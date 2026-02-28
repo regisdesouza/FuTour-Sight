@@ -169,6 +169,7 @@ header .botoes-autenticacao {
 
     color: var(--cor-escura);
     font-size: var(--texto-gigante);
+    font-weight: var(--bold);
 }
 
 .vantagens ul {
@@ -191,9 +192,13 @@ header .botoes-autenticacao {
 
 .vantagens .info h3 {
     font-size: var(--texto-grande);
+    font-weight: var(--bold);
+    color: var(--cor-escura);
 }
 
 .vantagens .info p {
+    font-size: var(--texto-medio);
+    font-weight: var(--regular);
     color: var(--cor-escura);
     text-align: center;
 }
