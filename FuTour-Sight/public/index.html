@@ -104,13 +104,19 @@
       </div>
     </section>
 
-    <section class="section contato">
+    <section class="contato">
       <form class="contato-formulario">
         <h3>Ficou com alguma dúvida? Entre em contato!</h3>
 
-        <label for="nome">Nome:</label><input type="text" name="nome" id="nome" required>
-        <label for="email">Email:</label><input type="text" name="email" id="email" required>
-        <label for="mensagem">Mensagem:</label><textarea name="mensagem" id="mensagem" required></textarea>
+        <div class="campo">
+          <label for="nome">Nome:</label><input type="text" name="nome" id="nome" placeholder="Seu nome" required>
+        </div>
+        <div class="campo">
+          <label for="email">Email:</label><input type="text" name="email" id="email" placeholder="Seu email" required>
+        </div>
+        <div class="campo">
+          <label for="mensagem">Mensagem:</label><textarea name="mensagem" id="mensagem" placeholder="Sua mensagem" required></textarea>
+        </div>
 
         <button type="submit">Enviar</button>
       </form>
