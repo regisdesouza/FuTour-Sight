@@ -57,14 +57,14 @@ header .links {
     gap: 32px;
 }
 
-.links .logo {
+.logo {
     display: flex;
     align-items: center;
 
     font-weight: var(--extra-bold);
 }
 
-.links .logo span{
+.logo span{
     margin-left: -4px;
 }
 
@@ -338,4 +338,42 @@ header .botoes-autenticacao {
     color: var(--cor-clara);
     font-weight: var(--medium);
     font-size: var(--texto-grande);
+}
+
+
+
+footer {
+    padding: 40px 160px;
+}
+
+footer .footer-acima {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    margin-bottom: 24px;
+    padding-bottom: 16px;
+    border-bottom: 2px var(--cor-clara) solid;
+}
+
+.footer-acima nav ul {
+    display: flex;
+    gap: 32px;
+}
+
+.footer-acima nav ul li a {
+    color: var(--cor-clara);
+    font-weight: var(--bold);
+    font-size: var(--texto-pequeno);
+}
+
+.footer-abaixo {
+    display: flex;
+    justify-content: space-between;
+}
+
+.footer-abaixo .redes-sociais {
+    display: flex;
+    align-items: center;
+    gap: 24px;
 }
