@@ -1,11 +1,160 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Document</title>
+  <title>FuTour Sight</title>
+
+  <link rel="stylesheet" href="./assets/css/reset.css">
+  <link rel="stylesheet" href="./assets/css/styles.css">
 </head>
+
 <body>
-  <h1>Hello World!</h1>
+  <header>
+    <div class="links">
+      <a href="./index.html" class="logo">
+        <img src="./assets/images/logo-futour-sight-branco.png" alt="Logo FuTour Sight">
+        <span>FuTour Sight</span>
+      </a>
+      <nav>
+        <ul>
+          <li><a href="./index.html">Home</a></li>
+          <li><a href="./sobre.html">Sobre</a></li>
+          <li><a href="#contato">Contato</a></li>
+        </ul>
+      </nav>
+    </div>
+
+    <div class="botoes-autenticacao">
+      <a href="./login.html">Entrar</a>
+      <a href="./cadastrar.html" class="botao-cadastrar">Cadastrar</a>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="hero-conteudo">
+        <div class="info">
+          <h1>Tenha <span>insights</span> do futuro com a FuTour Sight!</h1>
+          <p>Use nossa plataforma para analisar dados sobre a previsibilidade turística e se planejar para a demanda.</p>
+        </div>
+        <ul class="beneficios">
+          <li><img src="./assets/images/icons/grafico.png" alt="Ícone de gráfico"><span>Análise de dados</span></li>
+          <li><img src="./assets/images/icons/calendario-aviao.png" alt="Ícone de calendário com avião"><span>Previsibilidade turística</span></li>
+          <li><img src="./assets/images/icons/prancheta.png" alt="Ícone de prancheta"><span>Estratégia</span></li>
+        </ul>
+        <div class="botoes-acao">
+          <a href="./cadastro.html" class="botao-cadastrar">Comece agora!</a>
+          <a href="./sobre.html" class="botao-saiba-mais">Saiba mais</a>
+        </div>
+      </div>
+
+      <div class="hero-imagem">
+        <img src="./assets/images/insight.png" alt="Imagem de uma mulher tendo uma ideia">
+      </div>
+    </section>
+
+    <section class="vantagens">
+      <h2>Por que usar nosso serviço?</h2>
+      <ul>
+        <li>
+          <img src="./assets/images/visao-do-futuro.png" alt="Mulher com gráfico de pizza">
+          <div class="info">
+            <h3>Visão do Futuro</h3>
+            <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Mollitia cum sit beatae nemo sunt. Ipsam voluptas, beatae, corrupti, quas odit cumque ab eius vero non dolores doloribus esse cupiditate modi!</p>
+          </div>
+        </li>
+        <li>
+          <img src="./assets/images/estrategia.png" alt="Homem fazendo encomendas">
+          <div class="info">
+            <h3>Estratégia</h3>
+            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Sit tenetur quia repudiandae quasi totam optio asperiores id, porro voluptatum doloremque inventore libero debitis delectus fugit, dolore unde odio adipisci eum?</p>
+          </div>
+        </li>
+        <li>
+          <img src="./assets/images/valor.png" alt="Pessoas comemorando metas alcançadas e lucro">
+          <div class="info">
+            <h3>Valor</h3>
+            <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Quae praesentium expedita obcaecati dolor, aperiam corrupti tenetur vel atque veniam a amet, adipisci reprehenderit, doloremque distinctio quaerat accusantium odit ut corporis.</p>
+          </div>
+        </li>
+      </ul>
+    </section>
+
+    <section class="servicos">
+      <div class="info">
+        <h2>Análise de dados simples e visual</h2>
+        <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Omnis, necessitatibus veritatis dolorum assumenda voluptas perspiciatis ad accusantium dolore dignissimos minima deserunt molestiae harum? Harum, libero voluptates ipsam laboriosam et assumenda.</p>
+      </div>
+
+      <div class="servicos-imagem">
+        <img src="./assets/images/analise-dados.png" alt="Homem com gráficos">
+      </div>
+    </section>
+
+    <section class="chamada-acao">
+      <div class="chamada-acao-imagem">
+        <img src="./assets/images/tendencia.png" alt="Mulher com notebook e redes sociais">
+      </div>
+
+      <div class="chamada-acao-conteudo">
+        <p>Comece a prever tendências futuras de forma fácil e rápida agora mesmo!</p>
+        <a href="./cadastro.html">Comece agora!</a>
+      </div>
+    </section>
+
+    <section class="contato">
+      <form class="contato-formulario">
+        <h3>Ficou com alguma dúvida? Entre em contato!</h3>
+
+        <div class="campo">
+          <label for="nome">Nome:</label><input type="text" name="nome" id="nome" placeholder="Seu nome" required>
+        </div>
+        <div class="campo">
+          <label for="email">Email:</label><input type="text" name="email" id="email" placeholder="Seu email" required>
+        </div>
+        <div class="campo">
+          <label for="mensagem">Mensagem:</label><textarea name="mensagem" id="mensagem" placeholder="Sua mensagem" required></textarea>
+        </div>
+
+        <button type="submit">Enviar</button>
+      </form>
+
+      <div class="contato-imagem">
+        <img src="./assets/images/contato.png" alt="Mulher em cima de uma mensagem com dúvida">
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="footer-acima">
+      <div class="logo">
+        <a href="./index.html" class="logo">
+          <img src="./assets/images/logo-futour-sight-branco.png" alt="Logo FuTour Sight">
+          <span>FuTour Sight</span>
+        </a>
+      </div>
+      <nav>
+        <ul>
+          <li><a href="./index.html">Home</a></li>
+          <li><a href="./sobre.html">Sobre</a></li>
+          <li><a href="#contato">Contato</a></li>
+        </ul>
+      </nav>
+    </div>
+
+    <div class="footer-abaixo">
+      <p>FuTour Sight@ 2026. Todos os direitos reservados</p>
+      <nav>
+        <ul class="redes-sociais">
+          <li><a href=""><img src="./assets/images/redes-sociais/icone-youtube.png" alt="Logo do YouTube"></a></li>
+          <li><a href=""><img src="./assets/images/redes-sociais/icone-instagram.png" alt="Logo do Instagram"></a></li>
+          <li><a href=""><img src="./assets/images/redes-sociais/icone-linkedin.png" alt="Logo do Linkedin"></a></li>
+        </ul>
+      </nav>
+    </div>
+  </footer>
 </body>
+
 </html>
