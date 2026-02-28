@@ -197,3 +197,32 @@ header .botoes-autenticacao {
     color: var(--cor-escura);
     text-align: center;
 }
+
+
+
+.servicos {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    padding: 32px 160px;
+
+    background-color: var(--cor-clara);
+}
+
+.servicos .info {
+    max-width: 700px;
+}
+
+.servicos .info h2 {
+    color: var(--cor-escura);
+    font-size: var(--texto-gigante);
+    font-weight: var(--bold);
+
+    margin-bottom: 16px;
+}
+
+.servicos .info p {
+    color: var(--cor-cinza-escuro);
+    font-weight: var(--medium);
+}
