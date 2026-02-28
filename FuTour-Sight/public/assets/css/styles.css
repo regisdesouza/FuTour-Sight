@@ -84,3 +84,69 @@ header .botoes-autenticacao {
     padding: 8px 40px;
     border-radius: 32px;
 }
+
+
+
+.hero {
+    display: flex;
+    justify-content: space-between;
+
+    padding: 64px 160px 96px 160px;
+}
+
+.hero .hero-conteudo {
+    display: flex;
+    flex-direction: column;
+    gap: 64px;
+
+    max-width: 720px;
+}
+
+.hero-conteudo .info h1 {
+    font-size: 5rem;
+    margin-bottom: 8px;
+}
+
+.info h1 span {
+    color: var(--cor-contraste);
+}
+
+.info p {
+    color: var(--cor-cinza);
+    font-size: var(--texto-medio);
+    line-height: 150%;
+}
+
+.hero-conteudo .beneficios {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 32px;
+}
+
+.beneficios li {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+
+    font-size: var(--texto-grande);
+}
+
+.hero-conteudo .botoes-acao {
+    display: flex;
+    gap: 48px;
+    font-size: var(--texto-grande);
+    font-weight: var(--medium);
+}
+
+.botoes-acao a {
+    padding: 8px 64px;
+    border-radius: 32px;
+}
+
+.botoes-acao .botao-cadastrar {
+    background-color: var(--cor-complementar);
+}
+
+.botoes-acao .botao-saiba-mais {
+    background-color: var(--cor-terciaria);
+}
