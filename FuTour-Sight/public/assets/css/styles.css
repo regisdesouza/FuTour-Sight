@@ -231,3 +231,37 @@ header .botoes-autenticacao {
     color: var(--cor-cinza-escuro);
     font-weight: var(--medium);
 }
+
+
+
+.chamada-acao {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 64px;
+
+    padding: 48px 160px;
+}
+
+.chamada-acao .chamada-acao-conteudo {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 32px;
+}
+
+.chamada-acao-conteudo p {
+    color: var(--cor-clara);
+    font-size: var(--texto-grande);
+    font-weight: var(--bold);
+    text-align: center;
+}
+
+.chamada-acao-conteudo a {
+    padding: 8px 64px;
+    border-radius: 32px;
+    background-color: var(--cor-complementar);
+
+    font-size: var(--texto-grande);
+    font-weight: var(--medium);
+}
