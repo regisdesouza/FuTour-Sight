@@ -1,0 +1,19 @@
+:root {
+    --cor-primaria: #1C4AA6;
+    --cor-secundaria: #245CA6;
+    --cor-terciaria: #03658C;
+    --cor-complementar: #7D8C0D;
+    --cor-contraste: #BF7C2A;
+    --cor-clara: #eee;
+    --cor-cinza-claro: #ddd;
+    --cor-cinza: #ccc;
+    --cor-cinza-escuro: #999;
+    --cor-escura: #222;
+
+    --texto-gigante: 4rem;
+    --texto-grande: 2rem;
+    --texto-medio: 1.5rem;
+    --texto-pequeno: 1rem;
+
+    --fonte: 'Inter';
+}
