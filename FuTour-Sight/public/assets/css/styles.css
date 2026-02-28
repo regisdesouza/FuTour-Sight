@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap');
+
 :root {
     --cor-primaria: #1C4AA6;
     --cor-secundaria: #245CA6;
@@ -15,5 +17,11 @@
     --texto-medio: 1.5rem;
     --texto-pequeno: 1rem;
 
-    --fonte: 'Inter';
+    --fonte: 'Inter', sans-serif;
+
+    --regular: 400;
+    --medium: 500;
+    --semi-bold: 600;
+    --bold: 700;
+    --extra-bold: 800;
 }
