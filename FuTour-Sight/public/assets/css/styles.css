@@ -150,3 +150,50 @@ header .botoes-autenticacao {
 .botoes-acao .botao-saiba-mais {
     background-color: var(--cor-terciaria);
 }
+
+
+
+.vantagens {
+    padding: 64px 160px;
+
+    background-color: var(--cor-clara);
+
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+    align-items: center;
+}
+
+.vantagens h2 {
+    margin-bottom: 32px;
+
+    color: var(--cor-escura);
+    font-size: var(--texto-gigante);
+}
+
+.vantagens ul {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.vantagens ul li {
+    color: var(--cor-escura);
+    width: min-content;
+}
+
+.vantagens ul li .info {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+}
+
+.vantagens .info h3 {
+    font-size: var(--texto-grande);
+}
+
+.vantagens .info p {
+    color: var(--cor-escura);
+    text-align: center;
+}
