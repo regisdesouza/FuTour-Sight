@@ -5,6 +5,7 @@
     --cor-secundaria: #245CA6;
     --cor-terciaria: #03658C;
     --cor-complementar: #7D8C0D;
+    --cor-complementar-escura: #69750B;
     --cor-contraste: #BF7C2A;
     --cor-clara: #eee;
     --cor-cinza-claro: #ddd;
@@ -73,16 +74,37 @@ header .links {
     gap: 32px;
 }
 
+.links nav ul li a {
+    transition: .15s ease-in-out;
+    display: inline-block;
+}
+
+.links nav ul li a:hover {
+    transform: scale(1.2);
+}
+
 header .botoes-autenticacao {
     display: flex;
     align-items: center;
     gap: 32px;
 }
 
+.botoes-autenticacao a {
+    transition: .15s ease-in-out;
+}
+
+.botoes-autenticacao .botao-entrar:hover {
+    transform: scale(1.2);
+}
+
 .botoes-autenticacao .botao-cadastrar {
     background-color: var(--cor-complementar);
     padding: 8px 40px;
     border-radius: 32px;
+}
+
+.botao-cadastrar:hover {
+    background-color: var(--cor-complementar-escura);
 }
 
 
