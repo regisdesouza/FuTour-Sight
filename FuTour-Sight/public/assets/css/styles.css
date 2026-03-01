@@ -295,6 +295,11 @@ header .botoes-autenticacao {
 
     font-size: var(--texto-grande);
     font-weight: var(--medium);
+    transition: .15s ease-in-out;
+}
+
+.chamada-acao-conteudo a:hover {
+    background-color: var(--cor-complementar-escura);
 }
 
 
