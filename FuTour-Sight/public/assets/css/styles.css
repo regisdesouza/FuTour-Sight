@@ -163,14 +163,23 @@ header .botoes-autenticacao {
 .botoes-acao a {
     padding: 8px 64px;
     border-radius: 32px;
+    transition: .15s ease-in-out;
 }
 
 .botoes-acao .botao-cadastrar {
     background-color: var(--cor-complementar);
 }
 
+.botoes-acao .botao-cadastrar:hover {
+    background-color: var(--cor-complementar-escura);
+}
+
 .botoes-acao .botao-saiba-mais {
     background-color: var(--cor-terciaria);
+}
+
+.botoes-acao .botao-saiba-mais:hover {
+    background-color: #025475;
 }
 
 
