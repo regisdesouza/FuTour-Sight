@@ -374,6 +374,12 @@ header .botoes-autenticacao {
     color: var(--cor-clara);
     font-weight: var(--medium);
     font-size: var(--texto-grande);
+    transition: .15s ease-in-out;
+    cursor: pointer;
+}
+
+.contato-formulario button:hover {
+    background-color: var(--cor-complementar-escura);
 }
 
 
