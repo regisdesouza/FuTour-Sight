@@ -403,10 +403,15 @@ footer .footer-acima {
     gap: 32px;
 }
 
-.footer-acima nav ul li a {
+.footer-acima nav ul li {
     color: var(--cor-clara);
     font-weight: var(--bold);
     font-size: var(--texto-pequeno);
+    transition: .15s ease-in-out;
+}
+
+.footer-acima nav ul li:hover {
+    transform: scale(1.2);
 }
 
 .footer-abaixo {
@@ -418,4 +423,12 @@ footer .footer-acima {
     display: flex;
     align-items: center;
     gap: 24px;
+}
+
+.footer-abaixo .redes-sociais li {
+    transition: .15s ease-in-out;
+}
+
+.footer-abaixo .redes-sociais li:hover {
+    transform: scale(1.2);
 }
