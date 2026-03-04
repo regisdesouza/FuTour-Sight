@@ -77,6 +77,10 @@
         bottom: 0;
     }
 
+    .overlay {
+        display: block;
+    }
+
     header input#menu-hamburguer:checked~.overlay {
         opacity: .5;
     }
