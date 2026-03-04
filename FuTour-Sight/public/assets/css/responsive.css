@@ -175,4 +175,27 @@
     .chamada-acao-imagem img {
         width: 100%;
     }
+
+
+
+    .contato {
+        padding: 32px;
+    }
+
+    .contato .contato-formulario {
+        padding: 0;
+        gap: 16px;
+    }
+
+    .contato-formulario h3 {
+        font-size: 1.5rem;
+    }
+
+    .contato-formulario button {
+        padding: 12px 0;
+    }
+
+    .contato-imagem {
+        display: none;
+    }
 }
