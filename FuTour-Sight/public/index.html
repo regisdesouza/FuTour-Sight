@@ -8,15 +8,27 @@
 
   <link rel="stylesheet" href="./assets/css/reset.css">
   <link rel="stylesheet" href="./assets/css/styles.css">
+  <link rel="stylesheet" href="./assets/css/responsive.css">
 </head>
 
 <body>
   <header>
+    <a href="./index.html" class="logo">
+      <img src="./assets/images/logo-futour-sight-branco.png" alt="Logo FuTour Sight">
+      <span>FuTour Sight</span>
+    </a>
+
+    <input type="checkbox" id="menu-hamburguer">
+
+    <label for="menu-hamburguer" class="menu-hamburguer">
+      <div class="menu">
+        <span class="hamburguer"></span>
+      </div>
+    </label>
+
+    <div class="overlay"></div>
+
     <div class="links">
-      <a href="./index.html" class="logo">
-        <img src="./assets/images/logo-futour-sight-branco.png" alt="Logo FuTour Sight">
-        <span>FuTour Sight</span>
-      </a>
       <nav>
         <ul>
           <li><a href="./index.html">Home</a></li>
@@ -24,11 +36,10 @@
           <li><a href="#contato">Contato</a></li>
         </ul>
       </nav>
-    </div>
-
-    <div class="botoes-autenticacao">
-      <a href="./login.html" class="botao-entrar">Entrar</a>
-      <a href="./cadastrar.html" class="botao-cadastrar">Cadastrar</a>
+      <div class="botoes-autenticacao">
+        <a href="./login.html" class="botao-entrar">Entrar</a>
+        <a href="./cadastrar.html" class="botao-cadastrar">Cadastrar</a>
+      </div>
     </div>
   </header>
 
@@ -37,11 +48,13 @@
       <div class="hero-conteudo">
         <div class="info">
           <h1>Tenha <span>insights</span> do futuro com a FuTour Sight!</h1>
-          <p>Use nossa plataforma para analisar dados sobre a previsibilidade turística e se planejar para a demanda.</p>
+          <p>Use nossa plataforma para analisar dados sobre a previsibilidade turística e se planejar para a demanda.
+          </p>
         </div>
         <ul class="beneficios">
           <li><img src="./assets/images/icons/grafico.png" alt="Ícone de gráfico"><span>Análise de dados</span></li>
-          <li><img src="./assets/images/icons/calendario-aviao.png" alt="Ícone de calendário com avião"><span>Previsibilidade turística</span></li>
+          <li><img src="./assets/images/icons/calendario-aviao.png"
+              alt="Ícone de calendário com avião"><span>Previsibilidade turística</span></li>
           <li><img src="./assets/images/icons/prancheta.png" alt="Ícone de prancheta"><span>Estratégia</span></li>
         </ul>
         <div class="botoes-acao">
@@ -62,21 +75,26 @@
           <img src="./assets/images/visao-do-futuro.png" alt="Mulher com gráfico de pizza">
           <div class="info">
             <h3>Visão do Futuro</h3>
-            <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Mollitia cum sit beatae nemo sunt. Ipsam voluptas, beatae, corrupti, quas odit cumque ab eius vero non dolores doloribus esse cupiditate modi!</p>
+            <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Mollitia cum sit beatae nemo sunt. Ipsam
+              voluptas, beatae, corrupti, quas odit cumque ab eius vero non dolores doloribus esse cupiditate modi!</p>
           </div>
         </li>
         <li>
           <img src="./assets/images/estrategia.png" alt="Homem fazendo encomendas">
           <div class="info">
             <h3>Estratégia</h3>
-            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Sit tenetur quia repudiandae quasi totam optio asperiores id, porro voluptatum doloremque inventore libero debitis delectus fugit, dolore unde odio adipisci eum?</p>
+            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Sit tenetur quia repudiandae quasi totam optio
+              asperiores id, porro voluptatum doloremque inventore libero debitis delectus fugit, dolore unde odio
+              adipisci eum?</p>
           </div>
         </li>
         <li>
           <img src="./assets/images/valor.png" alt="Pessoas comemorando metas alcançadas e lucro">
           <div class="info">
             <h3>Valor</h3>
-            <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Quae praesentium expedita obcaecati dolor, aperiam corrupti tenetur vel atque veniam a amet, adipisci reprehenderit, doloremque distinctio quaerat accusantium odit ut corporis.</p>
+            <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Quae praesentium expedita obcaecati dolor,
+              aperiam corrupti tenetur vel atque veniam a amet, adipisci reprehenderit, doloremque distinctio quaerat
+              accusantium odit ut corporis.</p>
           </div>
         </li>
       </ul>
@@ -85,7 +103,9 @@
     <section class="servicos">
       <div class="info">
         <h2>Análise de dados simples e visual</h2>
-        <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Omnis, necessitatibus veritatis dolorum assumenda voluptas perspiciatis ad accusantium dolore dignissimos minima deserunt molestiae harum? Harum, libero voluptates ipsam laboriosam et assumenda.</p>
+        <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Omnis, necessitatibus veritatis dolorum assumenda
+          voluptas perspiciatis ad accusantium dolore dignissimos minima deserunt molestiae harum? Harum, libero
+          voluptates ipsam laboriosam et assumenda.</p>
       </div>
 
       <div class="servicos-imagem">
@@ -115,7 +135,8 @@
           <label for="email">Email:</label><input type="text" name="email" id="email" placeholder="Seu email" required>
         </div>
         <div class="campo">
-          <label for="mensagem">Mensagem:</label><textarea name="mensagem" id="mensagem" placeholder="Sua mensagem" required></textarea>
+          <label for="mensagem">Mensagem:</label><textarea name="mensagem" id="mensagem" placeholder="Sua mensagem"
+            required></textarea>
         </div>
 
         <button type="submit">Enviar</button>
