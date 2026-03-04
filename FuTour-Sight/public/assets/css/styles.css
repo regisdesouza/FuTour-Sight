@@ -40,7 +40,7 @@ a {
 header {
     display: flex;
     align-items: center;
-    justify-content: space-between;
+    gap: 32px;
 
     margin: 32px 128px 16px 128px;
     border-radius: 32px;
@@ -55,7 +55,9 @@ header {
 header .links {
     display: flex;
     align-items: center;
+    justify-content: space-between;
     gap: 32px;
+    width: 100%;
 }
 
 .logo {
@@ -67,6 +69,7 @@ header .links {
 
 .logo span{
     margin-left: -4px;
+    width: max-content;
 }
 
 .links nav ul {
@@ -105,6 +108,56 @@ header .botoes-autenticacao {
 
 .botao-cadastrar:hover {
     background-color: var(--cor-complementar-escura);
+}
+
+header label,
+header input {
+    display: none;
+}
+
+header .menu-hamburguer {
+    display: none;
+}
+
+.menu-hamburguer .menu {
+    width: 32px;
+    height: 32px;
+    margin-right: 12px;
+}
+
+.menu .hamburguer {
+    display: block;
+    width: 100%;
+    background-color: var(--cor-clara);
+    height: 2px;
+    position: relative;
+    top: 50%;
+    transform: translateY(-50%);
+    transition: .5s ease-in-out;
+}
+
+.menu .hamburguer::before,
+.menu .hamburguer::after {
+    display: block;
+    width: 100%;
+    background-color: var(--cor-clara);
+    height: 2px;
+    position: absolute;
+    content: '';
+    transition: .2s ease-in-out;
+}
+
+.menu .hamburguer::before {
+    top: -12px;
+}
+
+.menu .hamburguer::after {
+    bottom: -12px;
+}
+
+.overlay {
+    z-index: 1;
+    display: none;
 }
 
 
