@@ -159,4 +159,20 @@
     .servicos-imagem img {
         width: 100%;
     }
+
+
+
+    .chamada-acao {
+        flex-direction: column-reverse;
+        padding: 24px;
+        gap: 24px;
+    }
+
+    .chamada-acao .chamada-acao-conteudo {
+        gap: 16px;
+    }
+
+    .chamada-acao-imagem img {
+        width: 100%;
+    }
 }
