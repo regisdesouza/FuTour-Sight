@@ -1,0 +1,228 @@
+@media (max-width: 576px) {
+    :root {
+        --texto-gigante: 2rem;
+        --texto-grande: 1.2rem;
+        --texto-medio: 1rem;
+        --texto-pequeno: .8rem;
+    }
+
+    header {
+        margin: 16px 24px 8px 24px;
+        padding: 8px 16px;
+        justify-content: space-between;
+    }
+
+    .logo img {
+        width: 50px;
+    }
+
+    header .logo span {
+        display: none;
+    }
+
+    header .links {
+        position: fixed;
+        top: 0;
+        right: -100%;
+        flex-direction: column;
+        justify-content: flex-start;
+        width: min-content;
+
+        background-color: var(--cor-secundaria);
+        padding: 82px 32px 0 32px;
+        height: 100vh;
+        z-index: 2;
+
+        gap: 16px;
+        transition: .5s ease-in-out;
+    }
+
+    .links nav {
+        border-bottom: 1px solid var(--cor-clara);
+        padding-bottom: 16px;
+        width: 100%;
+    }
+
+    .links nav ul,
+    header .botoes-autenticacao {
+        flex-direction: column;
+        gap: 16px;
+        text-align: center;
+    }
+
+    .botoes-autenticacao .botao-cadastrar {
+        padding: 4px 20px;
+    }
+
+    header .menu-hamburguer {
+        display: block;
+        z-index: 3;
+    }
+
+    header input#menu-hamburguer:checked~.links {
+        right: 0;
+    }
+
+    header input#menu-hamburguer:checked~label.menu-hamburguer .hamburguer {
+        transform: rotate(45deg);
+    }
+
+    header input#menu-hamburguer:checked~label.menu-hamburguer .hamburguer::before {
+        transform: rotate(90deg);
+        top: 0;
+    }
+
+    header input#menu-hamburguer:checked~label.menu-hamburguer .hamburguer::after {
+        transform: rotate(90deg);
+        bottom: 0;
+    }
+
+    header input#menu-hamburguer:checked~.overlay {
+        opacity: .5;
+    }
+
+
+
+    .hero {
+        padding: 8px 24px;
+        flex-direction: column;
+    }
+
+    .hero .hero-conteudo {
+        width: 100%;
+        gap: 24px;
+    }
+
+    .hero-conteudo .info h1 {
+        font-size: 3rem;
+        text-align: center;
+    }
+
+    .hero-conteudo .info p {
+        text-align: center;
+    }
+
+    .hero-conteudo .beneficios {
+        gap: 12px;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .hero-conteudo .botoes-acao {
+        flex-direction: column;
+        gap: 16px;
+    }
+
+    .botoes-acao a {
+        padding: 8px 16px;
+        text-align: center;
+    }
+
+    .hero-imagem img {
+        width: 100%;
+    }
+
+
+
+    .vantagens {
+        padding: 24px;
+    }
+
+    .vantagens h2 {
+        text-align: center;
+        margin-bottom: 0;
+    }
+
+    .vantagens ul {
+        flex-direction: column;
+    }
+
+    .vantagens ul li {
+        width: 100%;
+    }
+
+    .vantagens ul li img {
+        width: 100%;
+    }
+
+
+
+    .servicos {
+        padding: 32px 24px 0 24px;
+        flex-direction: column;
+    }
+
+    .servicos h2 {
+        text-align: center;
+    }
+
+    .servicos-imagem img {
+        width: 100%;
+    }
+
+
+
+    .chamada-acao {
+        flex-direction: column-reverse;
+        padding: 24px;
+        gap: 24px;
+    }
+
+    .chamada-acao .chamada-acao-conteudo {
+        gap: 16px;
+    }
+
+    .chamada-acao-imagem img {
+        width: 100%;
+    }
+
+
+
+    .contato {
+        padding: 32px;
+    }
+
+    .contato .contato-formulario {
+        padding: 0;
+        gap: 16px;
+    }
+
+    .contato-formulario h3 {
+        font-size: 1.5rem;
+    }
+
+    .contato-formulario button {
+        padding: 12px 0;
+    }
+
+    .contato-imagem {
+        display: none;
+    }
+
+
+
+    footer {
+        padding: 24px;
+    }
+
+    footer .footer-acima {
+        margin-bottom: 16px;
+        padding-bottom: 12px;
+    }
+
+    .footer-acima nav ul {
+        gap: 12px;
+    }
+
+    footer .footer-abaixo {
+        gap: 32px;
+    }
+
+    .footer-abaixo p {
+        font-size: var(--texto-pequeno);
+    }
+
+    .footer-abaixo .redes-sociais {
+        gap: 16px;
+    }
+}
