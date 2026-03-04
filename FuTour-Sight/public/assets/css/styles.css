@@ -27,6 +27,10 @@
     --extra-bold: 800;
 }
 
+html {
+    scroll-behavior: smooth;
+}
+
 body {
     background: linear-gradient(to right, var(--cor-primaria), var(--cor-terciaria));
     font-family: var(--fonte);
