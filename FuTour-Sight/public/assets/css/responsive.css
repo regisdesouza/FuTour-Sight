@@ -88,7 +88,7 @@
 
 
     .hero {
-        padding: 8px 24px;
+        padding: 8px 24px 32px 24px;
         flex-direction: column;
     }
 
@@ -122,8 +122,8 @@
         text-align: center;
     }
 
-    .hero-imagem img {
-        width: 100%;
+    .hero-imagem {
+        display: none;
     }
 
 
