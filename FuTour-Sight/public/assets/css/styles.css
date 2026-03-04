@@ -120,7 +120,7 @@ header .menu-hamburguer {
 }
 
 .menu-hamburguer .menu {
-    width: 32px;
+    width: 28px;
     height: 32px;
     margin-right: 12px;
 }
@@ -148,11 +148,11 @@ header .menu-hamburguer {
 }
 
 .menu .hamburguer::before {
-    top: -12px;
+    top: -10px;
 }
 
 .menu .hamburguer::after {
-    bottom: -12px;
+    bottom: -10px;
 }
 
 .overlay {
