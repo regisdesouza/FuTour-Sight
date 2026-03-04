@@ -67,7 +67,7 @@ header .links {
     font-weight: var(--extra-bold);
 }
 
-.logo span{
+.logo span {
     margin-left: -4px;
     width: max-content;
 }
@@ -157,7 +157,14 @@ header .menu-hamburguer {
 
 .overlay {
     z-index: 1;
-    display: none;
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 100vw;
+    height: 100%;
+    background-color: #000;
+    opacity: 0;
+    transition: .2s ease-in-out;
 }
 
 
@@ -419,7 +426,7 @@ header .menu-hamburguer {
     background-color: var(--cor-complementar);
     border-radius: 16px;
     border: none;
-    
+
     width: 100%;
 
     padding: 16px 0;
