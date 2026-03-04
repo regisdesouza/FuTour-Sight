@@ -37,6 +37,12 @@
         transition: .5s ease-in-out;
     }
 
+    .links nav {
+        border-bottom: 1px solid var(--cor-clara);
+        padding-bottom: 16px;
+        width: 100%;
+    }
+
     .links nav ul,
     header .botoes-autenticacao {
         flex-direction: column;
