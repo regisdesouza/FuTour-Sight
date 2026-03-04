@@ -104,7 +104,8 @@
 
     .hero-conteudo .beneficios {
         gap: 12px;
-        justify-content: center;
+        flex-direction: column;
+        align-items: center;
     }
 
     .hero-conteudo .botoes-acao {
