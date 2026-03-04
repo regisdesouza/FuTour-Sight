@@ -1,7 +1,7 @@
 @media (max-width: 576px) {
     :root {
         --texto-gigante: 2rem;
-        --texto-grande: 1.5rem;
+        --texto-grande: 1.2rem;
         --texto-medio: 1rem;
         --texto-pequeno: .8rem;
     }
@@ -53,25 +53,25 @@
         z-index: 3;
     }
 
-    header input#menu-hamburguer:checked ~ .links {
+    header input#menu-hamburguer:checked~.links {
         right: 0;
     }
 
-    header input#menu-hamburguer:checked ~ label.menu-hamburguer .hamburguer {
+    header input#menu-hamburguer:checked~label.menu-hamburguer .hamburguer {
         transform: rotate(45deg);
     }
 
-    header input#menu-hamburguer:checked ~ label.menu-hamburguer .hamburguer::before {
+    header input#menu-hamburguer:checked~label.menu-hamburguer .hamburguer::before {
         transform: rotate(90deg);
         top: 0;
     }
 
-    header input#menu-hamburguer:checked ~ label.menu-hamburguer .hamburguer::after {
+    header input#menu-hamburguer:checked~label.menu-hamburguer .hamburguer::after {
         transform: rotate(90deg);
         bottom: 0;
     }
 
-    header input#menu-hamburguer:checked ~ .overlay {
+    header input#menu-hamburguer:checked~.overlay {
         display: block;
         position: fixed;
         left: 0;
@@ -79,5 +79,45 @@
         width: 100vw;
         height: 100%;
         background-color: rgba(0, 0, 0, .5);
+    }
+
+
+
+    .hero {
+        padding: 8px 24px;
+        flex-direction: column;
+    }
+
+    .hero .hero-conteudo {
+        width: 100%;
+        gap: 24px;
+    }
+
+    .hero-conteudo .info h1 {
+        font-size: 3rem;
+        text-align: center;
+    }
+
+    .hero-conteudo .info p {
+        text-align: center;
+    }
+
+    .hero-conteudo .beneficios {
+        gap: 12px;
+        justify-content: center;
+    }
+
+    .hero-conteudo .botoes-acao {
+        flex-direction: column;
+        gap: 16px;
+    }
+
+    .botoes-acao a {
+        padding: 8px 16px;
+        text-align: center;
+    }
+
+    .hero-imagem img {
+        width: 100%;
     }
 }
