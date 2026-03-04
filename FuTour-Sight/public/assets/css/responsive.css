@@ -144,4 +144,19 @@
     .vantagens ul li img {
         width: 100%;
     }
+
+
+
+    .servicos {
+        padding: 32px 24px 0 24px;
+        flex-direction: column;
+    }
+
+    .servicos h2 {
+        text-align: center;
+    }
+
+    .servicos-imagem img {
+        width: 100%;
+    }
 }
