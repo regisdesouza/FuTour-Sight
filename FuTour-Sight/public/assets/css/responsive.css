@@ -121,4 +121,27 @@
     .hero-imagem img {
         width: 100%;
     }
+
+
+
+    .vantagens {
+        padding: 24px;
+    }
+
+    .vantagens h2 {
+        text-align: center;
+        margin-bottom: 0;
+    }
+
+    .vantagens ul {
+        flex-direction: column;
+    }
+
+    .vantagens ul li {
+        width: 100%;
+    }
+
+    .vantagens ul li img {
+        width: 100%;
+    }
 }
