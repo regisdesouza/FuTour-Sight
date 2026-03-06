@@ -229,4 +229,10 @@
     .footer-abaixo .redes-sociais {
         gap: 16px;
     }
+
+
+
+    .login-container {
+        padding: 24px;
+    }
 }
