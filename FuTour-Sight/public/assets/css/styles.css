@@ -488,7 +488,7 @@ header .menu-hamburguer {
     font-size: var(--texto-grande);
 }
 
-.info p {
+.body-sobre .info p {
     color: var(--cor-cinza-escuro);
     font-weight: var(--bold);
     font-size: var(--texto-medio);
