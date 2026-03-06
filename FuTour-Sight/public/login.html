@@ -11,7 +11,7 @@
     <link rel="stylesheet" href="./assets/css/responsive.css">
 </head>
 
-<body>
+<body class="body-login">
     <header>
         <a href="./index.html" class="logo">
             <img src="./assets/images/logo-futour-sight-branco.png" alt="Logo FuTour Sight">
@@ -45,15 +45,19 @@
 
     <main>
         <div class="login-container">
-            <label for="email">E-mail</label>
-            <input type="text" id="email" placeholder="E-mail">
+            <div class="campo">
+                <label for="email">E-mail</label>
+                <input type="text" id="email" placeholder="E-mail">
+            </div>
 
-            <label for="senha">Senha</label>
-            <input type="password" id="senha" placeholder="Senha">
+            <div class="campo">
+                <label for="senha">Senha</label>
+                <input type="password" id="senha" placeholder="Senha">
+            </div>
 
-            <button>Esqueceu a senha?</button>
+            <button class="botao-esqueceu-senha">Esqueceu a senha?</button>
 
-            <button>Entrar</button>
+            <button class="botao-entrar">Entrar</button>
 
             <p>Não tem uma conta? <a href="./cadastrar.html">Crie agora!</a></p>
         </div>
