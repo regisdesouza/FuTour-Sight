@@ -63,6 +63,11 @@
         right: 0;
     }
 
+    header input#menu-hamburguer:checked~.menu-hamburguer {
+        position: fixed;
+        right: 40px;
+    }
+
     header input#menu-hamburguer:checked~label.menu-hamburguer .hamburguer {
         transform: rotate(45deg);
     }
