@@ -537,7 +537,7 @@ header .menu-hamburguer {
 }
 
 .equipe-info ul img {
-    width: 180px;
+    width: 240px;
     height: 240px;
     border-radius: 5px;
     object-fit: cover;
@@ -546,6 +546,10 @@ header .menu-hamburguer {
 .equipe-info h3 {
     display: inline;
     color: var(--cor-secundaria);
+}
+
+.container-carrossel {
+    display: none;
 }
 
 footer {
