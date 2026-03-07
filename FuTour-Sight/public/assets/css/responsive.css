@@ -85,8 +85,6 @@
         opacity: .5;
     }
 
-
-
     .hero {
         padding: 8px 24px 32px 24px;
         flex-direction: column;
@@ -126,8 +124,6 @@
         display: none;
     }
 
-
-
     .vantagens {
         padding: 24px;
     }
@@ -149,8 +145,6 @@
         width: 100%;
     }
 
-
-
     .servicos {
         padding: 32px 24px 0 24px;
         flex-direction: column;
@@ -163,8 +157,6 @@
     .servicos-imagem img {
         width: 100%;
     }
-
-
 
     .chamada-acao {
         flex-direction: column-reverse;
@@ -179,8 +171,6 @@
     .chamada-acao-imagem img {
         width: 100%;
     }
-
-
 
     .contato {
         padding: 32px;
@@ -203,7 +193,142 @@
         display: none;
     }
 
+    .sobre {
+        padding: 8px 32px 32px 32px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+    }
 
+    .sobre-imagem {
+        display: none;
+    }
+
+    .body-sobre .info {
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        gap: 8px;
+    }
+
+    .body-sobre .info h1 {
+        font-size: var(--texto-gigante);
+    }
+
+    .info .frase-impacto {
+        font-size: var(--texto-grande);
+    }
+
+    .info p {
+        font-size: var(--texto-medio);
+    }
+
+    .body-sobre .chamada-acao {
+        flex-direction: column;
+        padding: 24px;
+        padding-bottom: 0;
+        gap: 24px;
+    }
+
+
+    .body-sobre .chamada-acao p {
+        font-size: var(--texto-medio);
+    }
+
+
+    .body-sobre .chamada-acao-imagem img {
+       width: 70%;
+       margin-left: 40px;
+    }
+
+    .membros {
+        padding: 8px 24px 32px 24px;
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+        background-color: var(--cor-clara);
+    }
+
+    .equipe-imagem {
+        display: none;
+    }
+
+    .equipe-info {
+        display: none;
+    }
+
+    .container-carrossel {
+        padding: 8px 24px 32px 24px;
+        display: flex;
+        flex-direction: column;
+        gap: 1em;
+        padding: 16px;
+        width: 100%;
+    }
+
+    .container-carrossel h2 {
+        color: #1C4AA6;
+        font-size: var(--texto-gigante);
+    }
+
+    .equipe-imagem-responsive img {
+        width: 100%;
+    }
+
+    .carrossel {
+        display: flex;
+        width: 100%;
+        overflow: hidden;
+    }
+
+    .carrossel::-webkit-scrollbar {
+        display: none;
+    }
+
+    .group {
+        display: flex;
+        gap: 2em;
+        margin-right: 3em;
+        animation: spin 18s linear infinite;
+    }
+
+    .subgroup {
+        flex-shrink: 0;
+    }
+
+    .card {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        min-width: 130px;
+        padding: 1em;
+    }
+
+    .card img {
+        width: 90px;
+        height: 120px;
+        border-radius: 5px;
+        object-fit: cover;
+    }
+
+    .group h3 {
+        font-size: var(--texto-medio);
+        color: #245CA6;
+        text-align: center;
+        max-width: 110px;
+        line-height: 1.2;
+    }
+
+    @keyframes spin {
+        from {
+            transform: translateX(0);
+        }
+
+        to {
+            transform: translateX(-100%);
+        }
+    }
 
     footer {
         padding: 24px;
