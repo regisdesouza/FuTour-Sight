@@ -402,7 +402,7 @@ header .menu-hamburguer {
 
 .campo label {
     font-size: var(--texto-medio);
-    font-weight: var(--semi-bold);
+    font-weight: var(--medium);
     color: var(--cor-escura);
 }
 
