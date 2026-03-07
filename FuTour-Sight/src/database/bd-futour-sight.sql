@@ -1,6 +1,7 @@
 CREATE DATABASE futour_sight;
 USE futour_sight;
 
+
 CREATE TABLE Empresa (
     idEmpresa INT AUTO_INCREMENT PRIMARY KEY,
     nome VARCHAR(150) NOT NULL,
@@ -58,35 +59,17 @@ CREATE TABLE Feedback (
     FOREIGN KEY (Empresa_idEmpresa) REFERENCES Empresa(idEmpresa)
 );
 
-CREATE TABLE DadosAereos (
-    idDadosAereos INT AUTO_INCREMENT PRIMARY KEY,
-    empresaSigla VARCHAR(10) NOT NULL,
-    empresaNome VARCHAR(200) NOT NULL,
-    empresaNacionalidade ENUM('BRASILEIRA','ESTRANGEIRA') NOT NULL,
-    ano SMALLINT NOT NULL,
-    mes TINYINT NOT NULL CHECK (mes BETWEEN 1 AND 12),
-    origemSigla CHAR(4) NOT NULL,
-    origemNome VARCHAR(150),
-    origemUF CHAR(2),
-    origemRegiao VARCHAR(50),
-    origemPais VARCHAR(100),
-    origemContinente VARCHAR(50),
-    destinoSigla CHAR(4) NOT NULL,
-    destinoNome VARCHAR(150),
-    destinoUF CHAR(2),
-    destinoRegiao VARCHAR(50),
-    destinoPais VARCHAR(100),
-    destinoContinente VARCHAR(50),
-    natureza VARCHAR(50),
-    grupoVoo VARCHAR(50),
-    passageirosPagos INT DEFAULT 0,
-    passageirosGratis INT DEFAULT 0,
-    decolagens INT DEFAULT 0,
-    assentos INT DEFAULT 0,
-    dataCriacao DATETIME DEFAULT CURRENT_TIMESTAMP
+CREATE TABLE Chegadas_turistas (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    via_de_acesso VARCHAR(20),
+    uf VARCHAR(50),
+    nome_pais_origem VARCHAR(100),
+    mes VARCHAR(20),
+    ano INT,
+    chegadas INT
 );
 
-CREATE TABLE Log (
+CREATE TABLE Log (  
     idLog INT AUTO_INCREMENT PRIMARY KEY,
     acao ENUM('LOGIN','LOGOUT','CRIAR','ATUALIZAR','DELETAR') NOT NULL,
     descricao TEXT,
