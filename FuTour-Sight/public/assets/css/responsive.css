@@ -63,6 +63,11 @@
         right: 0;
     }
 
+    header input#menu-hamburguer:checked~.menu-hamburguer {
+        position: fixed;
+        right: 40px;
+    }
+
     header input#menu-hamburguer:checked~label.menu-hamburguer .hamburguer {
         transform: rotate(45deg);
     }
@@ -79,10 +84,12 @@
 
     .overlay {
         display: block;
+        z-index: -1;
     }
 
     header input#menu-hamburguer:checked~.overlay {
         opacity: .5;
+        z-index: 0;
     }
 
     .hero {
@@ -353,5 +360,11 @@
 
     .footer-abaixo .redes-sociais {
         gap: 16px;
+    }
+
+
+
+    .login-container {
+        padding: 24px;
     }
 }
