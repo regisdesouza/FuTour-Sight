@@ -482,7 +482,7 @@ header .menu-hamburguer {
     font-size: var(--texto-gigante);
 }
 
-.info .frase-impacto {
+.body-sobre .info .frase-impacto {
     color: var(--cor-terciaria);
     font-weight: var(--bold);
     font-size: var(--texto-grande);
