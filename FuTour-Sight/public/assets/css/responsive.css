@@ -210,8 +210,6 @@
         display: none;
     }
 
-
-
     footer {
         padding: 24px;
     }
@@ -241,5 +239,66 @@
 
     .login-container {
         padding: 24px;
+    }
+
+    .body-cadastro {
+        overflow-y: auto;
+        overflow-x: hidden;
+    }
+
+    .body-cadastro header.menu-hamburguer {
+        z-index: 1;
+    }
+
+    .body-cadastro .container {
+        bottom: -34px;
+        width: 87%;
+        height: 180%;
+        margin-top: 200px;
+        z-index: 0;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .form-box .input-group {
+        display: flex;
+        flex-direction: column;
+        margin-top: 90px;
+        margin-bottom: 20px;
+        width: 320%;
+        overflow-y: scroll;
+    }
+
+    .toggle-box {
+        position: relative;
+        width: 100%;
+        height: 220px;
+        background: linear-gradient(to right, var(--cor-primaria), var(--cor-terciaria));
+        border-radius: 0 0 40px 40px;
+    }
+
+    .toggle-box::before {
+        display: none;
+    }
+
+    .toggle-panel {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        z-index: 2;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        padding: 40px;
+    }
+
+    .container.active .form-box { 
+        margin-left: -170px;
+        margin-top: 30px;
+    }
+
+    .btn-main {
+        width: 200%;
     }
 }
