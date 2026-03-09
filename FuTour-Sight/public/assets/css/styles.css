@@ -689,7 +689,6 @@ footer .footer-acima {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    overflow: hidden;
 }
 
 
@@ -697,7 +696,6 @@ footer .footer-acima {
     background-color: var(--cor-clara);
     font-family: var(--fonte);
     width: 100%;
-    height: 100vh;
     display: flex;
     align-items: center;
     justify-content: center;
