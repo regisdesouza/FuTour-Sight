@@ -1,7 +1,7 @@
 # 🏨 FuTour Sight – Análise de Dados e Previsões Turísticas para Hotelaria
 
 <p align="center">
-  <img src="FuTour-Sight/assets/FuTourSight-colorido.png" alt="Logo FuTour Sight" width="200"/>
+  <img src="./FuTour-Sight/public/assets/images/logo-futour-sight-colorido.png" alt="Logo FuTour Sight" width="200"/>
 </p>
 
 ---
