@@ -12,32 +12,32 @@
     justify-content: center;
 }
 
-.login-container {
+.login-conteudo {
     display: flex;
     flex-direction: column;
     gap: 16px;
     width: 660px;
 }
 
-.login-container label,
-.login-container input,
-.login-container p {
+.login-conteudo label,
+.login-conteudo input,
+.login-conteudo p {
     width: 100%;
 }
 
-.login-container label {
+.login-conteudo label {
     color: var(--cor-escura);
     font-size: var(--texto-pequeno);
     font-weight: var(--regular);
 }
 
-.login-container input {
+.login-conteudo input {
     margin-top: 8px;
     border-radius: 4px;
     font-size: var(--texto-pequeno);
 }
 
-.login-container .botao-esqueceu-senha {
+.login-conteudo .botao-esqueceu-senha {
     text-align: end;
     align-self: flex-end;
     border: none;
@@ -46,26 +46,26 @@
     cursor: pointer;
 }
 
-.login-container .botao-esqueceu-senha:hover {
+.login-conteudo .botao-esqueceu-senha:hover {
     text-decoration: underline;
 }
 
-.login-container .botao-entrar {
+.login-conteudo .botao-entrar {
     padding: 16px;
     border: none;
     border-radius: 4px;
     font-weight: var(--bold);
 }
 
-.login-container p {
+.login-conteudo p {
     color: var(--cor-escura);
     text-align: center;
 }
 
-.login-container a {
+.login-conteudo a {
     color: var(--cor-primaria);
 }
 
-.login-container a:hover {
+.login-conteudo a:hover {
     text-decoration: underline;
 }
