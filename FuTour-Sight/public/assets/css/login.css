@@ -1,0 +1,71 @@
+.body-login {
+    display: flex;
+    justify-content: space-between;
+    flex-direction: column;
+    background-image: none;
+    min-height: 100vh;
+
+}
+
+.body-login main {
+    display: flex;
+    justify-content: center;
+}
+
+.login-container {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    width: 660px;
+}
+
+.login-container label,
+.login-container input,
+.login-container p {
+    width: 100%;
+}
+
+.login-container label {
+    color: var(--cor-escura);
+    font-size: var(--texto-pequeno);
+    font-weight: var(--regular);
+}
+
+.login-container input {
+    margin-top: 8px;
+    border-radius: 4px;
+    font-size: var(--texto-pequeno);
+}
+
+.login-container .botao-esqueceu-senha {
+    text-align: end;
+    align-self: flex-end;
+    border: none;
+    color: var(--cor-primaria);
+    width: fit-content;
+    cursor: pointer;
+}
+
+.login-container .botao-esqueceu-senha:hover {
+    text-decoration: underline;
+}
+
+.login-container .botao-entrar {
+    padding: 16px;
+    border: none;
+    border-radius: 4px;
+    font-weight: var(--bold);
+}
+
+.login-container p {
+    color: var(--cor-escura);
+    text-align: center;
+}
+
+.login-container a {
+    color: var(--cor-primaria);
+}
+
+.login-container a:hover {
+    text-decoration: underline;
+}
