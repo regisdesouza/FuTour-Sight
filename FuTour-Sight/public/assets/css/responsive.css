@@ -364,8 +364,14 @@
 
 
 
-    .login-container {
+    .login-conteudo {
         padding: 24px;
+        border-radius: 24px;
+        width: 100%;
+    }
+
+    .login-info {
+        display: none;
     }
 
     .body-cadastro {
