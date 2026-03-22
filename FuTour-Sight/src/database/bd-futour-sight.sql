@@ -1,39 +1,56 @@
 CREATE DATABASE futour_sight;
 USE futour_sight;
 
+CREATE TABLE NivelPermissao (
+    idNivelPermissao INT AUTO_INCREMENT PRIMARY KEY,
+    nome VARCHAR(50) NOT NULL UNIQUE,
+    descricao VARCHAR(255)
+);
+
+INSERT INTO NivelPermissao (nome, descricao) VALUES
+('PLATAFORMA_ADMIN', 'Administrador da FuTour Sight, acesso total ao sistema'),
+('EMPRESA_ADMIN', 'Administrador do cliente, gerencia sua empresa e funcionarios'),
+('EMPRESA_USER', 'Funcionario da empresa, acesso limitado ao dashboard');
+
+CREATE TABLE Contato (
+    idContato INT AUTO_INCREMENT PRIMARY KEY,
+    nomeColaborador VARCHAR(150) NOT NULL,
+    nomeEmpresa VARCHAR(150) NOT NULL,
+    emailColaborador VARCHAR(150) NOT NULL,
+    emailEmpresa VARCHAR(150) NOT NULL,
+    cnpj CHAR(14) NOT NULL,
+    telefone VARCHAR(20),
+    mensagem TEXT NOT NULL,
+    dataCriacao DATETIME DEFAULT CURRENT_TIMESTAMP,
+    FkEmpresa INT,
+    FOREIGN KEY (FkEmpresa) REFERENCES Empresa(idEmpresa)
+);
 
 CREATE TABLE Empresa (
     idEmpresa INT AUTO_INCREMENT PRIMARY KEY,
-    nome VARCHAR(150) NOT NULL,
-    cnpj CHAR(14) NOT NULL UNIQUE,
+    nome VARCHAR(150),
+    cnpj CHAR(14) UNIQUE,
     email VARCHAR(150) UNIQUE,
-    status ENUM('ATIVA','SUSPENSA') DEFAULT 'ATIVA',
+    telefone VARCHAR(20),
+    status ENUM('ATIVA', 'SUSPENSA', 'PENDENTE') DEFAULT 'PENDENTE',
     dataCriacao DATETIME DEFAULT CURRENT_TIMESTAMP,
-    dataAtualizacao DATETIME DEFAULT CURRENT_TIMESTAMP
+    dataAtualizacao DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 );
 
 CREATE TABLE Usuario (
     idUsuario INT AUTO_INCREMENT PRIMARY KEY,
-    nome VARCHAR(150) NOT NULL,
+    nome VARCHAR(150),
     email VARCHAR(150) NOT NULL UNIQUE,
-    senha VARCHAR(255) NOT NULL,
-    tipo ENUM('PLATAFORMA_ADMIN','EMPRESA_ADMIN','EMPRESA_USER') NOT NULL,
+    senha VARCHAR(255),
+    FkNivelPermissao INT NOT NULL,
     FkEmpresa INT,
-    status ENUM('ATIVO','INATIVO') DEFAULT 'ATIVO',
+    status ENUM('ATIVO', 'INATIVO', 'PENDENTE') DEFAULT 'PENDENTE',
+    primeiroAcesso BOOLEAN DEFAULT TRUE,
     dataCriacao DATETIME DEFAULT CURRENT_TIMESTAMP,
-    dataAtualizacao DATETIME DEFAULT CURRENT_TIMESTAMP,
+    dataAtualizacao DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    FOREIGN KEY (FkNivelPermissao) REFERENCES NivelPermissao(idNivelPermissao),
     FOREIGN KEY (FkEmpresa) REFERENCES Empresa(idEmpresa)
 );
-
-CREATE TABLE Token (
-    idToken INT AUTO_INCREMENT PRIMARY KEY,
-    codigo VARCHAR(100) NOT NULL UNIQUE,
-    usado BOOLEAN DEFAULT FALSE,
-    dataCriacao DATETIME DEFAULT CURRENT_TIMESTAMP,
-    dataExpiracao DATETIME,
-    dataUso DATETIME
-);
-
 
 CREATE TABLE Unidade (
     idUnidade INT AUTO_INCREMENT PRIMARY KEY,
@@ -41,21 +58,9 @@ CREATE TABLE Unidade (
     cidade VARCHAR(100),
     estado VARCHAR(100),
     cep CHAR(8),
-    status ENUM('ATIVA','INATIVA') DEFAULT 'ATIVA',
+    status ENUM('ATIVA', 'INATIVA') DEFAULT 'ATIVA',
     Empresa_idEmpresa INT NOT NULL,
     dataCriacao DATETIME DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY (Empresa_idEmpresa) REFERENCES Empresa(idEmpresa)
-);
-
-CREATE TABLE Feedback (
-    idFeedback INT AUTO_INCREMENT PRIMARY KEY,
-    mensagem TEXT NOT NULL,
-    nota INT CHECK (nota BETWEEN 0 AND 5),
-    dataCriacao DATETIME DEFAULT CURRENT_TIMESTAMP,
-    Usuario_idUsuario INT NOT NULL,
-    Empresa_idEmpresa INT NOT NULL,
-    UNIQUE (Usuario_idUsuario, Empresa_idEmpresa),
-    FOREIGN KEY (Usuario_idUsuario) REFERENCES Usuario(idUsuario),
     FOREIGN KEY (Empresa_idEmpresa) REFERENCES Empresa(idEmpresa)
 );
 
@@ -69,9 +74,9 @@ CREATE TABLE Chegadas_turistas (
     chegadas INT
 );
 
-CREATE TABLE Log (  
+CREATE TABLE Log (
     idLog INT AUTO_INCREMENT PRIMARY KEY,
-    acao ENUM('LOGIN','LOGOUT','CRIAR','ATUALIZAR','DELETAR') NOT NULL,
+    acao ENUM('LOGIN', 'LOGOUT', 'CRIAR', 'ATUALIZAR', 'DELETAR') NOT NULL,
     descricao TEXT,
     ip VARCHAR(45),
     dataCriacao DATETIME DEFAULT CURRENT_TIMESTAMP,
