@@ -9,7 +9,7 @@ router.patch('/usuarios/:id/aprovar', async (req, res) => {
 
     // Mocado temporário até a conexao com o banco ficar pronta
     const usuario = {
-      email: 'lucas.teodoro@gmail.com',
+      email: 'marlon.silva@sptech.school',
       status: 'PENDENTE',
       update: async () => {},
     };
