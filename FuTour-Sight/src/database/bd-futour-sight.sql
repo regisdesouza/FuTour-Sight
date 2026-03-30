@@ -12,20 +12,6 @@ INSERT INTO NivelPermissao (nome, descricao) VALUES
 ('EMPRESA_ADMIN', 'Administrador do cliente, gerencia sua empresa e funcionarios'),
 ('EMPRESA_USER', 'Funcionario da empresa, acesso limitado ao dashboard');
 
-CREATE TABLE Contato (
-    idContato INT AUTO_INCREMENT PRIMARY KEY,
-    nomeColaborador VARCHAR(150) NOT NULL,
-    nomeEmpresa VARCHAR(150) NOT NULL,
-    emailColaborador VARCHAR(150) NOT NULL,
-    emailEmpresa VARCHAR(150) NOT NULL,
-    cnpj CHAR(14) NOT NULL,
-    telefone VARCHAR(20),
-    mensagem TEXT NOT NULL,
-    dataCriacao DATETIME DEFAULT CURRENT_TIMESTAMP,
-    FkEmpresa INT,
-    FOREIGN KEY (FkEmpresa) REFERENCES Empresa(idEmpresa)
-);
-
 CREATE TABLE Empresa (
     idEmpresa INT AUTO_INCREMENT PRIMARY KEY,
     nome VARCHAR(150),
@@ -58,6 +44,8 @@ CREATE TABLE Unidade (
     cidade VARCHAR(100),
     estado VARCHAR(100),
     cep CHAR(8),
+    logradouro VARCHAR(100),
+    numero char(6),
     status ENUM('ATIVA', 'INATIVA') DEFAULT 'ATIVA',
     Empresa_idEmpresa INT NOT NULL,
     dataCriacao DATETIME DEFAULT CURRENT_TIMESTAMP,
@@ -83,3 +71,12 @@ CREATE TABLE Log (
     Usuario_idUsuario INT NOT NULL,
     FOREIGN KEY (Usuario_idUsuario) REFERENCES Usuario(idUsuario)
 );
+
+CREATE TABLE Contato (
+    idContato INT AUTO_INCREMENT PRIMARY KEY,
+    mensagem TEXT NOT NULL,
+    dataCriacao DATETIME DEFAULT CURRENT_TIMESTAMP,
+    FkEmpresa INT,
+    FOREIGN KEY (FkEmpresa) REFERENCES Empresa(idEmpresa)
+);
+
