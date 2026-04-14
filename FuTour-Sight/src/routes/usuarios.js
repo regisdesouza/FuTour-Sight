@@ -7,5 +7,9 @@ router.post("/enviarMensagem", function (req, res) {
     usuarioController.enviarMensagem(req, res);
 })
 
+router.post("/autenticar", function (req, res) {
+    usuarioController.autenticar(req, res);
+});
+
 
 module.exports = router;
