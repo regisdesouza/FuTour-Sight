@@ -14,8 +14,6 @@ router.patch('/usuarios/:id/aprovar', async (req, res) => {
       update: async () => {},
     };
 
-    const token = crypto.randomBytes(8).toString('hex');
-
     const transporter = nodemailer.createTransport({
       service: 'gmail',
       auth: {

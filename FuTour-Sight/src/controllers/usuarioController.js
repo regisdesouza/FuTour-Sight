@@ -9,7 +9,7 @@ function enviarMensagem(req, res) {
     if (nomeMensagem == undefined) {
         res.status(400).send("Seu nome está undefined!");
     } else if (emailMensagem == undefined) {
-        res.status(400).send("Seu email está undefined!");
+        res.status(400).send("Seu e-mail está undefined!");
     } else if (telefoneMensagem == undefined) {
         res.status(400).send("Seu telefone está undefined!");
     } else if (mensagemMensagem == undefined) {
@@ -33,18 +33,56 @@ function enviarMensagem(req, res) {
     }
 }
 
+function preCadastrar(req, res) {
+    var nomePreCadastro = req.body.nomeServer;
+    var emailPessoalPreCadastro = req.body.emailPessoalServer;
+    var empresaPreCadastro = req.body.empresaServer;
+    var emailCorporativoPreCadastro = req.body.emailCorporativoServer;
+    var cnpjPreCadastro = req.body.cnpjServer;
+    var telefoneCorporativoPreCadastro = req.body.telefoneCorporativoServer;
+
+    if (nomePreCadastro == undefined) {
+        res.status(400).send("Seu nome está undefined!");
+    } else if (emailPessoalPreCadastro == undefined) {
+        res.status(400).send("Seu e-mail pessoal está undefined!");
+    } else if (empresaPreCadastro == undefined) {
+        res.status(400).send("Sua empresa está undefined!");
+    } else if (emailCorporativoPreCadastro == undefined) {
+        res.status(400).send("Seu e-mail corporativo está undefined!");
+    } else if (cnpjPreCadastro == undefined) {
+        res.status(400).send("Seu cnpj está undefined!");
+    } else if (telefoneCorporativoPreCadastro == undefined) {
+        res.status(400).send("Seu telefone corporativo está undefined!");
+    } else {
+        usuarioModel.preCadastrar(nomePreCadastro, emailPessoalPreCadastro, empresaPreCadastro, emailCorporativoPreCadastro, cnpjPreCadastro, telefoneCorporativoPreCadastro)
+            .then(
+                function (resultado) {
+                    res.json(resultado);
+                }
+            ).catch(
+                function (erro) {
+                    console.log(erro);
+                    console.log(
+                        "\nHouve um erro ao realizar o pré cadastro! Erro: ",
+                        erro.sqlMessage
+                    );
+                    res.status(500).json(erro.sqlMessage);
+                }
+            );
+    }
+}
 
 function autenticar(req, res) {
-    var email = req.body.emailServer;
-    var senha = req.body.senhaServer;
+    var emailLogin = req.body.emailServer;
+    var senhaLogin = req.body.senhaServer;
 
-    if (email == undefined) {
-        res.status(400).send("Seu email está undefined!");
-    } else if (senha == undefined) {
+    if (emailLogin == undefined) {
+        res.status(400).send("Seu e-mail está undefined!");
+    } else if (senhaLogin == undefined) {
         res.status(400).send("Sua senha está indefinida!");
     } else {
 
-        usuarioModel.autenticar(email, senha)
+        usuarioModel.autenticar(emailLogin, senhaLogin)
             .then(
                 function (resultadoAutenticar) {
                     console.log(`\nResultados encontrados: ${resultadoAutenticar.length}`);
@@ -70,5 +108,6 @@ function autenticar(req, res) {
 
 module.exports = {
     enviarMensagem,
+    preCadastrar,
     autenticar
 }
