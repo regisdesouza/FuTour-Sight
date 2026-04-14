@@ -46,96 +46,101 @@
     </header>
 
     <main>
-        <div class="container">
-            <div class="form-box pessoais">
-                <form action="">
-                    <h1>Cadastre-se</h1>
-                    <div class="input-group">
-                        <div class="input-box">
-                            <label for="firstname">Primeiro nome</label>
-                            <input id="firstname" type="text" placeholder="Digite seu primeiro nome" required>
-                        </div>
-                        <div class="input-box">
-                            <label for="lastname">Sobrenome</label>
-                            <input id="lastname" type="text" placeholder="Digite seu sobrenome" required>
-                        </div>
-                        <div class="input-box">
-                            <label for="email">E-mail</label>
-                            <input id="email" type="email" placeholder="Digite seu e-mail" required>
-                            <i class="bi bi-envelope"></i>
-                        </div>
-                        <div class="input-box">
-                            <label for="number">Celular</label>
-                            <input id="number" type="tel" placeholder="(xx) xxxx-xxxx" required>
-                            <i class="bi bi-telephone"></i>
-                        </div>
-                        <div class="input-box">
-                            <label for="password">Senha</label>
-                            <input id="password" type="password" placeholder="Digite sua senha" required>
-                            <i class="bi bi-eye-slash"></i>
-                        </div>
-                        <div class="input-box">
-                            <label for="confirm-password">Confirme sua senha</label>
-                            <input id="confirm-password" type="password" placeholder="Confirme sua senha" required>
-                            <i class="bi bi-eye-slash"></i>
-                        </div>
+        <h2>Quer ser cliente?</h2>
+        <p>Preencha com seus dados para solicitar o login em nosso site!</p>
+
+        <div class="form-container">
+            <div class="form">
+                <div class="input-container">
+                    <div class="label-container">
+                        <label for="nome-completo">Nome Completo</label>
+                        <img src="./assets/images/icons/pessoa.png" alt="ícone de pessoa">
                     </div>
-                    <button type="submit" class="botao btn-main">Cadastrar</button>
-                </form>
+                    <input type="text" id="nome-completo" placeholder="Nome Completo">
+                </div>
+
+                <div class="input-container">
+                    <div class="label-container">
+                        <label for="empresa">Empresa</label>
+                        <img src="./assets/images/icons/empresa.png" alt="ícone de empresa">
+                    </div>
+                    <input type="text" id="empresa" placeholder="Empresa">
+                </div>
+
+                <div class="input-container">
+                    <div class="label-container">
+                        <label for="cnpj">CNPJ</label>
+                        <img src="./assets/images/icons/arquivo.png" alt="ícone de arquivo">
+                    </div>
+                    <input type="text" id="cnpj" placeholder="CNPJ">
+                </div>
+
+                <div class="input-container">
+                    <div class="label-container">
+                        <label for="email-pessoal">E-mail Pessoal</label>
+                        <img src="./assets/images/icons/email.png" alt="ícone de email">
+                    </div>
+                    <input type="text" id="email-pessoal" placeholder="E-mail Pessoal">
+                </div>
+
+                <div class="input-container">
+                    <div class="label-container">
+                        <label for="email-corporativo">E-mail Corporativo</label>
+                        <img src="./assets/images/icons/email.png" alt="ícone de email">
+                    </div>
+                    <input type="text" id="email-corporativo" placeholder="E-mail Corporativo">
+                </div>
+
+                <div class="input-container">
+                    <div class="label-container">
+                        <label for="telefone-corporativo">Telefone Corporativo</label>
+                        <img src="./assets/images/icons/telefone.png" alt="ícone de telefone">
+                    </div>
+                    <input type="text" id="telefone-corporativo" placeholder="Telefone Corporativo">
+                </div>
             </div>
 
-            <div class="form-box empresariais">
-                <form action="">
-                    <h1>Cadastre sua empresa</h1>
-                    <div class="input-group">
-                        <div class="input-box">
-                            <label for="emp-name">Nome da empresa</label>
-                            <input id="emp-name" type="text" placeholder="Nome da empresa" required>
-                        </div>
-                        <div class="input-box">
-                            <label for="cnpj">CNPJ</label>
-                            <input id="cnpj" type="text" placeholder="00.000.000/0000-00" required>
-                        </div>
-                        <div class="input-box">
-                            <label for="emp-tel">Telefone</label>
-                            <input id="emp-tel" type="tel" placeholder="(xx) xxxx-xxxx" required>
-                            <i class="bi bi-telephone"></i>
-                        </div>
-                        <div class="input-box">
-                            <label for="cep">CEP</label>
-                            <input type="text" id="cep" placeholder="00000-000" required>
-                            <i class="bi bi-map"></i>
-                        </div>
-                        <div class="input-box">
-                            <label for="rua">Endereço</label>
-                            <input id="rua" type="text" placeholder="Rua..." required>
-                        </div>
-                        <div class="input-box">
-                            <label for="numero">Número</label>
-                            <input id="numero" type="text" placeholder="Nº" required>
-                        </div>
-                        <div class="input-box">
-                            <label for="token">Token</label>
-                            <input id="token" type="text" placeholder="Token" required>
-                        </div>
-                    </div>
-                    <button type="button" class="botao btn-main register-btn">Próximo</button>
-                </form>
-            </div>
+            <img src="./assets/images/pre-cadastro.png" alt="imagem do pré-cadastro">
 
-            <div class="toggle-box">
-                <div class="toggle-panel toggle-left">
-                    <h1>Quase lá...</h1>
-                    <p>Antecipe a demanda. Decida com inteligência.</p>
-                    <button class="btn-outline login-btn">Voltar</button>
-                </div>
-                <div class="toggle-panel toggle-right">
-                    <h1>Olá, Seja bem-Vindo!</h1>
-                    <p>Já tem uma conta? <a href="login.html" style="color: #fff; font-weight: bold;">Entrar</a></p>
-                </div>
+            <div class="envio-container">
+                <p>Os dados serão analisados e entraremos em contato em breve!</p>
+
+                <button class="botao">Enviar solicitação</button>
             </div>
         </div>
     </main>
+
+    <footer class="footer secao background-gradient">
+        <div class="footer-acima">
+            <div class="logo">
+                <a href="./index.html" class="logo">
+                    <img src="./assets/images/logo-futour-sight-branco.png" alt="Logo FuTour Sight">
+                    <span>FuTour Sight</span>
+                </a>
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="#main">Home</a></li>
+                    <li><a href="./sobre.html">Sobre</a></li>
+                    <li><a href="#contato">Contato</a></li>
+                </ul>
+            </nav>
+        </div>
+
+        <div class="footer-abaixo">
+            <p>FuTour Sight@ 2026. Todos os direitos reservados</p>
+            <nav>
+                <ul class="redes-sociais">
+                    <li><a href=""><img src="./assets/images/redes-sociais/icone-youtube.png" alt="Logo do YouTube"></a>
+                    </li>
+                    <li><a href=""><img src="./assets/images/redes-sociais/icone-instagram.png"
+                                alt="Logo do Instagram"></a></li>
+                    <li><a href=""><img src="./assets/images/redes-sociais/icone-linkedin.png"
+                                alt="Logo do Linkedin"></a></li>
+                </ul>
+            </nav>
+        </div>
+    </footer>
 
     <script src="assets/js/cadastro.js"></script>
 </body>
