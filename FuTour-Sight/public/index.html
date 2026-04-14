@@ -37,8 +37,7 @@
         </ul>
       </nav>
       <div class="botoes-autenticacao">
-        <a href="./login.html" class="botao-entrar">Entrar</a>
-        <a href="./cadastro.html" class="botao botao-cadastrar">Cadastrar</a>
+        <a href="./cadastro.html" class="botao botao-cadastrar">Entrar</a>
       </div>
     </div>
   </header>
@@ -129,17 +128,37 @@
         <h3>Ficou com alguma dúvida? Entre em contato!</h3>
 
         <div class="campo">
-          <label for="nome">Nome:</label><input type="text" name="nome" id="nome" placeholder="Seu nome" required>
+          <label for="nome">Nome Completo</label>
+          <input type="text" name="nome" id="nome" placeholder="Seu nome" required onkeyup="onkey_nome()">
+          <div class="msg_erro" id="div_msg_nome"></div>
         </div>
         <div class="campo">
-          <label for="email">Email:</label><input type="text" name="email" id="email" placeholder="Seu email" required>
+          <label for="email">Email de Contato</label>
+          <input type="text" name="email" id="email" placeholder="Seu email" required onkeyup="onkey_email()">
+          <div class="msg_erro" id="div_msg_email"></div>
         </div>
         <div class="campo">
-          <label for="mensagem">Mensagem:</label><textarea name="mensagem" id="mensagem" placeholder="Sua mensagem"
-            required></textarea>
+          <label for="telefone">Telefone de Contato</label>
+          <input type="text" name="telefone" id="telefone" placeholder="Seu telefone" required
+            onkeyup="onkey_telefone()" maxlength="11">
+          <div class="msg_erro" id="div_msg_telefone"></div>
+        </div>
+        <div class="campo">
+          <label for="mensagem">Mensagem</label>
+          <textarea name="mensagem" id="mensagem" placeholder="Sua mensagem" required
+            onkeyup="onkey_mensagem()"></textarea>
+          <div class="msg_erro" id="div_msg_msg"></div>
         </div>
 
-        <button class="botao" type="submit">Enviar</button>
+        <button class="botao" type="button" onclick="enviarMensagem()">Enviar</button>
+        <div class="msg_erro" id="div_msg"
+          style="color: green; text-align: center; font-weight: 500; margin-top: 10px;"></div>
+        <div class="alerta_erro">
+          <div class="card_erro" id="cardErro">
+            <span id="mensagem_erro"></span>
+          </div>
+        </div>
+        <div id="div_erros"></div>
       </form>
 
       <div class="contato-imagem">
@@ -181,3 +200,4 @@
 </html>
 
 <script src="./assets/js/index.js"></script>
+<script src="./assets/js/sessao.js"></script>
