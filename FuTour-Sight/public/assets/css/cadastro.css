@@ -98,3 +98,64 @@ main.secao {
         border-radius: 8px;
     }
 }
+
+@media (max-width: 576px) {
+    body {
+        gap: 16px;
+    }
+
+    .form-container {
+        flex-direction: column;
+        gap: 16px;
+
+        img {
+            width: 100%;
+        }
+    }
+
+    .form {
+        flex-direction: column;
+        gap: 16px;
+        min-width: 0;
+        width: 100%;
+    }
+
+    .input-container input {
+        width: 100%;
+    }
+
+    .label-container {
+        img {
+            width: 24px;
+            margin-right: 4px;
+        }
+
+        .icone-arquivo {
+            margin-right: 6px;
+            width: 16px;
+        }
+    }
+
+    .envio-container {
+        flex-direction: column;
+        gap: 16px;
+
+        p {
+            justify-content: center;
+            gap: 8px;
+            letter-spacing: 0;
+            word-spacing: 0;
+        }
+
+        p::before {
+            content: url('../images/icons/info.png');
+        }
+
+        .botao {
+            font-size: var(--texto-medio);
+            font-weight: var(--regular);
+            padding: 12px 32px;
+            border-radius: 8px;
+        }
+    }
+}
