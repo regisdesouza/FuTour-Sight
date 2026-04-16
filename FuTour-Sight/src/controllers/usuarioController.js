@@ -106,8 +106,52 @@ function autenticar(req, res) {
     }
 }
 
+function editarEmpresa(req, res) {
+    var idEmpresaEditarEmpresa = req.params.idEmpresa;
+    var empresaEditarEmpresa = req.body.empresaServer;
+    var cnpjEditarEmpresa = req.body.cnpjServer;
+    var emailCorporativoEditarEmpresa = req.body.emailCorporativoServer;
+    var telefoneCorporativoEditarEmpresa = req.body.telefoneCorporativoServer;
+    var cepEditarEmpresa = req.body.cepServer;
+    var estadoEditarEmpresa = req.body.estadoServer;
+    var cidadeEditarEmpresa = req.body.cidadeServer;
+    var bairroEditarEmpresa = req.body.bairroServer;
+    var logradouroEditarEmpresa = req.body.logradouroServer;
+    var numeroEditarEmpresa = req.body.numeroServer;
+    var complementoEditarEmpresa = req.body.complementoServer;
+
+    usuarioModel.editarEmpresa(
+        idEmpresaEditarEmpresa,
+        empresaEditarEmpresa,
+        cnpjEditarEmpresa,
+        emailCorporativoEditarEmpresa,
+        telefoneCorporativoEditarEmpresa,
+        cepEditarEmpresa,
+        estadoEditarEmpresa,
+        cidadeEditarEmpresa,
+        bairroEditarEmpresa,
+        logradouroEditarEmpresa,
+        numeroEditarEmpresa,
+        complementoEditarEmpresa
+    )
+        .then(
+            function (resultado) {
+                res.json(resultado);
+            }
+        )
+        .catch(
+            function (erro) {
+                console.log(erro);
+                console.log("Houve um erro ao realizar o put: ", erro.sqlMessage);
+                res.status(500).json(erro.sqlMessage);
+            }
+        );
+
+}
+
 module.exports = {
     enviarMensagem,
     preCadastrar,
-    autenticar
+    autenticar,
+    editarEmpresa
 }

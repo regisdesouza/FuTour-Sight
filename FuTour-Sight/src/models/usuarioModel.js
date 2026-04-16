@@ -30,8 +30,67 @@ function autenticar(emailLogin, senhaLogin) {
     return database.executar(instrucaoSql);
 }
 
+function editarEmpresa(
+    idEmpresaEditarEmpresa,
+    empresaEditarEmpresa,
+    cnpjEditarEmpresa,
+    emailCorporativoEditarEmpresa,
+    telefoneCorporativoEditarEmpresa,
+    cepEditarEmpresa,
+    estadoEditarEmpresa,
+    cidadeEditarEmpresa,
+    bairroEditarEmpresa,
+    logradouroEditarEmpresa,
+    numeroEditarEmpresa,
+    complementoEditarEmpresa
+) {
+    console.log("ACESSEI O AVISO MODEL \n \n\t\t >> Se aqui der erro de 'Error: connect ECONNREFUSED',\n \t\t >> verifique suas credenciais de acesso ao banco\n \t\t >> e se o servidor de seu BD está rodando corretamente. \n\n function editar(): ",
+        idEmpresaEditarEmpresa,
+        empresaEditarEmpresa,
+        cnpjEditarEmpresa,
+        emailCorporativoEditarEmpresa,
+        telefoneCorporativoEditarEmpresa,
+        cepEditarEmpresa,
+        estadoEditarEmpresa,
+        cidadeEditarEmpresa,
+        bairroEditarEmpresa,
+        logradouroEditarEmpresa,
+        numeroEditarEmpresa,
+        complementoEditarEmpresa);
+
+    var instrucaoSqlUpdateEmpresa = `
+        UPDATE empresa SET nome = ?, cnpj = ?, email = ?, telefone = ? WHERE id_empresa = ?;
+    `;
+
+    var instrucaoSqlUpdateEndereco = `
+        UPDATE unidade SET cidade = ?, estado = ?, cep = ?, logradouro = ?, numero = ?, complemento = ? WHERE fk_empresa = ?;
+    `;
+
+    console.log("Executando a instrução SQL: \n" + instrucaoSqlUpdateEmpresa);
+    return database.executar(instrucaoSqlUpdateEmpresa, [
+        empresaEditarEmpresa,
+        cnpjEditarEmpresa,
+        emailCorporativoEditarEmpresa,
+        telefoneCorporativoEditarEmpresa,
+        idEmpresaEditarEmpresa
+    ]).then(() => {
+        console.log("Executando a instrução SQL: \n" + instrucaoSqlUpdateEndereco);
+        return database.executar(instrucaoSqlUpdateEndereco, [
+            cidadeEditarEmpresa,
+            estadoEditarEmpresa,
+            cepEditarEmpresa,
+            logradouroEditarEmpresa,
+            numeroEditarEmpresa,
+            complementoEditarEmpresa,
+            idEmpresaEditarEmpresa
+        ]);
+    });
+
+}
+
 module.exports = {
     enviarMensagem,
     preCadastrar,
-    autenticar
+    autenticar,
+    editarEmpresa
 };
