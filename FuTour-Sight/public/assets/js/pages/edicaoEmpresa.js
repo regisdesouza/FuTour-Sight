@@ -1,6 +1,6 @@
 
 
-function editar() {
+function editarEmpresa() {
     fetch(`/usuarios/editarEmpresa/${sessionStorage.getItem("ID_EMPRESA")}`, {
         method: "PUT",
         headers: {

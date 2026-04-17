@@ -185,10 +185,34 @@ function editarEmpresa(req, res) {
 
 }
 
+function editarPerfil(req, res) {
+    var idUsuarioEditarPerfil = req.params.idUsuario;
+    var nomeEditarPerfil = req.body.nomeServer;
+    var emailEditarPerfil = req.body.emailServer;
+    var senhaEditarPerfil = req.body.senhaServer;
+
+
+    usuarioModel.editarPerfil(idUsuarioEditarPerfil, nomeEditarPerfil, emailEditarPerfil, senhaEditarPerfil)
+        .then(
+            function (resultado) {
+                res.json(resultado);
+            }
+        )
+        .catch(
+            function (erro) {
+                console.log(erro);
+                console.log("Houve um erro ao realizar o put: ", erro.sqlMessage);
+                res.status(500).json(erro.sqlMessage);
+            }
+        );
+
+}
+
 module.exports = {
     enviarMensagem,
     preCadastrar,
     autenticar,
     cadastrarFuncionario,
-    editarEmpresa
+    editarEmpresa,
+    editarPerfil
 }

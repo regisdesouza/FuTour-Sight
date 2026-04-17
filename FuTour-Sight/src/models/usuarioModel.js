@@ -54,7 +54,7 @@ function editarEmpresa(
     numeroEditarEmpresa,
     complementoEditarEmpresa
 ) {
-    console.log("ACESSEI O AVISO MODEL \n \n\t\t >> Se aqui der erro de 'Error: connect ECONNREFUSED',\n \t\t >> verifique suas credenciais de acesso ao banco\n \t\t >> e se o servidor de seu BD está rodando corretamente. \n\n function editar(): ",
+    console.log("ACESSEI O AVISO MODEL \n \n\t\t >> Se aqui der erro de 'Error: connect ECONNREFUSED',\n \t\t >> verifique suas credenciais de acesso ao banco\n \t\t >> e se o servidor de seu BD está rodando corretamente. \n\n function editarEmpresa(): ",
         idEmpresaEditarEmpresa,
         empresaEditarEmpresa,
         cnpjEditarEmpresa,
@@ -98,10 +98,25 @@ function editarEmpresa(
 
 }
 
+function editarPerfil(idUsuarioEditarPerfil, nomeEditarPerfil, emailEditarPerfil, senhaEditarPerfil) {
+    console.log("ACESSEI O AVISO MODEL \n \n\t\t >> Se aqui der erro de 'Error: connect ECONNREFUSED',\n \t\t >> verifique suas credenciais de acesso ao banco\n \t\t >> e se o servidor de seu BD está rodando corretamente. \n\n function editarPerfil(): ", idUsuarioEditarPerfil, nomeEditarPerfil, emailEditarPerfil, senhaEditarPerfil);
+    var instrucaoSql = `
+        UPDATE usuario SET nome = ?, email = ?, senha = ? WHERE id_usuario = ?;
+    `;
+    console.log("Executando a instrução SQL: \n" + instrucaoSql);
+    return database.executar(instrucaoSql, [
+        nomeEditarPerfil,
+        emailEditarPerfil,
+        senhaEditarPerfil,
+        idUsuarioEditarPerfil
+    ])
+}
+
 module.exports = {
     enviarMensagem,
     preCadastrar,
     autenticar,
     cadastrarFuncionario,
-    editarEmpresa
+    editarEmpresa,
+    editarPerfil
 };
