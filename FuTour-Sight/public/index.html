@@ -140,13 +140,14 @@
         <div class="campo">
           <label for="telefone">Telefone de Contato</label>
           <input type="text" name="telefone" id="telefone" placeholder="Seu telefone" required
-            onkeyup="onkey_telefone()" maxlength="11">
+            onkeyup="onkey_telefone()" maxlength="15">
           <div class="msg_erro" id="div_msg_telefone"></div>
         </div>
         <div class="campo">
           <label for="mensagem">Mensagem</label>
-          <textarea name="mensagem" id="mensagem" placeholder="Sua mensagem" required
-            onkeyup="onkey_mensagem()"></textarea>
+          <textarea name="mensagem" id="mensagem" placeholder="Sua mensagem" required onkeyup="onkey_mensagem()"
+            maxlength="1000"></textarea>
+          <div id="contador_mensagem">0/1000</div>
           <div class="msg_erro" id="div_msg_msg"></div>
         </div>
 
@@ -195,9 +196,12 @@
       </nav>
     </div>
   </footer>
+
+  <script src="./assets/js/menu.js"></script>
+  <script src="./assets/js/validacoes.js"></script>
+  <script src="./assets/js/sessao.js"></script>
+  <script src="https://unpkg.com/inputmask@5.0.8/dist/inputmask.min.js"></script>
+  <script src="./assets/js/index.js"></script>
 </body>
 
 </html>
-
-<script src="./assets/js/index.js"></script>
-<script src="./assets/js/sessao.js"></script>

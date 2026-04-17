@@ -15,6 +15,7 @@
     "dotenv": "^16.6.1",
     "dotenvi": "^0.9.1",
     "express": "^4.17.1",
+    "inputmask": "^5.0.9",
     "mysql2": "^3.9.4",
     "nodemailer": "^8.0.3",
     "nodemon": "^2.0.7",
