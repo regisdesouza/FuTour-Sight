@@ -15,6 +15,10 @@ router.post("/autenticar", function (req, res) {
     usuarioController.autenticar(req, res);
 });
 
+router.post("/cadastrarFuncionario", function (req, res) {
+    usuarioController.cadastrarFuncionario(req, res);
+});
+
 router.put("/editarEmpresa/:idEmpresa", function (req, res) {
     usuarioController.editarEmpresa(req, res);
 });

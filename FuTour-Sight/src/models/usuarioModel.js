@@ -30,6 +30,16 @@ function autenticar(emailLogin, senhaLogin) {
     return database.executar(instrucaoSql);
 }
 
+function cadastrarFuncionario(nomeCadastroFuncionario, emailPessoalCadastroFuncionario, senhaCadastroFuncionario, unidadeCadastroFuncionario, permissaoCadastroFuncionario) {
+    console.log("ACESSEI O USUARIO MODEL \n \n\t\t >> Se aqui der erro de 'Error: connect ECONNREFUSED',\n \t\t >> verifique suas credenciais de acesso ao banco\n \t\t >> e se o servidor de seu BD está rodando corretamente. \n\n function cadastrarFuncionario():", nomeCadastroFuncionario, emailPessoalCadastroFuncionario, senhaCadastroFuncionario, unidadeCadastroFuncionario, permissaoCadastroFuncionario);
+
+    var instrucaoSql = `
+        INSERT INTO usuario (nome, email, senha, fk_nivel_permissao, fk_empresa) VALUES ('${nomeCadastroFuncionario}', '${emailPessoalCadastroFuncionario}', '${senhaCadastroFuncionario}', '${permissaoCadastroFuncionario}', '${unidadeCadastroFuncionario}');
+    `;
+    console.log("Executando a instrução SQL: \n" + instrucaoSql);
+    return database.executar(instrucaoSql);
+}
+
 function editarEmpresa(
     idEmpresaEditarEmpresa,
     empresaEditarEmpresa,
@@ -92,5 +102,6 @@ module.exports = {
     enviarMensagem,
     preCadastrar,
     autenticar,
+    cadastrarFuncionario,
     editarEmpresa
 };
