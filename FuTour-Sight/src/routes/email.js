@@ -9,12 +9,10 @@ router.patch('/usuarios/:id/aprovar', async (req, res) => {
 
     // Mocado temporário até a conexao com o banco ficar pronta
     const usuario = {
-      email: 'marlon.silva@sptech.school',
+      email: 'reginaldo.lima@sptech.school',
       status: 'PENDENTE',
       update: async () => {},
     };
-
-    const token = crypto.randomBytes(8).toString('hex');
 
     const transporter = nodemailer.createTransport({
       service: 'gmail',
