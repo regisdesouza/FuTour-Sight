@@ -18,11 +18,11 @@ function validarEmail(valor) {
     if (email == '') {
         return "Preencha o campo E-mail de Contato";
     } else if (email.indexOf("@") == -1 || email.indexOf(".") == -1) {
-        return "E-mail de Contato inválido";
+        return "E-mail de Contato inválido, insira um '@' e um '.' ; Exemplo: exemplo@exemplo.com";
     } else if (email.startsWith("@") || email.endsWith("@")) {
-        return "E-mail de Contato inválido";
+        return "E-mail de Contato inválido. O e-mail não pode iniciar e nem finalizar com '@'";
     } else if (email.lastIndexOf(".") < email.indexOf("@")) {
-        return "E-mail de Contato inválido";
+        return "E-mail de Contato inválido, está faltando um '.' depois do '@'";
     }
 
     return "";
@@ -35,9 +35,7 @@ function validarTelefone(valor) {
         return "Preencha o Telefone de Contato";
     } else if (numeros.length != 11) {
         return "Telefone de Contato inválido";
-    } else if (/^(\d)\1+$/.test(numeros)) {
-        return "Telefone de Contato inválido";
-    }
+    } 
 
     return "";
 }
