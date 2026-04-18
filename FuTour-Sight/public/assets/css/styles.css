@@ -486,6 +486,8 @@ footer .footer-acima {
 
 .footer-acima nav ul {
     display: flex;
+    justify-content: flex-end;
+    flex-wrap: wrap;
     gap: 32px;
 }
 
