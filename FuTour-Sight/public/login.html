@@ -35,11 +35,11 @@
                     <li><a href="./index.html">Home</a></li>
                     <li><a href="./sobre.html">Sobre</a></li>
                     <li><a href="./index.html#contato">Contato</a></li>
+                    <li><a href="./cadastro.html">Quero ser cliente</a></li>
                 </ul>
             </nav>
             <div class="botoes-autenticacao">
-                <a href="./login.html" class="botao-entrar">Entrar</a>
-                <a href="./cadastro.html" class="botao botao-cadastrar">Cadastrar</a>
+                <a href="./login.html" class="botao-cadastrar botao">Entrar</a>
             </div>
         </div>
     </header>
@@ -50,17 +50,30 @@
                 <h2>Faça seu login!</h2>
                 <div class="campo">
                     <label for="email">E-mail</label>
-                    <input type="text" id="email" placeholder="E-mail">
+                    <input type="text" id="email" placeholder="E-mail" required onkeyup="onkey_email()">
+                    <div class="msg_erro" id="div_msg_email"> </div>
                 </div>
 
                 <div class="campo">
                     <label for="senha">Senha</label>
-                    <input type="password" id="senha" placeholder="Senha">
+                    <input type="password" id="senha" placeholder="Senha" required onkeyup="onkey_senha()">
+                    <div class="msg_erro" id="div_msg_senha"></div>
                 </div>
 
                 <button class="botao-esqueceu-senha">Esqueceu a senha?</button>
 
-                <button class="botao botao-entrar">Entrar</button>
+                <div class="alerta_erro">
+                    <div class="card_erro" id="cardErro">
+                        <span id="mensagem_erro"></span>
+                    </div>
+                </div>
+                <div class="msg_erro" id="div_erros"> </div>
+
+                <div id="div_aguardar" class="loading-div">
+                    <img src="" id="">
+                </div>
+
+                <button class="botao botao-entrar" onclick="login()">Entrar</button>
             </div>
 
             <div class="login-info background-gradient">
@@ -83,6 +96,7 @@
                     <li><a href="./index.html">Home</a></li>
                     <li><a href="./sobre.html">Sobre</a></li>
                     <li><a href="./index.html#contato">Contato</a></li>
+                    <li><a href="./cadastro.html">Quero ser cliente</a></li>
                 </ul>
             </nav>
         </div>
@@ -101,6 +115,11 @@
             </nav>
         </div>
     </footer>
+
+    <script src="./assets/js/menu.js"></script>
+    <script src="./assets/js/validacoes.js"></script>
+    <script src="./assets/js/sessao.js"></script>
+    <script src="./assets/js/login.js"></script>
 </body>
 
 </html>

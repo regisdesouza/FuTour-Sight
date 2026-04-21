@@ -34,11 +34,11 @@
           <li><a href="#main" id="botao-home">Home</a></li>
           <li><a href="./sobre.html">Sobre</a></li>
           <li><a href="#contato" id="botao-contato">Contato</a></li>
+          <li><a href="./cadastro.html">Quero ser cliente</a></li>
         </ul>
       </nav>
       <div class="botoes-autenticacao">
-        <a href="./login.html" class="botao-entrar">Entrar</a>
-        <a href="./cadastro.html" class="botao botao-cadastrar">Cadastrar</a>
+        <a href="./login.html" class="botao botao-cadastrar">Entrar</a>
       </div>
     </div>
   </header>
@@ -128,23 +128,65 @@
       <form class="contato-formulario">
         <h3>Ficou com alguma dúvida? Entre em contato!</h3>
 
-        <div class="campo">
-          <label for="nome">Nome:</label><input type="text" name="nome" id="nome" placeholder="Seu nome" required>
-        </div>
-        <div class="campo">
-          <label for="email">Email:</label><input type="text" name="email" id="email" placeholder="Seu email" required>
-        </div>
-        <div class="campo">
-          <label for="mensagem">Mensagem:</label><textarea name="mensagem" id="mensagem" placeholder="Sua mensagem"
-            required></textarea>
+        <div class="infos-contato">
+          <div class="campo">
+            <div class="label-container">
+              <label for="nome">Nome Completo</label>
+              <img src="./assets/images/icons/pessoa.png" alt="icone de pessoa">
+            </div>
+            <input type="text" name="nome" id="nome" placeholder="Seu nome" required onkeyup="onkey_nome()">
+            <div class="msg_erro" id="div_msg_nome"></div>
+          </div>
+          <div class="campo">
+            <div class="label-container">
+              <label for="email">Email de Contato</label>
+              <img src="./assets/images/icons/email.png" alt="icone de email">
+            </div>
+            <input type="text" name="email" id="email" placeholder="Seu email" required onkeyup="onkey_email()">
+            <div class="msg_erro" id="div_msg_email"></div>
+          </div>
+          <div class="campo">
+            <div class="label-container">
+              <label for="telefone">Telefone de Contato</label>
+              <img src="./assets/images/icons/telefone.png" alt="icone de telefone">
+            </div>
+            <input type="text" name="telefone" id="telefone" placeholder="Seu telefone" required
+              onkeyup="onkey_telefone()" maxlength="15">
+            <div class="msg_erro" id="div_msg_telefone"></div>
+          </div>
         </div>
 
-        <button class="botao" type="submit">Enviar</button>
+        <div class="contato-container">
+          <div class="mensagem-container">
+            <div class="campo">
+              <div class="label-container">
+                <label for="mensagem">Mensagem</label>
+                <img src="./assets/images/icons/mensagem.png" alt="icone de mensagem">
+              </div>
+              <textarea name="mensagem" id="mensagem" placeholder="Sua mensagem" required onkeyup="onkey_mensagem()"
+                maxlength="1000"></textarea>
+              <div id="contador_mensagem">0/1000</div>
+              <div class="msg_erro" id="div_msg_msg"></div>
+            </div>
+
+            <button class="botao" type="button" onclick="enviarMensagem()">Enviar</button>
+
+            <div class="msg_erro" id="div_msg"
+              style="color: green; text-align: center; font-weight: 500; margin-top: 10px;"></div>
+
+            <div class="alerta_erro">
+              <div class="card_erro" id="cardErro">
+                <span id="mensagem_erro"></span>
+              </div>
+            </div>
+            <div id="div_erros"></div>
+          </div>
+
+          <div class="contato-imagem">
+            <img src="./assets/images/contato.png" alt="Mulher em cima de uma mensagem com dúvida">
+          </div>
+        </div>
       </form>
-
-      <div class="contato-imagem">
-        <img src="./assets/images/contato.png" alt="Mulher em cima de uma mensagem com dúvida">
-      </div>
     </section>
   </main>
 
@@ -161,6 +203,7 @@
           <li><a href="#main">Home</a></li>
           <li><a href="./sobre.html">Sobre</a></li>
           <li><a href="#contato">Contato</a></li>
+          <li><a href="./cadastro.html">Quero ser cliente</a></li>
         </ul>
       </nav>
     </div>
@@ -176,8 +219,12 @@
       </nav>
     </div>
   </footer>
+
+  <script src="./assets/js/menu.js"></script>
+  <script src="./assets/js/validacoes.js"></script>
+  <script src="./assets/js/sessao.js"></script>
+  <script src="https://unpkg.com/inputmask@5.0.8/dist/inputmask.min.js"></script>
+  <script src="./assets/js/pages/index.js"></script>
 </body>
 
 </html>
-
-<script src="./assets/js/index.js"></script>

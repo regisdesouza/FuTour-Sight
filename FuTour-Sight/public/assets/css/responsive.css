@@ -1,9 +1,14 @@
 @media (max-width: 576px) {
     :root {
         --texto-gigante: 2rem;
+        --texto-grande-plus: 1.5rem;
         --texto-grande: 1.2rem;
         --texto-medio: 1rem;
         --texto-pequeno: .8rem;
+    }
+
+    .secao {
+        padding: 24px;
     }
 
     header {
@@ -244,8 +249,8 @@
 
 
     .body-sobre .chamada-acao-imagem img {
-       width: 70%;
-       margin-left: 40px;
+        width: 70%;
+        margin-left: 40px;
     }
 
     .membros {
