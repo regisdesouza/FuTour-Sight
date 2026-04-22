@@ -10,7 +10,7 @@
     <link rel="stylesheet" href="../assets/css/styles.css">
     <link rel="stylesheet" href="../assets/css/responsive.css">
     <link rel="stylesheet" href="../assets/css/usuario.css">
-    <link rel="stylesheet" href="../assets/css/dashboard-proprietario.css">
+    <link rel="stylesheet" href="../assets/css/dashboard-gerente.css">
 </head>
 
 <body class="background-branco">
@@ -72,38 +72,6 @@
 
     <main>
         <h1>Dashboard</h1>
-        <div class="kpis">
-            <div class="kpi-container container">
-                <p class="descricao">Estado com maior crescimento de turistas no último ano</p>
-                <div class="kpi-infos">
-                    <span class="info">São Paulo</span>
-                    <div class="kpi-dados">
-                        <span>+12%</span>
-                        <span>+5600 turistas</span>
-                    </div>
-                </div>
-            </div>
-            <div class="kpi-container container">
-                <p class="descricao">Estado que mais cresceu em comparação aos últimos 10 anos</p>
-                <div class="kpi-infos">
-                    <span class="info">Rio de Janeiro</span>
-                    <div class="kpi-dados">
-                        <span>+24%</span>
-                        <span>+5 milhões</span>
-                    </div>
-                </div>
-            </div>
-            <div class="kpi-container container">
-                <p class="descricao">Estado com maior número total de turistas</p>
-                <div class="kpi-infos">
-                    <span class="info">Piauí</span>
-                    <div class="kpi-dados">
-                        <span>+124 mil</span>
-                        <span>turistas</span>
-                    </div>
-                </div>
-            </div>
-        </div>
 
         <div class="select-container">
             <span>Intervalo de anos</span>
@@ -122,9 +90,30 @@
             </select>
         </div>
 
+        <div class="kpis">
+            <div class="kpi-container container">
+                <p class="descricao">Aumento de turistas em relação a 2024</p>
+                <div class="kpi-infos">
+                    <span class="info">+13.4%</span>
+                    <div class="kpi-dados">
+                        <p><span>+34.905</span> turistas</p>
+                    </div>
+                </div>
+            </div>
+            <div class="kpi-container container">
+                <p class="descricao">Melhor mês</p>
+                <div class="kpi-infos">
+                    <span class="info">Dezembro</span>
+                    <div class="kpi-dados">
+                        <p><span>91732</span> turistas</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <div class="graficos-container">
             <div class="grafico container">
-                <h3>Estados com maior quantidade de turistas por ano</h3>
+                <h3>Fluxo de turistas total durante os anos</h3>
                 <canvas id="myChart"></canvas>
             </div>
 
@@ -135,53 +124,24 @@
                         <thead>
                             <tr>
                                 <th>Posição</th>
-                                <th>Estado</th>
+                                <th>País</th>
                                 <th>Crescimento</th>
                             </tr>
                         </thead>
                         <tbody>
                             <tr>
                                 <td>1º</td>
-                                <td>Acre</td>
-                                <td>+13%</td>
-                            </tr>
-                            <tr>
-                                <td>2º</td>
-                                <td>Minas Gerais</td>
-                                <td>+9%</td>
-                            </tr>
-                            <tr>
-                                <td>3º</td>
-                                <td>Bahia</td>
-                                <td>+7%</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-                <div class="tabela container">
-                    <h3>Crescimento absoluto</h3>
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>Posição</th>
-                                <th>Estado</th>
-                                <th>Crescimento</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>1º</td>
-                                <td>Goiânia</td>
+                                <td>EUA</td>
                                 <td>+4503</td>
                             </tr>
                             <tr>
                                 <td>2º</td>
-                                <td>Ceará</td>
+                                <td>França</td>
                                 <td>+2309</td>
                             </tr>
                             <tr>
                                 <td>3º</td>
-                                <td>Alagoas</td>
+                                <td>Argentina</td>
                                 <td>+2160</td>
                             </tr>
                         </tbody>
@@ -200,9 +160,9 @@
     const ctx = document.getElementById('myChart');
 
     new Chart(ctx, {
-        type: 'bar',
+        type: 'line',
         data: {
-            labels: ['São Paulo', 'Rio de Janeiro', 'Ceará', 'Green', 'Purple'],
+            labels: ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'],
             datasets: [{
                 label: '2025',
                 data: [12, 19, 3, 5, 2],
