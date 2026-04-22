@@ -23,7 +23,20 @@ function listarEmpresas() {
     return database.executar(instrucaoSql);
 }
 
+function listarEmpresasProcuradas(nomeEmpresa) {
+    var instrucaoSql = `
+        SELECT * FROM vw_empresas
+        WHERE nome LIKE ?
+        ORDER BY nome ASC;
+    `;
+
+    console.log("Executando SQL:", instrucaoSql);
+
+    return database.executar(instrucaoSql, [`%${nomeEmpresa}%`]);
+}
+
 module.exports = {
     buscarLogs,
-    listarEmpresas
+    listarEmpresas,
+    listarEmpresasProcuradas
 };

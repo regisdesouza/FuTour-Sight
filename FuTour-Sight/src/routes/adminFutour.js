@@ -11,4 +11,8 @@ router.get("/listarEmpresas", function (req, res) {
     adminFutourController.listarEmpresas(req, res);
 });
 
+router.get("/listarEmpresasProcuradas", function (req, res) {
+    adminFutourController.listarEmpresasProcuradas(req, res);
+});
+
 module.exports = router;

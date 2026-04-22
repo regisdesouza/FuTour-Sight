@@ -12,7 +12,33 @@ function listarEmpresas(req, res) {
     });
 }
 
+function listarEmpresasProcuradas(req, res) {
+    var nomeEmpresa = req.query.empresaServer;
+
+    adminFutourModel.listarEmpresasProcuradas(nomeEmpresa)
+        .then(
+            function (resultado) {
+                if (resultado.length > 0) {
+                    res.status(200).json(resultado);
+                } else {
+                    res.status(204).send("Nenhum resultado encontrado!");
+                }
+            }
+        )
+        .catch(
+            function (erro) {
+                console.log(erro);
+                console.log(
+                    "Houve um erro ao buscar as empresas: ",
+                    erro.sqlMessage
+                );
+                res.status(500).json(erro.sqlMessage);
+            }
+        );
+}
+
 module.exports = {
     buscarLogs,
-    listarEmpresas
+    listarEmpresas,
+    listarEmpresasProcuradas
 }
