@@ -15,7 +15,12 @@ function enviarMensagem(req, res) {
     } else if (mensagemMensagem == undefined) {
         res.status(400).send("Sua mensagem está undefined!");
     } else {
-        usuarioModel.enviarMensagem(nomeMensagem, emailMensagem, telefoneMensagem, mensagemMensagem)
+        usuarioModel.enviarMensagem(
+            nomeMensagem,
+            emailMensagem,
+            telefoneMensagem,
+            mensagemMensagem
+        )
             .then(
                 function (resultado) {
                     res.json(resultado);
@@ -54,7 +59,14 @@ function preCadastrar(req, res) {
     } else if (telefoneCorporativoPreCadastro == undefined) {
         res.status(400).send("Seu telefone corporativo está undefined!");
     } else {
-        usuarioModel.preCadastrar(nomePreCadastro, emailPessoalPreCadastro, empresaPreCadastro, emailCorporativoPreCadastro, cnpjPreCadastro, telefoneCorporativoPreCadastro)
+        usuarioModel.preCadastrar(
+            nomePreCadastro,
+            emailPessoalPreCadastro,
+            empresaPreCadastro,
+            emailCorporativoPreCadastro,
+            cnpjPreCadastro,
+            telefoneCorporativoPreCadastro
+        )
             .then(
                 function (resultado) {
                     res.json(resultado);
@@ -82,7 +94,10 @@ function autenticar(req, res) {
         res.status(400).send("Sua senha está indefinida!");
     } else {
 
-        usuarioModel.autenticar(emailLogin, senhaLogin)
+        usuarioModel.autenticar(
+            emailLogin,
+            senhaLogin
+        )
             .then(
                 function (resultadoAutenticar) {
                     console.log(`\nResultados encontrados: ${resultadoAutenticar.length}`);
@@ -124,7 +139,13 @@ function cadastrarFuncionario(req, res) {
     } else if (permissaoCadastroFuncionario == undefined) {
         res.status(400).send("Sua permissão está undefined!");
     } else {
-        usuarioModel.cadastrarFuncionario(nomeCadastroFuncionario, emailPessoalCadastroFuncionario, senhaCadastroFuncionario, unidadeCadastroFuncionario, permissaoCadastroFuncionario)
+        usuarioModel.cadastrarFuncionario(
+            nomeCadastroFuncionario,
+            emailPessoalCadastroFuncionario,
+            senhaCadastroFuncionario,
+            unidadeCadastroFuncionario,
+            permissaoCadastroFuncionario
+        )
             .then(
                 function (resultado) {
                     res.json(resultado);
@@ -178,7 +199,7 @@ function editarEmpresa(req, res) {
         .catch(
             function (erro) {
                 console.log(erro);
-                console.log("Houve um erro ao realizar o put: ", erro.sqlMessage);
+                console.log("Houve um erro ao realizar a edição da empresa: ", erro.sqlMessage);
                 res.status(500).json(erro.sqlMessage);
             }
         );
@@ -192,7 +213,12 @@ function editarPerfil(req, res) {
     var senhaEditarPerfil = req.body.senhaServer;
 
 
-    usuarioModel.editarPerfil(idUsuarioEditarPerfil, nomeEditarPerfil, emailEditarPerfil, senhaEditarPerfil)
+    usuarioModel.editarPerfil(
+        idUsuarioEditarPerfil,
+        nomeEditarPerfil,
+        emailEditarPerfil,
+        senhaEditarPerfil
+    )
         .then(
             function (resultado) {
                 res.json(resultado);
@@ -201,11 +227,17 @@ function editarPerfil(req, res) {
         .catch(
             function (erro) {
                 console.log(erro);
-                console.log("Houve um erro ao realizar o put: ", erro.sqlMessage);
+                console.log("Houve um erro ao realizar a edição do perfil: ", erro.sqlMessage);
                 res.status(500).json(erro.sqlMessage);
             }
         );
 
+}
+
+function buscarLogs(req, res) {
+    usuarioModel.buscarLogs().then((resultado) => {
+        res.status(200).json(resultado);
+    });
 }
 
 module.exports = {
@@ -214,5 +246,6 @@ module.exports = {
     autenticar,
     cadastrarFuncionario,
     editarEmpresa,
-    editarPerfil
+    editarPerfil,
+    buscarLogs
 }

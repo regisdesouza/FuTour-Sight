@@ -27,6 +27,11 @@ router.put("/editarPerfil/:idUsuario", function (req, res) {
     usuarioController.editarPerfil(req, res);
 });
 
+router.get("/buscarLogs", function (req, res) {
+    usuarioController.buscarLogs(req, res);
+});
+
+
 module.exports = router;
 
 
