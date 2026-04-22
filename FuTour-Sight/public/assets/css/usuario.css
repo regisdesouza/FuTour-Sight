@@ -77,3 +77,14 @@ header .links {
 .logo {
     color: var(--cor-clara);
 }
+
+.background-branco {
+    background-color: #fff;
+}
+
+.container {
+    background-color: var(--cor-clara);
+    border: 1px solid var(--cor-cinza-escuro);
+    border-radius: 16px;
+    padding: 16px;
+}
