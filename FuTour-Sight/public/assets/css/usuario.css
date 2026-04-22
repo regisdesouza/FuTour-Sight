@@ -54,6 +54,15 @@ header .links {
     width: 36px;
 }
 
+.links nav ul li button {
+    border: none;
+    color: var(--cor-clara);
+    font-size: var(--texto-grande);
+    background-color: transparent;
+    cursor: pointer;
+    transition: var(--transition);
+}
+
 .botao-sair-container {
     display: flex;
     align-items: center;
@@ -68,9 +77,11 @@ header .links {
     font-weight: var(--regular);
     font-size: var(--texto-medio);
     cursor: pointer;
+    transition: var(--transition);
 }
 
-.botao-sair-container button:hover {
+.botao-sair-container button:hover,
+.links nav ul li button:hover {
     transform: scale(1.2);
 }
 
