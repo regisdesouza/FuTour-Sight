@@ -1,7 +1,7 @@
 
 
 function cadastrarFuncionario() {
-    fetch("/usuarios/cadastrarFuncionario/", {
+    fetch("/usuariosAdmin/cadastrarFuncionario/", {
         method: "POST",
         headers: {
             "Content-Type": "application/json"

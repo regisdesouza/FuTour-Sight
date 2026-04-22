@@ -1,7 +1,7 @@
 
 
 function editarEmpresa() {
-    fetch(`/usuarios/editarEmpresa/${sessionStorage.getItem("ID_EMPRESA")}`, {
+    fetch(`/usuariosAdmin/editarEmpresa/${sessionStorage.getItem("ID_EMPRESA")}`, {
         method: "PUT",
         headers: {
             "Content-Type": "application/json"
