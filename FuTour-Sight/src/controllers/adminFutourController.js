@@ -13,9 +13,9 @@ function listarEmpresas(req, res) {
 }
 
 function listarEmpresasProcuradas(req, res) {
-    var nomeEmpresa = req.query.empresaServer;
+    var nomeEmpresalistarEmpresasProcuradas = req.query.empresaServer;
 
-    adminFutourModel.listarEmpresasProcuradas(nomeEmpresa)
+    adminFutourModel.listarEmpresasProcuradas(nomeEmpresalistarEmpresasProcuradas)
         .then(
             function (resultado) {
                 if (resultado.length > 0) {

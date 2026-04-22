@@ -78,7 +78,36 @@ function editarEmpresa(
 
 }
 
+function listarUsuarios() {
+    var instrucaoSql = `
+        SELECT * FROM vw_usuarios
+        WHERE status != 'PENDENTE'
+        ORDER BY nome ASC;`;
+
+    return database.executar(instrucaoSql);
+}
+
+function listarEmpresasProcuradas(idEmpresa, nomeFuncionariolistarUsuariosProcurados) {
+    var instrucaoSql = `
+        SELECT * FROM vw_usuarios
+        WHERE status != 'PENDENTE'
+        AND id_empresa = ?
+        AND nome LIKE ?
+        ORDER BY nome ASC;
+    `;
+
+    console.log("Executando SQL:", instrucaoSql);
+
+    return database.executar(instrucaoSql, [
+        idEmpresa,
+        `%${nomeFuncionariolistarUsuariosProcurados}%`
+    ]);
+}
+
+
 module.exports = {
     cadastrarFuncionario,
-    editarEmpresa
+    editarEmpresa,
+    listarUsuarios,
+    listarEmpresasProcuradas
 };

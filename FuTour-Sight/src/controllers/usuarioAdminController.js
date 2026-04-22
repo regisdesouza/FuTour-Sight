@@ -85,8 +85,34 @@ function editarEmpresa(req, res) {
 
 }
 
+function listarUsuarios(req, res) {
+    usuarioAdminModel.listarUsuarios().then((resultado) => {
+        res.status(200).json(resultado);
+    });
+}
+
+function listarUsuariosProcurados(req, res) {
+    var idEmpresa = req.query.idEmpresa;
+    var nomeFuncionario = req.query.nomeFuncionarioServer;
+
+    usuarioAdminModel.listarEmpresasProcuradas(idEmpresa, nomeFuncionario)
+        .then(function (resultado) {
+            if (resultado.length > 0) {
+                res.status(200).json(resultado);
+            } else {
+                res.status(204).send("Nenhum resultado encontrado!");
+            }
+        })
+        .catch(function (erro) {
+            console.log(erro);
+            res.status(500).json(erro.sqlMessage);
+        });
+}
+
 module.exports = {
     cadastrarFuncionario,
-    editarEmpresa
+    editarEmpresa,
+    listarUsuarios,
+    listarUsuariosProcurados
 }
 

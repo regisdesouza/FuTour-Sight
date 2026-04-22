@@ -23,7 +23,7 @@ function listarEmpresas() {
     return database.executar(instrucaoSql);
 }
 
-function listarEmpresasProcuradas(nomeEmpresa) {
+function listarEmpresasProcuradas(nomeEmpresalistarEmpresasProcuradas) {
     var instrucaoSql = `
         SELECT * FROM vw_empresas
         WHERE nome LIKE ?
@@ -32,7 +32,9 @@ function listarEmpresasProcuradas(nomeEmpresa) {
 
     console.log("Executando SQL:", instrucaoSql);
 
-    return database.executar(instrucaoSql, [`%${nomeEmpresa}%`]);
+    return database.executar(instrucaoSql, [
+        `%${nomeEmpresalistarEmpresasProcuradas}%`
+    ]);
 }
 
 module.exports = {
