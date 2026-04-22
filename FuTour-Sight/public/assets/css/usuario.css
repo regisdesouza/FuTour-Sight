@@ -1,0 +1,79 @@
+body {
+    display: flex;
+    min-height: 100vh;
+}
+
+header {
+    margin: 0;
+    padding: 64px;
+    border-radius: 0 24px 24px 0;
+}
+
+header .links {
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    height: 100%;
+}
+
+.links .usuario-infos {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+}
+
+.usuario-infos .img-container {
+    width: 200px;
+    height: 200px;
+}
+
+.usuario-infos .img-container img {
+    border-radius: 100px;
+}
+
+.usuario-infos span {
+    font-size: var(--texto-grande);
+    color: var(--cor-clara);
+    font-weight: var(--semi-bold);
+}
+
+.links nav ul {
+    flex-direction: column;
+    gap: 16px;
+}
+
+.links nav ul li {
+    display: flex;
+    align-items: center;
+    gap: 40px;
+    font-size: var(--texto-grande);
+}
+
+.links nav ul li img {
+    width: 36px;
+}
+
+.botao-sair-container {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    align-self: flex-start;
+}
+
+.botao-sair-container button {
+    border: none;
+    background-color: transparent;
+    color: var(--cor-clara);
+    font-weight: var(--regular);
+    font-size: var(--texto-medio);
+    cursor: pointer;
+}
+
+.botao-sair-container button:hover {
+    transform: scale(1.2);
+}
+
+.logo {
+    color: var(--cor-clara);
+}
