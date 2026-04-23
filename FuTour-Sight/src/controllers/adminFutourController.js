@@ -121,7 +121,23 @@ function aprovarSolicitacao(req, res) {
 function cancelarSolicitacao(req, res) {
     var id = req.params.idSolicitacao;
 
-    adminFutourModel.cancelarSolicitacao(id)
+    adminFutourModel.buscarPorId(id)
+        .then((resultado) => {
+
+            if (resultado.length == 0) {
+                return res.status(404).json({ mensagem: "Solicitação não encontrada" });
+            }
+
+            var status = resultado[0].fk_status;
+
+            if (status != 9) {
+                return res.status(400).json({
+                    mensagem: "Só é possível cancelar solicitações pendentes!"
+                });
+            }
+
+            return adminFutourModel.cancelarSolicitacao(id);
+        })
         .then(() => {
             res.status(200).json({ mensagem: "Solicitação cancelada!" });
         })
@@ -130,7 +146,6 @@ function cancelarSolicitacao(req, res) {
             res.status(500).json({ mensagem: erro.sqlMessage });
         });
 }
-
 
 module.exports = {
     buscarLogs,
