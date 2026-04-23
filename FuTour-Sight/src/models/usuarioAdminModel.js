@@ -87,7 +87,7 @@ function listarUsuarios() {
     return database.executar(instrucaoSql);
 }
 
-function listarEmpresasProcuradas(idEmpresa, nomeFuncionariolistarUsuariosProcurados) {
+function listarUsuariosProcurados(idEmpresa, nomeFuncionariolistarUsuariosProcurados) {
     var instrucaoSql = `
         SELECT * FROM vw_usuarios
         WHERE status != 'PENDENTE'
@@ -104,10 +104,19 @@ function listarEmpresasProcuradas(idEmpresa, nomeFuncionariolistarUsuariosProcur
     ]);
 }
 
+function editarStatusUsuario(idEditarStatusUsuario, statusEditarStatusUsuario) {
+    var instrucaoSql = `
+        UPDATE usuario
+        SET fk_status = ?
+        WHERE id_usuario = ?;`;
+
+    return database.executar(instrucaoSql, [5, idEditarStatusUsuario]);
+}
 
 module.exports = {
     cadastrarFuncionario,
     editarEmpresa,
     listarUsuarios,
-    listarEmpresasProcuradas
+    listarUsuariosProcurados,
+    editarStatusUsuario
 };

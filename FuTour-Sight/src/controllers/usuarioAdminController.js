@@ -95,7 +95,7 @@ function listarUsuariosProcurados(req, res) {
     var idEmpresa = req.query.idEmpresa;
     var nomeFuncionario = req.query.nomeFuncionarioServer;
 
-    usuarioAdminModel.listarEmpresasProcuradas(idEmpresa, nomeFuncionario)
+    usuarioAdminModel.listarUsuariosProcurados(idEmpresa, nomeFuncionario)
         .then(function (resultado) {
             if (resultado.length > 0) {
                 res.status(200).json(resultado);
@@ -109,10 +109,20 @@ function listarUsuariosProcurados(req, res) {
         });
 }
 
+function editarStatusUsuario(req, res) {
+    var idEditarStatusUsuario = req.params.idUsuario;
+    var statusEditarStatusUsuario = req.body.status;
+
+    usuarioAdminModel.editarStatusUsuario(idEditarStatusUsuario, statusEditarStatusUsuario).then((resultado) => {
+        res.status(200).json({ mensagem: "Status atualizado com sucesso." });
+    });
+}
+
 module.exports = {
     cadastrarFuncionario,
     editarEmpresa,
     listarUsuarios,
-    listarUsuariosProcurados
+    listarUsuariosProcurados,
+    editarStatusUsuario
 }
 
