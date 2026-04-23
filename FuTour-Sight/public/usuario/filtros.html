@@ -10,6 +10,7 @@
     <link rel="stylesheet" href="../assets/css/styles.css">
     <link rel="stylesheet" href="../assets/css/responsive.css">
     <link rel="stylesheet" href="../assets/css/usuario.css">
+    <link rel="stylesheet" href="../assets/css/filtros.css">
 </head>
 
 <body class="background-branco">
@@ -78,8 +79,6 @@
 
             <div class="criar-filtro-container">
                 <div class="criar-filtro">
-
-
                     <div class="campo">
                         <label for="nome-filtro">Nome do filtro</label>
                         <input id="nome-filtro" type="text" placeholder="Nome do filtro">
@@ -89,51 +88,66 @@
                         <select name="ano-referencia" id="ano-referencia">
                             <option value="#">Todos os estados (padrão)</option>
                         </select>
+                        <ul>
+                            <li class="item">
+                                <span>SP</span>
+                                <button>X</button>
+                            </li>
+                        </ul>
                     </div>
                     <div class="campo">
                         <label for="pais-origem">País de origem</label>
                         <select name="ano-referencia" id="ano-referencia">
                             <option value="#">Todos os países (padrão)</option>
                         </select>
+                        <ul>
+                            <li class="item">
+                                <span>Argentina</span>
+                                <button>X</button>
+                            </li>
+                        </ul>
                     </div>
 
                     <div class="intervalo-meses-container">
                         <label for="">Intervalo de meses</label>
-                        <select name="" id="">
-                            <option value="">Janeiro</option>
-                            <option value="">Fevereiro</option>
-                            <option value="">Março</option>
-                            <option value="">Abril</option>
-                            <option value="">Maio</option>
-                            <option value="">Junho</option>
-                            <option value="">Julho</option>
-                            <option value="">Agosto</option>
-                            <option value="">Setembro</option>
-                            <option value="">Outubro</option>
-                            <option value="">Novembro</option>
-                            <option value="">Dezembro</option>
-                        </select>
-                        <span>até</span>
-                        <select name="" id="">
-                            <option value="">Janeiro</option>
-                            <option value="">Fevereiro</option>
-                            <option value="">Março</option>
-                            <option value="">Abril</option>
-                            <option value="">Maio</option>
-                            <option value="">Junho</option>
-                            <option value="">Julho</option>
-                            <option value="">Agosto</option>
-                            <option value="">Setembro</option>
-                            <option value="">Outubro</option>
-                            <option value="">Novembro</option>
-                            <option value="">Dezembro</option>
-                        </select>
+                        <div class="intervalo-meses">
+                            <select name="" id="">
+                                <option value="">Janeiro</option>
+                                <option value="">Fevereiro</option>
+                                <option value="">Março</option>
+                                <option value="">Abril</option>
+                                <option value="">Maio</option>
+                                <option value="">Junho</option>
+                                <option value="">Julho</option>
+                                <option value="">Agosto</option>
+                                <option value="">Setembro</option>
+                                <option value="">Outubro</option>
+                                <option value="">Novembro</option>
+                                <option value="">Dezembro</option>
+                            </select>
+                            <span>até</span>
+                            <select name="" id="">
+                                <option value="">Janeiro</option>
+                                <option value="">Fevereiro</option>
+                                <option value="">Março</option>
+                                <option value="">Abril</option>
+                                <option value="">Maio</option>
+                                <option value="">Junho</option>
+                                <option value="">Julho</option>
+                                <option value="">Agosto</option>
+                                <option value="">Setembro</option>
+                                <option value="">Outubro</option>
+                                <option value="">Novembro</option>
+                                <option value="">Dezembro</option>
+                            </select>
+                        </div>
                     </div>
 
                     <div class="campo">
                         <label for="ano-referencia">Ano de referência</label>
                         <select name="ano-referencia" id="ano-referencia">
-                            <option value="#">Selecione um ano</option>
+                            <option value="#">2025</option>
+                            <option value="#">2024 </option>
                         </select>
                     </div>
                 </div>
