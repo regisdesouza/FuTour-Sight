@@ -9,13 +9,25 @@ function listarEmpresas() {
             return resposta.json();
         })
         .then((empresas) => {
-            console.log("Empresas recebidas:", empresas);
-
             listaEmpresasCadastradas = empresas;
 
+            const tbody = document.getElementById("tbody-empresas");
+            tbody.innerHTML = "";
+
             empresas.forEach((empresa) => {
-                console.log("Empresa:", empresa);
-                console.log("Nome:", empresa.nome);
+                const tr = document.createElement("tr");
+                tr.innerHTML = `
+                    <td>${empresa.nome}</td>
+                    <td>${empresa.cnpj}</td>
+                    <td>${empresa.email}</td>
+                    <td>${empresa.telefone}</td>
+                    <td>${empresa.status}</td>
+                    <td>${empresa.total_usuarios}</td>
+                    <td>
+                        <button onclick="alterarStatusEmpresa(${empresa.id_empresa})">✕</button>
+                    </td>
+                `;
+                tbody.appendChild(tr);
             });
         })
         .catch((erro) => {
@@ -26,28 +38,62 @@ function listarEmpresas() {
 function listarEmpresasProcuradas() {
     var nomeEmpresaVar = nome.value;
 
-    fetch(`/adminFutour/listarEmpresasProcuradas?nome=${nomeEmpresaVar}`)
-        .then(function (resposta) {
-
-            console.log("resposta:", resposta);
-
+    fetch(`/adminFutour/listarEmpresasProcuradas?nome=${nomeEmpresaVar}`, {
+        method: "GET",
+    })
+        .then((resposta) => {
             if (resposta.status == 204) {
                 alert("Nenhum resultado encontrado!");
                 return;
             }
-
-            if (resposta.ok) {
-                return resposta.json();
+            if (!resposta.ok) {
+                throw new Error("Erro: " + resposta.status);
             }
+            return resposta.json();
+        })
+        .then((dados) => {
+            if (!dados) return;
 
-            throw new Error("Erro: " + resposta.status);
+            const tbody = document.getElementById("tbody-empresas");
+            tbody.innerHTML = "";
+
+            dados.forEach((empresa) => {
+                const tr = document.createElement("tr");
+                tr.innerHTML = `
+                    <td>${empresa.nome}</td>
+                    <td>${empresa.cnpj}</td>
+                    <td>${empresa.email}</td>
+                    <td>${empresa.telefone}</td>
+                    <td>${empresa.status}</td>
+                    <td>${empresa.total_usuarios}</td>
+                    <td>
+                        <button onclick="alterarStatusEmpresa(${empresa.id_empresa})">✕</button>
+                    </td>
+                `;
+                tbody.appendChild(tr);
+            });
         })
-        .then(function (dados) {
-            console.log("Dados:", dados);
-        })
-        .catch(function (erro) {
-            console.log("#ERRO:", erro);
+        .catch((erro) => {
+            console.error("#ERRO:", erro);
         });
 
     return false;
+}
+
+function alterarStatusEmpresa(id) {
+    fetch(`/adminFutour/editarStatusEmpresa/${id}`, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+    })
+        .then((resposta) => {
+            if (!resposta.ok) throw new Error("Erro ao atualizar status");
+            return resposta.json();
+        })
+        .then((resultado) => {
+            console.log(resultado.mensagem);
+            listarEmpresas();
+        })
+        .catch((erro) => {
+            console.error("#ERRO:", erro);
+        });
 }

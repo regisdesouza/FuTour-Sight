@@ -5,7 +5,7 @@ var usuarioController = require("../controllers/usuarioController");
 
 router.post("/enviarMensagem", function (req, res) {
     usuarioController.enviarMensagem(req, res);
-})
+});
 
 router.post("/preCadastrar", function (req, res) {
     usuarioController.preCadastrar(req, res);
@@ -20,5 +20,3 @@ router.put("/editarPerfil/:idUsuario", function (req, res) {
 });
 
 module.exports = router;
-
-

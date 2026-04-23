@@ -9,6 +9,8 @@ function listarUsuarios() {
             return resposta.json();
         })
         .then((usuarios) => {
+            console.log("Usuários recebidos:", usuarios);
+
             listaFuncionariosCadastrados = usuarios;
 
             const tbody = document.getElementById("tbody-funcionarios");
@@ -38,22 +40,24 @@ function listarUsuariosProcurados() {
     var idEmpresaVar = sessionStorage.ID_EMPRESA;
     var nomeFuncionarioVar = nome.value;
 
-    fetch(`/adminFutour/listarUsuariosProcurados?idEmpresa=${idEmpresaVar}&nomeFuncionarioServer=${nomeFuncionarioVar}`)
-        .then(function (resposta) {
-            console.log("resposta:", resposta);
+    fetch(`/adminFutour/listarUsuariosProcurados?idEmpresa=${idEmpresaVar}&nomeFuncionarioServer=${nomeFuncionarioVar}`, {
+        method: "GET",
+    })
+        .then((resposta) => {
+            console.log("Resposta:", resposta);
 
             if (resposta.status == 204) {
                 alert("Nenhum resultado encontrado!");
                 return;
             }
 
-            if (resposta.ok) {
-                return resposta.json();
+            if (!resposta.ok) {
+                throw new Error("Erro: " + resposta.status);
             }
 
-            throw new Error("Erro: " + resposta.status);
+            return resposta.json();
         })
-        .then(function (dados) {
+        .then((dados) => {
             console.log("Dados:", dados);
 
             const tbody = document.getElementById("tbody-funcionarios");
@@ -74,8 +78,8 @@ function listarUsuariosProcurados() {
                 tbody.appendChild(tr);
             });
         })
-        .catch(function (erro) {
-            console.log("#ERRO:", erro);
+        .catch((erro) => {
+            console.error("#ERRO:", erro);
         });
 
     return false;
@@ -84,13 +88,17 @@ function listarUsuariosProcurados() {
 function alterarStatus(id) {
     fetch(`/usuariosAdmin/editarStatus/${id}`, {
         method: "PUT",
-        headers: { "Content-Type": "application/json" },
+        headers: {
+            "Content-Type": "application/json",
+        },
         body: JSON.stringify({
-            status: "INATIVO"
+            status: "INATIVO",
         }),
     })
         .then((resposta) => {
-            if (!resposta.ok) throw new Error("Erro ao atualizar status");
+            if (!resposta.ok) {
+                throw new Error("Erro ao atualizar status");
+            }
             return resposta.json();
         })
         .then((resultado) => {

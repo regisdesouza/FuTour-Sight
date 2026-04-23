@@ -2,7 +2,12 @@ function buscarLogs() {
   fetch("/adminFutour/buscarLogs", {
     method: "GET",
   })
-    .then((resposta) => resposta.json())
+    .then((resposta) => {
+      if (!resposta.ok) {
+        throw new Error("Erro na resposta do servidor");
+      }
+      return resposta.json();
+    })
     .then((logs) => {
       console.log("Logs recebidos:", logs);
     })

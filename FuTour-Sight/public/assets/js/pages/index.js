@@ -86,33 +86,36 @@ function enviarMensagem() {
     fetch("/usuarios/enviarMensagem", {
         method: "POST",
         headers: {
-            "Content-Type": "application/json"
+            "Content-Type": "application/json",
         },
         body: JSON.stringify({
             nomeServer: nomeVar,
             emailServer: emailVar,
             telefoneServer: telefoneVar,
-            mensagemServer: mensagemVar
-        })
+            mensagemServer: mensagemVar,
+        }),
     })
-        .then(function (resposta) {
-            if (resposta.ok) {
-                div_msg.innerHTML = "Mensagem enviada com sucesso!";
-                nome.value = "";
-                email.value = "";
-                telefone.value = "";
-                mensagem.value = "";
-                contador.textContent = "0/1000";
-
-                setTimeout(function () {
-                    div_msg.innerHTML = "";
-                }, 5000);
-            } else {
-                throw "Erro ao enviar mensagem";
+        .then((resposta) => {
+            if (!resposta.ok) {
+                throw new Error("Erro ao enviar mensagem. Código da resposta: " + resposta.status);
             }
+            return resposta.json();
         })
-        .catch(function (erro) {
-            console.log("ERRO:", erro);
+        .then((dados) => {
+            console.log("Mensagem enviada:", dados);
+            div_msg.innerHTML = "Mensagem enviada com sucesso!";
+            nome.value = "";
+            email.value = "";
+            telefone.value = "";
+            mensagem.value = "";
+            contador.textContent = "0/1000";
+
+            setTimeout(() => {
+                div_msg.innerHTML = "";
+            }, 5000);
+        })
+        .catch((erro) => {
+            console.error("#ERRO:", erro);
         });
 
     return false;

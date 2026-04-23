@@ -3,6 +3,14 @@ var router = express.Router();
 
 var usuarioAdminController = require("../controllers/usuarioAdminController");
 
+router.get("/listarUsuarios", function (req, res) {
+    usuarioAdminController.listarUsuarios(req, res);
+});
+
+router.get("/listarUsuariosProcurados", function (req, res) {
+    usuarioAdminController.listarUsuariosProcurados(req, res);
+});
+
 router.post("/cadastrarFuncionario", function (req, res) {
     usuarioAdminController.cadastrarFuncionario(req, res);
 });
@@ -14,16 +22,5 @@ router.put("/editarEmpresa/:idEmpresa", function (req, res) {
 router.put("/editarStatus/:idUsuario", function (req, res) {
     usuarioAdminController.editarStatusUsuario(req, res);
 });
-
-router.get("/listarUsuarios", function (req, res) {
-    usuarioAdminController.listarUsuarios(req, res);
-});
-
-router.get("/listarUsuariosProcurados", function (req, res) {
-    usuarioAdminController.listarUsuariosProcurados(req, res);
-});
-
-
-
 
 module.exports = router;

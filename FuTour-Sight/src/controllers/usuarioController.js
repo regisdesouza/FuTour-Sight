@@ -1,152 +1,99 @@
 var usuarioModel = require("../models/usuarioModel");
 
 function enviarMensagem(req, res) {
-    var nomeMensagem = req.body.nomeServer;
-    var emailMensagem = req.body.emailServer;
-    var telefoneMensagem = req.body.telefoneServer;
-    var mensagemMensagem = req.body.mensagemServer;
+    var { nomeServer, emailServer, telefoneServer, mensagemServer } = req.body;
 
-    if (nomeMensagem == undefined) {
-        res.status(400).send("Seu nome está undefined!");
-    } else if (emailMensagem == undefined) {
-        res.status(400).send("Seu e-mail está undefined!");
-    } else if (telefoneMensagem == undefined) {
-        res.status(400).send("Seu telefone está undefined!");
-    } else if (mensagemMensagem == undefined) {
-        res.status(400).send("Sua mensagem está undefined!");
-    } else {
-        usuarioModel.enviarMensagem(
-            nomeMensagem,
-            emailMensagem,
-            telefoneMensagem,
-            mensagemMensagem
-        )
-            .then(
-                function (resultado) {
-                    res.json(resultado);
-                }
-            ).catch(
-                function (erro) {
-                    console.log(erro);
-                    console.log(
-                        "\nHouve um erro ao enviar a mensagem! Erro: ",
-                        erro.sqlMessage
-                    );
-                    res.status(500).json(erro.sqlMessage);
-                }
-            );
+    if (!nomeServer) {
+        return res.status(400).json({ mensagem: "Nome undefined!" });
     }
+    if (!emailServer) {
+        return res.status(400).json({ mensagem: "Email undefined!" });
+    }
+    if (!telefoneServer) {
+        return res.status(400).json({ mensagem: "Telefone undefined!" });
+    }
+    if (!mensagemServer) {
+        return res.status(400).json({ mensagem: "Mensagem undefined!" });
+    }
+
+    usuarioModel.enviarMensagem(nomeServer, emailServer, telefoneServer, mensagemServer)
+        .then((resultado) => {
+            res.status(200).json(resultado);
+        })
+        .catch((erro) => {
+            console.log(erro);
+            res.status(500).json({ mensagem: erro.sqlMessage });
+        });
 }
 
 function preCadastrar(req, res) {
-    var nomePreCadastro = req.body.nomeServer;
-    var emailPessoalPreCadastro = req.body.emailPessoalServer;
-    var empresaPreCadastro = req.body.empresaServer;
-    var emailCorporativoPreCadastro = req.body.emailCorporativoServer;
-    var cnpjPreCadastro = req.body.cnpjServer;
-    var telefoneCorporativoPreCadastro = req.body.telefoneCorporativoServer;
+    var {
+        nomeServer,
+        emailPessoalServer,
+        empresaServer,
+        emailCorporativoServer,
+        cnpjServer,
+        telefoneCorporativoServer
+    } = req.body;
 
-    if (nomePreCadastro == undefined) {
-        res.status(400).send("Seu nome está undefined!");
-    } else if (emailPessoalPreCadastro == undefined) {
-        res.status(400).send("Seu e-mail pessoal está undefined!");
-    } else if (empresaPreCadastro == undefined) {
-        res.status(400).send("Sua empresa está undefined!");
-    } else if (emailCorporativoPreCadastro == undefined) {
-        res.status(400).send("Seu e-mail corporativo está undefined!");
-    } else if (cnpjPreCadastro == undefined) {
-        res.status(400).send("Seu cnpj está undefined!");
-    } else if (telefoneCorporativoPreCadastro == undefined) {
-        res.status(400).send("Seu telefone corporativo está undefined!");
-    } else {
-        usuarioModel.preCadastrar(
-            nomePreCadastro,
-            emailPessoalPreCadastro,
-            empresaPreCadastro,
-            emailCorporativoPreCadastro,
-            cnpjPreCadastro,
-            telefoneCorporativoPreCadastro
-        )
-            .then(
-                function (resultado) {
-                    res.json(resultado);
-                }
-            ).catch(
-                function (erro) {
-                    console.log(erro);
-                    console.log(
-                        "\nHouve um erro ao realizar o pré cadastro! Erro: ",
-                        erro.sqlMessage
-                    );
-                    res.status(500).json(erro.sqlMessage);
-                }
-            );
-    }
+    if (!nomeServer) return res.status(400).json({ mensagem: "Nome undefined!" });
+    if (!emailPessoalServer) return res.status(400).json({ mensagem: "Email pessoal undefined!" });
+    if (!empresaServer) return res.status(400).json({ mensagem: "Empresa undefined!" });
+    if (!emailCorporativoServer) return res.status(400).json({ mensagem: "Email corporativo undefined!" });
+    if (!cnpjServer) return res.status(400).json({ mensagem: "CNPJ undefined!" });
+    if (!telefoneCorporativoServer) return res.status(400).json({ mensagem: "Telefone undefined!" });
+
+    usuarioModel.preCadastrar(
+        nomeServer,
+        emailPessoalServer,
+        empresaServer,
+        emailCorporativoServer,
+        cnpjServer,
+        telefoneCorporativoServer
+    )
+        .then((resultado) => {
+            res.status(200).json(resultado);
+        })
+        .catch((erro) => {
+            console.log(erro);
+            res.status(500).json({ mensagem: erro.sqlMessage });
+        });
 }
 
 function autenticar(req, res) {
-    var emailLogin = req.body.emailServer;
-    var senhaLogin = req.body.senhaServer;
+    var { emailServer, senhaServer } = req.body;
 
-    if (emailLogin == undefined) {
-        res.status(400).send("Seu e-mail está undefined!");
-    } else if (senhaLogin == undefined) {
-        res.status(400).send("Sua senha está indefinida!");
-    } else {
+    if (!emailServer) return res.status(400).json({ mensagem: "Email undefined!" });
+    if (!senhaServer) return res.status(400).json({ mensagem: "Senha undefined!" });
 
-        usuarioModel.autenticar(
-            emailLogin,
-            senhaLogin
-        )
-            .then(
-                function (resultadoAutenticar) {
-                    console.log(`\nResultados encontrados: ${resultadoAutenticar.length}`);
-                    console.log(`Resultados: ${JSON.stringify(resultadoAutenticar)}`);
-
-                    if (resultadoAutenticar.length == 1) {
-                        res.json(resultadoAutenticar[0]);
-                    } else if (resultadoAutenticar.length == 0) {
-                        res.status(403).send("E-mail e/ou senha inválido(s)");
-                    } else {
-                        res.status(403).send("Mais de um usuário com o mesmo login e senha!");
-                    }
-                }
-            ).catch(
-                function (erro) {
-                    console.log(erro);
-                    console.log("\nHouve um erro ao realizar o login! Erro: ", erro.sqlMessage);
-                    res.status(500).json(erro.sqlMessage);
-                }
-            );
-    }
+    usuarioModel.autenticar(emailServer, senhaServer)
+        .then((resultado) => {
+            if (resultado.length == 1) {
+                res.status(200).json(resultado[0]);
+            } else if (resultado.length == 0) {
+                res.status(403).json({ mensagem: "Login inválido" });
+            } else {
+                res.status(403).json({ mensagem: "Duplicidade de usuário" });
+            }
+        })
+        .catch((erro) => {
+            console.log(erro);
+            res.status(500).json({ mensagem: erro.sqlMessage });
+        });
 }
 
 function editarPerfil(req, res) {
-    var idUsuarioEditarPerfil = req.params.idUsuario;
-    var nomeEditarPerfil = req.body.nomeServer;
-    var emailEditarPerfil = req.body.emailServer;
-    var senhaEditarPerfil = req.body.senhaServer;
+    var idUsuario = req.params.idUsuario;
+    var { nomeServer, emailServer, senhaServer } = req.body;
 
-
-    usuarioModel.editarPerfil(
-        idUsuarioEditarPerfil,
-        nomeEditarPerfil,
-        emailEditarPerfil,
-        senhaEditarPerfil
-    )
-        .then(
-            function (resultado) {
-                res.json(resultado);
-            }
-        )
-        .catch(
-            function (erro) {
-                console.log(erro);
-                console.log("Houve um erro ao realizar a edição do perfil: ", erro.sqlMessage);
-                res.status(500).json(erro.sqlMessage);
-            }
-        );
-
+    usuarioModel.editarPerfil(idUsuario, nomeServer, emailServer, senhaServer)
+        .then((resultado) => {
+            res.status(200).json(resultado);
+        })
+        .catch((erro) => {
+            console.log(erro);
+            res.status(500).json({ mensagem: erro.sqlMessage });
+        });
 }
 
 module.exports = {
@@ -154,4 +101,4 @@ module.exports = {
     preCadastrar,
     autenticar,
     editarPerfil
-}
+};
