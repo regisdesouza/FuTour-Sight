@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FuTour Sight</title>
+
+    <link rel="stylesheet" href="../assets/css/reset.css">
+    <link rel="stylesheet" href="../assets/css/styles.css">
+    <link rel="stylesheet" href="../assets/css/edicao.css">
+    <link rel="stylesheet" href="../assets/css/responsive.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+</head>
+
+<body class="body-empresa">
+
+    <header>
+        <a href="../index.html" class="logo">
+            <img src="../assets/images/logo-futour-sight-branco.png" alt="Logo FuTour Sight">
+            <span>FuTour Sight</span>
+        </a>
+
+        <input type="checkbox" id="menu-hamburguer">
+
+        <label for="menu-hamburguer" class="menu-hamburguer">
+            <div class="menu">
+                <span class="hamburguer"></span>
+            </div>
+        </label>
+
+        <div class="overlay"></div>
+
+        <div class="links">
+            <nav>
+                <div class="menu-usuario">
+                    <img src="../assets/images/placeholder-foto.png" alt="Foto da Empresa" class="img-circular">
+                    <h1>Nome de usuário</h1>
+                </div>
+            </nav>
+            <nav>
+                <div class="input-box">
+                    <i class="bi bi-graph-up-arrow"></i>
+                    <span>Dashboard</span>
+                </div>
+                <div class="input-box">
+                    <i class="bi bi-building"></i>
+                    <span>Empresa</span>
+                </div>
+                <div class="input-box">
+                    <i class="bi bi-person-fill"></i>
+                    <span>Perfil</span>
+                </div>
+                <div class="input-box">
+                    <i class="bi bi-clock-history"></i>
+                    <span>Histórico</span>
+                </div>
+                <div class="input-box">
+                    <i class="bi bi-funnel-fill"></i>
+                    <span>Filtro</span>
+            </nav>
+            <nav>
+                <div class="menu-lista">
+                    <div class="input-box">
+                        <i class="bi bi-box-arrow-left"></i>
+                        <span>Sair</span>
+                    </div>
+                </div>
+            </nav>
+            <a href="index.html" target="_blank" class="menu-logo">
+                <img src="../assets/images/logo-futour-sight-branco.png" alt="">
+                <h3>FuTour Sight</h3>
+            </a>
+        </div>
+    </header>
+
+    <main>
+
+        <!-- ------------------------- SIDEBAR ------------------------- -->
+
+        <div class="menu-lateral">
+
+            <div class="menu-usuario">
+                <img src="../assets/images/placeholder-foto.png" alt="Foto da Empresa" class="img-circular">
+                <h1>Nome de usuário</h1>
+            </div>
+
+            <div class="menu-lista links">
+                <div class="input-box">
+                    <i class="bi bi-graph-up-arrow"></i>
+                    <span>Dashboard</span>
+                </div>
+                <div class="input-box">
+                    <i class="bi bi-building"></i>
+                    <span>Empresa</span>
+                </div>
+                <div class="input-box">
+                    <i class="bi bi-person-fill"></i>
+                    <span>Perfil</span>
+                </div>
+                <div class="input-box">
+                    <i class="bi bi-clock-history"></i>
+                    <span>Histórico</span>
+                </div>
+                <div class="input-box">
+                    <i class="bi bi-funnel-fill"></i>
+                    <span>Filtro</span>
+                </div>
+            </div>
+
+            <div class="menu-lista">
+                <div class="input-box">
+                    <i class="bi bi-box-arrow-left"></i>
+                    <span>Sair</span>
+                </div>
+            </div>
+
+            <a href="index.html" target="_blank" class="menu-logo">
+                <img src="../assets/images/logo-futour-sight-branco.png" alt="">
+                <h3>FuTour Sight</h3>
+            </a>
+
+        </div>
+
+        <!-- ------------------------- PÁGINA ------------------------- -->
+
+        <div class="conteudo">
+
+            <div class="titulo-pagina">
+                <h1>Atualizar Dados Empresariais</h1>
+            </div>
+
+            <div class="banner-usuario">
+                <img src="../assets/images/placeholder-foto.png" alt="" class="img-circular">
+
+                <div class="banner-usuario-mens">
+                    <h1>Seja bem-vindo</h1>
+                    <h2>Nome da Empresa</h2>
+                    <h3>email@email.com</h1>
+                </div>
+                <img src="../assets/images/edicao-img1.png" alt="" class="banner-img">
+
+            </div>
+
+            <hr>
+
+            <div class="empresa-container form-box-empresa">
+                <form action="">
+                    <h1>Dados Empresariais</h1>
+                    <div class="input-fb-empresa">
+                        <div class="input-box">
+                            <label for="emp-name">Nome da empresa</label>
+                            <input id="emp-name" type="text" placeholder="Nome da empresa" required>
+                            <i class="bi bi-pencil"></i>
+                        </div>
+                        <div class="input-box">
+                            <label for="cnpj">CNPJ</label>
+                            <input id="cnpj" type="text" placeholder="00.000.000/0000-00" required>
+                            <i class="bi bi-building"></i>
+                        </div>
+                        <div class="input-box">
+                            <label for="emp-email">E-mail da Empresa</label>
+                            <input id="emp-email" type="email" placeholder="usuario@email.com" required>
+                            <i class="bi bi-envelope"></i>
+                        </div>
+                        <div class="input-box">
+                            <label for="emp-tel">Telefone da Empresa</label>
+                            <input id="emp-tel" type="tel" placeholder="(xx) xxxx-xxxx" required>
+                            <i class="bi bi-telephone"></i>
+                        </div>
+                        <div class="input-box">
+                            <label for="cep">CEP</label>
+                            <input type="text" id="cep" placeholder="00000-000" required>
+                            <i class="bi bi-map"></i>
+                        </div>
+                        <div class="input-box">
+                            <label for="estado">Estado</label>
+                            <input type="text" id="estado" placeholder="Estado" required>
+                            <i class="bi bi-map"></i>
+                        </div>
+                        <div class="input-box">
+                            <label for="cidade">Cidade</label>
+                            <input type="text" id="cidade" placeholder="Cidade" required>
+                            <i class="bi bi-map"></i>
+                        </div>
+                        <div class="input-box">
+                            <label for="bairro">Bairro</label>
+                            <input type="text" id="bairro" placeholder="Bairro" required>
+                            <i class="bi bi-map"></i>
+                        </div>
+                        <div class="input-box">
+                            <label for="rua">Logradouro</label>
+                            <input id="rua" type="text" placeholder="Rua" required>
+                            <i class="bi bi-map"></i>
+                        </div>
+                        <div class="input-box">
+                            <label for="numero">Número</label>
+                            <input id="numero" type="text" placeholder="Nº" required>
+                            <i class="bi bi-map"></i>
+                        </div>
+                        <div class="input-box">
+                            <label for="complemento">Complemento</label>
+                            <input id="complemento" type="text" placeholder="Complemento">
+                            <i class="bi bi-map"></i>
+                        </div>
+                    </div>
+
+                </form>
+
+            </div>
+            <div class="emp-div-btn">
+                <button type="button" class="btn-main register-btn botao-cadastrar">Atualizar</button>
+            </div>
+
+        </div>
+
+
+    </main>
+
+</body>
+
+</html>
