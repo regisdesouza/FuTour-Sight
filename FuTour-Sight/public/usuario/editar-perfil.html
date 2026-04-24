@@ -127,18 +127,16 @@
         <div class="conteudo">
 
             <div class="titulo-pagina">
-                <h1>Atualizar Dados Empresariais</h1>
+                <h1>Atualizar Dados Pessoais</h1>
             </div>
 
             <div class="banner-usuario">
-                <img src="../assets/images/placeholder-foto.png" alt="" class="img-circular">
-
                 <div class="banner-usuario-mens">
                     <h1>Seja bem-vindo</h1>
                     <h2>Nome da Empresa</h2>
                     <h3>email@email.com</h1>
                 </div>
-                <img src="../assets/images/edicao-img1.png" alt="" class="banner-img">
+                <img src="../assets/images/img-emp.png" alt="" class="banner-img">
 
             </div>
 
@@ -146,69 +144,32 @@
 
             <div class="empresa-container form-box-empresa">
                 <form action="">
-                    <h1>Dados Empresariais</h1>
+                    <h1>Dados Pessoais</h1>
                     <div class="input-fb-empresa">
                         <div class="input-box">
-                            <label for="emp-name">Nome da empresa</label>
-                            <input id="emp-name" type="text" placeholder="Nome da empresa" required>
+                            <label for="func-name">Nome Completo</label>
+                            <input id="func-name" type="text" placeholder="Nome Completo" required>
                             <i class="bi bi-pencil"></i>
                         </div>
                         <div class="input-box">
-                            <label for="cnpj">CNPJ</label>
-                            <input id="cnpj" type="text" placeholder="00.000.000/0000-00" required>
-                            <i class="bi bi-building"></i>
-                            <div class="msg_erro" id="div_msg_cnpj"></div>
-
-                        </div>
-                        <div class="input-box">
-                            <label for="emp-email">E-mail da Empresa</label>
-                            <input id="emailCorporativo" type="email" placeholder="usuario@email.com" required>
+                            <label for="func-email">E-mail</label>
+                            <input id="func-email" type="email" placeholder="usuario@email.com" required>
                             <i class="bi bi-envelope"></i>
-                            <div class="msg_erro" id="div_msg_email_corporativo"></div>
-
                         </div>
                         <div class="input-box">
-                            <label for="emp-tel">Telefone da Empresa</label>
-                            <input type="text" name="telefone" id="telefone" placeholder="Seu telefone" required
-                                onkeyup="onkey_telefone()" maxlength="15">
-                            <i class="bi bi-telephone"></i>
-                            <div class="msg_erro" id="div_msg_telefone"></div>
-
+                            <label for="func-senha">Senha Atual</label>
+                            <input id="func-senha" type="password" placeholder="Senha Atual" required>
+                            <i class="bi bi-key"></i>
                         </div>
                         <div class="input-box">
-                            <label for="cep">CEP</label>
-                            <input type="text" id="cep" placeholder="00000-000" required>
-                            <i class="bi bi-map"></i>
+                            <label for="func-senha">Nova Senha</label>
+                            <input id="func-senha" type="password" placeholder="Nova Senha" required>
+                            <i class="bi bi-key"></i>
                         </div>
                         <div class="input-box">
-                            <label for="estado">Estado</label>
-                            <input type="text" id="estado" placeholder="Estado" required>
-                            <i class="bi bi-map"></i>
-                        </div>
-                        <div class="input-box">
-                            <label for="cidade">Cidade</label>
-                            <input type="text" id="cidade" placeholder="Cidade" required>
-                            <i class="bi bi-map"></i>
-                        </div>
-                        <div class="input-box">
-                            <label for="bairro">Bairro</label>
-                            <input type="text" id="bairro" placeholder="Bairro" required>
-                            <i class="bi bi-map"></i>
-                        </div>
-                        <div class="input-box">
-                            <label for="rua">Logradouro</label>
-                            <input id="rua" type="text" placeholder="Rua" required>
-                            <i class="bi bi-map"></i>
-                        </div>
-                        <div class="input-box">
-                            <label for="numero">Número</label>
-                            <input id="numero" type="text" placeholder="Nº" required>
-                            <i class="bi bi-map"></i>
-                        </div>
-                        <div class="input-box">
-                            <label for="complemento">Complemento</label>
-                            <input id="complemento" type="text" placeholder="Complemento">
-                            <i class="bi bi-map"></i>
+                            <label for="func-senha">Confirmar Nova Senha</label>
+                            <input id="func-senha" type="password" placeholder="Confirmar Nova Senha" required>
+                            <i class="bi bi-key"></i>
                         </div>
                     </div>
 
@@ -216,7 +177,7 @@
 
             </div>
             <div class="emp-div-btn">
-                <button type="button" class="botao botao-cadastrar">Atualizar</button>
+                <button type="button" class="btn-main register-btn botao-cadastrar">Atualizar</button>
             </div>
 
         </div>

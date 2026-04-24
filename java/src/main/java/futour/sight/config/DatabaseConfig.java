@@ -15,7 +15,7 @@ public class DatabaseConfig {
             ds.setDriverClassName("com.mysql.cj.jdbc.Driver");
             ds.setUrl("jdbc:mysql://localhost:3306/futour_sight");
             ds.setUsername("root");
-            ds.setPassword("Senha");
+            ds.setPassword("Senha@1234");
 
             jdbc = new JdbcTemplate(ds);
         }

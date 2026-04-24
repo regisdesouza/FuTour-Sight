@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+
+    <link rel="stylesheet" href="../assets/css/reset.css">
+    <link rel="stylesheet" href="../assets/css/styles.css">
+    <link rel="stylesheet" href="../assets/css/responsive.css">
+    <link rel="stylesheet" href="../assets/css/usuario.css">
+    <link rel="stylesheet" href="../assets/css/filtros.css">
+</head>
+
+<body class="background-branco">
+    <header>
+        <input type="checkbox" id="menu-hamburguer">
+
+        <label for="menu-hamburguer" class="menu-hamburguer">
+            <div class="menu">
+                <span class="hamburguer"></span>
+            </div>
+        </label>
+
+        <div class="overlay"></div>
+
+        <div class="links">
+            <div class="usuario-infos">
+                <div class="img-container">
+                    <img src="https://placehold.co/200x200/png" alt="Imagem da empresa">
+                </div>
+                <span>Nome do usuário</span>
+            </div>
+
+            <nav>
+                <ul>
+                    <li>
+                        <img src="../assets/images/icons/dashboard.png" alt="icone de dashboard">
+                        <button>Dashboard</button>
+                    </li>
+                    <li>
+                        <img src="../assets/images/icons/empresa-branca.png" alt="icone de empresa da cor branca">
+                        <button>Empresa</button>
+                    </li>
+                    <li>
+                        <img src="../assets/images/icons/perfil.png" alt="icone de perfil">
+                        <button>Perfil</button>
+                    </li>
+                    <li>
+                        <img src="../assets/images/icons/historico.png" alt="icone de historico">
+                        <button>Funcionários</button>
+                    </li>
+                    <li>
+                        <img src="../assets/images/icons/filtro.png" alt="icone de filtro">
+                        <button>Filtro</button>
+                    </li>
+                </ul>
+            </nav>
+
+            <div class="botao-sair-container">
+                <img src="../assets/images/icons/sair.png" alt="icone de sair">
+                <button class="botao-sair">Sair</button>
+            </div>
+
+            <div class="logo">
+                <img src="../assets/images/logo-futour-sight-branco.png" alt="Logo FuTour Sight">
+                <span>FuTour Sight</span>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <section class="novo-filtro">
+            <div class="titulo">
+                <h2>Editar filtro</h2>
+                <p>Edite e salve uma visão personalizada da Dashboard</p>
+            </div>
+
+            <div class="criar-filtro-container">
+                <div class="criar-filtro">
+                    <div class="campo">
+                        <label for="nome-filtro">Nome do filtro</label>
+                        <input id="nome-filtro" type="text" placeholder="Nome do filtro">
+                    </div>
+                    <div class="campo">
+                        <label for="estado-destino">Estado de destino</label>
+                        <select name="ano-referencia" id="ano-referencia">
+                            <option value="#">Todos os estados (padrão)</option>
+                        </select>
+                        <ul>
+                            <li class="item">
+                                <span>SP</span>
+                                <button>X</button>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="campo">
+                        <label for="pais-origem">País de origem</label>
+                        <select name="ano-referencia" id="ano-referencia">
+                            <option value="#">Todos os países (padrão)</option>
+                        </select>
+                        <ul>
+                            <li class="item">
+                                <span>Argentina</span>
+                                <button>X</button>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <div class="intervalo-meses-container">
+                        <label for="">Intervalo de meses</label>
+                        <div class="intervalo-meses">
+                            <select name="" id="">
+                                <option value="">Janeiro</option>
+                                <option value="">Fevereiro</option>
+                                <option value="">Março</option>
+                                <option value="">Abril</option>
+                                <option value="">Maio</option>
+                                <option value="">Junho</option>
+                                <option value="">Julho</option>
+                                <option value="">Agosto</option>
+                                <option value="">Setembro</option>
+                                <option value="">Outubro</option>
+                                <option value="">Novembro</option>
+                                <option value="">Dezembro</option>
+                            </select>
+                            <span>até</span>
+                            <select name="" id="">
+                                <option value="">Janeiro</option>
+                                <option value="">Fevereiro</option>
+                                <option value="">Março</option>
+                                <option value="">Abril</option>
+                                <option value="">Maio</option>
+                                <option value="">Junho</option>
+                                <option value="">Julho</option>
+                                <option value="">Agosto</option>
+                                <option value="">Setembro</option>
+                                <option value="">Outubro</option>
+                                <option value="">Novembro</option>
+                                <option value="">Dezembro</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="campo">
+                        <label for="ano-referencia">Ano de referência</label>
+                        <select name="ano-referencia" id="ano-referencia">
+                            <option value="#">2025</option>
+                            <option value="#">2024 </option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="botoes">
+                    <button>Cancelar</button>
+                    <button>Atualizar filtro</button>
+                </div>
+            </div>
+        </section>
+    </main>
+</body>
+
+</html>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<script>
+    const ctx = document.getElementById('myChart');
+
+    new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'],
+            datasets: [{
+                label: '2025',
+                data: [12, 19, 3, 5, 2],
+                borderWidth: 1
+            },
+            {
+                label: '2024',
+                data: [10, 13, 2, 5, 4],
+                borderWidth: 1
+            }]
+        },
+        options: {
+            scales: {
+                y: {
+                    beginAtZero: true
+                },
+                x: {
+                    stacked: false
+                }
+            }
+        }
+    });
+</script>

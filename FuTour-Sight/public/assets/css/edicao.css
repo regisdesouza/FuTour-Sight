@@ -1,0 +1,458 @@
+header {
+    display: none;
+}
+
+.body-empresa main {
+    background-color: var(--cor-clara);
+}
+
+.conteudo {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    margin-left: 350px;
+    width: calc(100% - 350px);
+    align-items: center;
+    gap: 1.5vh;
+    justify-content: space-between;
+    gap: 10px;
+    min-height: 100vh;
+    height: auto;
+}
+
+.conteudo hr {
+    padding-inline: 45%;
+    padding-bottom: 40px;
+    border: none;
+    border-top: 3px solid var(--cor-complementar-escura);
+}
+
+.titulo-pagina {
+    position: relative;
+    top: 0;
+    left: 0;
+    width: 90%;
+    padding-top: 64px;
+    z-index: 1;
+    transition: all 0.6s ease-in-out;
+    color: var(--cor-escura);
+}
+
+.titulo-pagina h1 {
+    font-size: var(--texto-medio);
+
+}
+
+.banner-usuario {
+    position: relative;
+    width: 90%;
+    z-index: 1;
+    transition: all 0.6s ease-in-out;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px 20px;
+    padding-bottom: 40px;
+}
+
+.banner-usuario h1 {
+    font-size: var(--texto-medio);
+    color: var(--cor-escura);
+    margin: 0;
+
+}
+
+.banner-usuario h2 {
+    font-size: var(--texto-medio);
+    color: var(--cor-primaria);
+}
+
+.banner-usuario h3 {
+    font-size: var(--texto-pequeno);
+    color: var(--cor-escura);
+}
+
+.banner-img {
+    height: 200px;
+    width: auto;
+}
+
+.img-circular {
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.conteudo .img-circular:hover {
+    cursor: pointer;
+}
+
+.empresa-container {
+    position: relative;
+    width: 85%;
+    height: fit-content;
+    background: #fff;
+    border-radius: 30px;
+    box-shadow: 0 0 30px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    display: flex;
+}
+
+.form-box-empresa,
+.banner-usuario-mens {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    top: 0;
+    left: 0;
+    width: 90%;
+    padding: 40px;
+    z-index: 1;
+    transition: all 0.6s ease-in-out;
+    align-items: start;
+    justify-content: space-between;
+    gap: 12px 20px;
+}
+
+.form-box-empresa form,
+.banner-usuario-mens form {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    width: 100%;
+}
+
+.form-box-empresa h1,
+.banner-usuario-mens h1 {
+    font-size: var(--texto-medio);
+    font-weight: 700;
+    text-align: left;
+    color: var(--cor-escura);
+    padding-bottom: 30px;
+}
+
+.input-fb-empresa {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 12px 20px;
+}
+
+.emp-div-btn {
+    display: flex;
+    align-self: flex-end;
+    padding: 40px 80px 40px 40px;
+}
+
+.emp-div-btn button {
+    width: 250px;
+}
+
+.botao-cadastrar {
+    padding: 16px;
+    background-color: var(--cor-complementar);
+    border: none;
+    color: var(--cor-clara);
+    font-weight: var(--bold);
+    cursor: pointer;
+    transition: .15s ease-in-out;
+    border-radius: 32px;
+    font-size: var(--texto-pequeno);
+}
+
+.botao-cadastrar:hover {
+    background-color: var(--cor-complementar-escura);
+}
+
+
+.input-box {
+    text-align: left;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+}
+
+.input-box label {
+    display: block;
+    width: 100%;
+    font-size: 13px;
+    font-weight: 600;
+    margin-bottom: 4px;
+    color: #333;
+}
+
+.input-box input {
+    flex: 1;
+    padding: 10px 12px;
+    border: 1px solid #e5e7eb;
+    border-radius: 10px;
+    background: #fdfdfd;
+    font-size: 14px;
+    transition: all 0.3s ease;
+}
+
+.input-box i {
+    margin-left: 10px;
+    color: #9ca3af;
+    font-size: 18px;
+    flex-shrink: 0;
+}
+
+.input-box input:focus {
+    border-color: var(--cor-primaria);
+    outline: none;
+}
+
+.input-box input:focus + i {
+    color: var(--cor-primaria);
+}
+
+.input-box label {
+    display: block;
+    font-size: 13px;
+    font-weight: 600;
+    margin-bottom: 4px;
+    color: #333;
+}
+
+
+
+/* -------------- MENU LATERAL ----------------- */
+
+.menu-lateral {
+    display: flex;
+    flex-direction: column;
+    position: fixed;
+    align-items: center;
+    max-width: 350px;
+    height: 100vh;
+    background-color: var(--cor-primaria);
+    padding: 64px;
+    flex: 1;
+    gap: 32px;
+    justify-content: space-between;
+
+    text-align: center;
+    font-size: var(--texto-pequeno);
+    font-weight: var(--regular);
+
+    border-top-right-radius: 30px;
+    border-bottom-right-radius: 30px;
+}
+
+.menu-usuario h1 {
+    font-size: var(--texto-medio);
+    color: var(--cor-clara);
+    padding-top: 10px;
+}
+
+.menu-lista {
+    display: flex;
+    flex-direction: column;
+    align-self: flex-start;
+    text-align: left;
+}
+
+.menu-lista span {
+    color: var(--cor-clara);
+}
+
+.menu-lista i {
+    color: var(--cor-cinza-claro);
+    padding: 10px 10px 10px;
+    margin: 0;
+}
+
+.menu-lateral .input-box:hover {
+    transition: 0.15s ease-in-out;
+    transform: scale(1.2);
+    cursor: pointer;
+}
+
+.menu-logo {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+    padding-bottom: 40px;
+}
+
+.menu-logo h3 {
+    font-size: var(--texto-pequeno);
+}
+
+.input-box select {
+    flex: 1;
+    padding: 10px 12px;
+    border: 1px solid #e5e7eb;
+    border-radius: 10px;
+    background: #fdfdfd;
+    font-size: 14px;
+    transition: all 0.3s ease;
+}
+
+/* --------------------- RESPONSIVIDADE --------------------- */
+
+.menu-toggle {
+    display: none;
+    position: fixed;
+    top: 16px;
+    left: 16px;
+    z-index: 101;
+    background: var(--cor-primaria);
+    color: white;
+    border: none;
+    padding: 10px 12px;
+    border-radius: 10px;
+    font-size: 24px;
+    cursor: pointer;
+}
+
+.overlay-menu {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.4);
+    z-index: 999;
+}
+
+/* --------------------- RESPONSIVIDADE --------------------- */
+
+@media (max-width: 576px) {
+
+    header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+
+    body {
+        background: var(--cor-clara);
+    }
+
+    .menu-lateral {
+        display: none;
+    }
+
+    .conteudo {
+        display: flex;
+        flex-direction: column;
+        margin-left: 0;
+        width: 100%;
+        padding: 20px;
+        gap: 20px;
+    }
+
+
+    .banner-usuario {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .banner-img {
+        width: 100%;
+        height: auto;
+    }
+
+    .input-fb-empresa {
+        grid-template-columns: 1fr;
+    }
+
+    .empresa-container {
+        width: 95%;
+    }
+
+    .form-box-empresa {
+        align-items: center;
+        padding: 30px;
+    }
+
+    .banner-usuario-mens {
+        align-items: center;
+        padding: 20px;
+    }
+
+    .form-box-empresa h1,
+    .banner-usuario-mens h1 {
+        padding-bottom: 20px;
+    }
+
+    .banner-usuario-mens h1 {
+        margin-bottom: 0px;
+    }
+
+    .emp-div-btn {
+        display: flex;
+        width: 100%;
+        padding: 10px;
+    }
+
+    .emp-div-btn button {
+        flex: 1;
+        width: 100%;
+    }
+
+    .titulo-pagina {
+        padding-top: 0px;
+        text-align: center;
+    }
+
+    .links {
+        width: 50% !important;
+        justify-content: flex-start;
+        z-index: 10;
+    }
+
+    .links span {
+        color: var(--cor-clara);
+    }
+
+    .menu-usuario {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 8px;
+    }
+
+    .menu-usuario h1 {
+        font-size: 16px;
+        font-weight: 500;
+        margin: 0;
+        text-align: center;
+    }
+
+    .menu-usuario img {
+        height: 100px;
+        width: auto;
+        justify-self: center;
+    }
+
+    .menu-logo {
+        margin-top: auto;
+    }
+
+    .menu-logo img {
+        height: 50px;
+    }
+
+    .links nav ul li a {
+        text-decoration: none !important;
+    }
+
+    .input-box:hover {
+        cursor: pointer;
+    }
+
+    .input-box i,
+    .menu-lista i {
+        color: var(--cor-clara);
+        padding: 5px 5px 5px 0px;
+        margin: 0px;
+    }
+
+    .form-box-empresa i {
+        padding: 5px 5px 5px 10px;
+    }
+
+}
