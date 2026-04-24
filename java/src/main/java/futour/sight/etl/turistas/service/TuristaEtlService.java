@@ -1,12 +1,18 @@
 package futour.sight.etl.turistas.service;
 
-
 import futour.sight.etl.turistas.dao.ChegadaTuristaDAO;
 import futour.sight.etl.turistas.dto.ChegadaTuristaDTO;
 import futour.sight.etl.turistas.reader.ExcelReader;
 import futour.sight.log.dao.LogDAO;
 import org.springframework.jdbc.core.JdbcTemplate;
+import software.amazon.awssdk.core.sync.ResponseTransformer;
+import software.amazon.awssdk.services.s3.S3Client;
+import software.amazon.awssdk.services.s3.model.GetObjectRequest;
 
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
@@ -47,6 +53,44 @@ public class TuristaEtlService {
             logDAO.inserir("chegadas_turistas", lista.size(), false, "Erro ao salvar no banco: " + e.getMessage());
             log("ERRO", "Falha ao inserir no banco — " + e.getMessage());
         }
+    }
+
+    public void executarDoS3(S3Client s3Client, String bucketName, String objectKey) {
+        File tempFile = null;
+
+        try {
+            log("INFO", "Baixando arquivo do S3: s3://" + bucketName + "/" + objectKey);
+            tempFile = baixarArquivoDoS3(s3Client, bucketName, objectKey);
+            log("SUCESSO", "Arquivo baixado do S3 com sucesso");
+
+            executar(tempFile.getAbsolutePath());
+
+        } catch (IOException e) {
+            logDAO.inserir("chegadas_turistas", 0, false, "Erro ao baixar do S3: " + e.getMessage());
+            log("ERRO", "Falha ao baixar do S3 — " + e.getMessage());
+        } finally {
+            if (tempFile != null && tempFile.exists()) {
+                boolean deleted = tempFile.delete();
+                if (deleted) {
+                    log("INFO", "Arquivo temporário removido");
+                }
+            }
+        }
+    }
+
+    private File baixarArquivoDoS3(S3Client s3Client, String bucketName, String objectKey)
+            throws IOException {
+
+        Path tempPath = Files.createTempFile("etl-turistas-", ".xlsx");
+
+        GetObjectRequest getObjectRequest = GetObjectRequest.builder()
+                .bucket(bucketName)
+                .key(objectKey)
+                .build();
+
+        s3Client.getObject(getObjectRequest, ResponseTransformer.toFile(tempPath));
+
+        return tempPath.toFile();
     }
 
     private void log(String nivel, String mensagem) {
