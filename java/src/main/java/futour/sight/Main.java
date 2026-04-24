@@ -10,7 +10,7 @@ public class Main {
 
     public static void main(String[] args) {
 
-        String bucketName = "seu-bucket-futour";
+        String bucketName = "s3-futoursight";
         String objectKey = "chegadas-2024.xlsx";
 
         S3Client s3Client = S3Provider.getS3Client();
