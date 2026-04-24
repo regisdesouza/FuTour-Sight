@@ -1,0 +1,14 @@
+body {
+    background-color: #fff;
+}
+
+main {
+    height: 85vh;
+    padding: 32px 128px;
+}
+
+.container {
+    background-color: var(--cor-clara);
+    border: 1px solid var(--cor-cinza-escuro);
+    border-radius: 16px;
+}
