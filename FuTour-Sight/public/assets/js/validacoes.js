@@ -12,6 +12,20 @@ function validarNome(valor) {
     return "";
 }
 
+function validarNomeEmpresa(valor) {
+    const nomeEmpresa = valor.trim();
+
+    if (nomeEmpresa == '') {
+        return "Preencha o campo Empresa";
+    } else if (nomeEmpresa.length < 3) {
+        return "Nome da empresa muito curto";
+    } else if (nomeEmpresa.indexOf(' ') == -1) {
+        return "Digite o nome da empresa completo";
+    }
+
+    return "";
+}
+
 function validarEmail(valor) {
     const email = valor.trim();
 
@@ -71,6 +85,21 @@ function validarSenha(valor) {
         return "A senha deve conter pelo menos uma letra maiúscula";
     } else if (!/[!@#$%&*]/.test(senha)) {
         return "A senha deve conter pelo menos um caractere especial";
+    }
+
+    return "";
+}
+
+function validarCnpj(valor) {
+    const cnpjFormatado = valor.trim();
+    const numeros = cnpjFormatado.replace(/\D/g, "");
+
+    if (cnpjFormatado == '') {
+        return "Preencha o CNPJ";
+    } else if (numeros.length != 14) {
+        return "CNPJ inválido";
+    } else if (/^(\d)\1+$/.test(numeros)) {
+        return "CNPJ inválido";
     }
 
     return "";
