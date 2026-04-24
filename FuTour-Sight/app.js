@@ -18,6 +18,8 @@ var app = express();
 var indexRouter = require("./src/routes/index");
 var emailRouter = require("./src/routes/email");
 var usuarioRouter = require("./src/routes/usuarios");
+var usuarioAdminRouter = require("./src/routes/usuariosAdmin");
+var adminFutourRouter = require("./src/routes/adminFutour");
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
@@ -28,6 +30,8 @@ app.use(cors());
 app.use("/", indexRouter);
 app.use("/", emailRouter);
 app.use("/usuarios", usuarioRouter);
+app.use("/usuariosAdmin", usuarioAdminRouter);
+app.use("/adminFutour", adminFutourRouter);
 
 app.listen(PORTA_APP, function () {
     console.log(`

@@ -81,7 +81,7 @@ function preCadastrar() {
     fetch("/usuarios/preCadastrar", {
         method: "POST",
         headers: {
-            "Content-Type": "application/json"
+            "Content-Type": "application/json",
         },
         body: JSON.stringify({
             nomeServer: nomeVar,
@@ -89,29 +89,32 @@ function preCadastrar() {
             empresaServer: empresaVar,
             emailCorporativoServer: emailCorporativoVar,
             cnpjServer: cnpjVar,
-            telefoneCorporativoServer: telefoneCorporativoVar
-        })
+            telefoneCorporativoServer: telefoneCorporativoVar,
+        }),
     })
-        .then(function (resposta) {
-            if (resposta.ok) {
-                div_msg.innerHTML = "Pré cadastro enviado com sucesso!";
-
-                nome.value = "";
-                emailPessoal.value = "";
-                empresa.value = "";
-                emailCorporativo.value = "";
-                cnpj.value = "";
-                telefoneCorporativo.value = "";
-
-                setTimeout(function () {
-                    div_msg.innerHTML = "";
-                }, 5000);
-            } else {
-                throw "Erro no pré cadastro";
+        .then((resposta) => {
+            if (!resposta.ok) {
+                throw new Error("Erro no pré cadastro. Código da resposta: " + resposta.status);
             }
+            return resposta.json();
         })
-        .catch(function (erro) {
-            console.log("ERRO:", erro);
+        .then((dados) => {
+            console.log("Pré cadastro realizado:", dados);
+            div_msg.innerHTML = "Pré cadastro enviado com sucesso!";
+
+            nome.value = "";
+            emailPessoal.value = "";
+            empresa.value = "";
+            emailCorporativo.value = "";
+            cnpj.value = "";
+            telefoneCorporativo.value = "";
+
+            setTimeout(() => {
+                div_msg.innerHTML = "";
+            }, 5000);
+        })
+        .catch((erro) => {
+            console.error("#ERRO:", erro);
         });
 
     return false;

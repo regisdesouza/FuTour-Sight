@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Solicitações</title>
+
+    <link rel="stylesheet" href="../assets/css/reset.css">
+    <link rel="stylesheet" href="../assets/css/styles.css">
+    <link rel="stylesheet" href="../assets/css/responsive.css">
+    <link rel="stylesheet" href="../assets/css/solicitacoes.css">
+</head>
+
+<body>
+
+    <main>
+        <header>
+            <a href="../index.html" class="logo">
+                <img src="../assets/images/logo-futour-sight-branco.png" alt="Logo FuTour Sight">
+                <span>FuTour Sight</span>
+            </a>
+
+            <input type="checkbox" id="menu-hamburguer">
+
+            <label for="menu-hamburguer" class="menu-hamburguer">
+                <div class="menu">
+                    <span class="hamburguer"></span>
+                </div>
+            </label>
+
+            <div class="overlay"></div>
+
+            <div class="links">
+                <nav>
+                    <ul>
+                        <li><a href="#main">Solicitações</a></li>
+                        <li><a href="./parcerias.html">Parcerias</a></li>
+                        <li><a href="./logs.html">Logs</a></li>
+                    </ul>
+                </nav>
+                <div class="botoes-autenticacao">
+                    <a href="./login.html" class="botao botao-cadastrar">Sair</a>
+                </div>
+            </div>
+        </header>
+
+        <div class="infos-section">
+            <div class="infos-container">
+                <h2>Nome Sobrenome</h2>
+                <div class="infos-usuario">
+                    <span>Cargo</span>
+                    <span>usuario@email.com</span>
+                </div>
+            </div>
+            <div class="img-container">
+                <img src="../assets/images/solicitacoes.png" alt="imagem ilustrativa de solicitações">
+            </div>
+        </div>
+
+        <ul class="solicitacoes-empresas">
+
+            <!-- Retirar esse HTML e renderizar uma <li> para cada item buscado do Banco de Dados. -->
+            <!-- Feito apenas para testar o HTML e CSS -->
+
+            <li>
+                <img src="https://placehold.co/346x220/png" alt="imagem da empresa">
+                <div class="infos-empresa">
+                    <p>Empresa: exemplo</p>
+                    <p>E-mail da empresa: exemplo@teste.com</p>
+                </div>
+            </li>
+            <li>
+                <img src="https://placehold.co/346x220/png" alt="imagem da empresa">
+                <div class="infos-empresa">
+                    <p>Empresa: exemplo</p>
+                    <p>E-mail da empresa: exemplo@teste.com</p>
+                </div>
+            </li>
+            <li>
+                <img src="https://placehold.co/346x220/png" alt="imagem da empresa">
+                <div class="infos-empresa">
+                    <p>Empresa: exemplo</p>
+                    <p>E-mail da empresa: exemplo@teste.com</p>
+                </div>
+            </li>
+            <li>
+                <img src="https://placehold.co/346x220/png" alt="imagem da empresa">
+                <div class="infos-empresa">
+                    <p>Empresa: exemplo</p>
+                    <p>E-mail da empresa: exemplo@teste.com</p>
+                </div>
+            </li>
+
+            <!-- Fim das <li> -->
+
+        </ul>
+    </main>
+
+    <div class="empresa-selecionada">
+        <div class="botao-fechar-empresa">
+            <div class="linha"></div>
+        </div>
+        <img src="https://placehold.co/520x320/png" alt="imagem da empresa">
+        <div class="empresa-container background-gradient"> 
+            <div class="infos-empresa">
+                <p>Empresa: <span>exemplo</span></p>
+                <p>CNPJ: <span>00.000.000/0000-00</span></p>
+                <p>E-mail da empresa: <span>exemplo@teste.com</span></p>
+                <p>Telefone da empresa: <span>(11) 00000-0000</span></p>
+                <p>Responsável: <span>Exemplo</span></p>
+                <p>E-mail do responsável: <span>exemplo@teste.com</span></p>
+            </div>
+            <div class="botoes-confirmacao">
+                <button><img src="../assets/images/icons/negar.png" alt="ícone do botão de negar"></button>
+                <button><img src="../assets/images/icons/aprovar.png" alt="ícone do botão de aprovar"></button>
+            </div>
+        </div>
+    </div>
+
+    <script src="../assets/js/pages/solicitacoes.js"></script>
+</body>
+
+</html>

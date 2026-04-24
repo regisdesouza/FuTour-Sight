@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+
+    <link rel="stylesheet" href="../assets/css/reset.css">
+    <link rel="stylesheet" href="../assets/css/styles.css">
+    <link rel="stylesheet" href="../assets/css/responsive.css">
+    <link rel="stylesheet" href="../assets/css/usuario.css">
+    <link rel="stylesheet" href="../assets/css/dashboard-proprietario.css">
+</head>
+
+<body class="background-branco">
+    <header>
+        <input type="checkbox" id="menu-hamburguer">
+
+        <label for="menu-hamburguer" class="menu-hamburguer">
+            <div class="menu">
+                <span class="hamburguer"></span>
+            </div>
+        </label>
+
+        <div class="overlay"></div>
+
+        <div class="links">
+            <div class="usuario-infos">
+                <div class="img-container">
+                    <img src="https://placehold.co/200x200/png" alt="Imagem da empresa">
+                </div>
+                <span>Nome do usuário</span>
+            </div>
+
+            <nav>
+                <ul>
+                    <li>
+                        <img src="../assets/images/icons/dashboard.png" alt="icone de dashboard">
+                        <button>Dashboard</button>
+                    </li>
+                    <li>
+                        <img src="../assets/images/icons/empresa-branca.png" alt="icone de empresa da cor branca">
+                        <button>Empresa</button>
+                    </li>
+                    <li>
+                        <img src="../assets/images/icons/perfil.png" alt="icone de perfil">
+                        <button>Perfil</button>
+                    </li>
+                    <li>
+                        <img src="../assets/images/icons/historico.png" alt="icone de historico">
+                        <button>Funcionários</button>
+                    </li>
+                    <li>
+                        <img src="../assets/images/icons/filtro.png" alt="icone de filtro">
+                        <button>Filtro</button>
+                    </li>
+                </ul>
+            </nav>
+
+            <div class="botao-sair-container">
+                <img src="../assets/images/icons/sair.png" alt="icone de sair">
+                <button class="botao-sair">Sair</button>
+            </div>
+
+            <div class="logo">
+                <img src="../assets/images/logo-futour-sight-branco.png" alt="Logo FuTour Sight">
+                <span>FuTour Sight</span>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <h1>Dashboard</h1>
+        <div class="kpis">
+            <div class="kpi-container container">
+                <p class="descricao">Estado com maior crescimento de turistas no último ano</p>
+                <div class="kpi-infos">
+                    <span class="info">São Paulo</span>
+                    <div class="kpi-dados">
+                        <span>+12%</span>
+                        <span>+5600 turistas</span>
+                    </div>
+                </div>
+            </div>
+            <div class="kpi-container container">
+                <p class="descricao">Estado que mais cresceu em comparação aos últimos 10 anos</p>
+                <div class="kpi-infos">
+                    <span class="info">Rio de Janeiro</span>
+                    <div class="kpi-dados">
+                        <span>+24%</span>
+                        <span>+5 milhões</span>
+                    </div>
+                </div>
+            </div>
+            <div class="kpi-container container">
+                <p class="descricao">Estado com maior número total de turistas</p>
+                <div class="kpi-infos">
+                    <span class="info">Piauí</span>
+                    <div class="kpi-dados">
+                        <span>+124 mil</span>
+                        <span>turistas</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="select-container">
+            <span>Intervalo de anos</span>
+            <select name="ano-comeco" id="ano-comeco">
+                <option value="#">Selecione um ano</option>
+                <option value="2024">2024</option>
+                <!-- Puxar os anos e renderizar cada um como um option -->
+
+            </select>
+            <span>até</span>
+            <select name="ano-fim" id="ano-fim">
+                <option value="#">Selecione um ano</option>
+                <option value="2025">2025</option>
+                <!-- Puxar os anos e renderizar cada um como um option -->
+
+            </select>
+        </div>
+
+        <div class="graficos-container">
+            <div class="grafico container">
+                <h3>Estados com maior quantidade de turistas por ano</h3>
+                <canvas id="myChart"></canvas>
+            </div>
+
+            <div class="tabelas-container">
+                <div class="tabela container">
+                    <h3>Crescimento proporcional</h3>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Posição</th>
+                                <th>Estado</th>
+                                <th>Crescimento</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>1º</td>
+                                <td>Acre</td>
+                                <td>+13%</td>
+                            </tr>
+                            <tr>
+                                <td>2º</td>
+                                <td>Minas Gerais</td>
+                                <td>+9%</td>
+                            </tr>
+                            <tr>
+                                <td>3º</td>
+                                <td>Bahia</td>
+                                <td>+7%</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="tabela container">
+                    <h3>Crescimento absoluto</h3>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Posição</th>
+                                <th>Estado</th>
+                                <th>Crescimento</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>1º</td>
+                                <td>Goiânia</td>
+                                <td>+4503</td>
+                            </tr>
+                            <tr>
+                                <td>2º</td>
+                                <td>Ceará</td>
+                                <td>+2309</td>
+                            </tr>
+                            <tr>
+                                <td>3º</td>
+                                <td>Alagoas</td>
+                                <td>+2160</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </main>
+</body>
+
+</html>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<script>
+    const ctx = document.getElementById('myChart');
+
+    new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: ['São Paulo', 'Rio de Janeiro', 'Ceará', 'Green', 'Purple'],
+            datasets: [{
+                label: '2025',
+                data: [12, 19, 3, 5, 2],
+                borderWidth: 1
+            },
+            {
+                label: '2024',
+                data: [10, 13, 2, 5, 4],
+                borderWidth: 1
+            }]
+        },
+        options: {
+            scales: {
+                y: {
+                    beginAtZero: true
+                },
+                x: {
+                    stacked: false
+                }
+            }
+        }
+    });
+</script>

@@ -55,6 +55,10 @@ html {
     padding: 64px 160px;
 }
 
+button {
+    cursor: pointer;
+}
+
 
 
 body {

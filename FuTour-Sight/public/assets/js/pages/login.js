@@ -43,34 +43,35 @@ function login() {
     fetch("/usuarios/autenticar", {
         method: "POST",
         headers: {
-            "Content-Type": "application/json"
+            "Content-Type": "application/json",
         },
         body: JSON.stringify({
             emailServer: emailVar,
-            senhaServer: senhaVar
-        })
+            senhaServer: senhaVar,
+        }),
     })
-        .then(function (resposta) {
-            if (resposta.ok) {
-                resposta.json().then(function (json) {
-
-                    sessionStorage.ID_USUARIO = json.id;
-                    sessionStorage.NOME_USUARIO = json.nome;
-                    sessionStorage.EMAIL_USUARIO = json.email;
-                    sessionStorage.NIVEL_ACESSO = json.nivel_permissao;
-                    sessionStorage.ID_EMPRESA = json.fk_empresa;
-                    sessionStorage.PRIMEIRO_ACESSO = json.primeiro_acesso;
-
-                    setTimeout(function () {
-                        window.location = "./dashboardProprietario.html";
-                    }, 1000);
-                });
-            } else {
-                throw "Erro no login";
+        .then((resposta) => {
+            if (!resposta.ok) {
+                throw new Error("Erro no login. Código da resposta: " + resposta.status);
             }
+            return resposta.json();
         })
-        .catch(function (erro) {
-            console.log("ERRO:", erro);
+        .then((json) => {
+            console.log("Login realizado:", json);
+
+            sessionStorage.ID_USUARIO = json.id;
+            sessionStorage.NOME_USUARIO = json.nome;
+            sessionStorage.EMAIL_USUARIO = json.email;
+            sessionStorage.NIVEL_ACESSO = json.nivel_permissao;
+            sessionStorage.ID_EMPRESA = json.fk_empresa;
+            sessionStorage.PRIMEIRO_ACESSO = json.primeiro_acesso;
+
+            setTimeout(() => {
+                window.location = "./dashboardProprietario.html";
+            }, 1000);
+        })
+        .catch((erro) => {
+            console.error("#ERRO:", erro);
         });
 
     return false;

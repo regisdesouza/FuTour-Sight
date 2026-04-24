@@ -1,0 +1,229 @@
+main {
+    display: flex;
+    gap: 32px;
+    padding: 32px;
+    width: 100%;
+    max-height: 100vh;
+}
+
+.novo-filtro {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    height: 100%;
+    flex: 1;
+}
+
+.titulo {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.titulo h2 {
+    font-size: var(--texto-grande-plus);
+}
+
+.titulo p {
+    font-size: var(--texto-medio);
+}
+
+.criar-filtro-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 32px;
+    padding: 16px;
+    border-radius: 16px;
+    background-color: var(--cor-clara);
+    height: 100%;
+}
+
+.criar-filtro {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
+.campo {
+    display: flex;
+    flex-direction: column;
+}
+
+.campo input,
+select {
+    background-color: var(--cor-cinza-claro);
+    padding: 8px 16px;
+    border-radius: 16px;
+    border: none;
+    font-size: var(--texto-medio);
+}
+
+.campo ul {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 16px;
+    overflow-y: auto;
+    max-height: 100px;
+}
+
+.campo .item {
+    border: 1px solid var(--cor-cinza);
+    background-color: var(--cor-cinza-claro);
+    width: max-content;
+    padding: 8px;
+    border-radius: 24px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.campo .item button {
+    border: none;
+    background-color: var(--cor-cinza-escuro);
+    border-radius: 16px;
+    width: 24px;
+    height: 24px;
+    color: var(--cor-clara);
+    transition: var(--transition);
+}
+
+.campo .item button:hover {
+    background-color: var(--cor-escura);
+}
+
+.intervalo-meses-container {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.intervalo-meses-container label {
+    font-size: var(--texto-medio);
+}
+
+.intervalo-meses {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+.intervalo-meses span {
+    font-size: var(--texto-medio);
+}
+
+.intervalo-meses select {
+    width: 100%;
+}
+
+.criar-filtro-container .botoes {
+    display: flex;
+    gap: 24px;
+}
+
+.botoes button {
+    flex: 1;
+    padding: 12px 32px;
+    border-radius: 8px;
+    border: none;
+    font-size: var(--texto-medio);
+    transition: var(--transition);
+}
+
+.botoes button:first-child {
+    border: 1px solid var(--cor-complementar);
+    color: var(--cor-complementar);
+}
+
+.botoes button:first-child:hover {
+    background-color: var(--cor-complementar);
+    color: var(--cor-clara);
+}
+
+.botoes button:last-child {
+    color: var(--cor-clara);
+    background-color: var(--cor-complementar);
+}
+
+.botoes button:last-child:hover {
+    background-color: var(--cor-complementar-escura);
+}
+
+.filtros-salvos {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    flex: 1;
+}
+
+.filtros-salvos ul {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    overflow-y: auto;
+}
+
+.filtro {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 16px;
+    border-radius: 12px;
+    background-color: var(--cor-clara);
+    width: 100%;
+}
+
+.filtro .infos-filtro-container {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+.icone-filtro {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 70px;
+    height: 70px;
+    border-radius: 8px;
+    font-size: var(--texto-grande);
+    font-weight: var(--bold);
+    color: var(--cor-clara);
+    background-color: var(--cor-cinza-escuro);
+}
+
+.infos-filtro h4 {
+    font-size: var(--texto-medio);
+    font-weight: var(--bold);
+}
+
+.infos-filtro p {
+    font-size: var(--texto-pequeno);
+}
+
+.filtro .botoes {
+    display: flex;
+    gap: 16px;
+}
+
+.filtro .botoes button {
+    color: var(--cor-clara);
+    font-size: var(--texto-medio);
+}
+
+.filtro .botoes button:first-child {
+    background-color: var(--cor-terciaria);
+}
+
+.filtro .botoes button:first-child:hover {
+    background-color: #02445e;
+}
+
+.filtro .botoes button:last-child {
+    background-color: #E00000;
+}
+
+.filtro .botoes button:last-child:hover {
+    background-color: #b10000;
+}
