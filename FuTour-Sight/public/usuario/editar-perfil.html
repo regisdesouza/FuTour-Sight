@@ -9,7 +9,6 @@
     <link rel="stylesheet" href="../assets/css/reset.css">
     <link rel="stylesheet" href="../assets/css/styles.css">
     <link rel="stylesheet" href="../assets/css/edicao.css">
-    <link rel="stylesheet" href="../assets/css/cadastro-func.css">
     <link rel="stylesheet" href="../assets/css/responsive.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
 </head>
@@ -128,26 +127,48 @@
         <div class="conteudo">
 
             <div class="titulo-pagina">
-                <h1>Cadastro de Funcionário</h1>
+                <h1>Atualizar Dados Pessoais</h1>
             </div>
+
+            <div class="banner-usuario">
+                <div class="banner-usuario-mens">
+                    <h1>Seja bem-vindo</h1>
+                    <h2>Nome da Empresa</h2>
+                    <h3>email@email.com</h1>
+                </div>
+                <img src="../assets/images/img-emp.png" alt="" class="banner-img">
+
+            </div>
+
+            <hr>
 
             <div class="empresa-container form-box-empresa">
                 <form action="">
-                    <h1>Dados do Funcionário</h1>
+                    <h1>Dados Pessoais</h1>
                     <div class="input-fb-empresa">
                         <div class="input-box">
-                            <label for="func-name">Nome do colaborador</label>
-                            <input id="func-name" type="text" placeholder="Nome do funcionário" required>
+                            <label for="func-name">Nome Completo</label>
+                            <input id="func-name" type="text" placeholder="Nome Completo" required>
                             <i class="bi bi-pencil"></i>
                         </div>
                         <div class="input-box">
-                            <label for="func-email">E-mail do colaborador</label>
+                            <label for="func-email">E-mail</label>
                             <input id="func-email" type="email" placeholder="usuario@email.com" required>
                             <i class="bi bi-envelope"></i>
                         </div>
                         <div class="input-box">
-                            <label for="func-senha">Senha</label>
-                            <input id="func-senha" type="password" placeholder="Senha" required>
+                            <label for="func-senha">Senha Atual</label>
+                            <input id="func-senha" type="password" placeholder="Senha Atual" required>
+                            <i class="bi bi-key"></i>
+                        </div>
+                        <div class="input-box">
+                            <label for="func-senha">Nova Senha</label>
+                            <input id="func-senha" type="password" placeholder="Nova Senha" required>
+                            <i class="bi bi-key"></i>
+                        </div>
+                        <div class="input-box">
+                            <label for="func-senha">Confirmar Nova Senha</label>
+                            <input id="func-senha" type="password" placeholder="Confirmar Nova Senha" required>
                             <i class="bi bi-key"></i>
                         </div>
                     </div>
@@ -155,44 +176,8 @@
                 </form>
 
             </div>
-
-            <hr>
-
-            <div class="empresa-container form-box-empresa">
-                <div class="cad-func">
-                    <form action="">
-                        <h1>Dados de Configuração</h1>
-                        <div class="input-fb-empresa">
-                            <div class="input-box">
-                                <label for="nivel">Nível de Permissão</label>
-                                <select id="nivel" required>
-                                    <option value="">Selecione</option>
-                                    <option value="admin">Administrador</option>
-                                    <option value="editor">Editor</option>
-                                    <option value="viewer">Visualizador</option>
-                                </select>
-                                <i class="bi bi-lock"></i>
-                            </div>
-
-                        </div>
-                    </form>
-
-                    <div>
-                        <img src="../assets/images/edicao-img1.png" alt="" class="banner-img">
-                    </div>
-                </div>
-            </div>
-
-            <div class="linha-btn">
-                <div class="input-box linha-txt">
-                    <i class="bi bi-info-circle"></i>
-                    <h3>Após o cadastro do funcionário, um e-mail será enviado com as credenciais de acesso cadastradas.
-                    </h3>
-                    <div class="emp-div-btn">
-                        <button type="button" class="btn-main register-btn botao-cadastrar">Cadastrar</button>
-                    </div>
-                </div>
-
+            <div class="emp-div-btn">
+                <button type="button" class="btn-main register-btn botao-cadastrar">Atualizar</button>
             </div>
 
         </div>
