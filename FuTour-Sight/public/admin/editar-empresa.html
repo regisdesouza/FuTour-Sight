@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Editar funcionário</title>
+
+    <link rel="stylesheet" href="../assets/css/reset.css">
+    <link rel="stylesheet" href="../assets/css/styles.css">
+    <link rel="stylesheet" href="../assets/css/responsive.css">
+    <link rel="stylesheet" href="../assets/css/filtros.css">
+    <link rel="stylesheet" href="../assets/css/editar-empresa.css">
+</head>
+
+<body class="background-branco">
+    <header>
+        <a href="../index.html" class="logo">
+            <img src="../assets/images/logo-futour-sight-branco.png" alt="Logo FuTour Sight">
+            <span>FuTour Sight</span>
+        </a>
+
+        <input type="checkbox" id="menu-hamburguer">
+
+        <label for="menu-hamburguer" class="menu-hamburguer">
+            <div class="menu">
+                <span class="hamburguer"></span>
+            </div>
+        </label>
+
+        <div class="overlay"></div>
+
+        <div class="links">
+            <nav>
+                <ul>
+                    <li><a href="./solicitacoes.html">Solicitações</a></li>
+                    <li><a href="./lista-empresas.html">Parcerias</a></li>
+                    <li><a href="./logs.html">Logs</a></li>
+                </ul>
+            </nav>
+            <div class="botoes-autenticacao">
+                <a href="./login.html" class="botao botao-cadastrar">Sair</a>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <section class="novo-filtro">
+            <div class="titulo">
+                <h2>Editar empresa</h2>
+                <p>Edite e salve sua empresa</p>
+            </div>
+
+            <div class="criar-filtro-container">
+                <div class="criar-filtro">
+                    <div class="campo">
+                        <label for="nome-empresa">Nome da empresa</label>
+                        <input id="nome-empresa" type="text" placeholder="Nome da empresa">
+                    </div>
+                    <div class="campo">
+                        <label for="cnpj">CNPJ</label>
+                        <input id="cnpj" type="text" placeholder="CNPJ">
+                    </div>
+                    <div class="campo">
+                        <label for="email">Email</label>
+                        <input id="email" type="text" placeholder="Email">
+                    </div>
+                    <div class="campo">
+                        <label for="telefone">Telefone</label>
+                        <input id="telefone" type="text" placeholder="Telefone">
+                    </div>
+                </div>
+
+                <div class="botoes">
+                    <button>Cancelar</button>
+                    <button>Atualizar empresa</button>
+                </div>
+            </div>
+        </section>
+    </main>
+</body>
+
+</html>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<script>
+    const ctx = document.getElementById('myChart');
+
+    new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'],
+            datasets: [{
+                label: '2025',
+                data: [12, 19, 3, 5, 2],
+                borderWidth: 1
+            },
+            {
+                label: '2024',
+                data: [10, 13, 2, 5, 4],
+                borderWidth: 1
+            }]
+        },
+        options: {
+            scales: {
+                y: {
+                    beginAtZero: true
+                },
+                x: {
+                    stacked: false
+                }
+            }
+        }
+    });
+</script>
