@@ -6,6 +6,7 @@ CREATE TABLE nivel_permissao (
     id_nivel_permissao INT AUTO_INCREMENT PRIMARY KEY,
     nome VARCHAR(50) NOT NULL UNIQUE,
     descricao VARCHAR(255)
+    
 );
 
 INSERT INTO nivel_permissao (nome, descricao) VALUES
