@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+
+    <link rel="stylesheet" href="../assets/css/reset.css">
+    <link rel="stylesheet" href="../assets/css/styles.css">
+    <link rel="stylesheet" href="../assets/css/responsive.css">
+    <link rel="stylesheet" href="../assets/css/usuario.css">
+    <link rel="stylesheet" href="../assets/css/lista-funcionarios.css">
+</head>
+
+<body class="background-branco">
+    <header>
+        <input type="checkbox" id="menu-hamburguer">
+
+        <label for="menu-hamburguer" class="menu-hamburguer">
+            <div class="menu">
+                <span class="hamburguer"></span>
+            </div>
+        </label>
+
+        <div class="overlay"></div>
+
+        <div class="links">
+            <div class="usuario-infos">
+                <div class="img-container">
+                    <img src="https://placehold.co/200x200/png" alt="Imagem da empresa">
+                </div>
+                <span>Nome do usuário</span>
+            </div>
+
+            <nav>
+                <ul>
+                    <li>
+                        <img src="../assets/images/icons/dashboard.png" alt="icone de dashboard">
+                        <button>Dashboard</button>
+                    </li>
+                    <li>
+                        <img src="../assets/images/icons/empresa-branca.png" alt="icone de empresa da cor branca">
+                        <button>Empresa</button>
+                    </li>
+                    <li>
+                        <img src="../assets/images/icons/perfil.png" alt="icone de perfil">
+                        <button>Perfil</button>
+                    </li>
+                    <li>
+                        <img src="../assets/images/icons/historico.png" alt="icone de historico">
+                        <button>Funcionários</button>
+                    </li>
+                    <li>
+                        <img src="../assets/images/icons/filtro.png" alt="icone de filtro">
+                        <button>Filtro</button>
+                    </li>
+                </ul>
+            </nav>
+
+            <div class="botao-sair-container">
+                <img src="../assets/images/icons/sair.png" alt="icone de sair">
+                <button class="botao-sair">Sair</button>
+            </div>
+
+            <div class="logo">
+                <img src="../assets/images/logo-futour-sight-branco.png" alt="Logo FuTour Sight">
+                <span>FuTour Sight</span>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <div class="topo">
+            <div class="barra-pesquisa">
+                <input type="text" placeholder="Buscar funcionário">
+                <button><img src="../assets/images/icons/pesquisar.png" alt="icone de lupa"></button>
+            </div>
+            <button class="botao botao-cadastrar-funcionario">Cadastrar funcionário</button>
+        </div>
+
+        <div class="tabelas-container">
+            <div class="tabela container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Colaborador</th>
+                            <th>Nível de permissão</th>
+                            <th>Endereço</th>
+                            <th>Status</th>
+                            <th>Email</th>
+                            <th>Edição</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Colaborador nome exemplo</td>
+                            <td>Gerente</td>
+                            <td>Exemplo, SP</td>
+                            <td>Ativo</td>
+                            <td>colaborador.email@testeempresa.com</td>
+                            <td>
+                                <button><img src="../assets/images/icons/x.png" alt="botão de X"></button>
+                                <button><img src="../assets/images/icons/editar.png" alt="botão de editar"></button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Colaborador nome exemplo</td>
+                            <td>Gerente</td>
+                            <td>Exemplo, SP</td>
+                            <td>Ativo</td>
+                            <td>colaborador.email@testeempresa.com</td>
+                            <td>
+                                <button><img src="../assets/images/icons/x.png" alt="botão de X"></button>
+                                <button><img src="../assets/images/icons/editar.png" alt="botão de editar"></button>
+                            </td>
+                        </tr>
+                        
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+    </main>
+</body>
+
+</html>
