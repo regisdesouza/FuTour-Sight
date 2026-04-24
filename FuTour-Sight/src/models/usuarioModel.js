@@ -27,6 +27,15 @@ function enviarMensagem(
     ]);
 }
 
+function buscarPorCnpj(cnpj) {
+    var instrucaoSql = `
+        SELECT id_solicitacao 
+        FROM solicitacao_cadastro 
+        WHERE cnpj_empresa = ?;
+    `;
+
+    return database.executar(instrucaoSql, [cnpj]);
+}
 
 function preCadastrar(
     nomePreCadastro,
@@ -106,6 +115,7 @@ function editarPerfil(
 
 module.exports = {
     enviarMensagem,
+    buscarPorCnpj,
     preCadastrar,
     autenticar,
     editarPerfil

@@ -3,7 +3,6 @@ iniciarMenu();
 Inputmask("(99) 99999-9999").mask(document.getElementById("telefone"));
 Inputmask("99.999.999/9999-99").mask(document.getElementById("cnpj"));
 
-
 var chkNome = false;
 var chkEmailPessoal = false;
 var chkNomeEmpresa = false;
@@ -86,7 +85,7 @@ function onkey_telefone() {
 function preCadastrar() {
     onkey_nome();
     onkey_email_pessoal();
-    onkey_nome_empresa()
+    onkey_nome_empresa();
     onkey_email_corporativo();
     onkey_cnpj();
     onkey_telefone();
@@ -100,7 +99,7 @@ function preCadastrar() {
 
     if (!temErro) {
         cardErro.style.display = "block";
-        mensagem_erro.innerHTML = "Preencha todos os campos.";
+        mensagem_erro.innerHTML = "Preencha todos os campos corretamente.";
         setTimeout(sumirMensagem, 3000);
         return false;
     }
@@ -126,30 +125,35 @@ function preCadastrar() {
             telefoneCorporativoServer: telefoneCorporativoVar,
         }),
     })
-        .then((resposta) => {
-            if (!resposta.ok) {
-                throw new Error("Erro no pré cadastro. Código da resposta: " + resposta.status);
-            }
-            return resposta.json();
-        })
-        .then((dados) => {
-            console.log("Pré cadastro realizado:", dados);
-            div_msg.innerHTML = "Pré cadastro enviado com sucesso!, os dados serão analisados e entraremos em contato em breve!";
+    .then((resposta) => {
+        if (!resposta.ok) {
+            return resposta.json().then(err => {
+                throw new Error(err.mensagem);
+            });
+        }
+        return resposta.json();
+    })
+    .then((dados) => {
+        console.log("Pré cadastro realizado:", dados);
 
-            nome.value = "";
-            emailPessoal.value = "";
-            empresa.value = "";
-            emailCorporativo.value = "";
-            cnpj.value = "";
-            telefone.value = "";
+        div_msg.innerHTML = "Pré cadastro enviado com sucesso!";
 
-            setTimeout(() => {
-                div_msg.innerHTML = "";
-            }, 8000);
-        })
-        .catch((erro) => {
-            console.error("#ERRO:", erro);
-        });
+        nome.value = "";
+        emailPessoal.value = "";
+        empresa.value = "";
+        emailCorporativo.value = "";
+        cnpj.value = "";
+        telefone.value = "";
+
+        setTimeout(() => {
+            div_msg.innerHTML = "";
+        }, 8000);
+    })
+    .catch((erro) => {
+        console.error("#ERRO:", erro);
+
+        div_msg.innerHTML = erro.message;
+    });
 
     return false;
 }

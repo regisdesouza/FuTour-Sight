@@ -52,11 +52,10 @@ function listarSolicitacoes() {
     return database.executar(sql, [9]);
 }
 
-function buscarPorId(id) {
-    var sql = `
-        SELECT * FROM solicitacao_cadastro 
-        WHERE id_solicitacao = ?`;
-
+function buscarSolicitacaoPorId(id) {
+    const sql = `
+        SELECT * FROM solicitacao_cadastro WHERE id_solicitacao = ?;
+    `;
     return database.executar(sql, [id]);
 }
 
@@ -114,6 +113,14 @@ function criarUsuario(nome, email, idEmpresa) {
     ]);
 }
 
+function criarUnidade(idEmpresa) {
+    var sql = `
+        INSERT INTO unidade (nome, fk_empresa)
+        VALUES (?, ?)`;
+
+    return database.executar(sql, ["Matriz", idEmpresa]);
+}
+
 module.exports = {
     buscarLogs,
     listarEmpresas,
@@ -121,9 +128,10 @@ module.exports = {
     buscarEmpresaPorCnpj,
     editarStatusEmpresa,
     listarSolicitacoes,
-    buscarPorId,
+    buscarSolicitacaoPorId,
     cancelarSolicitacao,
     aprovarSolicitacao,
     criarEmpresa,
-    criarUsuario
+    criarUsuario,
+    criarUnidade
 };

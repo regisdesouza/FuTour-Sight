@@ -26,7 +26,7 @@ function enviarMensagem(req, res) {
         });
 }
 
-function preCadastrar(req, res) {
+async function preCadastrar(req, res) {
     var {
         nomeServer,
         emailPessoalServer,
@@ -43,21 +43,33 @@ function preCadastrar(req, res) {
     if (!cnpjServer) return res.status(400).json({ mensagem: "CNPJ undefined!" });
     if (!telefoneCorporativoServer) return res.status(400).json({ mensagem: "Telefone undefined!" });
 
-    usuarioModel.preCadastrar(
-        nomeServer,
-        emailPessoalServer,
-        empresaServer,
-        emailCorporativoServer,
-        cnpjServer,
-        telefoneCorporativoServer
-    )
-        .then((resultado) => {
-            res.status(200).json(resultado);
-        })
-        .catch((erro) => {
-            console.log(erro);
-            res.status(500).json({ mensagem: erro.sqlMessage });
+    try {
+        const existe = await usuarioModel.buscarPorCnpj(cnpjServer);
+
+        if (existe.length > 0) {
+            return res.status(400).json({
+                mensagem: "Já existe uma solicitação com esse CNPJ."
+            });
+        }
+
+        const resultado = await usuarioModel.preCadastrar(
+            nomeServer,
+            emailPessoalServer,
+            empresaServer,
+            emailCorporativoServer,
+            cnpjServer,
+            telefoneCorporativoServer
+        );
+
+        return res.status(200).json({
+            mensagem: "Pré cadastro realizado com sucesso",
+            resultado
         });
+
+    } catch (erro) {
+        console.log(erro);
+        return res.status(500).json({ mensagem: erro.sqlMessage });
+    }
 }
 
 function autenticar(req, res) {
