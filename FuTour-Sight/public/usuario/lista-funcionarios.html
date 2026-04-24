@@ -10,7 +10,6 @@
     <link rel="stylesheet" href="../assets/css/styles.css">
     <link rel="stylesheet" href="../assets/css/responsive.css">
     <link rel="stylesheet" href="../assets/css/usuario.css">
-    <!-- <link rel="stylesheet" href="../assets/css/dashboard-gerente.css"> -->
     <link rel="stylesheet" href="../assets/css/lista-funcionarios.css">
 </head>
 
@@ -126,36 +125,3 @@
 </body>
 
 </html>
-
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-
-<script>
-    const ctx = document.getElementById('myChart');
-
-    new Chart(ctx, {
-        type: 'line',
-        data: {
-            labels: ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'],
-            datasets: [{
-                label: '2025',
-                data: [12, 19, 3, 5, 2],
-                borderWidth: 1
-            },
-            {
-                label: '2024',
-                data: [10, 13, 2, 5, 4],
-                borderWidth: 1
-            }]
-        },
-        options: {
-            scales: {
-                y: {
-                    beginAtZero: true
-                },
-                x: {
-                    stacked: false
-                }
-            }
-        }
-    });
-</script>
