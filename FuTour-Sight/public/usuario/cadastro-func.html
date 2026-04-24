@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FuTour Sight</title>
+
+    <link rel="stylesheet" href="../assets/css/reset.css">
+    <link rel="stylesheet" href="../assets/css/styles.css">
+    <link rel="stylesheet" href="../assets/css/edicao.css">
+    <link rel="stylesheet" href="../assets/css/cadastro-func.css">
+    <link rel="stylesheet" href="../assets/css/responsive.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+</head>
+
+<body class="body-empresa">
+
+    <header>
+        <a href="../index.html" class="logo">
+            <img src="../assets/images/logo-futour-sight-branco.png" alt="Logo FuTour Sight">
+            <span>FuTour Sight</span>
+        </a>
+
+        <input type="checkbox" id="menu-hamburguer">
+
+        <label for="menu-hamburguer" class="menu-hamburguer">
+            <div class="menu">
+                <span class="hamburguer"></span>
+            </div>
+        </label>
+
+        <div class="overlay"></div>
+
+        <div class="links">
+            <nav>
+                <div class="menu-usuario">
+                    <img src="../assets/images/placeholder-foto.png" alt="Foto da Empresa" class="img-circular">
+                    <h1>Nome de usuário</h1>
+                </div>
+            </nav>
+            <nav>
+                <div class="input-box">
+                    <i class="bi bi-graph-up-arrow"></i>
+                    <span>Dashboard</span>
+                </div>
+                <div class="input-box">
+                    <i class="bi bi-building"></i>
+                    <span>Empresa</span>
+                </div>
+                <div class="input-box">
+                    <i class="bi bi-person-fill"></i>
+                    <span>Perfil</span>
+                </div>
+                <div class="input-box">
+                    <i class="bi bi-clock-history"></i>
+                    <span>Histórico</span>
+                </div>
+                <div class="input-box">
+                    <i class="bi bi-funnel-fill"></i>
+                    <span>Filtro</span>
+            </nav>
+            <nav>
+                <div class="menu-lista">
+                    <div class="input-box">
+                        <i class="bi bi-box-arrow-left"></i>
+                        <span>Sair</span>
+                    </div>
+                </div>
+            </nav>
+            <a href="index.html" target="_blank" class="menu-logo">
+                <img src="../assets/images/logo-futour-sight-branco.png" alt="">
+                <h3>FuTour Sight</h3>
+            </a>
+        </div>
+    </header>
+
+    <main>
+
+        <!-- ------------------------- SIDEBAR ------------------------- -->
+
+        <div class="menu-lateral">
+
+            <div class="menu-usuario">
+                <img src="../assets/images/placeholder-foto.png" alt="Foto da Empresa" class="img-circular">
+                <h1>Nome de usuário</h1>
+            </div>
+
+            <div class="menu-lista links">
+                <div class="input-box">
+                    <i class="bi bi-graph-up-arrow"></i>
+                    <span>Dashboard</span>
+                </div>
+                <div class="input-box">
+                    <i class="bi bi-building"></i>
+                    <span>Empresa</span>
+                </div>
+                <div class="input-box">
+                    <i class="bi bi-person-fill"></i>
+                    <span>Perfil</span>
+                </div>
+                <div class="input-box">
+                    <i class="bi bi-clock-history"></i>
+                    <span>Histórico</span>
+                </div>
+                <div class="input-box">
+                    <i class="bi bi-funnel-fill"></i>
+                    <span>Filtro</span>
+                </div>
+            </div>
+
+            <div class="menu-lista">
+                <div class="input-box">
+                    <i class="bi bi-box-arrow-left"></i>
+                    <span>Sair</span>
+                </div>
+            </div>
+
+            <a href="index.html" target="_blank" class="menu-logo">
+                <img src="../assets/images/logo-futour-sight-branco.png" alt="">
+                <h3>FuTour Sight</h3>
+            </a>
+
+        </div>
+
+        <!-- ------------------------- PÁGINA ------------------------- -->
+
+        <div class="conteudo">
+
+            <div class="titulo-pagina">
+                <h1>Cadastro de Funcionário</h1>
+            </div>
+
+            <div class="empresa-container form-box-empresa">
+                <form action="">
+                    <h1>Dados do Funcionário</h1>
+                    <div class="input-fb-empresa">
+                        <div class="input-box">
+                            <label for="func-name">Nome do colaborador</label>
+                            <input id="func-name" type="text" placeholder="Nome do funcionário" required>
+                            <i class="bi bi-pencil"></i>
+                        </div>
+                        <div class="input-box">
+                            <label for="func-email">E-mail do colaborador</label>
+                            <input id="func-email" type="email" placeholder="usuario@email.com" required>
+                            <i class="bi bi-envelope"></i>
+                        </div>
+                        <div class="input-box">
+                            <label for="func-senha">Senha</label>
+                            <input id="func-senha" type="password" placeholder="Senha" required>
+                            <i class="bi bi-key"></i>
+                        </div>
+                    </div>
+
+                </form>
+
+            </div>
+
+            <hr>
+
+            <div class="empresa-container form-box-empresa">
+                <div class="cad-func">
+                    <form action="">
+                        <h1>Dados de Configuração</h1>
+                        <div class="input-fb-empresa">
+                            <div class="input-box">
+                                <label for="nivel">Nível de Permissão</label>
+                                <select id="nivel" required>
+                                    <option value="">Selecione</option>
+                                    <option value="admin">Administrador</option>
+                                    <option value="editor">Editor</option>
+                                    <option value="viewer">Visualizador</option>
+                                </select>
+                                <i class="bi bi-lock"></i>
+                            </div>
+
+                        </div>
+                    </form>
+
+                    <div>
+                        <img src="../assets/images/edicao-img1.png" alt="" class="banner-img">
+                    </div>
+                </div>
+            </div>
+
+            <div class="linha-btn">
+                <div class="input-box linha-txt">
+                    <i class="bi bi-info-circle"></i>
+                    <h3>Após o cadastro do funcionário, um e-mail será enviado com as credenciais de acesso cadastradas.
+                    </h3>
+                    <div class="emp-div-btn">
+                        <button type="button" class="btn-main register-btn botao-cadastrar">Cadastrar</button>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+
+
+    </main>
+
+</body>
+
+</html>

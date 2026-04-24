@@ -1,0 +1,103 @@
+.conteudo hr {
+    padding-bottom: 0px;
+}
+
+.cad-func {
+    display: flex;
+    flex-direction: row;
+}
+
+.cad-func img {
+    height: 150px;
+    width: auto;
+}
+
+.linha-btn {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    justify-content: space-between;
+}
+
+.linha-btn i {
+    color: var(--cor-primaria);
+    padding: 10px;
+}
+
+.linha-btn h3 {
+    color: var(--cor-escura);
+    font-size: 0.75rem;
+}
+
+.linha-txt {
+    padding-left: 40px;
+}
+
+.linha-txt {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    width: 100%;
+}
+
+.linha-txt h3 {
+    margin: 0;
+    flex: 1;
+}
+
+.emp-div-btn {
+    margin-left: auto;
+    padding-right: 60px;
+}
+
+/* --------------------- RESPONSIVIDADE --------------------- */
+
+@media (max-width: 576px) {
+
+    .empresa-container .cad-func {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        gap: 20px;
+    }
+
+    .empresa-container .cad-func form {
+        width: 100%;
+    }
+
+    .empresa-container .input-fb-empresa {
+        width: 100%;
+    }
+
+    .empresa-container .input-box {
+        width: 100%;
+    }
+
+    .empresa-container .banner-img {
+        width: 100%;
+        max-width: 280px;
+        height: auto;
+    }
+
+    .linha-txt {
+        padding: 10px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+    }
+
+    .linha-txt h3 {
+        padding: 10px;
+        text-align: center;
+    }
+
+    .linha-txt i {
+        color: var(--cor-primaria);
+    }
+
+    .emp-div-btn {
+        padding-right: 0px;
+    }
+}
