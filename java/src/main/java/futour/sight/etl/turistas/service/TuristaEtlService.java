@@ -55,26 +55,18 @@ public class TuristaEtlService {
         }
     }
 
-    public void executarDoS3(S3Client s3Client, String bucketName, String objectKey) {
-        File tempFile = null;
+    public void executarDoS3(S3Client s3Client, String bucketName, String objectKey) throws IOException {
 
-        try {
-            log("INFO", "Baixando arquivo do S3: s3://" + bucketName + "/" + objectKey);
-            tempFile = baixarArquivoDoS3(s3Client, bucketName, objectKey);
-            log("SUCESSO", "Arquivo baixado do S3 com sucesso");
+        log("INFO", "Baixando S3: s3://" + bucketName + "/" + objectKey);
 
-            executar(tempFile.getAbsolutePath());
+        File tempFile = baixarArquivoDoS3(s3Client, bucketName, objectKey);
 
-        } catch (IOException e) {
-            logDAO.inserir("chegadas_turistas", 0, false, "Erro ao baixar do S3: " + e.getMessage());
-            log("ERRO", "Falha ao baixar do S3 — " + e.getMessage());
-        } finally {
-            if (tempFile != null && tempFile.exists()) {
-                boolean deleted = tempFile.delete();
-                if (deleted) {
-                    log("INFO", "Arquivo temporário removido");
-                }
-            }
+        log("SUCESSO", "Download concluído");
+
+        executar(tempFile.getAbsolutePath());
+
+        if (tempFile.exists()) {
+            tempFile.delete();
         }
     }
 
@@ -83,16 +75,15 @@ public class TuristaEtlService {
 
         Path tempPath = Files.createTempFile("etl-turistas-", ".xlsx");
 
-        GetObjectRequest getObjectRequest = GetObjectRequest.builder()
+        GetObjectRequest request = GetObjectRequest.builder()
                 .bucket(bucketName)
                 .key(objectKey)
                 .build();
 
-        s3Client.getObject(getObjectRequest, ResponseTransformer.toFile(tempPath));
+        s3Client.getObject(request, ResponseTransformer.toFile(tempPath));
 
         return tempPath.toFile();
     }
-
     private void log(String nivel, String mensagem) {
         String timestamp = LocalDateTime.now().format(FORMATTER);
         String saida = "[" + timestamp + "] [" + nivel + "] " + mensagem;

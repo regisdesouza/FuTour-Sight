@@ -8,7 +8,7 @@ import software.amazon.awssdk.services.s3.S3Client;
 
 public class Main {
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws Exception {
 
         String bucketName = "s3-futoursight";
         String objectKey = "chegadas-2024.xlsx";
@@ -17,6 +17,7 @@ public class Main {
         JdbcTemplate jdbc = DatabaseConfig.getJdbcTemplate();
 
         TuristaEtlService etl = new TuristaEtlService(jdbc);
+
         etl.executarDoS3(s3Client, bucketName, objectKey);
     }
 }
