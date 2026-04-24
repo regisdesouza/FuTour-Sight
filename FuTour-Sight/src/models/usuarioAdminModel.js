@@ -113,10 +113,33 @@ function editarStatusUsuario(idEditarStatusUsuario, statusEditarStatusUsuario) {
     return database.executar(instrucaoSql, [5, idEditarStatusUsuario]);
 }
 
+function buscarEmpresa(idEmpresaBuscarEmpresa) {
+    var instrucaoSql = `
+        SELECT 
+            e.nome AS empresa,
+            e.cnpj,
+            e.email AS emailCorporativo,
+            e.telefone AS telefoneCorporativo,
+            u.cep,
+            u.estado,
+            u.cidade,
+            u.bairro,
+            u.logradouro,
+            u.numero,
+            u.complemento
+        FROM empresa e
+        INNER JOIN unidade u ON u.fk_empresa = e.id_empresa
+        WHERE e.id_empresa = ?;
+    `;
+
+    return database.executar(instrucaoSql, [idEmpresaBuscarEmpresa]);
+}
+
 module.exports = {
     cadastrarFuncionario,
     editarEmpresa,
     listarUsuarios,
     listarUsuariosProcurados,
-    editarStatusUsuario
+    editarStatusUsuario,
+    buscarEmpresa
 };

@@ -157,16 +157,23 @@
                             <label for="cnpj">CNPJ</label>
                             <input id="cnpj" type="text" placeholder="00.000.000/0000-00" required>
                             <i class="bi bi-building"></i>
+                            <div class="msg_erro" id="div_msg_cnpj"></div>
+
                         </div>
                         <div class="input-box">
                             <label for="emp-email">E-mail da Empresa</label>
-                            <input id="emp-email" type="email" placeholder="usuario@email.com" required>
+                            <input id="emailCorporativo" type="email" placeholder="usuario@email.com" required>
                             <i class="bi bi-envelope"></i>
+                            <div class="msg_erro" id="div_msg_email_corporativo"></div>
+
                         </div>
                         <div class="input-box">
                             <label for="emp-tel">Telefone da Empresa</label>
-                            <input id="emp-tel" type="tel" placeholder="(xx) xxxx-xxxx" required>
+                            <input type="text" name="telefone" id="telefone" placeholder="Seu telefone" required
+                                onkeyup="onkey_telefone()" maxlength="15">
                             <i class="bi bi-telephone"></i>
+                            <div class="msg_erro" id="div_msg_telefone"></div>
+
                         </div>
                         <div class="input-box">
                             <label for="cep">CEP</label>
