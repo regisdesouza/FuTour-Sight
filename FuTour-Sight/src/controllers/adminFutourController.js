@@ -1,3 +1,5 @@
+const nodemailer = require("nodemailer");
+const crypto = require("crypto");
 var adminFutourModel = require("../models/adminFutourModel");
 
 function buscarLogs(req, res) {
@@ -23,9 +25,9 @@ function listarEmpresas(req, res) {
 }
 
 function listarEmpresasProcuradas(req, res) {
-    var nomeEmpresa = req.query.empresaServer;
+    var nomeEmpresalistarEmpresasProcuradas = req.query.empresaServer;
 
-    adminFutourModel.listarEmpresasProcuradas(nomeEmpresa)
+    adminFutourModel.listarEmpresasProcuradas(nomeEmpresalistarEmpresasProcuradas)
         .then((resultado) => {
             if (resultado.length > 0) {
                 res.status(200).json(resultado);
@@ -40,9 +42,9 @@ function listarEmpresasProcuradas(req, res) {
 }
 
 function editarStatusEmpresa(req, res) {
-    var idEmpresa = req.params.idEmpresa;
+    var idEmpresaeditarStatusEmpresa = req.params.idEmpresa;
 
-    adminFutourModel.editarStatusEmpresa(idEmpresa)
+    adminFutourModel.editarStatusEmpresa(idEmpresaeditarStatusEmpresa)
         .then(() => {
             res.status(200).json({ mensagem: "Status atualizado com sucesso." });
         })
@@ -68,60 +70,59 @@ function listarSolicitacoes(req, res) {
         });
 }
 
-function aprovarSolicitacao(req, res) {
-    var id = req.params.idSolicitacao;
+async function aprovarSolicitacao(req, res) {
+    var idaprovarSolicitacao = req.params.idSolicitacao;
 
-    adminFutourModel.buscarPorId(id)
-        .then((resultado) => {
+    try {
+        const solicitacao = await adminFutourModel.buscarSolicitacaoPorId(idaprovarSolicitacao);
 
-            if (resultado.length == 0) {
-                return res.status(404).json({ mensagem: "Solicitação não encontrada" });
-            }
+        if (solicitacao.length === 0) {
+            return res.status(404).json({ mensagem: "Solicitação não encontrada" });
+        }
 
-            var dados = resultado[0];
+        const dados = solicitacao[0];
 
-            return adminFutourModel.buscarEmpresaPorCnpj(dados.cnpj_empresa)
-                .then((empresaExistente) => {
+        const senhaTemp = crypto.randomBytes(4).toString("hex");
 
-                    if (empresaExistente.length > 0) {
-                        return empresaExistente[0].id_empresa;
-                    } else {
-                        return adminFutourModel.criarEmpresa(
-                            dados.nome_empresa,
-                            dados.cnpj_empresa,
-                            dados.email_empresa,
-                            dados.telefone_empresa
-                        ).then(res => res.insertId);
-                    }
-
-                })
-                .then((idEmpresa) => {
-
-                    return adminFutourModel.criarUsuario(
-                        dados.nome_responsavel,
-                        dados.email_responsavel,
-                        idEmpresa
-                    );
-
-                });
-
-        })
-        .then(() => {
-            return adminFutourModel.aprovarSolicitacao(id);
-        })
-        .then(() => {
-            res.status(200).json({ mensagem: "Solicitação aprovada!" });
-        })
-        .catch((erro) => {
-            console.log("ERRO GERAL:", erro);
-            res.status(500).json({ mensagem: erro.sqlMessage });
+        const transporter = nodemailer.createTransport({
+            service: "gmail",
+            auth: {
+                user: process.env.EMAIL_USER,
+                pass: process.env.EMAIL_PASS,
+            },
         });
+
+        const info = await transporter.sendMail({
+            from: `"FuTour Sight" <${process.env.EMAIL_USER}>`,
+            to: dados.email_responsavel,
+            subject: "Sua solicitação foi aprovada!",
+            html: `
+                <h2>Bem-vindo ao FuTour Sight!</h2>
+                <p>Sua solicitação foi aprovada 🎉</p>
+                <p><strong>Email:</strong> ${dados.email_responsavel}</p>
+                <p><strong>Senha temporária:</strong> ${senhaTemp}</p>
+
+                <a href="http://localhost:3333/login.html">Acessar sistema</a>
+                <p>No primeiro acesso você deverá alterar sua senha.</p>
+            `,
+        });
+
+        console.log("EMAIL ENVIADO:", info);
+
+        await adminFutourModel.aprovarSolicitacao(idaprovarSolicitacao);
+
+        return res.json({ mensagem: "Solicitação aprovada e email enviado!" });
+
+    } catch (erro) {
+        console.error("ERRO REAL:", erro);
+        return res.status(500).json({ erro: erro.message });
+    }
 }
 
 function cancelarSolicitacao(req, res) {
-    var id = req.params.idSolicitacao;
+    var idcancelarSolicitacao = req.params.idSolicitacao;
 
-    adminFutourModel.buscarPorId(id)
+    adminFutourModel.buscarPorId(idcancelarSolicitacao)
         .then((resultado) => {
 
             if (resultado.length == 0) {
@@ -136,7 +137,7 @@ function cancelarSolicitacao(req, res) {
                 });
             }
 
-            return adminFutourModel.cancelarSolicitacao(id);
+            return adminFutourModel.cancelarSolicitacao(idcancelarSolicitacao);
         })
         .then(() => {
             res.status(200).json({ mensagem: "Solicitação cancelada!" });
