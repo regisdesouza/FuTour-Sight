@@ -54,7 +54,6 @@ function editarStatusEmpresa(req, res) {
         });
 }
 
-
 function listarSolicitacoes(req, res) {
     adminFutourModel.listarSolicitacoes()
         .then((resultado) => {
@@ -84,6 +83,24 @@ async function aprovarSolicitacao(req, res) {
 
         const senhaTemp = crypto.randomBytes(4).toString("hex");
 
+        const resultadoEmpresa = await adminFutourModel.criarEmpresa(
+            dados.nome_empresa,
+            dados.cnpj_empresa,
+            dados.email_empresa,
+            dados.telefone_empresa
+        );
+        const idEmpresa = resultadoEmpresa.insertId;
+
+        await adminFutourModel.criarUnidade(idEmpresa);
+
+        await adminFutourModel.criarUsuario(
+            dados.nome_responsavel,
+            dados.email_responsavel,
+            idEmpresa
+        );
+
+        await adminFutourModel.aprovarSolicitacao(idaprovarSolicitacao);
+
         const transporter = nodemailer.createTransport({
             service: "gmail",
             auth: {
@@ -92,7 +109,7 @@ async function aprovarSolicitacao(req, res) {
             },
         });
 
-        const info = await transporter.sendMail({
+        await transporter.sendMail({
             from: `"FuTour Sight" <${process.env.EMAIL_USER}>`,
             to: dados.email_responsavel,
             subject: "Sua solicitação foi aprovada!",
@@ -101,17 +118,12 @@ async function aprovarSolicitacao(req, res) {
                 <p>Sua solicitação foi aprovada 🎉</p>
                 <p><strong>Email:</strong> ${dados.email_responsavel}</p>
                 <p><strong>Senha temporária:</strong> ${senhaTemp}</p>
-
                 <a href="http://localhost:3333/login.html">Acessar sistema</a>
                 <p>No primeiro acesso você deverá alterar sua senha.</p>
             `,
         });
 
-        console.log("EMAIL ENVIADO:", info);
-
-        await adminFutourModel.aprovarSolicitacao(idaprovarSolicitacao);
-
-        return res.json({ mensagem: "Solicitação aprovada e email enviado!" });
+        return res.status(200).json({ mensagem: "Solicitação aprovada e email enviado!" });
 
     } catch (erro) {
         console.error("ERRO REAL:", erro);
@@ -124,7 +136,6 @@ function cancelarSolicitacao(req, res) {
 
     adminFutourModel.buscarPorId(idcancelarSolicitacao)
         .then((resultado) => {
-
             if (resultado.length == 0) {
                 return res.status(404).json({ mensagem: "Solicitação não encontrada" });
             }
