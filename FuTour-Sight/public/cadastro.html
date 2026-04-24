@@ -57,7 +57,9 @@
                         <label for="nome-completo">Nome Completo</label>
                         <img src="./assets/images/icons/pessoa.png" alt="ícone de pessoa">
                     </div>
-                    <input type="text" id="nome-completo" placeholder="Nome Completo">
+                    <input type="text" id="nome" placeholder="Nome Completo" onkeyup="onkey_nome()">
+                    <div class="msg_erro" id="div_msg_nome"></div>
+
                 </div>
 
                 <div class="input-container">
@@ -65,7 +67,9 @@
                         <label for="email-pessoal">E-mail Pessoal</label>
                         <img src="./assets/images/icons/email.png" alt="ícone de email">
                     </div>
-                    <input type="text" id="email-pessoal" placeholder="E-mail Pessoal">
+                    <input type="text" id="emailPessoal" placeholder="E-mail Pessoal" onkeyup="onkey_email_pessoal()">
+                    <div class="msg_erro" id="div_msg_email_pessoal"></div>
+
                 </div>
 
                 <div class="input-container">
@@ -73,7 +77,9 @@
                         <label for="empresa">Empresa</label>
                         <img src="./assets/images/icons/empresa.png" alt="ícone de empresa">
                     </div>
-                    <input type="text" id="empresa" placeholder="Empresa">
+                    <input type="text" id="empresa" placeholder="Empresa" onkeyup="onkey_nome_empresa()">
+                    <div class="msg_erro" id="div_msg_nome_empresa"></div>
+
                 </div>
 
                 <div class="input-container">
@@ -81,7 +87,10 @@
                         <label for="email-corporativo">E-mail Corporativo</label>
                         <img src="./assets/images/icons/email.png" alt="ícone de email">
                     </div>
-                    <input type="text" id="email-corporativo" placeholder="E-mail Corporativo">
+                    <input type="text" id="emailCorporativo" placeholder="E-mail Corporativo"
+                        onkeyup="onkey_email_corporativo()">
+                    <div class="msg_erro" id="div_msg_email_corporativo"></div>
+
                 </div>
 
                 <div class="input-container">
@@ -89,7 +98,10 @@
                         <label for="cnpj">CNPJ</label>
                         <img class="icone-arquivo" src="./assets/images/icons/arquivo.png" alt="ícone de arquivo">
                     </div>
-                    <input type="text" id="cnpj" placeholder="CNPJ">
+                    <input type="text" name="cnpj" id="cnpj" placeholder="Seu CNPJ" required onkeyup="onkey_cnpj()"
+                        maxlength="18">
+                    <div class="msg_erro" id="div_msg_cnpj"></div>
+
                 </div>
 
                 <div class="input-container">
@@ -97,7 +109,10 @@
                         <label for="telefone-corporativo">Telefone Corporativo</label>
                         <img src="./assets/images/icons/telefone.png" alt="ícone de telefone">
                     </div>
-                    <input type="text" id="telefone-corporativo" placeholder="Telefone Corporativo">
+                    <input type="text" name="telefone" id="telefone" placeholder="Seu telefone" required
+                        onkeyup="onkey_telefone()" maxlength="15">
+                    <div class="msg_erro" id="div_msg_telefone"></div>
+
                 </div>
             </div>
 
@@ -107,7 +122,17 @@
         <div class="envio-container">
             <p>Os dados serão analisados e entraremos em contato em breve!</p>
 
-            <button class="botao">Enviar solicitação</button>
+            <button class="botao" onclick="preCadastrar()">Enviar solicitação</button>
+
+            <div class="msg_erro" id="div_msg"
+                style="color: green; text-align: center; font-weight: 500; margin-top: 10px;"></div>
+
+            <div class="alerta_erro">
+                <div class="card_erro" id="cardErro">
+                    <span id="mensagem_erro"></span>
+                </div>
+            </div>
+            <div id="div_erros"></div>
         </div>
     </main>
 
@@ -144,7 +169,12 @@
         </div>
     </footer>
 
-    <script src="assets/js/cadastro.js"></script>
+
+    <script src="./assets/js/menu.js"></script>
+    <script src="./assets/js/validacoes.js"></script>
+    <script src="./assets/js/sessao.js"></script>
+    <script src="https://unpkg.com/inputmask@5.0.8/dist/inputmask.min.js"></script>
+    <script src="assets/js/pages/preCadastro.js"></script>
 </body>
 
 </html>
