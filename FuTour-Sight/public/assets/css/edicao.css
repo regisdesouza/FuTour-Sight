@@ -39,7 +39,7 @@ header {
 }
 
 .titulo-pagina h1 {
-    font-size: var(--texto-medio);
+    font-size: var(--texto-grande);
 
 }
 
@@ -57,24 +57,24 @@ header {
 }
 
 .banner-usuario h1 {
-    font-size: var(--texto-medio);
+    font-size: var(--texto-grande);
     color: var(--cor-escura);
     margin: 0;
 
 }
 
 .banner-usuario h2 {
-    font-size: var(--texto-medio);
+    font-size: var(--texto-grande);
     color: var(--cor-primaria);
 }
 
 .banner-usuario h3 {
-    font-size: var(--texto-pequeno);
+    font-size: var(--texto-medio);
     color: var(--cor-escura);
 }
 
 .banner-img {
-    height: 200px;
+    height: 300px;
     width: auto;
 }
 
@@ -217,6 +217,41 @@ header {
 }
 
 
+.input-container input {
+    /* width: 471px; */
+    width: 100%;
+    margin-top: 4px;
+    padding: 8px 16px;
+    border: none;
+    border-radius: 8px;
+    color: var(--cor-escura);
+    font-size: var(--texto-pequeno);
+    font-family: var(--fonte);
+    background-color: var(--cor-cinza-claro);
+}
+
+.label-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    label {
+        font-size: var(--texto-medio);
+        font-weight: var(--medium);
+    }
+
+    img {
+        width: 32px;
+        margin-right: 8px;
+    }
+
+    .icone-arquivo {
+        margin-right: 12px;
+        width: 24px;
+    }
+}
+
+
 
 /* -------------- MENU LATERAL ----------------- */
 
@@ -251,7 +286,7 @@ header {
     display: flex;
     flex-direction: column;
     align-self: flex-start;
-    text-align: left;
+    text-align: left;font-size: var(--texto-medio);
 }
 
 .menu-lista span {
