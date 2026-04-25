@@ -157,7 +157,7 @@ header {
     font-weight: var(--bold);
     cursor: pointer;
     transition: .15s ease-in-out;
-    border-radius: 32px;
+    border-radius: 8px;
     font-size: var(--texto-pequeno);
 }
 
