@@ -135,20 +135,28 @@
                 <form action="">
                     <h1>Dados do Funcionário</h1>
                     <div class="input-fb-empresa">
-                        <div class="input-box">
-                            <label for="func-name">Nome do colaborador</label>
-                            <input id="func-name" type="text" placeholder="Nome do funcionário" required>
-                            <i class="bi bi-pencil"></i>
+                        <div class="input-container">
+                            <div class="label-container">
+                                <label for="nome">Nome do Colaborador</label>
+                                <img src="../assets/images/icons/pessoa.png" alt="ícone de pessoa">
+                            </div>
+                            <input type="text" id="nome-colab" placeholder="Nome Completo">
                         </div>
-                        <div class="input-box">
-                            <label for="func-email">E-mail do colaborador</label>
-                            <input id="func-email" type="email" placeholder="usuario@email.com" required>
-                            <i class="bi bi-envelope"></i>
+
+                        <div class="input-container">
+                            <div class="label-container">
+                                <label for="email">E-mail do Colaborador</label>
+                                <img src="../assets/images/icons/email.png" alt="ícone de email">
+                            </div>
+                            <input type="text" id="email-colab" placeholder="E-mail">
                         </div>
-                        <div class="input-box">
-                            <label for="func-senha">Senha</label>
-                            <input id="func-senha" type="password" placeholder="Senha" required>
-                            <i class="bi bi-key"></i>
+
+                        <div class="input-container">
+                            <div class="label-container">
+                                <label for="email-pessoal">Senha</label>
+                                <img src="../assets/images/icons/senha.png" alt="ícone de senha">
+                            </div>
+                            <input type="password" id="sesnha-colab" placeholder="Senha">
                         </div>
                     </div>
 
@@ -158,34 +166,37 @@
 
             <hr>
 
-            <div class="empresa-container form-box-empresa">
-                <div class="cad-func">
+            <div class="form-permissao">
+                <div class="empresa-container form-box-empresa">
                     <form action="">
                         <h1>Dados de Configuração</h1>
                         <div class="input-fb-empresa">
-                            <div class="input-box">
-                                <label for="nivel">Nível de Permissão</label>
-                                <select id="nivel" required>
-                                    <option value="">Selecione</option>
-                                    <option value="admin">Administrador</option>
-                                    <option value="editor">Editor</option>
-                                    <option value="viewer">Visualizador</option>
-                                </select>
-                                <i class="bi bi-lock"></i>
+                            <div class="input-container">
+                                <div class="label-container">
+                                    <label for="nivel">Nível de Permissão</label>
+                                    <img src="../assets/images/icons/seguranca.png" alt="ícone de permissão">
+                                </div>
+                                <div class="label-container">
+                                    <select id="nivel" required>
+                                        <option value="">Selecione</option>
+                                        <option value="admin">Administrador</option>
+                                        <option value="editor">Editor</option>
+                                        <option value="viewer">Visualizador</option>
+                                    </select>
+                                </div>
                             </div>
 
                         </div>
                     </form>
-
-                    <div>
-                        <img src="../assets/images/edicao-img1.png" alt="" class="banner-img">
-                    </div>
+                </div>
+                <div>
+                    <img src="../assets/images/edicao-img1.png" alt="" class="banner-img">
                 </div>
             </div>
 
             <div class="linha-btn">
-                <div class="input-box linha-txt">
-                    <i class="bi bi-info-circle"></i>
+                <div class="linha-txt">
+                    <img src="../assets/images/icons/info.png" alt="ícone de informação">
                     <h3>Após o cadastro do funcionário, um e-mail será enviado com as credenciais de acesso cadastradas.
                     </h3>
                     <div class="emp-div-btn">
@@ -194,6 +205,10 @@
                 </div>
 
             </div>
+
+        </div>
+
+
 
         </div>
 

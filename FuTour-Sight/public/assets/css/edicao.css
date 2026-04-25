@@ -217,7 +217,7 @@ header {
 }
 
 
-.input-container input {
+.input-container input, .input-container select {
     /* width: 471px; */
     width: 100%;
     margin-top: 4px;
