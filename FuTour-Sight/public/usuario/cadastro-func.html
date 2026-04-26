@@ -4,7 +4,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>FuTour Sight</title>
+    <title>FuTour Sight | Funcionários</title>
+
+    <link rel="icon" href="../assets/images/logo-futour-sight-icone-pagina.png" type="image/png">
 
     <link rel="stylesheet" href="../assets/css/reset.css">
     <link rel="stylesheet" href="../assets/css/styles.css">
@@ -40,35 +42,40 @@
                 </div>
             </nav>
             <nav>
-                <div class="input-box">
+                <a href="./dashboard-proprietario.html" class="input-box">
                     <i class="bi bi-graph-up-arrow"></i>
                     <span>Dashboard</span>
-                </div>
-                <div class="input-box">
+                </a>
+
+                <a href="./edicao-empresa.html" class="input-box">
                     <i class="bi bi-building"></i>
                     <span>Empresa</span>
-                </div>
-                <div class="input-box">
+                </a>
+
+                <a href="./editar-perfil.html" class="input-box">
                     <i class="bi bi-person-fill"></i>
                     <span>Perfil</span>
-                </div>
-                <div class="input-box">
+                </a>
+
+                <a href="" class="input-box">
                     <i class="bi bi-clock-history"></i>
                     <span>Histórico</span>
-                </div>
-                <div class="input-box">
+                </a>
+
+                <a href="./filtros.html" class="input-box">
                     <i class="bi bi-funnel-fill"></i>
                     <span>Filtro</span>
+                </a>
             </nav>
             <nav>
                 <div class="menu-lista">
-                    <div class="input-box">
+                    <a href="" class="input-box">
                         <i class="bi bi-box-arrow-left"></i>
                         <span>Sair</span>
-                    </div>
+                    </a>
                 </div>
             </nav>
-            <a href="index.html" target="_blank" class="menu-logo">
+            <a href="../index.html" target="_blank" class="menu-logo">
                 <img src="../assets/images/logo-futour-sight-branco.png" alt="">
                 <h3>FuTour Sight</h3>
             </a>
@@ -87,36 +94,40 @@
             </div>
 
             <div class="menu-lista links">
-                <div class="input-box">
+                <a href="./dashboard-proprietario.html" class="input-box">
                     <i class="bi bi-graph-up-arrow"></i>
                     <span>Dashboard</span>
-                </div>
-                <div class="input-box">
+                </a>
+
+                <a href="./edicao-empresa.html" class="input-box">
                     <i class="bi bi-building"></i>
                     <span>Empresa</span>
-                </div>
-                <div class="input-box">
+                </a>
+
+                <a href="./editar-perfil.html" class="input-box">
                     <i class="bi bi-person-fill"></i>
                     <span>Perfil</span>
-                </div>
-                <div class="input-box">
+                </a>
+
+                <a href="" class="input-box">
                     <i class="bi bi-clock-history"></i>
                     <span>Histórico</span>
-                </div>
-                <div class="input-box">
+                </a>
+
+                <a href="./filtros.html" class="input-box">
                     <i class="bi bi-funnel-fill"></i>
                     <span>Filtro</span>
-                </div>
+                </a>
             </div>
 
             <div class="menu-lista">
-                <div class="input-box">
+                <a href="" class="input-box">
                     <i class="bi bi-box-arrow-left"></i>
                     <span>Sair</span>
-                </div>
+                </a>
             </div>
 
-            <a href="index.html" target="_blank" class="menu-logo">
+            <a href="../index.html" target="_blank" class="menu-logo">
                 <img src="../assets/images/logo-futour-sight-branco.png" alt="">
                 <h3>FuTour Sight</h3>
             </a>
@@ -135,20 +146,28 @@
                 <form action="">
                     <h1>Dados do Funcionário</h1>
                     <div class="input-fb-empresa">
-                        <div class="input-box">
-                            <label for="func-name">Nome do colaborador</label>
-                            <input id="func-name" type="text" placeholder="Nome do funcionário" required>
-                            <i class="bi bi-pencil"></i>
+                        <div class="input-container">
+                            <div class="label-container">
+                                <label for="nome">Nome do Colaborador</label>
+                                <img src="../assets/images/icons/pessoa.png" alt="ícone de pessoa">
+                            </div>
+                            <input type="text" id="nome-colab" placeholder="Nome Completo">
                         </div>
-                        <div class="input-box">
-                            <label for="func-email">E-mail do colaborador</label>
-                            <input id="func-email" type="email" placeholder="usuario@email.com" required>
-                            <i class="bi bi-envelope"></i>
+
+                        <div class="input-container">
+                            <div class="label-container">
+                                <label for="email">E-mail do Colaborador</label>
+                                <img src="../assets/images/icons/email.png" alt="ícone de email">
+                            </div>
+                            <input type="text" id="email-colab" placeholder="E-mail">
                         </div>
-                        <div class="input-box">
-                            <label for="func-senha">Senha</label>
-                            <input id="func-senha" type="password" placeholder="Senha" required>
-                            <i class="bi bi-key"></i>
+
+                        <div class="input-container">
+                            <div class="label-container">
+                                <label for="email-pessoal">Senha</label>
+                                <img src="../assets/images/icons/senha.png" alt="ícone de senha">
+                            </div>
+                            <input type="password" id="senha-colab" placeholder="Senha">
                         </div>
                     </div>
 
@@ -158,34 +177,37 @@
 
             <hr>
 
-            <div class="empresa-container form-box-empresa">
-                <div class="cad-func">
+            <div class="form-permissao">
+                <div class="empresa-container form-box-empresa">
                     <form action="">
                         <h1>Dados de Configuração</h1>
                         <div class="input-fb-empresa">
-                            <div class="input-box">
-                                <label for="nivel">Nível de Permissão</label>
-                                <select id="nivel" required>
-                                    <option value="">Selecione</option>
-                                    <option value="admin">Administrador</option>
-                                    <option value="editor">Editor</option>
-                                    <option value="viewer">Visualizador</option>
-                                </select>
-                                <i class="bi bi-lock"></i>
+                            <div class="input-container">
+                                <div class="label-container">
+                                    <label for="nivel">Nível de Permissão</label>
+                                    <img src="../assets/images/icons/seguranca.png" alt="ícone de permissão">
+                                </div>
+                                <div class="label-container">
+                                    <select id="nivel" required>
+                                        <option value="">Selecione</option>
+                                        <option value="admin">Administrador</option>
+                                        <option value="editor">Editor</option>
+                                        <option value="viewer">Visualizador</option>
+                                    </select>
+                                </div>
                             </div>
 
                         </div>
                     </form>
-
-                    <div>
-                        <img src="../assets/images/edicao-img1.png" alt="" class="banner-img">
-                    </div>
+                </div>
+                <div>
+                    <img src="../assets/images/empresa-senha.png" alt="" class="banner-img">
                 </div>
             </div>
 
             <div class="linha-btn">
-                <div class="input-box linha-txt">
-                    <i class="bi bi-info-circle"></i>
+                <div class="linha-txt">
+                    <img src="../assets/images/icons/info.png" alt="ícone de informação">
                     <h3>Após o cadastro do funcionário, um e-mail será enviado com as credenciais de acesso cadastradas.
                     </h3>
                     <div class="emp-div-btn">
@@ -194,6 +216,10 @@
                 </div>
 
             </div>
+
+        </div>
+
+
 
         </div>
 

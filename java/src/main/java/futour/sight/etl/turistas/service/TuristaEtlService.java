@@ -75,6 +75,8 @@ public class TuristaEtlService {
 
         Path tempPath = Files.createTempFile("etl-turistas-", ".xlsx");
 
+        Files.deleteIfExists(tempPath);
+
         GetObjectRequest request = GetObjectRequest.builder()
                 .bucket(bucketName)
                 .key(objectKey)
@@ -84,6 +86,7 @@ public class TuristaEtlService {
 
         return tempPath.toFile();
     }
+
     private void log(String nivel, String mensagem) {
         String timestamp = LocalDateTime.now().format(FORMATTER);
         String saida = "[" + timestamp + "] [" + nivel + "] " + mensagem;

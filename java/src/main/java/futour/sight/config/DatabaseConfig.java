@@ -13,8 +13,8 @@ public class DatabaseConfig {
             BasicDataSource ds = new BasicDataSource();
 
             ds.setDriverClassName("com.mysql.cj.jdbc.Driver");
-            ds.setUrl("jdbc:mysql://localhost:3306/futour_sight");
-            ds.setUsername("root");
+            ds.setUrl("jdbc:mysql://ContainerBanco:3306/futour_sight");
+            ds.setUsername("futour");
             ds.setPassword("Senha@1234");
 
             jdbc = new JdbcTemplate(ds);
@@ -23,3 +23,9 @@ public class DatabaseConfig {
         return jdbc;
     }
 }
+
+
+
+
+
+
