@@ -101,10 +101,25 @@ function editarStatusUsuario(req, res) {
         });
 }
 
+function buscarEmpresa(req, res) {
+    var idEmpresabuscarEmpresa = req.params.idEmpresa;
+
+    usuarioAdminModel.buscarEmpresa(idEmpresabuscarEmpresa)
+        .then((resultado) => {
+            if (resultado.length == 0) return res.status(404).json({ mensagem: "Empresa não encontrada!" });
+            res.status(200).json(resultado[0]);
+        })
+        .catch((erro) => {
+            console.log(erro);
+            res.status(500).json({ mensagem: erro.sqlMessage });
+        });
+}
+
 module.exports = {
     cadastrarFuncionario,
     editarEmpresa,
     listarUsuarios,
     listarUsuariosProcurados,
-    editarStatusUsuario
+    editarStatusUsuario,
+    buscarEmpresa
 };

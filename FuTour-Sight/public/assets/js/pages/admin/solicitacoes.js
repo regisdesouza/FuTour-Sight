@@ -1,21 +1,31 @@
-const solicitacoes = document.querySelectorAll(".solicitacoes-empresas li")
 const div_empresa_selecionada = document.querySelector('.empresa-selecionada')
 const botao_fechar_empresa = document.querySelector('.botao-fechar-empresa')
-
-solicitacoes.forEach(solicitacao => {
-  console.log(solicitacao);
-
-  solicitacao.addEventListener('click', () => {
-    console.log('clicou');
-
-
-    div_empresa_selecionada.classList.add('selecionado')
-  })
-})
+const lista_solicitacoes = document.querySelector('.solicitacoes-empresas')
 
 botao_fechar_empresa.addEventListener('click', () => {
-  div_empresa_selecionada.classList.remove('selecionado')
+    div_empresa_selecionada.classList.remove('selecionado')
 })
+
+function abrirSolicitacao(solicitacao) {
+    div_empresa_selecionada.querySelector('.infos-empresa p:nth-child(1) span').textContent = solicitacao.nome_empresa
+    div_empresa_selecionada.querySelector('.infos-empresa p:nth-child(2) span').textContent = solicitacao.cnpj_empresa
+    div_empresa_selecionada.querySelector('.infos-empresa p:nth-child(3) span').textContent = solicitacao.email_empresa
+    div_empresa_selecionada.querySelector('.infos-empresa p:nth-child(4) span').textContent = solicitacao.telefone_empresa
+    div_empresa_selecionada.querySelector('.infos-empresa p:nth-child(5) span').textContent = solicitacao.nome_responsavel
+    div_empresa_selecionada.querySelector('.infos-empresa p:nth-child(6) span').textContent = solicitacao.email_responsavel
+
+    const [btnNegar, btnAprovar] = div_empresa_selecionada.querySelectorAll('.botoes-confirmacao button')
+
+    const btnNegarNovo = btnNegar.cloneNode(true)
+    const btnAprovarNovo = btnAprovar.cloneNode(true)
+    btnNegar.replaceWith(btnNegarNovo)
+    btnAprovar.replaceWith(btnAprovarNovo)
+
+    btnNegarNovo.addEventListener('click', () => cancelarSolicitacao(solicitacao.id_solicitacao))
+    btnAprovarNovo.addEventListener('click', () => aprovarSolicitacao(solicitacao.id_solicitacao))
+
+    div_empresa_selecionada.classList.add('selecionado')
+}
 
 function listarSolicitacoes() {
     fetch("/adminFutour/buscarSolicitacoes", {
@@ -23,89 +33,72 @@ function listarSolicitacoes() {
     })
         .then((resposta) => {
             if (resposta.status == 204) {
-                alert("Nenhuma solicitação encontrada!");
-                return;
+                lista_solicitacoes.innerHTML = "<p>Nenhuma solicitação encontrada.</p>"
+                return
             }
 
-            if (!resposta.ok) {
-                throw new Error("Erro na resposta do servidor");
-            }
+            if (!resposta.ok) throw new Error("Erro na resposta do servidor")
 
-            return resposta.json();
+            return resposta.json()
         })
         .then((dados) => {
-            if (!dados) return;
+            if (!dados) return
 
-            const div = document.getElementById("lista");
-            div.innerHTML = "";
+            lista_solicitacoes.innerHTML = ""
 
             dados.forEach((s) => {
-                const bloco = document.createElement("div");
+                const li = document.createElement("li")
 
-                bloco.innerHTML = `
-                    <p>${s.nome_responsavel} - ${s.nome_empresa}</p>
-                    
-                    <button onclick="aprovarSolicitacao(${s.id_solicitacao})">
-                        Aprovar
-                    </button>
+                li.innerHTML = `
+                    <img src="https://placehold.co/346x220/png" alt="imagem da empresa">
+                    <div class="infos-empresa">
+                        <p>Empresa: ${s.nome_empresa}</p>
+                        <p>E-mail da empresa: ${s.email_empresa}</p>
+                    </div>
+                `
 
-                    <button onclick="cancelarSolicitacao(${s.id_solicitacao})">
-                        Cancelar
-                    </button>
-                `;
+                li.addEventListener('click', () => abrirSolicitacao(s))
 
-                div.appendChild(bloco);
-            });
+                lista_solicitacoes.appendChild(li)
+            })
         })
         .catch((erro) => {
-            console.error("#ERRO:", erro);
-        });
+            console.error("#ERRO:", erro)
+        })
 }
 
 function aprovarSolicitacao(id) {
     fetch(`/adminFutour/solicitacoesAprovar/${id}`, {
         method: "POST",
-        headers: {
-            "Content-Type": "application/json"
-        }
+        headers: { "Content-Type": "application/json" }
     })
         .then((resposta) => {
-            if (!resposta.ok) {
-                throw new Error("Erro ao aprovar solicitação");
-            }
-
-            return resposta.json();
+            if (!resposta.ok) throw new Error("Erro ao aprovar solicitação")
+            return resposta.json()
         })
         .then((resultado) => {
-            console.log(resultado.mensagem);
-            listarSolicitacoes();
+            console.log(resultado.mensagem)
+            div_empresa_selecionada.classList.remove('selecionado')
+            listarSolicitacoes()
         })
-        .catch((erro) => {
-            console.error("#ERRO:", erro);
-        });
+        .catch((erro) => console.error("#ERRO:", erro))
 }
 
 function cancelarSolicitacao(id) {
     fetch(`/adminFutour/solicitacoesCancelar/${id}`, {
         method: "POST",
-        headers: {
-            "Content-Type": "application/json"
-        }
+        headers: { "Content-Type": "application/json" }
     })
         .then((resposta) => {
-            if (!resposta.ok) {
-                throw new Error("Erro ao cancelar solicitação");
-            }
-
-            return resposta.json();
+            if (!resposta.ok) throw new Error("Erro ao cancelar solicitação")
+            return resposta.json()
         })
         .then((resultado) => {
-            console.log(resultado.mensagem);
-            listarSolicitacoes();
+            console.log(resultado.mensagem)
+            div_empresa_selecionada.classList.remove('selecionado')
+            listarSolicitacoes()
         })
-        .catch((erro) => {
-            console.error("#ERRO:", erro);
-        });
+        .catch((erro) => console.error("#ERRO:", erro))
 }
 
-listarSolicitacoes();
+listarSolicitacoes()

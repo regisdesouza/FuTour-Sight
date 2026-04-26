@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Editar funcionário</title>
+
+    <link rel="stylesheet" href="../assets/css/reset.css">
+    <link rel="stylesheet" href="../assets/css/styles.css">
+    <link rel="stylesheet" href="../assets/css/responsive.css">
+    <link rel="stylesheet" href="../assets/css/usuario.css">
+    <link rel="stylesheet" href="../assets/css/filtros.css">
+</head>
+
+<body class="background-branco">
+    <header>
+        <input type="checkbox" id="menu-hamburguer">
+
+        <label for="menu-hamburguer" class="menu-hamburguer">
+            <div class="menu">
+                <span class="hamburguer"></span>
+            </div>
+        </label>
+
+        <div class="overlay"></div>
+
+        <div class="links">
+            <div class="usuario-infos">
+                <div class="img-container">
+                    <img src="https://placehold.co/200x200/png" alt="Imagem da empresa">
+                </div>
+                <span>Nome do usuário</span>
+            </div>
+
+            <nav>
+                <ul>
+                    <li>
+                        <img src="../assets/images/icons/dashboard.png" alt="icone de dashboard">
+                        <button>Dashboard</button>
+                    </li>
+                    <li>
+                        <img src="../assets/images/icons/empresa-branca.png" alt="icone de empresa da cor branca">
+                        <button>Empresa</button>
+                    </li>
+                    <li>
+                        <img src="../assets/images/icons/perfil.png" alt="icone de perfil">
+                        <button>Perfil</button>
+                    </li>
+                    <li>
+                        <img src="../assets/images/icons/historico.png" alt="icone de historico">
+                        <button>Funcionários</button>
+                    </li>
+                    <li>
+                        <img src="../assets/images/icons/filtro.png" alt="icone de filtro">
+                        <button>Filtro</button>
+                    </li>
+                </ul>
+            </nav>
+
+            <div class="botao-sair-container">
+                <img src="../assets/images/icons/sair.png" alt="icone de sair">
+                <button class="botao-sair">Sair</button>
+            </div>
+
+            <div class="logo">
+                <img src="../assets/images/logo-futour-sight-branco.png" alt="Logo FuTour Sight">
+                <span>FuTour Sight</span>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <section class="novo-filtro">
+            <div class="titulo">
+                <h2>Editar funcionário</h2>
+                <p>Edite e salve seu funcionário</p>
+            </div>
+
+            <div class="criar-filtro-container">
+                <div class="criar-filtro">
+                    <div class="campo">
+                        <label for="nome-funcionario">Nome do funcionário</label>
+                        <input id="nome-funcionario" type="text" placeholder="Nome do funcionario">
+                    </div>
+                    <div class="campo">
+                        <label for="nivel-permissao">Nível de permissão</label>
+                        <select name="nivel-permissao" id="nivel-permissao">
+                            <option value="#">Administrador</option>
+                            <option value="#">Gerente</option>
+                            <option value="#">Suporte</option>
+                        </select>
+                    </div>
+                    <div class="campo">
+                        <label for="endereco">Endereço</label>
+                        <input id="endereco" type="text" placeholder="Endereço">
+                    </div>
+                    <div class="campo">
+                        <label for="email">Email</label>
+                        <input id="email" type="text" placeholder="Email">
+                    </div>
+                </div>
+
+                <div class="botoes">
+                    <button>Cancelar</button>
+                    <button>Atualizar funcionário</button>
+                </div>
+            </div>
+        </section>
+    </main>
+</body>
+
+</html>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<script>
+    const ctx = document.getElementById('myChart');
+
+    new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'],
+            datasets: [{
+                label: '2025',
+                data: [12, 19, 3, 5, 2],
+                borderWidth: 1
+            },
+            {
+                label: '2024',
+                data: [10, 13, 2, 5, 4],
+                borderWidth: 1
+            }]
+        },
+        options: {
+            scales: {
+                y: {
+                    beginAtZero: true
+                },
+                x: {
+                    stacked: false
+                }
+            }
+        }
+    });
+</script>

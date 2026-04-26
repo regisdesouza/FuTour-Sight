@@ -1,0 +1,125 @@
+body {
+    background-color: #fff;
+}
+
+main {
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+    padding: 32px 64px;
+    width: 100%;
+    height: 85vh;
+}
+
+.topo {
+    display: flex;
+    justify-content: space-between;
+    gap: 32px;
+}
+
+.barra-pesquisa {
+    display: flex;
+    align-items: center;
+    flex: 1;
+}
+
+.barra-pesquisa input {
+    background-color: var(--cor-cinza-claro);
+    padding: 8px 16px;
+    width: 100%;
+    font-size: var(--texto-medio);
+    border: none;
+    border-top-left-radius: 16px;
+    border-bottom-left-radius: 16px;
+}
+
+.barra-pesquisa button {
+    width: 55px;
+    height: 55px;
+    background-color: var(--cor-cinza);
+    border-radius: 8px;
+    border: none;
+    transition: var(--transition);
+}
+
+.tabelas-container {
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+    flex: 1;
+    height: 100%;
+    overflow-y: auto;
+
+}
+
+.tabela {
+    flex: 1;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    overflow-y: auto;
+}
+
+.container {
+    background-color: var(--cor-clara);
+    border: 1px solid var(--cor-cinza-escuro);
+    border-radius: 16px;
+}
+
+.tabelas-container table {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    flex: 1;
+    height: 100%;
+}
+
+.tabelas-container table thead {
+    background-color: var(--cor-primaria);
+    color: var(--cor-clara);
+}
+
+.tabelas-container table thead th {
+    padding: 8px 0;
+}
+
+tr {
+    display: flex;
+    gap: 0;
+}
+
+th,
+td {
+    border: 1px solid var(--cor-escura);
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+td {
+    gap: 16px;
+    min-width: 0;
+    word-break: break-word;
+    padding: 8px;
+}
+
+th:last-child,
+td:last-child {
+    max-width: 192px;
+}
+
+td button {
+    width: 50px;
+    height: 50px;
+    background-color: var(--cor-cinza-claro);
+    border-radius: 25px;
+    border: none;
+    transition: var(--transition);
+}
+
+.barra-pesquisa button:hover,
+td button:hover {
+    background-color: var(--cor-cinza-escuro);
+}
