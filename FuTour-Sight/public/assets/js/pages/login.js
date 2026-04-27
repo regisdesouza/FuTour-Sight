@@ -65,10 +65,34 @@ function login() {
             sessionStorage.NIVEL_ACESSO = json.nivel_permissao;
             sessionStorage.ID_EMPRESA = json.fk_empresa;
             sessionStorage.PRIMEIRO_ACESSO = json.primeiro_acesso;
+            const nivel = Number(sessionStorage.getItem("NIVEL_ACESSO"));
+            const primeiroAcesso = Number(sessionStorage.getItem("PRIMEIRO_ACESSO")) === 1;
 
-            setTimeout(() => {
-                window.location = "./dashboardProprietario.html";
-            }, 1000);
+            if (nivel === 1) {
+                setTimeout(() => {
+                    window.location.href = "/admin/solicitacoes.html";
+                }, 1000);
+
+            } else if (nivel === 2 && primeiroAcesso) {
+                setTimeout(() => {
+                    window.location.href = "/usuario/edicao-empresa.html";
+                }, 1000);
+
+            } else if (nivel === 2 && !primeiroAcesso) {
+                setTimeout(() => {
+                    window.location.href = "/usuario/dashboard-proprietario.html";
+                }, 1000);
+
+            } else if (nivel === 3 && primeiroAcesso) {
+                setTimeout(() => {
+                    window.location.href = "/usuario/editar-perfil.html";
+                }, 1000);
+
+            } else if (nivel === 3 && !primeiroAcesso) {
+                setTimeout(() => {
+                    window.location.href = "/usuario/dashboard-gerente.html";
+                }, 1000);
+            }
         })
         .catch((erro) => {
             console.error("#ERRO:", erro);

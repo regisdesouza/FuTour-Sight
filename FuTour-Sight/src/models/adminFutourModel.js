@@ -99,26 +99,27 @@ function criarEmpresa(nome, cnpj, email, telefone) {
     ]);
 }
 
-function criarUsuario(nome, email, idEmpresa) {
+function criarUsuario(nome, email, senha, senhaTemp, idEmpresa) {
     var sql = `
         INSERT INTO usuario 
         (nome, email, fk_empresa, fk_nivel_permissao)
-        VALUES (?, ?, ?, ?)`;
+        VALUES (?, ?, ?, ?, ?)`;
 
     return database.executar(sql, [
         nome,
         email,
+        senhaTemp,
         idEmpresa,
-        1
+        2
     ]);
 }
 
-function criarUnidade(idEmpresa) {
+function criarEndereco(idEmpresa) {
     var sql = `
-        INSERT INTO unidade (nome, fk_empresa)
-        VALUES (?, ?)`;
+        INSERT INTO endereco (fk_empresa)
+        VALUES (?)`;
 
-    return database.executar(sql, ["Matriz", idEmpresa]);
+    return database.executar(sql, [idEmpresa]);
 }
 
 module.exports = {
@@ -133,5 +134,5 @@ module.exports = {
     aprovarSolicitacao,
     criarEmpresa,
     criarUsuario,
-    criarUnidade
+    criarEndereco
 };

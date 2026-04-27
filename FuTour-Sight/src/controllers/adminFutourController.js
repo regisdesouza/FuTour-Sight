@@ -91,11 +91,12 @@ async function aprovarSolicitacao(req, res) {
         );
         const idEmpresa = resultadoEmpresa.insertId;
 
-        await adminFutourModel.criarUnidade(idEmpresa);
+        await adminFutourModel.criarEndereco(idEmpresa);
 
         await adminFutourModel.criarUsuario(
             dados.nome_responsavel,
             dados.email_responsavel,
+            senhaTemp,
             idEmpresa
         );
 
