@@ -102,7 +102,6 @@ CREATE TABLE solicitacao_cadastro (
 
 CREATE TABLE endereco (
  id_endereco INT AUTO_INCREMENT PRIMARY KEY,
- nome VARCHAR(150) NOT NULL,
  cep CHAR(8),
  logradouro VARCHAR(100),
  numero CHAR(6),
