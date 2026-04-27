@@ -123,8 +123,14 @@
     color: var(--cor-clara);
 }
 
-.chamado-para-acao-cadastro a {
+a.chamado-para-acao-cadastro {
     padding: 12px 24px;
     border: 1px solid var(--cor-clara);
     border-radius: 32px;
+    transition: var(--transition);
+}
+
+a.chamado-para-acao-cadastro:hover {
+    background-color: var(--cor-clara);
+    color: var(--cor-primaria);
 }
