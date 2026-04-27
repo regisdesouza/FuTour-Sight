@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Editar funcionário</title>
+
+    <link rel="stylesheet" href="../assets/css/reset.css">
+    <link rel="stylesheet" href="../assets/css/styles.css">
+    <link rel="stylesheet" href="../assets/css/responsive.css">
+    <link rel="stylesheet" href="../assets/css/logs.css">
+
+</head>
+
+<body class="background-branco">
+    <header>
+        <a href="../index.html" class="logo">
+            <img src="../assets/images/logo-futour-sight-branco.png" alt="Logo FuTour Sight">
+            <span>FuTour Sight</span>
+        </a>
+
+        <input type="checkbox" id="menu-hamburguer">
+
+        <label for="menu-hamburguer" class="menu-hamburguer">
+            <div class="menu">
+                <span class="hamburguer"></span>
+            </div>
+        </label>
+
+        <div class="overlay"></div>
+
+        <div class="links">
+            <nav>
+                <ul>
+                    <li><a href="./solicitacoes.html">Solicitações</a></li>
+                    <li><a href="./lista-empresas.html">Parcerias</a></li>
+                    <li><a href="./logs.html">Logs</a></li>
+                </ul>
+            </nav>
+            <div class="botoes-autenticacao">
+                <a href="./login.html" class="botao botao-cadastrar">Sair</a>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <div class="container">
+            <div class="legendas">
+                <p class="data-hora">Data/Hora</p>
+                <p class="mensagem">Mensagem</p>
+                <p class="status">Status</p>
+            </div>
+
+            <ul class="logs">
+                <li class="log">
+                    <p class="data-hora">06/04/2026, 12:45</p>
+                    <p class="mensagem">Lendo tabela</p>
+                    <div class="status">
+                        <p class="sucesso">Sucesso</p>
+                    </div>
+                </li>
+                <li class="log">
+                    <p class="data-hora">06/04/2026, 11:34</p>
+                    <p class="mensagem">Lendo tabela</p>
+                    <div class="status">
+                        <p class="erro">Erro</p>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </main>
+</body>
+
+</html>
