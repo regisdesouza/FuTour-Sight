@@ -99,18 +99,19 @@ function criarEmpresa(nome, cnpj, email, telefone) {
     ]);
 }
 
-function criarUsuario(nome, email, senha, senhaTemp, idEmpresa) {
+function criarUsuario(nome, email, senhaTemp, idEmpresa) {
     var sql = `
         INSERT INTO usuario 
-        (nome, email, fk_empresa, fk_nivel_permissao)
-        VALUES (?, ?, ?, ?, ?)`;
+        (nome, email, senha, fk_nivel_permissao, fk_empresa, fk_status)
+        VALUES (?, ?, ?, ?, ?, ?)`;
 
     return database.executar(sql, [
         nome,
         email,
         senhaTemp,
+        2,
         idEmpresa,
-        2
+        1
     ]);
 }
 

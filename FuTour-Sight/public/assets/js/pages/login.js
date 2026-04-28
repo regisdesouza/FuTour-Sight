@@ -59,12 +59,13 @@ function login() {
         .then((json) => {
             console.log("Login realizado:", json);
 
-            sessionStorage.ID_USUARIO = json.id;
+            sessionStorage.ID_USUARIO = json.id_usuario;
             sessionStorage.NOME_USUARIO = json.nome;
             sessionStorage.EMAIL_USUARIO = json.email;
             sessionStorage.NIVEL_ACESSO = json.nivel_permissao;
-            sessionStorage.ID_EMPRESA = json.fk_empresa;
+            sessionStorage.ID_EMPRESA = json.empresa;
             sessionStorage.PRIMEIRO_ACESSO = json.primeiro_acesso;
+            
             const nivel = Number(sessionStorage.getItem("NIVEL_ACESSO"));
             const primeiroAcesso = Number(sessionStorage.getItem("PRIMEIRO_ACESSO")) === 1;
 
@@ -75,6 +76,7 @@ function login() {
 
             } else if (nivel === 2 && primeiroAcesso) {
                 setTimeout(() => {
+                    
                     window.location.href = "/usuario/edicao-empresa.html";
                 }, 1000);
 

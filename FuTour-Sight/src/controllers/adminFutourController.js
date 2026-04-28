@@ -81,7 +81,13 @@ async function aprovarSolicitacao(req, res) {
 
         const dados = solicitacao[0];
 
-        const senhaTemp = crypto.randomBytes(4).toString("hex");
+        const maiusculas = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+        const especiais = "!@#$%&*";
+
+        const letraMaiuscula = maiusculas[Math.floor(Math.random() * maiusculas.length)];
+        const caractereEspecial = especiais[Math.floor(Math.random() * especiais.length)];
+
+        const senhaTemp = letraMaiuscula + caractereEspecial + crypto.randomBytes(3).toString("hex");
 
         const resultadoEmpresa = await adminFutourModel.criarEmpresa(
             dados.nome_empresa,
@@ -135,7 +141,7 @@ async function aprovarSolicitacao(req, res) {
 function cancelarSolicitacao(req, res) {
     var idcancelarSolicitacao = req.params.idSolicitacao;
 
-    adminFutourModel.buscarPorId(idcancelarSolicitacao)
+    adminFutourModel.buscarSolicitacaoPorId(idcancelarSolicitacao)
         .then((resultado) => {
             if (resultado.length == 0) {
                 return res.status(404).json({ mensagem: "Solicitação não encontrada" });
