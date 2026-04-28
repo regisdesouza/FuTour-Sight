@@ -102,16 +102,16 @@ function criarEmpresa(nome, cnpj, email, telefone) {
 function criarUsuario(nome, email, senhaTemp, idEmpresa) {
     var sql = `
         INSERT INTO usuario 
-        (nome, email, senha, fk_nivel_permissao, fk_empresa)
-        VALUES (?, ?, ?, ?, ?)`;
+        (nome, email, senha, fk_empresa, fk_nivel_permissao, fk_empresa, fk_status)
+        VALUES (?, ?, ?, ?, ?, ?)`;
 
     return database.executar(sql, [
         nome,
         email,
         senhaTemp,
         2,
-        idEmpresa
-
+        idEmpresa,
+        1
     ]);
 }
 

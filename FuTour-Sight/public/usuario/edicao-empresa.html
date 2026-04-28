@@ -13,6 +13,8 @@
     <link rel="stylesheet" href="../assets/css/edicao.css">
     <link rel="stylesheet" href="../assets/css/responsive.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+
+    <link rel="shortcut icon" href="../assets/images/icons/favicon.png" type="image/x-icon">
 </head>
 
 <body class="body-empresa">
@@ -165,8 +167,11 @@
                                 <label for="emp-name">Nome da Empresa</label>
                                 <img src="../assets/images/icons/empresa.png" alt="ícone de empresa">
                             </div>
-                            <input type="text" id="emp-name" placeholder="Empresa">
+                            <input type="text" id="empresa" placeholder="Empresa">
+                            <div class="msg_erro" id="div_msg_nome_empresa"></div>
+
                         </div>
+                        
 
                         <div class="input-container">
                             <div class="label-container">
@@ -174,6 +179,7 @@
                                 <img src="../assets/images/icons/empresa.png" alt="ícone de empresa">
                             </div>
                             <input type="text" id="cnpj" placeholder="CNPJ">
+                            <div class="msg_erro" id="div_msg_cnpj"></div>
                         </div>
 
                         <div class="input-container">
@@ -181,7 +187,17 @@
                                 <label for="emp-mail">E-mail da Empresa</label>
                                 <img src="../assets/images/icons/email.png" alt="ícone de email">
                             </div>
-                            <input type="text" id="emp-mail" placeholder="E-mail da Empresa">
+                            <input type="text" id="emailCorporativo" placeholder="E-mail da Empresa">
+                            <div class="msg_erro" id="div_msg_email_corporativo"></div>
+                        </div>
+
+                        <div class="input-container">
+                            <div class="label-container">
+                                <label for="telefone-corporativo">Telefone da Empresa</label>
+                                <img src="../assets/images/icons/telefone.png" alt="ícone de telefone">
+                            </div>
+                            <input type="text" id="telefone" placeholder="Telefone da Empresa">
+                            <div class="msg_erro" id="div_msg_telefone"></div>
                         </div>
 
                         <div class="input-container">
@@ -256,16 +272,28 @@
 
 
         </div>
+
+        <div class="alerta_erro">
+            <div class="card_erro" id="cardErro">
+                <span id="mensagem_erro"></span>
+            </div>
+        </div>
+        <div class="msg_erro" id="div_erros"> </div>
+
+        <div id="div_aguardar" class="loading-div">
+            <img src="" id="">
+        </div>
+
         <div class="emp-div-btn">
-            <button type="button" class="botao botao-cadastrar">Atualizar</button>
+            <button type="button" class="botao botao-cadastrar" onclick="editarEmpresa()">Atualizar</button>
         </div>
 
 
     </main>
 
-    <script src="./assets/js/menu.js"></script>
-    <script src="./assets/js/validacoes.js"></script>
-    <script src="./assets/js/sessao.js"></script>
+    <script src="../assets/js/shared/menu.js"></script>
+    <script src="../assets/js/shared/validacoes.js"></script>
+    <script src="../assets/js/shared/sessao.js"></script>
     <script src="https://unpkg.com/inputmask@5.0.8/dist/inputmask.min.js"></script>
     <script src="../assets/js/pages/usuario/edicaoEmpresa.js"></script>
 </body>

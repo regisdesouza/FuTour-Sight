@@ -4,12 +4,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>FuTour Sight</title>
+    <title>FuTour Sight - Pré-cadastro</title>
 
     <link rel="stylesheet" href="./assets/css/reset.css">
     <link rel="stylesheet" href="./assets/css/styles.css">
     <link rel="stylesheet" href="./assets/css/cadastro.css">
     <link rel="stylesheet" href="./assets/css/responsive.css">
+
+    <link rel="shortcut icon" href="./assets/images/icons/favicon.png" type="image/x-icon">
 </head>
 
 <body class="body-cadastro">
@@ -124,16 +126,22 @@
 
             <button class="botao" onclick="preCadastrar()">Enviar solicitação</button>
 
-            <div class="msg_erro" id="div_msg"
-                style="color: green; text-align: center; font-weight: 500; margin-top: 10px;"></div>
+            <!-- <div class="msg_erro" id="div_msg" -->
+                <!-- style="color: green; text-align: center; font-weight: 500; margin-top: 10px;"></div> -->
 
-            <div class="alerta_erro">
+            <!-- <div class="alerta_erro">
+                <div class="card_erro" id="cardErro">
+                    <span id="mensagem_erro"></span>
+                </div>
+            </div> -->
+            <!-- <div id="div_erros"></div> -->
+        </div>
+
+        <div class="alerta_erro">
                 <div class="card_erro" id="cardErro">
                     <span id="mensagem_erro"></span>
                 </div>
             </div>
-            <div id="div_erros"></div>
-        </div>
     </main>
 
     <footer class="footer secao background-gradient">
@@ -170,9 +178,9 @@
     </footer>
 
 
-    <script src="./assets/js/menu.js"></script>
-    <script src="./assets/js/validacoes.js"></script>
-    <script src="./assets/js/sessao.js"></script>
+    <script src="./assets/js/shared/menu.js"></script>
+    <script src="./assets/js/shared/validacoes.js"></script>
+    <script src="./assets/js/shared/sessao.js"></script>
     <script src="https://unpkg.com/inputmask@5.0.8/dist/inputmask.min.js"></script>
     <script src="assets/js/pages/preCadastro.js"></script>
 </body>
