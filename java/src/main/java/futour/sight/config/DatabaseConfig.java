@@ -10,22 +10,23 @@ public class DatabaseConfig {
     public static JdbcTemplate getJdbcTemplate() {
 
         if (jdbc == null) {
-            BasicDataSource ds = new BasicDataSource();
 
+            String dbHost = System.getenv("DB_HOST");
+            String dbPort = System.getenv("DB_PORT");
+            String dbName = System.getenv("DB_DATABASE");
+            String dbUser = System.getenv("DB_USER");
+            String dbPassword = System.getenv("DB_PASSWORD");
+
+            String jdbcUrl = String.format("jdbc:mysql://%s:%s/%s", dbHost, dbPort, dbName);
+
+            BasicDataSource ds = new BasicDataSource();
             ds.setDriverClassName("com.mysql.cj.jdbc.Driver");
-            ds.setUrl("jdbc:mysql://ContainerBanco:3306/futour_sight");
-            ds.setUsername("futour");
-            ds.setPassword("Senha@1234");
+            ds.setUrl(jdbcUrl);
+            ds.setUsername(dbUser);
+            ds.setPassword(dbPassword);
 
             jdbc = new JdbcTemplate(ds);
         }
-
         return jdbc;
     }
 }
-
-
-
-
-
-
