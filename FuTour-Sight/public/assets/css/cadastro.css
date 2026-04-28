@@ -37,8 +37,12 @@ main.secao {
     min-width: 1000px;
 }
 
-.input-container input {
+.input-container {
     width: 471px;
+}
+
+.input-container input {
+    width: 100%;
     margin-top: 4px;
     padding: 8px 16px;
     border: none;
@@ -99,6 +103,10 @@ main.secao {
     }
 }
 
+.msg_erro {
+    
+}
+
 @media (max-width: 576px) {
     body {
         gap: 16px;
@@ -120,7 +128,7 @@ main.secao {
         width: 100%;
     }
 
-    .input-container input {
+    .input-container {
         width: 100%;
     }
 
