@@ -4,14 +4,14 @@ function cadastrarFuncionario(
     nomeCadastroFuncionario,
     emailPessoalCadastroFuncionario,
     senhaCadastroFuncionario,
-    unidadeCadastroFuncionario,
+    enderecoCadastroFuncionario,
     permissaoCadastroFuncionario
 ) {
     console.log("function cadastrarFuncionario():",
         nomeCadastroFuncionario,
         emailPessoalCadastroFuncionario,
         senhaCadastroFuncionario,
-        unidadeCadastroFuncionario,
+        enderecoCadastroFuncionario,
         permissaoCadastroFuncionario
     );
 
@@ -27,7 +27,7 @@ function cadastrarFuncionario(
         emailPessoalCadastroFuncionario,
         senhaCadastroFuncionario,
         permissaoCadastroFuncionario,
-        unidadeCadastroFuncionario
+        enderecoCadastroFuncionario
     ]);
 }
 
@@ -53,8 +53,14 @@ function editarEmpresa(
     `;
 
     var instrucaoSqlUpdateEndereco = `
-        UPDATE unidade 
-        SET cidade = ?, estado = ?, cep = ?, logradouro = ?, numero = ?, complemento = ? 
+        UPDATE endereco 
+        SET cidade = ?, estado = ?, cep = ?, logradouro = ?, numero = ?, bairro = ?, complemento = ? 
+        WHERE fk_empresa = ?;
+    `;
+
+    var instrucaoSqlUpdatePrimeiroAcesso = `
+        UPDATE usuario
+        SET primeiro_acesso = 0
         WHERE fk_empresa = ?;
     `;
 
@@ -71,20 +77,26 @@ function editarEmpresa(
             cepEditarEmpresa,
             logradouroEditarEmpresa,
             numeroEditarEmpresa,
+            bairroEditarEmpresa,
             complementoEditarEmpresa,
+            idEmpresaEditarEmpresa
+        ]);
+    }).then(() => {
+        return database.executar(instrucaoSqlUpdatePrimeiroAcesso, [
             idEmpresaEditarEmpresa
         ]);
     });
 
 }
 
-function listarUsuarios() {
+function listarUsuarios(idEmpresa) {
     var instrucaoSql = `
         SELECT * FROM vw_usuarios
         WHERE status != 'PENDENTE'
+        AND id_empresa = ?
         ORDER BY nome ASC;`;
 
-    return database.executar(instrucaoSql);
+    return database.executar(instrucaoSql, [idEmpresa]);
 }
 
 function listarUsuariosProcurados(idEmpresa, nomeFuncionariolistarUsuariosProcurados) {
@@ -120,15 +132,15 @@ function buscarEmpresa(idEmpresaBuscarEmpresa) {
             e.cnpj,
             e.email AS emailCorporativo,
             e.telefone AS telefoneCorporativo,
-            u.cep,
-            u.estado,
-            u.cidade,
-            u.bairro,
-            u.logradouro,
-            u.numero,
-            u.complemento
+            end.cep,
+            end.estado,
+            end.cidade,
+            end.bairro,
+            end.logradouro,
+            end.numero,
+            end.complemento
         FROM empresa e
-        INNER JOIN unidade u ON u.fk_empresa = e.id_empresa
+        INNER JOIN endereco end ON end.fk_empresa = e.id_empresa
         WHERE e.id_empresa = ?;
     `;
 

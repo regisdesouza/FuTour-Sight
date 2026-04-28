@@ -73,8 +73,8 @@
     <main>
         <div class="topo">
             <div class="barra-pesquisa">
-                <input type="text" placeholder="Buscar funcionário">
-                <button><img src="../assets/images/icons/pesquisar.png" alt="icone de lupa"></button>
+                <input type="text" id="input-busca" placeholder="Buscar funcionário">
+                <button id="btn-busca"><img src="../assets/images/icons/pesquisar.png" alt="icone de lupa"></button>
             </div>
             <button class="botao botao-cadastrar-funcionario">Cadastrar funcionário</button>
         </div>
@@ -92,36 +92,14 @@
                             <th>Edição</th>
                         </tr>
                     </thead>
-                    <tbody>
-                        <tr>
-                            <td>Colaborador nome exemplo</td>
-                            <td>Gerente</td>
-                            <td>Exemplo, SP</td>
-                            <td>Ativo</td>
-                            <td>colaborador.email@testeempresa.com</td>
-                            <td>
-                                <button><img src="../assets/images/icons/x.png" alt="botão de X"></button>
-                                <button><img src="../assets/images/icons/editar.png" alt="botão de editar"></button>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>Colaborador nome exemplo</td>
-                            <td>Gerente</td>
-                            <td>Exemplo, SP</td>
-                            <td>Ativo</td>
-                            <td>colaborador.email@testeempresa.com</td>
-                            <td>
-                                <button><img src="../assets/images/icons/x.png" alt="botão de X"></button>
-                                <button><img src="../assets/images/icons/editar.png" alt="botão de editar"></button>
-                            </td>
-                        </tr>
-                        
-                    </tbody>
+                    <tbody id="tbody-funcionarios"></tbody>
                 </table>
             </div>
         </div>
 
     </main>
+
+    <script src="../assets/js/pages/usuario/listaUsuarios.js"></script>
 </body>
 
 </html>

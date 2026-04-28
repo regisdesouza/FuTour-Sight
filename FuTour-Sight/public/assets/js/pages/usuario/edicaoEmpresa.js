@@ -8,14 +8,6 @@ var chkNomeEmpresa = false;
 var chkCnpj = false;
 var chkEmailCorporativo = false;
 var chkTelefone = false;
-var chkCep = false;
-var chkEstado = false;
-var chkCidade = false;
-var chkBairro = false;
-var chkLogradouro = false;
-var chkNumero = false;
-var chkComplemento = false;
-
 
 fetch(`/usuariosAdmin/buscarEmpresa/${sessionStorage.getItem("ID_EMPRESA")}`)
     .then((res) => res.json())
@@ -106,16 +98,9 @@ function editarEmpresa() {
     onkey_telefone();
 
     const temErro = chkNomeEmpresa &&
-        chkTelefone &&
+        chkCnpj &&
         chkEmailCorporativo &&
-        chkCep &&
-        chkEstado &&
-        chkCidade &&
-        chkBairro &&
-        chkLogradouro &&
-        chkNumero &&
-        chkComplemento &&
-        chkCnpj;
+        chkTelefone
 
     if (!temErro) {
         cardErro.style.display = "block";
@@ -128,10 +113,10 @@ function editarEmpresa() {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-            empresaServer: emp - name.value.trim(),
+            empresaServer: empresa.value.trim(),
             cnpjServer: cnpj.value.replace(/\D/g, ""),
-            emailCorporativoServer: emp - email.value.trim(),
-            telefoneCorporativoServer: emp - tel.value.replace(/\D/g, ""),
+            emailCorporativoServer: emailCorporativo.value.trim(),
+            telefoneCorporativoServer: telefone.value.replace(/\D/g, ""),
             cepServer: cep.value.replace(/\D/g, ""),
             estadoServer: estado.value.trim(),
             cidadeServer: cidade.value.trim(),
@@ -149,7 +134,7 @@ function editarEmpresa() {
         .then((dados) => {
             console.log("Empresa atualizada:", dados);
             window.alert("Dados empresariais atualizados com sucesso pelo usuário de email: " + sessionStorage.getItem("EMAIL_USUARIO") + "!");
-            window.location = "/dashboard/mural.html";
+            window.location = "dashboard-proprietario.html";
         })
         .catch((erro) => {
             console.error("#ERRO:", erro);

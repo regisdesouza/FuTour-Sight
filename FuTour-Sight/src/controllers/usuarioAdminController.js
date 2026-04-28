@@ -5,21 +5,21 @@ function cadastrarFuncionario(req, res) {
         nomeServer,
         emailPessoalServer,
         senhaServer,
-        unidadeServer,
+        enderecoServer,
         permissaoServer
     } = req.body;
 
     if (!nomeServer) return res.status(400).json({ mensagem: "Nome undefined!" });
     if (!emailPessoalServer) return res.status(400).json({ mensagem: "Email undefined!" });
     if (!senhaServer) return res.status(400).json({ mensagem: "Senha undefined!" });
-    if (!unidadeServer) return res.status(400).json({ mensagem: "Unidade undefined!" });
+    if (!enderecoServer) return res.status(400).json({ mensagem: "Endereço undefined!" });
     if (!permissaoServer) return res.status(400).json({ mensagem: "Permissão undefined!" });
 
     usuarioAdminModel.cadastrarFuncionario(
         nomeServer,
         emailPessoalServer,
         senhaServer,
-        unidadeServer,
+        enderecoServer,
         permissaoServer
     )
         .then((resultado) => {
@@ -59,7 +59,9 @@ function editarEmpresa(req, res) {
 }
 
 function listarUsuarios(req, res) {
-    usuarioAdminModel.listarUsuarios()
+    var idEmpresa = req.query.idEmpresa
+
+    usuarioAdminModel.listarUsuarios(idEmpresa)
         .then((resultado) => {
             res.status(200).json(resultado);
         })

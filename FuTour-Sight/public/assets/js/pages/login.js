@@ -59,16 +59,45 @@ function login() {
         .then((json) => {
             console.log("Login realizado:", json);
 
-            sessionStorage.ID_USUARIO = json.id;
+            sessionStorage.ID_USUARIO = json.id_usuario;
             sessionStorage.NOME_USUARIO = json.nome;
             sessionStorage.EMAIL_USUARIO = json.email;
             sessionStorage.NIVEL_ACESSO = json.nivel_permissao;
-            sessionStorage.ID_EMPRESA = json.fk_empresa;
+            sessionStorage.ID_EMPRESA = json.empresa;
             sessionStorage.PRIMEIRO_ACESSO = json.primeiro_acesso;
 
+<<<<<<< Updated upstream
             setTimeout(() => {
                 window.location = "./dashboardProprietario.html";
             }, 1000);
+=======
+            if (nivel === 1) {
+                setTimeout(() => {
+                    window.location.href = "/admin/solicitacoes.html";
+                }, 1000);
+
+            } else if (nivel === 2 && primeiroAcesso) {
+                setTimeout(() => {
+                    
+                    window.location.href = "/usuario/edicao-empresa.html";
+                }, 1000);
+
+            } else if (nivel === 2 && !primeiroAcesso) {
+                setTimeout(() => {
+                    window.location.href = "/usuario/dashboard-proprietario.html";
+                }, 1000);
+
+            } else if (nivel === 3 && primeiroAcesso) {
+                setTimeout(() => {
+                    window.location.href = "/usuario/editar-perfil.html";
+                }, 1000);
+
+            } else if (nivel === 3 && !primeiroAcesso) {
+                setTimeout(() => {
+                    window.location.href = "/usuario/dashboard-gerente.html";
+                }, 1000);
+            }
+>>>>>>> Stashed changes
         })
         .catch((erro) => {
             console.error("#ERRO:", erro);

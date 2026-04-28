@@ -100,6 +100,22 @@ CREATE TABLE solicitacao_cadastro (
     FOREIGN KEY (fk_status) REFERENCES status(id_status)
 );
 
+CREATE TABLE endereco (
+ id_endereco INT AUTO_INCREMENT PRIMARY KEY,
+ cep CHAR(8),
+ logradouro VARCHAR(100),
+ numero CHAR(6),
+ bairro VARCHAR(100),
+ cidade VARCHAR(100),
+ estado VARCHAR(100),
+ complemento VARCHAR(100),
+ fk_status INT NOT NULL DEFAULT 7,
+ fk_empresa INT NOT NULL,
+ data_criacao DATETIME DEFAULT CURRENT_TIMESTAMP,
+ FOREIGN KEY (fk_status) REFERENCES status(id_status),
+ FOREIGN KEY (fk_empresa) REFERENCES empresa(id_empresa)
+ );
+
 CREATE TABLE log (
     id_log INT AUTO_INCREMENT PRIMARY KEY,
     tabela VARCHAR(100) NOT NULL,

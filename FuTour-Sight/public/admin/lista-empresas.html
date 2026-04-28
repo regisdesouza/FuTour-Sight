@@ -38,7 +38,7 @@
                 </ul>
             </nav>
             <div class="botoes-autenticacao">
-                <a href="./login.html" class="botao botao-cadastrar">Sair</a>
+                <a href="../login.html" class="botao botao-cadastrar">Sair</a>
             </div>
         </div>
     </header>
@@ -46,8 +46,8 @@
     <main>
         <div class="topo">
             <div class="barra-pesquisa">
-                <input type="text" placeholder="Buscar funcionário">
-                <button><img src="../assets/images/icons/pesquisar.png" alt="icone de lupa"></button>
+                <input type="text" placeholder="Buscar funcionário" id="input-busca">
+                <button><img src="../assets/images/icons/pesquisar.png" alt="icone de lupa" id="btn-busca"></button>
             </div>
         </div>
 
@@ -64,35 +64,14 @@
                             <th>Edição</th>
                         </tr>
                     </thead>
-                    <tbody>
-                        <tr>
-                            <td>Exemplo nome empresa</td>
-                            <td>00.000.000/0000-00</td>
-                            <td>email@testeempresa.com</td>
-                            <td>(11) 00000-0000</td>
-                            <td>Ativo</td>
-                            <td>
-                                <button><img src="../assets/images/icons/x.png" alt="botão de X"></button>
-                                <button><img src="../assets/images/icons/editar.png" alt="botão de editar"></button>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>Exemplo nome empresa</td>
-                            <td>00.000.000/0000-00</td>
-                            <td>email@testeempresa.com</td>
-                            <td>(11) 00000-0000</td>
-                            <td>Ativo</td>
-                            <td>
-                                <button><img src="../assets/images/icons/x.png" alt="botão de X"></button>
-                                <button><img src="../assets/images/icons/editar.png" alt="botão de editar"></button>
-                            </td>
-                        </tr>
-                    </tbody>
+                    <tbody id="tbody-empresas"></tbody>
                 </table>
             </div>
         </div>
 
     </main>
+
+    <script src="../assets/js/pages/admin/listaEmpresas.js"></script>
 </body>
 
 </html>

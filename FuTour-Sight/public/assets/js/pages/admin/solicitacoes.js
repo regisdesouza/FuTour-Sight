@@ -72,6 +72,7 @@ function aprovarSolicitacao(id) {
         method: "POST",
         headers: { "Content-Type": "application/json" }
     })
+<<<<<<< Updated upstream
         .then((resposta) => {
             if (!resposta.ok) throw new Error("Erro ao aprovar solicitação")
             return resposta.json()
@@ -82,6 +83,23 @@ function aprovarSolicitacao(id) {
             listarSolicitacoes()
         })
         .catch((erro) => console.error("#ERRO:", erro))
+=======
+        .then(async (resposta) => {
+            const data = await resposta.json()
+
+            if (!resposta.ok) throw new Error("Erro ao aprovar solicitação")
+            return resposta.json()
+        })
+        .then((resultado) => {
+            console.log(resultado.mensagem)
+            div_empresa_selecionada.classList.remove('selecionado')
+            listarSolicitacoes()
+        })
+        .catch((erro) => {
+            console.error("#ERRO:", erro)
+        }
+        )
+>>>>>>> Stashed changes
 }
 
 function cancelarSolicitacao(id) {
