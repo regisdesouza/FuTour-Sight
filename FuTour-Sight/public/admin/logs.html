@@ -4,12 +4,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>FuTour Sight | Empresas</title>
+    <title>FuTour Sight | Logs</title>
 
     <link rel="stylesheet" href="../assets/css/reset.css">
     <link rel="stylesheet" href="../assets/css/styles.css">
     <link rel="stylesheet" href="../assets/css/responsive.css">
-    <link rel="stylesheet" href="../assets/css/lista-empresas.css">
+    <link rel="stylesheet" href="../assets/css/logs.css">
 
     <link rel="shortcut icon" href="../assets/images/icons/favicon.png" type="image/x-icon">
 </head>
@@ -40,40 +40,41 @@
                 </ul>
             </nav>
             <div class="botoes-autenticacao">
-                <a href="../login.html" class="botao botao-cadastrar">Sair</a>
+                <a href="./login.html" class="botao botao-cadastrar">Sair</a>
             </div>
         </div>
     </header>
 
     <main>
-        <div class="topo">
-            <div class="barra-pesquisa">
-                <input type="text" placeholder="Buscar funcionário" id="input-busca">
-                <button><img src="../assets/images/icons/pesquisar.png" alt="icone de lupa" id="btn-busca"></button>
+        <div class="container">
+            <div class="legendas">
+                <p class="data-hora">Data/Hora</p>
+                <p class="mensagem">Mensagem</p>
+                <p class="status">Status</p>
             </div>
-        </div>
 
-        <div class="tabelas-container">
-            <div class="tabela container">
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Empresa</th>
-                            <th>CNPJ</th>
-                            <th>Email</th>
-                            <th>Telefone</th>
-                            <th>Status</th>
-                            <th>Edição</th>
-                        </tr>
-                    </thead>
-                    <tbody id="tbody-empresas"></tbody>
-                </table>
-            </div>
-        </div>
+            <ul class="logs" id="lista-logs">
+                <!-- Itens usados para testar o frontend -->
 
+                <!-- <li class="log">
+                    <p class="data-hora">06/04/2026, 12:45</p>
+                    <p class="mensagem">Lendo tabela</p>
+                    <div class="status">
+                        <p class="sucesso">Sucesso</p>
+                    </div>
+                </li>
+                <li class="log">
+                    <p class="data-hora">06/04/2026, 11:34</p>
+                    <p class="mensagem">Lendo tabela</p>
+                    <div class="status">
+                        <p class="erro">Erro</p>
+                    </div>
+                </li> -->
+            </ul>
+        </div>
     </main>
-
-    <script src="../assets/js/pages/admin/listaEmpresas.js"></script>
 </body>
 
 </html>
+
+<script src="../assets/js/pages/admin/logs.js"></script>

@@ -103,7 +103,7 @@ function criarUsuario(nome, email, senhaTemp, idEmpresa) {
     var sql = `
         INSERT INTO usuario 
         (nome, email, senha, fk_nivel_permissao, fk_empresa, fk_status)
-        VALUES (?, ?, ?, ?, ?)`;
+        VALUES (?, ?, ?, ?, ?, ?)`;
 
     return database.executar(sql, [
         nome,
@@ -115,12 +115,12 @@ function criarUsuario(nome, email, senhaTemp, idEmpresa) {
     ]);
 }
 
-function criarUnidade(idEmpresa) {
+function criarEndereco(idEmpresa) {
     var sql = `
-        INSERT INTO unidade (nome, fk_empresa)
-        VALUES (?, ?)`;
+        INSERT INTO endereco (fk_empresa)
+        VALUES (?)`;
 
-    return database.executar(sql, ["Matriz", idEmpresa]);
+    return database.executar(sql, [idEmpresa]);
 }
 
 module.exports = {
@@ -135,5 +135,5 @@ module.exports = {
     aprovarSolicitacao,
     criarEmpresa,
     criarUsuario,
-    criarUnidade
+    criarEndereco
 };

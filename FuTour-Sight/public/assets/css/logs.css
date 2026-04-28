@@ -1,0 +1,70 @@
+body {
+    background-color: #fff;
+}
+
+main {
+    padding: 32px 128px;
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    background-color: var(--cor-clara);
+    border: 1px solid var(--cor-cinza-escuro);
+    border-radius: 16px;
+    padding: 16px;
+    height: 80vh;
+}
+
+.legendas,
+.log {
+    display: flex;
+    justify-content: space-between;
+}
+
+.legendas p {
+    font-size: var(--texto-medio);
+    font-weight: var(--semi-bold);
+    text-align: center;
+}
+
+.logs {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    overflow-y: auto;
+}
+
+.log p {
+    text-align: center;
+}
+
+.data-hora {
+    width: 300px;
+}
+
+.mensagem {
+    width: 400px;
+}
+
+.status {
+    width: 200px;
+    display: flex;
+    justify-content: center;
+}
+
+.status p {
+    color: var(--cor-clara);
+    width: 150px;
+    padding: 8px 0;
+    border-radius: 16px;
+}
+
+.status p.sucesso {
+    background-color: #14C600;
+}
+
+.status p.erro {
+    background-color: #C60000;
+}

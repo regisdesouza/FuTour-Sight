@@ -17,6 +17,8 @@
     background-color: #fff;
     border-radius: 32px;
     box-shadow: 0 0 30px rgba(0, 0, 0, 0.1);
+    max-width: 952px;
+    margin: 24px;
 }
 
 .login-conteudo {
@@ -28,6 +30,7 @@
     border-bottom-left-radius: 32px;
     width: 50%;
     background-color: #fff;
+    max-width: 476px;
 }
 
 .login-conteudo label,
@@ -123,8 +126,22 @@
     color: var(--cor-clara);
 }
 
-.chamado-para-acao-cadastro a {
+a.chamado-para-acao-cadastro {
     padding: 12px 24px;
     border: 1px solid var(--cor-clara);
     border-radius: 32px;
+    transition: var(--transition);
+}
+
+a.chamado-para-acao-cadastro:hover {
+    background-color: var(--cor-clara);
+    color: var(--cor-primaria);
+}
+
+.msg_erro {
+    width: 100%;
+}
+
+.campo {
+    width: 100%;
 }

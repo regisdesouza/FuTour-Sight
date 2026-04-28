@@ -2,21 +2,12 @@
     padding-bottom: 0px;
 }
 
-.cad-func {
-    display: flex;
-    flex-direction: row;
-}
-
-.cad-func img {
-    height: 150px;
-    width: auto;
-}
-
 .linha-btn {
     display: flex;
     flex-direction: row;
     width: 100%;
     justify-content: space-between;
+    padding-left: 40px;
 }
 
 .linha-btn i {
@@ -50,54 +41,109 @@
     padding-right: 60px;
 }
 
+.label-container {
+    justify-content: space-between;
+}
+
+.input-fb-empresa {
+    justify-content: space-between;
+    align-items: center;
+    display: flex;
+    flex-direction: row;
+    gap: 12px 20px;
+    width: 100%;
+}
+
+.input-container {
+    flex: 1;
+}
+
+.banner-img {
+    height: 300px;
+    width: auto;
+}
+
+.form-permissao {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    padding-left: 80px;
+    padding-right: 80px;
+}
+
 /* --------------------- RESPONSIVIDADE --------------------- */
 
 @media (max-width: 576px) {
 
-    .empresa-container .cad-func {
+    .conteudo {
+        padding: 20px;
+    }
+
+    .input-fb-empresa {
         flex-direction: column;
-        align-items: center;
-        text-align: center;
+        gap: 15px;
+    }
+
+    .input-container {
+        width: 100%;
+    }
+
+    .form-permissao {
+        flex-direction: column;
+        padding-left: 0px;
+        padding-right: 0px;
+        margin: 0;
         gap: 20px;
     }
 
-    .empresa-container .cad-func form {
+    .banner-img {
         width: 100%;
-    }
-
-    .empresa-container .input-fb-empresa {
-        width: 100%;
-    }
-
-    .empresa-container .input-box {
-        width: 100%;
-    }
-
-    .empresa-container .banner-img {
-        width: 100%;
-        max-width: 280px;
         height: auto;
     }
 
-    .linha-txt {
-        padding: 10px;
-        display: flex;
+    .linha-btn {
         flex-direction: column;
-        align-items: center;
+        padding-left: 0px;
+        gap: 15px;
         justify-content: center;
-        gap: 8px;
+    }
+
+    .linha-txt {
+        flex-direction: column;
+        align-items: flex-start;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+        gap: 10px;
+        padding-left: 0;
+        gap: 10px;
     }
 
     .linha-txt h3 {
-        padding: 10px;
         text-align: center;
     }
 
-    .linha-txt i {
-        color: var(--cor-primaria);
+    .emp-div-btn {
+        margin-left: 0;
+padding: 0;
+        width: 100%;
+        display: flex;
+        justify-content: center;
     }
 
-    .emp-div-btn {
-        padding-right: 0px;
+    .botao-cadastrar {
+        width: 100%;
     }
+
+    .label-container {
+        flex-direction: row;
+        align-items: center;
+    }
+
+    .empresa-container.form-box-empresa {
+        width: 100%;
+        margin: 0;
+        box-sizing: border-box;
+    }
+
 }

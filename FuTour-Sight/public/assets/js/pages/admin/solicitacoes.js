@@ -75,18 +75,15 @@ function aprovarSolicitacao(id) {
         .then(async (resposta) => {
             const data = await resposta.json()
 
-            if (!resposta.ok) throw new Error("Erro ao aprovar solicitação")
-            return resposta.json()
-        })
-        .then((resultado) => {
-            console.log(resultado.mensagem)
-            div_empresa_selecionada.classList.remove('selecionado')
-            listarSolicitacoes()
+            if (!resposta.ok) {
+                throw new Error(data.erro || "Erro ao aprovar")
+            }
+
+            return data
         })
         .catch((erro) => {
-            console.error("#ERRO:", erro)
-        }
-        )
+            document.getElementById("mensagemErro").textContent = erro.message
+        })
 }
 
 function cancelarSolicitacao(id) {
@@ -103,7 +100,10 @@ function cancelarSolicitacao(id) {
             div_empresa_selecionada.classList.remove('selecionado')
             listarSolicitacoes()
         })
-        .catch((erro) => console.error("#ERRO:", erro))
+        .catch((erro) => {
+            console.error("#ERRO:", erro)
+        }
+        )
 }
 
 listarSolicitacoes()
