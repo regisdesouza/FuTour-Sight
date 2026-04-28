@@ -99,28 +99,17 @@ function criarEmpresa(nome, cnpj, email, telefone) {
     ]);
 }
 
-<<<<<<< Updated upstream
-function criarUsuario(nome, email, idEmpresa) {
-    var sql = `
-        INSERT INTO usuario 
-        (nome, email, fk_empresa, fk_nivel_permissao)
-        VALUES (?, ?, ?, ?)`;
-=======
 function criarUsuario(nome, email, senhaTemp, idEmpresa) {
     var sql = `
         INSERT INTO usuario 
         (nome, email, senha, fk_nivel_permissao, fk_empresa, fk_status)
         VALUES (?, ?, ?, ?, ?)`;
->>>>>>> Stashed changes
 
     return database.executar(sql, [
         nome,
         email,
-<<<<<<< Updated upstream
-=======
         senhaTemp,
         2,
->>>>>>> Stashed changes
         idEmpresa,
         1
     ]);

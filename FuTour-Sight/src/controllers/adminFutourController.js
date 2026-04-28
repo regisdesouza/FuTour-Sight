@@ -140,7 +140,7 @@ async function aprovarSolicitacao(req, res) {
 function cancelarSolicitacao(req, res) {
     var idcancelarSolicitacao = req.params.idSolicitacao;
 
-    adminFutourModel.buscarPorId(idcancelarSolicitacao)
+    adminFutourModel.buscarSolicitacaoPorId(idcancelarSolicitacao)
         .then((resultado) => {
             if (resultado.length == 0) {
                 return res.status(404).json({ mensagem: "Solicitação não encontrada" });

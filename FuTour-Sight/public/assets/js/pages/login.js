@@ -65,12 +65,10 @@ function login() {
             sessionStorage.NIVEL_ACESSO = json.nivel_permissao;
             sessionStorage.ID_EMPRESA = json.empresa;
             sessionStorage.PRIMEIRO_ACESSO = json.primeiro_acesso;
+            
+            const nivel = Number(sessionStorage.getItem("NIVEL_ACESSO"));
+            const primeiroAcesso = Number(sessionStorage.getItem("PRIMEIRO_ACESSO")) === 1;
 
-<<<<<<< Updated upstream
-            setTimeout(() => {
-                window.location = "./dashboardProprietario.html";
-            }, 1000);
-=======
             if (nivel === 1) {
                 setTimeout(() => {
                     window.location.href = "/admin/solicitacoes.html";
@@ -97,7 +95,6 @@ function login() {
                     window.location.href = "/usuario/dashboard-gerente.html";
                 }, 1000);
             }
->>>>>>> Stashed changes
         })
         .catch((erro) => {
             console.error("#ERRO:", erro);
