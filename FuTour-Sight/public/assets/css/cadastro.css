@@ -103,10 +103,6 @@ main.secao {
     }
 }
 
-.msg_erro {
-    
-}
-
 @media (max-width: 576px) {
     body {
         gap: 16px;
