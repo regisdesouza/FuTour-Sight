@@ -97,33 +97,30 @@
                     </div>
                     <div class="campo">
                         <label for="estado-destino">Estado de destino</label>
-                        <select name="ano-referencia" id="ano-referencia">
-                            <option value="#">Todos os estados (padrão)</option>
+                        <select name="estado-destino" id="estado-destino" onchange="adicionarEstado()">
+                            <option value="">Selecione um estado...</option>
+                            <option value="sp">SP</option>
                         </select>
                         <ul>
-                            <li class="item">
-                                <span>SP</span>
-                                <button>X</button>
-                            </li>
+                            
                         </ul>
                     </div>
                     <div class="campo">
                         <label for="pais-origem">País de origem</label>
-                        <select name="ano-referencia" id="ano-referencia">
-                            <option value="#">Todos os países (padrão)</option>
+                        <select name="pais-origem" id="pais-origem" onchange="adicionarPais()">
+                            <option value="">Selecione um país...</option>
+                            <option value="brasil">Brasil</option>
+                            <option value="japao">Japão</option>
                         </select>
                         <ul>
-                            <li class="item">
-                                <span>Argentina</span>
-                                <button>X</button>
-                            </li>
+                            
                         </ul>
                     </div>
 
                     <div class="intervalo-meses-container">
                         <label for="">Intervalo de meses</label>
                         <div class="intervalo-meses">
-                            <select name="" id="">
+                            <select name="" id="mes-inicio">
                                 <option value="Janeiro">Janeiro</option>
                                 <option value="Fevereiro">Fevereiro</option>
                                 <option value="Março">Março</option>
@@ -138,7 +135,7 @@
                                 <option value="Dezembro">Dezembro</option>
                             </select>
                             <span>até</span>
-                            <select name="" id="">
+                            <select name="" id="mes-final">
                                 <option value="Janeiro">Janeiro</option>
                                 <option value="Fevereiro">Fevereiro</option>
                                 <option value="Março">Março</option>

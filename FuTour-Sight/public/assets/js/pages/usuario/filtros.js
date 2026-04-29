@@ -1,5 +1,101 @@
 function salvarFiltro() {
+    const nomeFiltro = document.getElementById('nome-filtro').value;
+    const mes_inicio = document.getElementById('mes-inicio').value;
+    const mes_final = document.getElementById('mes-final').value;
+    const ano = document.getElementById('ano-referencia').value;
+    
+    fetch(`/usuarios/criarFiltro`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+            nomeFiltro: nomeFiltro,
+            estados: estadosSelecionados,
+            paises: paisesSelecionados,
+            mes_inicio: mes_inicio,
+            mes_fim: mes_final,
+            ano: ano,
+            fkUsuario: sessionStorage.ID_USUARIO
+        }),
+    })
+    .then(() => {
+        carregarFiltros();
+    })
+}
 
+let estadosSelecionados = [];
+
+function adicionarEstado() {
+    const select = document.getElementById("estado-destino");
+    const valor = select.value;
+    const texto = select.options[select.selectedIndex].text;
+
+    if (!valor) return;
+
+    // Evita duplicados
+    if (!estadosSelecionados.includes(texto)) {
+        estadosSelecionados.push(texto);
+        renderizarEstados();
+    }
+
+    // Reseta o select
+    select.value = "";    
+}
+
+function renderizarEstados() {
+    const ul = document.querySelector("#estado-destino + ul");
+    ul.innerHTML = "";
+
+    estadosSelecionados.forEach((estado, index) => {
+        ul.innerHTML += `
+            <li class="item">
+                <span>${estado}</span>
+                <button onclick="removerEstado(${index})">X</button>
+            </li>
+        `;
+    });
+}
+
+function removerEstado(index) {
+    estadosSelecionados.splice(index, 1);
+    renderizarEstados();
+}
+
+let paisesSelecionados = [];
+
+function adicionarPais() {
+    const select = document.getElementById("pais-origem");
+    const valor = select.value;
+    const texto = select.options[select.selectedIndex].text;
+
+    if (!valor) return;
+
+    // Evita duplicados
+    if (!paisesSelecionados.includes(texto)) {
+        paisesSelecionados.push(texto);
+        renderizarPaises();
+    }
+
+    // Reseta o select
+    select.value = "";   
+}
+
+function renderizarPaises() {
+    const ul = document.querySelector("#pais-origem + ul");
+    ul.innerHTML = "";
+
+    paisesSelecionados.forEach((pais, index) => {
+        ul.innerHTML += `
+            <li class="item">
+                <span>${pais}</span>
+                <button onclick="removerPais(${index})">X</button>
+            </li>
+        `;
+    });
+}
+
+function removerPais(index) {
+    paisesSelecionados.splice(index, 1);
+    renderizarPaises();
 }
 
 function carregarFiltros() {
@@ -22,6 +118,8 @@ function carregarFiltros() {
             } else {
                 p_quantidade_filtros.innerHTML = `${filtros.length} filtros salvos`
             }
+
+            ul_filtros.innerHTML = "";
 
             filtros.forEach(filtro => {
                 const primeirosEstados = filtro.estados.slice(0, 3);
