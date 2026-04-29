@@ -30,12 +30,14 @@ header .links {
 
 .usuario-infos .img-container img {
     border-radius: 100px;
+    width: 100%;
 }
 
 .usuario-infos span {
-    font-size: var(--texto-grande);
+    font-size: var(--texto-medio);
     color: var(--cor-clara);
     font-weight: var(--semi-bold);
+    text-align: center;
 }
 
 .links nav ul {
@@ -43,10 +45,10 @@ header .links {
     gap: 16px;
 }
 
-.links nav ul li {
+.links nav ul li button{
     display: flex;
     align-items: center;
-    gap: 40px;
+    gap: 16px;
     font-size: var(--texto-grande);
 }
 
@@ -70,7 +72,7 @@ header .links {
     align-self: flex-start;
 }
 
-.botao-sair-container button {
+.botao-sair-container {
     border: none;
     background-color: transparent;
     color: var(--cor-clara);
@@ -80,7 +82,7 @@ header .links {
     transition: var(--transition);
 }
 
-.botao-sair-container button:hover,
+.botao-sair-container:hover,
 .links nav ul li button:hover {
     transform: scale(1.2);
 }
