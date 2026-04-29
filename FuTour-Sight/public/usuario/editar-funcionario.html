@@ -18,15 +18,12 @@
 <body class="background-branco">
     <header>
         <input type="checkbox" id="menu-hamburguer">
-
         <label for="menu-hamburguer" class="menu-hamburguer">
             <div class="menu">
                 <span class="hamburguer"></span>
             </div>
         </label>
-
         <div class="overlay"></div>
-
         <div class="links">
             <div class="usuario-infos">
                 <div class="img-container">
@@ -34,7 +31,6 @@
                 </div>
                 <span>Nome do usuário</span>
             </div>
-
             <nav>
                 <ul>
                     <li>
@@ -91,68 +87,39 @@
 
             <div class="criar-filtro-container">
                 <div class="criar-filtro">
+
                     <div class="campo">
                         <label for="nome-funcionario">Nome do funcionário</label>
-                        <input id="nome-funcionario" type="text" placeholder="Nome do funcionario">
+                        <input id="nome-funcionario" type="text" placeholder="Nome do funcionário">
                     </div>
+
                     <div class="campo">
                         <label for="nivel-permissao">Nível de permissão</label>
-                        <select name="nivel-permissao" id="nivel-permissao">
-                            <option value="#">Administrador</option>
-                            <option value="#">Gerente</option>
-                            <option value="#">Suporte</option>
+                        <select id="nivel-permissao">
+                            <option value="">Selecione</option>
+                            <option value="2">EMPRESA_ADMIN</option>
+                            <option value="3">EMPRESA_USER</option>
                         </select>
                     </div>
-                    <div class="campo">
-                        <label for="endereco">Endereço</label>
-                        <input id="endereco" type="text" placeholder="Endereço">
-                    </div>
+
                     <div class="campo">
                         <label for="email">Email</label>
                         <input id="email" type="text" placeholder="Email">
                     </div>
+
                 </div>
 
                 <div class="botoes">
-                    <button>Cancelar</button>
-                    <button>Atualizar funcionário</button>
+                    <button onclick="cancelar()">Cancelar</button>
+                    <button onclick="salvarEdicao()">Atualizar funcionário</button>
                 </div>
             </div>
         </section>
     </main>
+
+    <script src="../assets/js/shared/sessao.js"></script>
+    <script src="../assets/js/pages/usuario/editarFuncionario.js"></script>
+
 </body>
 
 </html>
-
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-
-<script>
-    const ctx = document.getElementById('myChart');
-
-    new Chart(ctx, {
-        type: 'line',
-        data: {
-            labels: ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'],
-            datasets: [{
-                label: '2025',
-                data: [12, 19, 3, 5, 2],
-                borderWidth: 1
-            },
-            {
-                label: '2024',
-                data: [10, 13, 2, 5, 4],
-                borderWidth: 1
-            }]
-        },
-        options: {
-            scales: {
-                y: {
-                    beginAtZero: true
-                },
-                x: {
-                    stacked: false
-                }
-            }
-        }
-    });
-</script>

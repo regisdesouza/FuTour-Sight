@@ -4,30 +4,21 @@ function cadastrarFuncionario(
     nomeCadastroFuncionario,
     emailPessoalCadastroFuncionario,
     senhaCadastroFuncionario,
-    enderecoCadastroFuncionario,
-    permissaoCadastroFuncionario
+    permissaoCadastroFuncionario,
+    idEmpresaCadastroFuncionario
 ) {
-    console.log("function cadastrarFuncionario():",
-        nomeCadastroFuncionario,
-        emailPessoalCadastroFuncionario,
-        senhaCadastroFuncionario,
-        enderecoCadastroFuncionario,
-        permissaoCadastroFuncionario
-    );
-
     var instrucaoSql = `
         INSERT INTO usuario 
-        (nome, email, senha, fk_nivel_permissao, fk_empresa) 
-        VALUES (?, ?, ?, ?, ?);
+        (nome, email, senha, fk_nivel_permissao, fk_empresa, fk_status) 
+        VALUES (?, ?, ?, ?, ?, 1);
     `;
 
-    console.log("Executando a instrução SQL: \n" + instrucaoSql);
     return database.executar(instrucaoSql, [
         nomeCadastroFuncionario,
         emailPessoalCadastroFuncionario,
         senhaCadastroFuncionario,
         permissaoCadastroFuncionario,
-        enderecoCadastroFuncionario
+        idEmpresaCadastroFuncionario
     ]);
 }
 
@@ -147,11 +138,37 @@ function buscarEmpresa(idEmpresaBuscarEmpresa) {
     return database.executar(instrucaoSql, [idEmpresaBuscarEmpresa]);
 }
 
+function buscarFuncionario(idUsuario) {
+    var instrucaoSql = `
+        SELECT 
+            id_usuario,
+            nome,
+            email,
+            fk_nivel_permissao
+        FROM usuario
+        WHERE id_usuario = ?;
+    `;
+
+    return database.executar(instrucaoSql, [idUsuario]);
+}
+
+function editarFuncionario(idUsuario, nome, email, permissao) {
+    var instrucaoSql = `
+        UPDATE usuario
+        SET nome = ?, email = ?, fk_nivel_permissao = ?
+        WHERE id_usuario = ?;
+    `;
+
+    return database.executar(instrucaoSql, [nome, email, permissao, idUsuario]);
+}
+
 module.exports = {
     cadastrarFuncionario,
     editarEmpresa,
     listarUsuarios,
     listarUsuariosProcurados,
     editarStatusUsuario,
-    buscarEmpresa
+    buscarEmpresa,
+    buscarFuncionario,
+    editarFuncionario
 };
