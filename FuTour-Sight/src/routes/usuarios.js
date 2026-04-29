@@ -19,6 +19,10 @@ router.post("/criarFiltro", function(req, res) {
     usuarioController.criarFiltro(req, res);
 })
 
+router.get("/listarFiltros", function(req, res) {
+    usuarioController.listarFiltros(req, res);
+})
+
 router.put("/editarPerfil/:idUsuario", function (req, res) {
     usuarioController.editarPerfil(req, res);
 });
