@@ -327,6 +327,23 @@ header {
     transition: all 0.3s ease;
 }
 
+.menu-lista button {
+    background-color: transparent;
+    border: none;
+}
+
+.menu-lista button i {
+    width: 48px;
+}
+
+.menu-lista button i::before {
+    width: 100%;
+}
+
+.menu-lista button span {
+    font-size: var(--texto-medio);
+}
+
 /* --------------------- RESPONSIVIDADE --------------------- */
 
 .menu-toggle {
