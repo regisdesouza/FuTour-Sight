@@ -19,6 +19,7 @@ function salvarFiltro() {
     })
         .then(() => {
             carregarFiltros();
+            limparCampos();
         })
 }
 
@@ -242,3 +243,13 @@ function renderizarOptionsAnos() {
 }
 
 renderizarOptionsAnos()
+
+function limparCampos() {
+    document.getElementById('nome-filtro').value = "";
+    document.getElementById('mes-inicio').value = "Janeiro";
+    document.getElementById('mes-final').value = "Janeiro";
+    estadosSelecionados = [];
+    paisesSelecionados = [];
+    renderizarEstados();
+    renderizarPaises();
+}
