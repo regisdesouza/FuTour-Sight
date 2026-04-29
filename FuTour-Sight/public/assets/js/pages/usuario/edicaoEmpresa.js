@@ -4,6 +4,8 @@ Inputmask("(99) 99999-9999").mask(document.getElementById("telefone"));
 Inputmask("99.999.999/9999-99").mask(document.getElementById("cnpj"));
 Inputmask("99999-999").mask(document.getElementById("cep"));
 
+document.getElementById("nomeUser").innerHTML = sessionStorage.getItem("NOME_USUARIO")
+
 var chkNomeEmpresa = false;
 var chkCnpj = false;
 var chkEmailCorporativo = false;
@@ -23,6 +25,10 @@ fetch(`/usuariosAdmin/buscarEmpresa/${sessionStorage.getItem("ID_EMPRESA")}`)
         rua.value = dados.logradouro || "";
         numero.value = dados.numero || "";
         complemento.value = dados.complemento || "";
+
+        document.getElementById("banner-nome-empresa").innerHTML = dados.empresa || "";
+        document.getElementById("banner-email-empresa").innerHTML = dados.emailCorporativo || "";
+
     })
     .catch((erro) => console.error("#ERRO ao carregar empresa:", erro));
 
