@@ -119,6 +119,7 @@ async function listarFiltros(req, res) {
         const resultados = await usuarioModel.listarFiltros(idUsuario);
 
         const listaFiltros = resultados.map(filtro => ({
+            id: filtro.id_filtro,
             nome: filtro.nome,
             estados: filtro.estados ? filtro.estados.split(",") : [],
             paises: filtro.paises ? filtro.paises.split(",") : [],
@@ -133,6 +134,25 @@ async function listarFiltros(req, res) {
         console.log(erro);
         res.status(500).json({ mensagem: erro.sqlMessage });
     }
+}
+
+async function atualizarFiltro(req, res) {
+    const idFiltro = req.params.idFiltro;
+    const { nomeFiltro, estados, paises, mes_inicio, mes_fim, ano, fkUsuario } = req.body;
+
+    await usuarioModel.atualizarFiltro(nomeFiltro, mes_inicio, mes_fim, ano, idFiltro);
+
+    await usuarioModel.deletarFiltrosItens(idFiltro);
+
+    estados.forEach(estado => {
+        usuarioModel.criarFiltroItem(idFiltro, "ESTADO", estado)
+    });
+
+    paises.forEach(pais => {
+        usuarioModel.criarFiltroItem(idFiltro, "PAIS", pais)
+    });
+
+    return res.status(200).json({ mensagem: "Filtro atualizado!" });
 }
 
 function editarPerfil(req, res) {
@@ -155,5 +175,6 @@ module.exports = {
     autenticar,
     criarFiltro,
     listarFiltros,
+    atualizarFiltro,
     editarPerfil
 };

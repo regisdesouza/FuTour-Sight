@@ -117,7 +117,7 @@ function criarFiltro(
 function criarFiltroItem(
     fkFiltro,
     tipo,
-    valor    
+    valor
 ) {
     var instrucaoSql = `
         INSERT INTO filtro_item (fk_filtro, tipo, valor) VALUES
@@ -152,6 +152,42 @@ function listarFiltros(idUsuario) {
     ])
 }
 
+function atualizarFiltro(
+    nomeFiltro,
+    mes_inicio,
+    mes_fim,
+    ano,
+    idFiltro
+) {
+    var instrucaoSql = `
+        UPDATE filtro_personalizado 
+        SET nome = ?, 
+        mes_inicio = ?, 
+        mes_fim = ?, 
+        ano_referencia = ? 
+        WHERE id_filtro = ?;
+    `;
+
+    return database.executar(instrucaoSql, [
+        nomeFiltro,
+        mes_inicio,
+        mes_fim,
+        ano,
+        idFiltro
+    ])
+}
+
+function deletarFiltrosItens (idFiltro) {
+    var instrucaoSql = `
+        DELETE FROM filtro_item 
+        WHERE fk_filtro = ?;
+    `;
+
+    return database.executar(instrucaoSql, [
+        idFiltro
+    ])
+}
+
 function editarPerfil(
     idUsuarioEditarPerfil,
     nomeEditarPerfil,
@@ -180,5 +216,7 @@ module.exports = {
     criarFiltro,
     criarFiltroItem,
     listarFiltros,
+    atualizarFiltro,
+    deletarFiltrosItens,
     editarPerfil
 };
