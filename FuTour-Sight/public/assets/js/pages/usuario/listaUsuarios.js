@@ -23,6 +23,9 @@ function renderizarUsuarios(usuarios) {
                 <button onclick="alterarStatus(${usuario.id_usuario})">
                     <img src="../assets/images/icons/x.png" alt="botão de X">
                 </button>
+                 <button onclick="editarPerfil(${usuario.id_usuario})">
+                    <img src="../assets/images/icons/editar.png" alt="botão de editar">
+                </button>
             </td>
         `
         tbody.appendChild(tr)
@@ -96,6 +99,11 @@ function alterarStatus(id) {
         .catch((erro) => {
             console.error("#ERRO:", erro)
         })
+}
+
+function editarPerfil(id) {
+    sessionStorage.setItem("ID_USUARIO_EDITAR", id);
+    window.location.href = "./editar-funcionario.html";
 }
 
 listarUsuarios()

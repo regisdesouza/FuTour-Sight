@@ -1,34 +1,65 @@
 var usuarioAdminModel = require("../models/usuarioAdminModel");
+var nodemailer = require("nodemailer");
+
+var transporter = nodemailer.createTransport({
+    service: "gmail",
+    auth: {
+        user: process.env.EMAIL_USER,      
+        pass: process.env.EMAIL_PASS         
+    }
+});
 
 function cadastrarFuncionario(req, res) {
     var {
         nomeServer,
         emailPessoalServer,
         senhaServer,
-        enderecoServer,
-        permissaoServer
+        permissaoServer,
+        idEmpresaServer
     } = req.body;
 
-    if (!nomeServer) return res.status(400).json({ mensagem: "Nome undefined!" });
+    if (!nomeServer)         return res.status(400).json({ mensagem: "Nome undefined!" });
     if (!emailPessoalServer) return res.status(400).json({ mensagem: "Email undefined!" });
-    if (!senhaServer) return res.status(400).json({ mensagem: "Senha undefined!" });
-    if (!enderecoServer) return res.status(400).json({ mensagem: "Endereço undefined!" });
-    if (!permissaoServer) return res.status(400).json({ mensagem: "Permissão undefined!" });
+    if (!senhaServer)        return res.status(400).json({ mensagem: "Senha undefined!" });
+    if (!permissaoServer)    return res.status(400).json({ mensagem: "Permissão undefined!" });
+    if (!idEmpresaServer)    return res.status(400).json({ mensagem: "Empresa undefined!" });
 
     usuarioAdminModel.cadastrarFuncionario(
         nomeServer,
         emailPessoalServer,
         senhaServer,
-        enderecoServer,
-        permissaoServer
+        permissaoServer,
+        idEmpresaServer
     )
-        .then((resultado) => {
-            res.status(200).json(resultado);
-        })
-        .catch((erro) => {
-            console.log(erro);
-            res.status(500).json({ mensagem: erro.sqlMessage });
+    .then((resultado) => {
+        var mailOptions = {
+            from: process.env.EMAIL_USER,         
+            to: emailPessoalServer,
+            subject: "Suas credenciais de acesso",
+            html: `
+                <h2>Olá, ${nomeServer}!</h2>
+                <p>Seu cadastro foi realizado com sucesso. Seguem suas credenciais de acesso:</p>
+                <p><strong>Email:</strong> ${emailPessoalServer}</p>
+                <p><strong>Senha:</strong> ${senhaServer}</p>
+                <br>
+                <p>Recomendamos que você altere sua senha após o primeiro acesso.</p>
+            `
+        };
+
+        transporter.sendMail(mailOptions, (erro, info) => {
+            if (erro) {
+                console.error("Erro ao enviar email:", erro);
+            } else {
+                console.log("Email enviado:", info.response);
+            }
         });
+
+        res.status(200).json(resultado);
+    })
+    .catch((erro) => {
+        console.log(erro);
+        res.status(500).json({ mensagem: erro.sqlMessage });
+    });
 }
 
 function editarEmpresa(req, res) {
@@ -117,11 +148,46 @@ function buscarEmpresa(req, res) {
         });
 }
 
+function buscarFuncionario(req, res) {
+    var idUsuario = req.params.idUsuario;
+
+    usuarioAdminModel.buscarFuncionario(idUsuario)
+        .then((resultado) => {
+            if (resultado.length == 0)
+                return res.status(404).json({ mensagem: "Funcionário não encontrado!" });
+            res.status(200).json(resultado[0]);
+        })
+        .catch((erro) => {
+            console.log(erro);
+            res.status(500).json({ mensagem: erro.sqlMessage });
+        });
+}
+
+function editarFuncionario(req, res) {
+    var idUsuario = req.params.idUsuario;
+    var { nomeServer, emailServer, permissaoServer } = req.body;
+
+    if (!nomeServer)      return res.status(400).json({ mensagem: "Nome undefined!" });
+    if (!emailServer)     return res.status(400).json({ mensagem: "Email undefined!" });
+    if (!permissaoServer) return res.status(400).json({ mensagem: "Permissão undefined!" });
+
+    usuarioAdminModel.editarFuncionario(idUsuario, nomeServer, emailServer, permissaoServer)
+        .then((resultado) => {
+            res.status(200).json(resultado);
+        })
+        .catch((erro) => {
+            console.log(erro);
+            res.status(500).json({ mensagem: erro.sqlMessage });
+        });
+}
+
 module.exports = {
     cadastrarFuncionario,
     editarEmpresa,
     listarUsuarios,
     listarUsuariosProcurados,
     editarStatusUsuario,
-    buscarEmpresa
+    buscarEmpresa,
+    buscarFuncionario,
+    editarFuncionario
 };

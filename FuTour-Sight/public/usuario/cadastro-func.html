@@ -48,22 +48,18 @@
                     <i class="bi bi-graph-up-arrow"></i>
                     <span>Dashboard</span>
                 </a>
-
                 <a href="./edicao-empresa.html" class="input-box">
                     <i class="bi bi-building"></i>
                     <span>Empresa</span>
                 </a>
-
                 <a href="./editar-perfil.html" class="input-box">
                     <i class="bi bi-person-fill"></i>
                     <span>Perfil</span>
                 </a>
-
                 <a href="" class="input-box">
                     <i class="bi bi-clock-history"></i>
                     <span>Histórico</span>
                 </a>
-
                 <a href="./filtros.html" class="input-box">
                     <i class="bi bi-funnel-fill"></i>
                     <span>Filtro</span>
@@ -89,7 +85,6 @@
         <!-- ------------------------- SIDEBAR ------------------------- -->
 
         <div class="menu-lateral">
-
             <div class="menu-usuario">
                 <img src="../assets/images/placeholder-foto.png" alt="Foto da Empresa" class="img-circular">
                 <h1>Nome de usuário</h1>
@@ -100,22 +95,18 @@
                     <i class="bi bi-graph-up-arrow"></i>
                     <span>Dashboard</span>
                 </a>
-
                 <a href="./edicao-empresa.html" class="input-box">
                     <i class="bi bi-building"></i>
                     <span>Empresa</span>
                 </a>
-
                 <a href="./editar-perfil.html" class="input-box">
                     <i class="bi bi-person-fill"></i>
                     <span>Perfil</span>
                 </a>
-
                 <a href="" class="input-box">
                     <i class="bi bi-clock-history"></i>
                     <span>Histórico</span>
                 </a>
-
                 <a href="./filtros.html" class="input-box">
                     <i class="bi bi-funnel-fill"></i>
                     <span>Filtro</span>
@@ -133,7 +124,6 @@
                 <img src="../assets/images/logo-futour-sight-branco.png" alt="">
                 <h3>FuTour Sight</h3>
             </a>
-
         </div>
 
         <!-- ------------------------- PÁGINA ------------------------- -->
@@ -144,37 +134,48 @@
                 <h1>Cadastro de Funcionário</h1>
             </div>
 
+            <!-- Mensagem de sucesso -->
+            <div id="div_msg" style="color:green; font-size:14px; margin-bottom:8px;"></div>
+
+            <!-- Card de erro -->
+            <div id="cardErro" style="display:none; margin-bottom:8px;">
+                <p id="mensagem_erro" style="color:red;"></p>
+            </div>
+
             <div class="empresa-container form-box-empresa">
                 <form action="">
                     <h1>Dados do Funcionário</h1>
                     <div class="input-fb-empresa">
+
                         <div class="input-container">
                             <div class="label-container">
-                                <label for="nome">Nome do Colaborador</label>
+                                <label for="nome-colab">Nome do Colaborador</label>
                                 <img src="../assets/images/icons/pessoa.png" alt="ícone de pessoa">
                             </div>
-                            <input type="text" id="nome-colab" placeholder="Nome Completo">
+                            <input type="text" id="nome-colab" placeholder="Nome Completo" oninput="onkey_nome()">
+                            <div id="div_msg_nome" style="color:red; font-size:12px;"></div>
                         </div>
 
                         <div class="input-container">
                             <div class="label-container">
-                                <label for="email">E-mail do Colaborador</label>
+                                <label for="email-colab">E-mail do Colaborador</label>
                                 <img src="../assets/images/icons/email.png" alt="ícone de email">
                             </div>
-                            <input type="text" id="email-colab" placeholder="E-mail">
+                            <input type="text" id="email-colab" placeholder="E-mail" oninput="onkey_email()">
+                            <div id="div_msg_email" style="color:red; font-size:12px;"></div>
                         </div>
 
                         <div class="input-container">
                             <div class="label-container">
-                                <label for="email-pessoal">Senha</label>
+                                <label for="senha-colab">Senha</label>
                                 <img src="../assets/images/icons/senha.png" alt="ícone de senha">
                             </div>
-                            <input type="password" id="senha-colab" placeholder="Senha">
+                            <input type="password" id="senha-colab" placeholder="Senha" oninput="onkey_senha()">
+                            <div id="div_msg_senha" style="color:red; font-size:12px;"></div>
                         </div>
+
                     </div>
-
                 </form>
-
             </div>
 
             <hr>
@@ -192,13 +193,11 @@
                                 <div class="label-container">
                                     <select id="nivel" required>
                                         <option value="">Selecione</option>
-                                        <option value="admin">Administrador</option>
-                                        <option value="editor">Editor</option>
-                                        <option value="viewer">Visualizador</option>
+                                        <option value="2">EMPRESA_ADMIN</option>
+                                        <option value="3">EMPRESA_USER</option>
                                     </select>
                                 </div>
                             </div>
-
                         </div>
                     </form>
                 </div>
@@ -210,23 +209,22 @@
             <div class="linha-btn">
                 <div class="linha-txt">
                     <img src="../assets/images/icons/info.png" alt="ícone de informação">
-                    <h3>Após o cadastro do funcionário, um e-mail será enviado com as credenciais de acesso cadastradas.
-                    </h3>
+                    <h3>Após o cadastro do funcionário, um e-mail será enviado com as credenciais de acesso cadastradas.</h3>
                     <div class="emp-div-btn">
-                        <button type="button" class="btn-main register-btn botao-cadastrar">Cadastrar</button>
+                        <button type="button" class="btn-main register-btn botao-cadastrar"
+                            onclick="cadastrarFuncionario()">Cadastrar</button>
                     </div>
                 </div>
-
             </div>
 
         </div>
 
-
-
-        </div>
-
-
     </main>
+
+    <script src="../assets/js/shared/menu.js"></script>
+    <script src="../assets/js/shared/validacoes.js"></script>
+    <script src="../assets/js/shared/sessao.js"></script>
+    <script src="../assets/js/pages/usuario/cadastroFuncionario.js"></script>
 
 </body>
 
