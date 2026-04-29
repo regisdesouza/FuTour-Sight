@@ -136,6 +136,13 @@ async function listarFiltros(req, res) {
     }
 }
 
+function listarEstados(req, res) {
+    usuarioModel.listarEstados()
+        .then(resposta => {
+            res.status(200).json(resposta)
+        })
+}
+
 async function atualizarFiltro(req, res) {
     const idFiltro = req.params.idFiltro;
     const { nomeFiltro, estados, paises, mes_inicio, mes_fim, ano, fkUsuario } = req.body;
@@ -187,6 +194,7 @@ module.exports = {
     autenticar,
     criarFiltro,
     listarFiltros,
+    listarEstados,
     atualizarFiltro,
     editarPerfil,
     excluirFiltro

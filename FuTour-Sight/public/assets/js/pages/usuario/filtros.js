@@ -3,7 +3,7 @@ function salvarFiltro() {
     const mes_inicio = document.getElementById('mes-inicio').value;
     const mes_final = document.getElementById('mes-final').value;
     const ano = document.getElementById('ano-referencia').value;
-    
+
     fetch(`/usuarios/criarFiltro`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -17,9 +17,9 @@ function salvarFiltro() {
             fkUsuario: sessionStorage.ID_USUARIO
         }),
     })
-    .then(() => {
-        carregarFiltros();
-    })
+        .then(() => {
+            carregarFiltros();
+        })
 }
 
 let estadosSelecionados = [];
@@ -38,7 +38,7 @@ function adicionarEstado() {
     }
 
     // Reseta o select
-    select.value = "";    
+    select.value = "";
 }
 
 function renderizarEstados() {
@@ -76,7 +76,7 @@ function adicionarPais() {
     }
 
     // Reseta o select
-    select.value = "";   
+    select.value = "";
 }
 
 function renderizarPaises() {
@@ -111,7 +111,7 @@ function carregarFiltros() {
             return resposta.json()
         })
         .then((filtros) => {
-            if(filtros.length == 0) {
+            if (filtros.length == 0) {
                 p_quantidade_filtros.innerHTML = "0 filtros salvos"
             } else if (filtros.length == 1) {
                 p_quantidade_filtros.innerHTML = "1 filtro salvo"
@@ -179,3 +179,24 @@ function excluirFiltro(idFiltro) {
             carregarFiltros();
         })
 }
+
+function renderizarOptionsEstados() {
+    fetch("/usuarios/listarEstados", {
+        method: "GET"
+    })
+        .then((resposta) => {
+            resposta.json()
+                .then((estados) => {
+                    const select = document.getElementById("estado-destino");
+
+                    estados.forEach(estado => {
+                        select.innerHTML += `
+                    <option value="${estado.uf}">${estado.uf}</option>
+                `
+                    });
+                })
+
+        })
+}
+
+renderizarOptionsEstados();

@@ -152,6 +152,16 @@ function listarFiltros(idUsuario) {
     ])
 }
 
+function listarEstados() {
+    const instrucaoSql = `
+        SELECT DISTINCT uf
+        FROM chegadas_turistas
+        ORDER BY uf;
+    `
+
+    return database.executar(instrucaoSql)
+}
+
 function atualizarFiltro(
     nomeFiltro,
     mes_inicio,
@@ -227,6 +237,7 @@ module.exports = {
     criarFiltro,
     criarFiltroItem,
     listarFiltros,
+    listarEstados,
     atualizarFiltro,
     deletarFiltrosItens,
     editarPerfil,

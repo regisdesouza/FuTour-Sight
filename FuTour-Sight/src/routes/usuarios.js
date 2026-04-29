@@ -23,6 +23,10 @@ router.get("/listarFiltros", function(req, res) {
     usuarioController.listarFiltros(req, res);
 })
 
+router.get("/listarEstados", function(req, res) {
+    usuarioController.listarEstados(req, res);
+})
+
 router.put("/atualizarFiltro/:idFiltro", function(req, res) {
     usuarioController.atualizarFiltro(req, res);
 })
