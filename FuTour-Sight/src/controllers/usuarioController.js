@@ -94,6 +94,88 @@ function autenticar(req, res) {
         });
 }
 
+async function criarFiltro(req, res) {
+    var { nomeFiltro, estados, paises, mes_inicio, mes_fim, ano, fkUsuario } = req.body;
+
+    const filtro = await usuarioModel.criarFiltro(nomeFiltro, mes_inicio, mes_fim, ano, fkUsuario);
+
+    const idFiltro = filtro.insertId;
+
+    estados.forEach(estado => {
+        usuarioModel.criarFiltroItem(idFiltro, "ESTADO", estado)
+    });
+
+    paises.forEach(pais => {
+        usuarioModel.criarFiltroItem(idFiltro, "PAIS", pais)
+    });
+
+    return res.status(200).json({ mensagem: "Filtro criado!" });
+}
+
+async function listarFiltros(req, res) {
+    const idUsuario = req.query.idUsuario;
+
+    try {
+        const resultados = await usuarioModel.listarFiltros(idUsuario);
+
+        const listaFiltros = resultados.map(filtro => ({
+            id: filtro.id_filtro,
+            nome: filtro.nome,
+            estados: filtro.estados ? filtro.estados.split(",") : [],
+            paises: filtro.paises ? filtro.paises.split(",") : [],
+            mes_inicio: filtro.mes_inicio,
+            mes_fim: filtro.mes_fim,
+            ano: filtro.ano_referencia
+        }));
+
+        res.status(200).json(listaFiltros);
+
+    } catch (erro) {
+        console.log(erro);
+        res.status(500).json({ mensagem: erro.sqlMessage });
+    }
+}
+
+function listarEstados(req, res) {
+    usuarioModel.listarEstados()
+        .then(resposta => {
+            res.status(200).json(resposta)
+        })
+}
+
+function listarPaises(req, res) {
+    usuarioModel.listarPaises()
+        .then(resposta => {
+            res.status(200).json(resposta)
+        })
+}
+
+function listarAnos(req, res) {
+    usuarioModel.listarAnos()
+        .then(resposta => {
+            res.status(200).json(resposta)
+        })
+}
+
+async function atualizarFiltro(req, res) {
+    const idFiltro = req.params.idFiltro;
+    const { nomeFiltro, estados, paises, mes_inicio, mes_fim, ano, fkUsuario } = req.body;
+
+    await usuarioModel.atualizarFiltro(nomeFiltro, mes_inicio, mes_fim, ano, idFiltro);
+
+    await usuarioModel.deletarFiltrosItens(idFiltro);
+
+    estados.forEach(estado => {
+        usuarioModel.criarFiltroItem(idFiltro, "ESTADO", estado)
+    });
+
+    paises.forEach(pais => {
+        usuarioModel.criarFiltroItem(idFiltro, "PAIS", pais)
+    });
+
+    return res.status(200).json({ mensagem: "Filtro atualizado!" });
+}
+
 function editarPerfil(req, res) {
     var idUsuario = req.params.idUsuario;
     var { nomeServer, emailServer, senhaServer } = req.body;
@@ -108,9 +190,28 @@ function editarPerfil(req, res) {
         });
 }
 
+function excluirFiltro(req, res) {
+    const idFiltro = req.params.idFiltro;
+
+    usuarioModel.deletarFiltrosItens(idFiltro)
+        .then(() => {
+            usuarioModel.excluirFiltro(idFiltro)
+                .then(() => {
+                    return res.status(200).json({ mensagem: "Filtro excluído!" });
+                })
+        })
+}
+
 module.exports = {
     enviarMensagem,
     preCadastrar,
     autenticar,
-    editarPerfil
+    criarFiltro,
+    listarFiltros,
+    listarEstados,
+    listarPaises,
+    listarAnos,
+    atualizarFiltro,
+    editarPerfil,
+    excluirFiltro
 };
