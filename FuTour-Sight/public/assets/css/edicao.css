@@ -204,7 +204,7 @@ header {
     outline: none;
 }
 
-.input-box input:focus + i {
+.input-box input:focus+i {
     color: var(--cor-primaria);
 }
 
@@ -217,7 +217,8 @@ header {
 }
 
 
-.input-container input, .input-container select {
+.input-container input,
+.input-container select {
     /* width: 471px; */
     width: 100%;
     margin-top: 4px;
@@ -286,7 +287,8 @@ header {
     display: flex;
     flex-direction: column;
     align-self: flex-start;
-    text-align: left;font-size: var(--texto-medio);
+    text-align: left;
+    font-size: var(--texto-medio);
 }
 
 .menu-lista span {
@@ -297,6 +299,12 @@ header {
     color: var(--cor-cinza-claro);
     padding: 10px 10px 10px;
     margin: 0;
+}
+
+.menu-lista img {
+    width: 18px;
+    color: var(--cor-cinza-claro);
+    margin: 10px 10px 10px;
 }
 
 .menu-lateral .input-box:hover {
@@ -310,11 +318,12 @@ header {
     flex-direction: row;
     align-items: center;
     justify-content: flex-start;
-    padding-bottom: 40px;
+    /* padding-bottom: 40px; */
 }
 
 .menu-logo h3 {
     font-size: var(--texto-pequeno);
+    font-weight: var(--bold);
 }
 
 .input-box select {
