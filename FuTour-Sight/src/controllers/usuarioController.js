@@ -169,6 +169,18 @@ function editarPerfil(req, res) {
         });
 }
 
+function excluirFiltro(req, res) {
+    const idFiltro = req.params.idFiltro;
+
+    usuarioModel.deletarFiltrosItens(idFiltro)
+        .then(() => {
+            usuarioModel.excluirFiltro(idFiltro)
+                .then(() => {
+                    return res.status(200).json({ mensagem: "Filtro excluído!" });
+                })
+        })
+}
+
 module.exports = {
     enviarMensagem,
     preCadastrar,
@@ -176,5 +188,6 @@ module.exports = {
     criarFiltro,
     listarFiltros,
     atualizarFiltro,
-    editarPerfil
+    editarPerfil,
+    excluirFiltro
 };

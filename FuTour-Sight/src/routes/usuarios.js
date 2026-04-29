@@ -31,4 +31,8 @@ router.put("/editarPerfil/:idUsuario", function (req, res) {
     usuarioController.editarPerfil(req, res);
 });
 
+router.delete("/excluirFiltro/:idFiltro", function(req, res) {
+    usuarioController.excluirFiltro(req, res);
+})
+
 module.exports = router;

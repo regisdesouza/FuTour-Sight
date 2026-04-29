@@ -188,6 +188,17 @@ function deletarFiltrosItens (idFiltro) {
     ])
 }
 
+function excluirFiltro(idFiltro) {
+    var instrucaoSql = `
+        DELETE FROM filtro_personalizado 
+        WHERE id_filtro = ?;
+    `;
+
+    return database.executar(instrucaoSql, [
+        idFiltro
+    ])
+}
+
 function editarPerfil(
     idUsuarioEditarPerfil,
     nomeEditarPerfil,
@@ -218,5 +229,6 @@ module.exports = {
     listarFiltros,
     atualizarFiltro,
     deletarFiltrosItens,
-    editarPerfil
+    editarPerfil,
+    excluirFiltro
 };
