@@ -93,6 +93,142 @@ function autenticar(
     ]);
 }
 
+function criarFiltro(
+    nomeFiltro,
+    mes_inicio,
+    mes_fim,
+    ano,
+    fkUsuario
+) {
+    var instrucaoSql = `
+        INSERT INTO filtro_personalizado (nome, mes_inicio, mes_fim, ano_referencia, fk_usuario) VALUES
+        (?, ?, ?, ?, ?);
+    `;
+
+    return database.executar(instrucaoSql, [
+        nomeFiltro,
+        mes_inicio,
+        mes_fim,
+        ano,
+        fkUsuario
+    ])
+}
+
+function criarFiltroItem(
+    fkFiltro,
+    tipo,
+    valor
+) {
+    var instrucaoSql = `
+        INSERT INTO filtro_item (fk_filtro, tipo, valor) VALUES
+        (?, ?, ?);
+    `;
+
+    return database.executar(instrucaoSql, [
+        fkFiltro,
+        tipo,
+        valor
+    ])
+}
+
+function listarFiltros(idUsuario) {
+    var instrucaoSql = `
+        SELECT
+            fp.id_filtro,
+            fp.nome,
+            fp.mes_inicio,
+            fp.mes_fim,
+            fp.ano_referencia,
+            GROUP_CONCAT(CASE WHEN fi.tipo = 'ESTADO' THEN fi.valor END) AS estados,
+            GROUP_CONCAT(CASE WHEN fi.tipo = 'PAIS' THEN fi.valor END) AS paises
+        FROM filtro_personalizado fp
+        LEFT JOIN filtro_item fi ON fi.fk_filtro = fp.id_filtro
+        WHERE fp.fk_usuario = ?
+        GROUP BY fp.id_filtro;
+    `
+
+    return database.executar(instrucaoSql, [
+        idUsuario
+    ])
+}
+
+function listarEstados() {
+    const instrucaoSql = `
+        SELECT DISTINCT uf
+        FROM chegadas_turistas
+        ORDER BY uf;
+    `
+
+    return database.executar(instrucaoSql)
+}
+
+function listarPaises() {
+    const instrucaoSql = `
+        SELECT DISTINCT nome_pais_origem
+        FROM chegadas_turistas
+        ORDER BY nome_pais_origem;
+    `
+
+    return database.executar(instrucaoSql)
+}
+
+function listarAnos() {
+    const instrucaoSql = `
+        SELECT DISTINCT ano
+        FROM chegadas_turistas
+        ORDER BY ano DESC;
+    `
+
+    return database.executar(instrucaoSql)
+}
+
+function atualizarFiltro(
+    nomeFiltro,
+    mes_inicio,
+    mes_fim,
+    ano,
+    idFiltro
+) {
+    var instrucaoSql = `
+        UPDATE filtro_personalizado 
+        SET nome = ?, 
+        mes_inicio = ?, 
+        mes_fim = ?, 
+        ano_referencia = ? 
+        WHERE id_filtro = ?;
+    `;
+
+    return database.executar(instrucaoSql, [
+        nomeFiltro,
+        mes_inicio,
+        mes_fim,
+        ano,
+        idFiltro
+    ])
+}
+
+function deletarFiltrosItens (idFiltro) {
+    var instrucaoSql = `
+        DELETE FROM filtro_item 
+        WHERE fk_filtro = ?;
+    `;
+
+    return database.executar(instrucaoSql, [
+        idFiltro
+    ])
+}
+
+function excluirFiltro(idFiltro) {
+    var instrucaoSql = `
+        DELETE FROM filtro_personalizado 
+        WHERE id_filtro = ?;
+    `;
+
+    return database.executar(instrucaoSql, [
+        idFiltro
+    ])
+}
+
 function editarPerfil(
     idUsuarioEditarPerfil,
     nomeEditarPerfil,
@@ -118,5 +254,14 @@ module.exports = {
     buscarPorCnpj,
     preCadastrar,
     autenticar,
-    editarPerfil
+    criarFiltro,
+    criarFiltroItem,
+    listarFiltros,
+    listarEstados,
+    listarPaises,
+    listarAnos,
+    atualizarFiltro,
+    deletarFiltrosItens,
+    editarPerfil,
+    excluirFiltro
 };
