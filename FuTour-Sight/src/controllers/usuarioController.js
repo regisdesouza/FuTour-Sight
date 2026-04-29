@@ -143,6 +143,13 @@ function listarEstados(req, res) {
         })
 }
 
+function listarPaises(req, res) {
+    usuarioModel.listarPaises()
+        .then(resposta => {
+            res.status(200).json(resposta)
+        })
+}
+
 async function atualizarFiltro(req, res) {
     const idFiltro = req.params.idFiltro;
     const { nomeFiltro, estados, paises, mes_inicio, mes_fim, ano, fkUsuario } = req.body;
@@ -195,6 +202,7 @@ module.exports = {
     criarFiltro,
     listarFiltros,
     listarEstados,
+    listarPaises,
     atualizarFiltro,
     editarPerfil,
     excluirFiltro

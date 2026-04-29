@@ -162,6 +162,16 @@ function listarEstados() {
     return database.executar(instrucaoSql)
 }
 
+function listarPaises() {
+    const instrucaoSql = `
+        SELECT DISTINCT nome_pais_origem
+        FROM chegadas_turistas
+        ORDER BY nome_pais_origem;
+    `
+
+    return database.executar(instrucaoSql)
+}
+
 function atualizarFiltro(
     nomeFiltro,
     mes_inicio,
@@ -238,6 +248,7 @@ module.exports = {
     criarFiltroItem,
     listarFiltros,
     listarEstados,
+    listarPaises,
     atualizarFiltro,
     deletarFiltrosItens,
     editarPerfil,

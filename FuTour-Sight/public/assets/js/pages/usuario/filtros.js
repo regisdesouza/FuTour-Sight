@@ -200,3 +200,24 @@ function renderizarOptionsEstados() {
 }
 
 renderizarOptionsEstados();
+
+function renderizarOptionsPaises() {
+    fetch("/usuarios/listarPaises", {
+        method: "GET"
+    })
+        .then((resposta) => {
+            resposta.json()
+                .then((paises) => {
+                    const select = document.getElementById("pais-origem");
+
+                    paises.forEach(pais => {
+                        select.innerHTML += `
+                    <option value="${pais.nome_pais_origem}">${pais.nome_pais_origem}</option>
+                `
+                    });
+                })
+
+        })
+}
+
+renderizarOptionsPaises()
