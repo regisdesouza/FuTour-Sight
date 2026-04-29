@@ -124,33 +124,33 @@
                         <label for="">Intervalo de meses</label>
                         <div class="intervalo-meses">
                             <select name="" id="">
-                                <option value="">Janeiro</option>
-                                <option value="">Fevereiro</option>
-                                <option value="">Março</option>
-                                <option value="">Abril</option>
-                                <option value="">Maio</option>
-                                <option value="">Junho</option>
-                                <option value="">Julho</option>
-                                <option value="">Agosto</option>
-                                <option value="">Setembro</option>
-                                <option value="">Outubro</option>
-                                <option value="">Novembro</option>
-                                <option value="">Dezembro</option>
+                                <option value="Janeiro">Janeiro</option>
+                                <option value="Fevereiro">Fevereiro</option>
+                                <option value="Março">Março</option>
+                                <option value="Abril">Abril</option>
+                                <option value="Maio">Maio</option>
+                                <option value="Junho">Junho</option>
+                                <option value="Julho">Julho</option>
+                                <option value="Agosto">Agosto</option>
+                                <option value="Setembro">Setembro</option>
+                                <option value="Outubro">Outubro</option>
+                                <option value="Novembro">Novembro</option>
+                                <option value="Dezembro">Dezembro</option>
                             </select>
                             <span>até</span>
                             <select name="" id="">
-                                <option value="">Janeiro</option>
-                                <option value="">Fevereiro</option>
-                                <option value="">Março</option>
-                                <option value="">Abril</option>
-                                <option value="">Maio</option>
-                                <option value="">Junho</option>
-                                <option value="">Julho</option>
-                                <option value="">Agosto</option>
-                                <option value="">Setembro</option>
-                                <option value="">Outubro</option>
-                                <option value="">Novembro</option>
-                                <option value="">Dezembro</option>
+                                <option value="Janeiro">Janeiro</option>
+                                <option value="Fevereiro">Fevereiro</option>
+                                <option value="Março">Março</option>
+                                <option value="Abril">Abril</option>
+                                <option value="Maio">Maio</option>
+                                <option value="Junho">Junho</option>
+                                <option value="Julho">Julho</option>
+                                <option value="Agosto">Agosto</option>
+                                <option value="Setembro">Setembro</option>
+                                <option value="Outubro">Outubro</option>
+                                <option value="Novembro">Novembro</option>
+                                <option value="Dezembro">Dezembro</option>
                             </select>
                         </div>
                     </div>
@@ -158,15 +158,15 @@
                     <div class="campo">
                         <label for="ano-referencia">Ano de referência</label>
                         <select name="ano-referencia" id="ano-referencia">
-                            <option value="#">2025</option>
-                            <option value="#">2024 </option>
+                            <option value="2025">2025</option>
+                            <option value="2024">2024 </option>
                         </select>
                     </div>
                 </div>
 
                 <div class="botoes">
                     <button>Limpar</button>
-                    <button>Salvar filtro</button>
+                    <button onclick="salvarFiltro()">Salvar filtro</button>
                 </div>
             </div>
         </section>
@@ -175,14 +175,13 @@
             <div class="titulo">
                 <h2>Filtros salvos</h2>
                 <!-- Pegar do Banco quantidade de filtros -->
-                <p>3 filtros salvos</p>
+                <p id="pQuantidadeFiltros"></p>
             </div>
 
-            <ul>
-                <li class="filtro">
+            <ul id="ul_filtros">
+                <!-- <li class="filtro">
                     <div class="infos-filtro-container">
                         <div class="icone-filtro">
-                            <!-- Pegar primeira letra do nome do filtro -->
                             <span>N</span>
                         </div>
 
@@ -196,7 +195,7 @@
                         <button>Editar</button>
                         <button>Excluir</button>
                     </div>
-                </li>
+                </li> -->
             </ul>
         </section>
     </main>
@@ -204,35 +203,4 @@
 
 </html>
 
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-
-<script>
-    const ctx = document.getElementById('myChart');
-
-    new Chart(ctx, {
-        type: 'line',
-        data: {
-            labels: ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'],
-            datasets: [{
-                label: '2025',
-                data: [12, 19, 3, 5, 2],
-                borderWidth: 1
-            },
-            {
-                label: '2024',
-                data: [10, 13, 2, 5, 4],
-                borderWidth: 1
-            }]
-        },
-        options: {
-            scales: {
-                y: {
-                    beginAtZero: true
-                },
-                x: {
-                    stacked: false
-                }
-            }
-        }
-    });
-</script>
+<script src="../assets/js/pages/usuario/filtros.js"></script>
