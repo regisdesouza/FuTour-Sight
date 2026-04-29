@@ -31,6 +31,10 @@ router.get("/listarPaises", function(req, res) {
     usuarioController.listarPaises(req, res);
 })
 
+router.get("/listarAnos", function(req, res) {
+    usuarioController.listarAnos(req, res);
+})
+
 router.put("/atualizarFiltro/:idFiltro", function(req, res) {
     usuarioController.atualizarFiltro(req, res);
 })

@@ -221,3 +221,24 @@ function renderizarOptionsPaises() {
 }
 
 renderizarOptionsPaises()
+
+function renderizarOptionsAnos() {
+    fetch("/usuarios/listarAnos", {
+        method: "GET"
+    })
+        .then((resposta) => {
+            resposta.json()
+                .then((anos) => {
+                    const select = document.getElementById("ano-referencia");
+
+                    anos.forEach(ano => {
+                        select.innerHTML += `
+                            <option value="${ano.ano}">${ano.ano}</option>
+                        `
+                    });
+                })
+
+        })
+}
+
+renderizarOptionsAnos()
