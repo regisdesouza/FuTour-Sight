@@ -132,6 +132,11 @@
                 <!-- Puxar os anos e renderizar cada um como um option -->
 
             </select>
+            <h2>Filtros</h2>
+            <select name="filtros" id="filtros" onchange="atualizarDashboard()">
+                <option value="0">Nenhum</option>
+                <option value="1">Nordeste 2024</option>
+            </select>
         </div>
 
         <div class="graficos-container">
@@ -143,7 +148,7 @@
             <div class="tabelas-container">
                 <div class="tabela container">
                     <h3>Crescimento proporcional</h3>
-                    <table>
+                    <table id="tabela-proporcional">
                         <thead>
                             <tr>
                                 <th>Posição</th>
@@ -154,25 +159,25 @@
                         <tbody>
                             <tr>
                                 <td>1º</td>
-                                <td>Acre</td>
-                                <td>+13%</td>
+                                <td>Rio de Janeiro</td>
+                                <td>+14.29%</td>
                             </tr>
                             <tr>
                                 <td>2º</td>
-                                <td>Minas Gerais</td>
-                                <td>+9%</td>
+                                <td>São Paulo</td>
+                                <td>+12.5%</td>
                             </tr>
                             <tr>
                                 <td>3º</td>
-                                <td>Bahia</td>
-                                <td>+7%</td>
+                                <td>Pernambuco</td>
+                                <td>+11.76%</td>
                             </tr>
                         </tbody>
                     </table>
                 </div>
                 <div class="tabela container">
                     <h3>Crescimento absoluto</h3>
-                    <table>
+                    <table id="tabela-absoluta">
                         <thead>
                             <tr>
                                 <th>Posição</th>
@@ -183,18 +188,18 @@
                         <tbody>
                             <tr>
                                 <td>1º</td>
-                                <td>Goiânia</td>
-                                <td>+4503</td>
+                                <td>São Paulo</td>
+                                <td>+20000</td>
                             </tr>
                             <tr>
                                 <td>2º</td>
-                                <td>Ceará</td>
-                                <td>+2309</td>
+                                <td>Rio de Janeiro</td>
+                                <td>+19000</td>
                             </tr>
                             <tr>
                                 <td>3º</td>
-                                <td>Alagoas</td>
-                                <td>+2160</td>
+                                <td>Minas Gerais</td>
+                                <td>+10000</td>
                             </tr>
                         </tbody>
                     </table>
@@ -214,18 +219,165 @@
 <script>
     const ctx = document.getElementById('myChart');
 
-    new Chart(ctx, {
+    let data = {}
+    function atualizarDashboard() {
+        let filtro = document.getElementById('filtros').value
+        if (filtro == 0) {
+            data = {
+                labels: ['São Paulo', 'Rio de Janeiro', 'Minhas Gerais', 'Bahia', 'Pernambuco'],
+                datasets: [{
+                    label: '2025',
+                    data: [150000, 130000, 100000, 95000, 80000],
+                    borderWidth: 1
+                },
+                {
+                    label: '2024',
+                    data: [160000, 140000, 110000, 100000, 85000],
+                    borderWidth: 1
+                }]
+            }
+
+            document.getElementById('tabela-proporcional').innerHTML = `
+                <thead>
+                    <tr>
+                        <th>Posição</th>
+                        <th>Estado</th>
+                        <th>Crescimento</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>1º</td>
+                        <td>Rio de Janeiro</td>
+                        <td>+14.29%</td>
+                    </tr>
+                    <tr>
+                        <td>2º</td>
+                        <td>São Paulo</td>
+                        <td>+12.5%</td>
+                    </tr>
+                    <tr>
+                        <td>3º</td>
+                        <td>Pernambuco</td>
+                        <td>+11.76%</td>
+                    </tr>
+                </tbody>
+            `
+
+            document.getElementById('tabela-absoluta').innerHTML = `
+                <thead>
+                    <tr>
+                        <th>Posição</th>
+                        <th>Estado</th>
+                        <th>Crescimento</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>1º</td>
+                        <td>São Paulo</td>
+                        <td>+20000</td>
+                    </tr>
+                    <tr>
+                        <td>2º</td>
+                        <td>Rio de Janeiro</td>
+                        <td>+19000</td>
+                    </tr>
+                    <tr>
+                        <td>3º</td>
+                        <td>Minas Gerais</td>
+                        <td>+10000</td>
+                    </tr>
+                </tbody>
+            `
+        }
+        else if (filtro == 1) {
+            data = {
+                labels: ['Bahia', 'Pernambuco', 'Ceará', 'Rio Grande do Norte', 'Alagoas'],
+                datasets: [{
+                    label: '2025',
+                    data: [11200, 9300, 7000, 6000, 5500],
+                    borderWidth: 1
+                },
+                {
+                    label: '2024',
+                    data: [10000, 8000, 6500, 5200, 4800],
+                    borderWidth: 1
+                }]
+            }
+
+            document.getElementById('tabela-proporcional').innerHTML = `
+                <thead>
+                    <tr>
+                        <th>Posição</th>
+                        <th>Estado</th>
+                        <th>Crescimento</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>1º</td>
+                        <td>RG do Norte</td>
+                        <td>+13.33%</td>
+                    </tr>
+                    <tr>
+                        <td>2º</td>
+                        <td>Pernambuco</td>
+                        <td>+11.76%</td>
+                    </tr>
+                    <tr>
+                        <td>3º</td>
+                        <td>Bahia</td>
+                        <td>+10%</td>
+                    </tr>
+                </tbody>
+            `
+
+            document.getElementById('tabela-absoluta').innerHTML = `
+                <thead>
+                    <tr>
+                        <th>Posição</th>
+                        <th>Estado</th>
+                        <th>Crescimento</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>1º</td>
+                        <td>Bahia</td>
+                        <td>+10000</td>
+                    </tr>
+                    <tr>
+                        <td>2º</td>
+                        <td>Pernambuco</td>
+                        <td>+9000</td>
+                    </tr>
+                    <tr>
+                        <td>3º</td>
+                        <td>RG do Norte</td>
+                        <td>+8000</td>
+                    </tr>
+                </tbody>
+            `
+        }
+
+        myChart.data = data;
+        myChart.update();
+
+    }
+
+    let myChart = new Chart(ctx, {
         type: 'bar',
         data: {
-            labels: ['São Paulo', 'Rio de Janeiro', 'Ceará', 'Green', 'Purple'],
+            labels: ['São Paulo', 'Rio de Janeiro', 'Minhas Gerais', 'Bahia', 'Pernambuco'],
             datasets: [{
                 label: '2025',
-                data: [12, 19, 3, 5, 2],
+                data: [150000, 130000, 100000, 95000, 80000],
                 borderWidth: 1
             },
             {
                 label: '2024',
-                data: [10, 13, 2, 5, 4],
+                data: [160000, 140000, 110000, 100000, 85000],
                 borderWidth: 1
             }]
         },
