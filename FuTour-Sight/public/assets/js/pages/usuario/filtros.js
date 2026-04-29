@@ -141,7 +141,7 @@ function carregarFiltros() {
                     stringPaises += ` +${restantePaises}`;
                 }
 
-                const stringInfoFiltro = stringEstados + `${stringPaises != "" ? " - " + stringPaises : ""}`
+                const stringInfoFiltro = stringEstados + `${stringPaises != "" && stringEstados != "" ? " - " : ""}` + stringPaises
 
                 ul_filtros.innerHTML += `
                     <li class="filtro">
