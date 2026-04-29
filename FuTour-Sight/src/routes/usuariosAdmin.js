@@ -19,6 +19,14 @@ router.get("/buscarEmpresa/:idEmpresa", function (req, res) {
     usuarioAdminController.buscarEmpresa(req, res);
 });
 
+router.get("/buscarFuncionario/:idUsuario", function (req, res) {
+    usuarioAdminController.buscarFuncionario(req, res);
+});
+
+router.put("/editarFuncionario/:idUsuario", function (req, res) {
+    usuarioAdminController.editarFuncionario(req, res);
+});
+
 router.put("/editarEmpresa/:idEmpresa", function (req, res) {
     usuarioAdminController.editarEmpresa(req, res);
 });
