@@ -1,3 +1,5 @@
+document.getElementById("nomeUser").innerHTML = sessionStorage.getItem("NOME_USUARIO")
+
 function salvarFiltro() {
     const nomeFiltro = document.getElementById('nome-filtro').value;
     const mes_inicio = document.getElementById('mes-inicio').value;
