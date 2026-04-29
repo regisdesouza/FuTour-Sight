@@ -35,6 +35,10 @@ router.get("/listarAnos", function(req, res) {
     usuarioController.listarAnos(req, res);
 })
 
+router.get("/buscarFiltro/:idFiltro", function(req, res) {
+    usuarioController.buscarFiltro(req, res);
+})
+
 router.put("/atualizarFiltro/:idFiltro", function(req, res) {
     usuarioController.atualizarFiltro(req, res);
 })

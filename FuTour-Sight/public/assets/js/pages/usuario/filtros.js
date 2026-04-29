@@ -253,3 +253,8 @@ function limparCampos() {
     renderizarEstados();
     renderizarPaises();
 }
+
+function editarFiltro(idFiltro) {
+    sessionStorage.ID_FILTRO = idFiltro;
+    window.location.href = "../../../usuario/editar-filtro.html"
+}

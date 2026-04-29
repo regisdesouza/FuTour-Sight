@@ -182,6 +182,27 @@ function listarAnos() {
     return database.executar(instrucaoSql)
 }
 
+function buscarFiltro(idFiltro) {
+    const instrucaoSql = `
+        SELECT
+            fp.id_filtro,
+            fp.nome,
+            fp.mes_inicio,
+            fp.mes_fim,
+            fp.ano_referencia,
+            GROUP_CONCAT(CASE WHEN fi.tipo = 'ESTADO' THEN fi.valor END) AS estados,
+            GROUP_CONCAT(CASE WHEN fi.tipo = 'PAIS' THEN fi.valor END) AS paises
+        FROM filtro_personalizado fp
+        LEFT JOIN filtro_item fi ON fi.fk_filtro = fp.id_filtro
+        WHERE fp.id_filtro = ?
+        GROUP BY fp.id_filtro;
+    `
+
+    return database.executar(instrucaoSql, [
+        idFiltro
+    ])
+}
+
 function atualizarFiltro(
     nomeFiltro,
     mes_inicio,
@@ -260,6 +281,7 @@ module.exports = {
     listarEstados,
     listarPaises,
     listarAnos,
+    buscarFiltro,
     atualizarFiltro,
     deletarFiltrosItens,
     editarPerfil,
