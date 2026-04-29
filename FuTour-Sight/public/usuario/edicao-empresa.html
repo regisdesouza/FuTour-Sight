@@ -88,51 +88,45 @@
         <!-- ------------------------- SIDEBAR ------------------------- -->
 
         <div class="menu-lateral">
-
             <div class="menu-usuario">
                 <img src="../assets/images/icons/logo-FuTourSight-branco.png" alt="Foto da Empresa" class="img-circular">
-                <h1>Nome de usuário</h1>
+                <h1 id="nomeUser"></h1>
             </div>
 
             <div class="menu-lista links">
-                <a href="./dashboard-proprietario.html" class="input-box">
+                <button onclick="redirecionarDashboard()" class="input-box">
                     <i class="bi bi-graph-up-arrow"></i>
                     <span>Dashboard</span>
-                </a>
-
-                <a href="./edicao-empresa.html" class="input-box">
+                </button>
+                <button onclick="redirecionarEdicaoEmpresa()" class="input-box">
                     <i class="bi bi-building"></i>
                     <span>Empresa</span>
-                </a>
-
-                <a href="./editar-perfil.html" class="input-box">
+                </button>
+                <button onclick="redirecionarPerfil()" class="input-box">
                     <i class="bi bi-person-fill"></i>
                     <span>Perfil</span>
-                </a>
-
-                <a href="" class="input-box">
+                </button>
+                <button onclick="redirecionarListFuncionario()" class="input-box">
                     <i class="bi bi-clock-history"></i>
-                    <span>Histórico</span>
-                </a>
-
-                <a href="./filtros.html" class="input-box">
+                    <span>Funcionários</span>
+                </button>
+                <button onclick="filtro()" class="input-box">
                     <i class="bi bi-funnel-fill"></i>
                     <span>Filtro</span>
-                </a>
+                </button>
             </div>
 
             <div class="menu-lista">
-                <a href="" class="input-box">
+                <button onclick="sair()" class="input-box">
                     <i class="bi bi-box-arrow-left"></i>
                     <span>Sair</span>
-                </a>
+                </button>
             </div>
 
-            <a href="../index.html" target="_blank" class="menu-logo">
+            <a href="" target="_blank" class="menu-logo">
                 <img src="../assets/images/logo-futour-sight-branco.png" alt="">
                 <h3>FuTour Sight</h3>
             </a>
-
         </div>
 
         <!-- ------------------------- PÁGINA ------------------------- -->
@@ -148,8 +142,8 @@
 
                 <div class="banner-usuario-mens">
                     <h1>Seja bem-vindo</h1>
-                    <h2>Nome da Empresa</h2>
-                    <h3>email@email.com</h1>
+                    <h2 id="banner-nome-empresa"></h2>
+                    <h3 id="banner-email-empresa"></h1>
                 </div>
                 <img src="../assets/images/edicao-img1.png" alt="" class="banner-img">
 
@@ -198,14 +192,6 @@
                             </div>
                             <input type="text" id="telefone" placeholder="Telefone da Empresa">
                             <div class="msg_erro" id="div_msg_telefone"></div>
-                        </div>
-
-                        <div class="input-container">
-                            <div class="label-container">
-                                <label for="telefone-corporativo">Telefone da Empresa</label>
-                                <img src="../assets/images/icons/telefone.png" alt="ícone de telefone">
-                            </div>
-                            <input type="text" id="emp-tel" placeholder="Telefone da Empresa">
                         </div>
 
                         <div class="input-container">
@@ -294,6 +280,8 @@
     <script src="../assets/js/shared/menu.js"></script>
     <script src="../assets/js/shared/validacoes.js"></script>
     <script src="../assets/js/shared/sessao.js"></script>
+
+    <script src="../assets/js/shared/redirecionamento.js"></script>
     <script src="https://unpkg.com/inputmask@5.0.8/dist/inputmask.min.js"></script>
     <script src="../assets/js/pages/usuario/edicaoEmpresa.js"></script>
 </body>
