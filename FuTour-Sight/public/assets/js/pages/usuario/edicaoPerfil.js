@@ -1,3 +1,13 @@
+
+document.getElementById("nomeUser").innerHTML = sessionStorage.getItem("NOME_USUARIO")
+
+document.getElementById("nomeUser").innerHTML             = sessionStorage.getItem("NOME_USUARIO");
+document.getElementById("banner-nome-usuario").innerHTML  = sessionStorage.getItem("NOME_USUARIO");
+document.getElementById("banner-email-usuario").innerHTML = sessionStorage.getItem("EMAIL_USUARIO");
+
+document.getElementById("nome").value  = sessionStorage.getItem("NOME_USUARIO");
+document.getElementById("email").value = sessionStorage.getItem("EMAIL_USUARIO");
+
 function editarPerfil() {
     fetch(`/usuarios/editarPerfil/${sessionStorage.getItem("ID_USUARIO")}`, {
         method: "PUT",
@@ -24,7 +34,6 @@ function editarPerfil() {
         .then((dados) => {
             console.log("Perfil atualizado:", dados);
             window.alert("Dados pessoais atualizados com sucesso pelo usuário de email: " + sessionStorage.getItem("EMAIL_USUARIO") + "!");
-            window.location = "/dashboard/mural.html";
         })
         .catch((erro) => {
             console.error("#ERRO:", erro);

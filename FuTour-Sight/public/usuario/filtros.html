@@ -32,37 +32,37 @@
                 <div class="img-container">
                     <img src="../assets/images/icons/logo-FuTourSight-branco.png" alt="Imagem da empresa">
                 </div>
-                <span>Nome do usuário</span>
+                <span id="nomeUser"></span>
             </div>
 
             <nav>
                 <ul>
                     <li>
-                        <button>
+                        <button onclick="redirecionarDashboard()">
                             <img src="../assets/images/icons/dashboard.png" alt="icone de dashboard">
                             <span>Dashboard</span>
                         </button>
                     </li>
                     <li>
-                        <button>
+                        <button onclick="redirecionarEdicaoEmpresa()">
                             <img src="../assets/images/icons/empresa-branca.png" alt="icone de empresa da cor branca">
                             <span>Empresa</span>
                         </button>
                     </li>
                     <li>
-                        <button>
+                        <button onclick="redirecionarPerfil()">
                             <img src="../assets/images/icons/perfil.png" alt="icone de perfil">
                             <span>Perfil</span>
                         </button>
                     </li>
                     <li>
-                        <button>
+                        <button onclick="redirecionarListFuncionario()">
                             <img src="../assets/images/icons/historico.png" alt="icone de historico">
                             <span>Funcionários</span>
                         </button>
                     </li>
                     <li>
-                        <button>
+                        <button onclick="filtro()">
                             <img src="../assets/images/icons/filtro.png" alt="icone de filtro">
                             <span>Filtro</span>
                         </button>
@@ -70,7 +70,7 @@
                 </ul>
             </nav>
 
-            <button class="botao-sair-container">
+            <button class="botao-sair-container" onclick="sair()">
                 <img src="../assets/images/icons/sair.png" alt="icone de sair">
                 <span class="botao-sair">Sair</span>
             </button>
@@ -101,7 +101,15 @@
                             <option value="">Selecione um estado...</option>
                         </select>
                         <ul>
+<<<<<<< HEAD
+<<<<<<< Updated upstream
                             
+=======
+
+>>>>>>> Stashed changes
+=======
+                            
+>>>>>>> 586f15c6f22cdc40214e64da8178d19454f7c73e
                         </ul>
                     </div>
                     <div class="campo">
@@ -110,7 +118,18 @@
                             <option value="">Selecione um país...</option>
                         </select>
                         <ul>
+<<<<<<< HEAD
+<<<<<<< Updated upstream
+                            <li class="item">
+                                <span>Argentina</span>
+                                <button>X</button>
+                            </li>
+=======
+
+>>>>>>> Stashed changes
+=======
                             
+>>>>>>> 586f15c6f22cdc40214e64da8178d19454f7c73e
                         </ul>
                     </div>
 
@@ -152,7 +171,16 @@
                     <div class="campo">
                         <label for="ano-referencia">Ano de referência</label>
                         <select name="ano-referencia" id="ano-referencia">
+<<<<<<< HEAD
+<<<<<<< Updated upstream
+                            <option value="#">2025</option>
+                            <option value="#">2024 </option>
+=======
+
+>>>>>>> Stashed changes
+=======
                             
+>>>>>>> 586f15c6f22cdc40214e64da8178d19454f7c73e
                         </select>
                     </div>
                 </div>
@@ -196,4 +224,46 @@
 
 </html>
 
+<<<<<<< HEAD
+<<<<<<< Updated upstream
+
+<script src="../assets/js/shared/redirecionamento.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<script>
+    const ctx = document.getElementById('myChart');
+
+    new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'],
+            datasets: [{
+                label: '2025',
+                data: [12, 19, 3, 5, 2],
+                borderWidth: 1
+            },
+            {
+                label: '2024',
+                data: [10, 13, 2, 5, 4],
+                borderWidth: 1
+            }]
+        },
+        options: {
+            scales: {
+                y: {
+                    beginAtZero: true
+                },
+                x: {
+                    stacked: false
+                }
+            }
+        }
+    });
+</script>
+=======
+<script src="../assets/js/shared/redirecionamento.js"></script>
 <script src="../assets/js/pages/usuario/filtros.js"></script>
+>>>>>>> Stashed changes
+=======
+<script src="../assets/js/pages/usuario/filtros.js"></script>
+>>>>>>> 586f15c6f22cdc40214e64da8178d19454f7c73e

@@ -32,37 +32,37 @@
                 <div class="img-container">
                     <img src="../assets/images/icons/logo-FuTourSight-branco.png" alt="Imagem da empresa">
                 </div>
-                <span>Nome do usuário</span>
+                <span id="nomeUser"></span>
             </div>
 
             <nav>
                 <ul>
                     <li>
-                        <button>
+                        <button onclick="redirecionarDashboard()">
                             <img src="../assets/images/icons/dashboard.png" alt="icone de dashboard">
                             <span>Dashboard</span>
                         </button>
                     </li>
                     <li>
-                        <button>
+                        <button onclick="redirecionarEdicaoEmpresa()">
                             <img src="../assets/images/icons/empresa-branca.png" alt="icone de empresa da cor branca">
                             <span>Empresa</span>
                         </button>
                     </li>
                     <li>
-                        <button>
+                        <button onclick="redirecionarPerfil()">
                             <img src="../assets/images/icons/perfil.png" alt="icone de perfil">
                             <span>Perfil</span>
                         </button>
                     </li>
                     <li>
-                        <button>
+                        <button onclick="redirecionarListFuncionario()">
                             <img src="../assets/images/icons/historico.png" alt="icone de historico">
                             <span>Funcionários</span>
                         </button>
                     </li>
                     <li>
-                        <button>
+                        <button onclick="filtro()">
                             <img src="../assets/images/icons/filtro.png" alt="icone de filtro">
                             <span>Filtro</span>
                         </button>
@@ -70,7 +70,7 @@
                 </ul>
             </nav>
 
-            <button class="botao-sair-container">
+            <button class="botao-sair-container" onclick="sair()">
                 <img src="../assets/images/icons/sair.png" alt="icone de sair">
                 <span class="botao-sair">Sair</span>
             </button>
@@ -206,6 +206,9 @@
 
 </html>
 
+
+<script src="../assets/js/shared/redirecionamento.js"></script>
+<script src="../assets/js/pages/usuario/dashboardProprietario.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
 <script>

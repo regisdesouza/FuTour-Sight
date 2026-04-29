@@ -1,5 +1,7 @@
 var idUsuario = sessionStorage.getItem("ID_USUARIO_EDITAR");
 
+document.getElementById("nomeUser").innerHTML = sessionStorage.getItem("NOME_USUARIO")
+
 if (!idUsuario) {
     alert("Nenhum funcionário selecionado.");
     window.location.href = "../usuario/lista-funcionarios.html";
