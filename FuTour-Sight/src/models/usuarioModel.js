@@ -93,6 +93,44 @@ function autenticar(
     ]);
 }
 
+function criarFiltro(
+    nomeFiltro,
+    mes_inicio,
+    mes_fim,
+    ano,
+    fkUsuario
+) {
+    var instrucaoSql = `
+        INSERT INTO filtro_personalizado (nome, mes_inicio, mes_fim, ano_referencia, fk_usuario) VALUES
+        (?, ?, ?, ?, ?);
+    `;
+
+    return database.executar(instrucaoSql, [
+        nomeFiltro,
+        mes_inicio,
+        mes_fim,
+        ano,
+        fkUsuario
+    ])
+}
+
+function criarFiltroItem(
+    fkFiltro,
+    tipo,
+    valor    
+) {
+    var instrucaoSql = `
+        INSERT INTO filtro_item (fk_filtro, tipo, valor) VALUES
+        (?, ?, ?);
+    `;
+
+    return database.executar(instrucaoSql, [
+        fkFiltro,
+        tipo,
+        valor
+    ])
+}
+
 function editarPerfil(
     idUsuarioEditarPerfil,
     nomeEditarPerfil,
@@ -118,5 +156,7 @@ module.exports = {
     buscarPorCnpj,
     preCadastrar,
     autenticar,
+    criarFiltro,
+    criarFiltroItem,
     editarPerfil
 };

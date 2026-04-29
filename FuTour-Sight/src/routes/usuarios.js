@@ -15,6 +15,10 @@ router.post("/autenticar", function (req, res) {
     usuarioController.autenticar(req, res);
 });
 
+router.post("/criarFiltro", function(req, res) {
+    usuarioController.criarFiltro(req, res);
+})
+
 router.put("/editarPerfil/:idUsuario", function (req, res) {
     usuarioController.editarPerfil(req, res);
 });

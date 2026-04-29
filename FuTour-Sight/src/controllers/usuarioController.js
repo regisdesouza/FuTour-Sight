@@ -94,6 +94,24 @@ function autenticar(req, res) {
         });
 }
 
+async function criarFiltro(req, res) {
+    var {nomeFiltro, estados, paises, mes_inicio, mes_fim, ano, fkUsuario} = req.body;
+
+    const filtro = await usuarioModel.criarFiltro(nomeFiltro, mes_inicio, mes_fim, ano, fkUsuario);
+
+    const idFiltro = filtro.insertId;
+
+    estados.forEach(estado => {
+        usuarioModel.criarFiltroItem(idFiltro, "ESTADO", estado)
+    });
+
+    paises.forEach(pais => {
+        usuarioModel.criarFiltroItem(idFiltro, "PAIS", pais)
+    });
+
+    return res.status(200).json({ mensagem: "Filtro criado!" });
+}
+
 function editarPerfil(req, res) {
     var idUsuario = req.params.idUsuario;
     var { nomeServer, emailServer, senhaServer } = req.body;
@@ -112,5 +130,6 @@ module.exports = {
     enviarMensagem,
     preCadastrar,
     autenticar,
+    criarFiltro,
     editarPerfil
 };
