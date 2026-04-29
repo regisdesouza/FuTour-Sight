@@ -170,3 +170,12 @@ function carregarFiltros() {
 }
 
 carregarFiltros()
+
+function excluirFiltro(idFiltro) {
+    fetch(`/usuarios/excluirFiltro/${idFiltro}`, {
+        method: "DELETE"
+    })
+        .then(() => {
+            carregarFiltros();
+        })
+}
