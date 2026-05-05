@@ -1,6 +1,6 @@
 iniciarMenu();
 
-document.getElementById("nomeUser-header").innerHTML  = sessionStorage.getItem("NOME_USUARIO");
+document.getElementById("nomeUser").innerHTML  = sessionStorage.getItem("NOME_USUARIO");
 document.getElementById("nomeUser-sidebar").innerHTML = sessionStorage.getItem("NOME_USUARIO");
 
 var chkNome  = false;
