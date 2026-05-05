@@ -10,8 +10,9 @@
 
     <link rel="stylesheet" href="../assets/css/reset.css">
     <link rel="stylesheet" href="../assets/css/styles.css">
-    <link rel="stylesheet" href="../assets/css/edicao.css">
     <link rel="stylesheet" href="../assets/css/responsive.css">
+    <link rel="stylesheet" href="../assets/css/edicao.css">
+    <link rel="stylesheet" href="../assets/css/usuario.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
 
     <link rel="shortcut icon" href="../assets/images/icons/favicon.png" type="image/x-icon">
@@ -20,11 +21,6 @@
 <body class="body-empresa">
 
     <header>
-        <a href="../index.html" class="logo">
-            <img src="../assets/images/logo-futour-sight-branco.png" alt="Logo FuTour Sight">
-            <span>FuTour Sight</span>
-        </a>
-
         <input type="checkbox" id="menu-hamburguer">
 
         <label for="menu-hamburguer" class="menu-hamburguer">
@@ -36,46 +32,57 @@
         <div class="overlay"></div>
 
         <div class="links">
-            <nav>
-                <div class="menu-usuario">
-                    <img src="../assets/images/placeholder-foto.png" alt="Foto da Empresa" class="img-circular">
-                    <h1>Nome de usuário</h1>
+            <div class="usuario-infos">
+                <div class="img-container">
+                    <img src="../assets/images/icons/logo-FuTourSight-branco.png" alt="Imagem da empresa">
                 </div>
-            </nav>
+                <span id="nomeUser"></span>
+            </div>
+
             <nav>
-                <a href="./dashboard-proprietario.html" class="input-box">
-                    <i class="bi bi-graph-up-arrow"></i>
-                    <span>Dashboard</span>
-                </a>
-                <a href="./edicao-empresa.html" class="input-box">
-                    <i class="bi bi-building"></i>
-                    <span>Empresa</span>
-                </a>
-                <a href="./editar-perfil.html" class="input-box">
-                    <i class="bi bi-person-fill"></i>
-                    <span>Perfil</span>
-                </a>
-                <a href="" class="input-box">
-                    <i class="bi bi-clock-history"></i>
-                    <span>Histórico</span>
-                </a>
-                <a href="./filtros.html" class="input-box">
-                    <i class="bi bi-funnel-fill"></i>
-                    <span>Filtro</span>
-                </a>
+                <ul>
+                    <li>
+                        <button onclick="redirecionarDashboard()">
+                            <img src="../assets/images/icons/dashboard.png" alt="icone de dashboard">
+                            <span>Dashboard</span>
+                        </button>
+                    </li>
+                    <li>
+                        <button onclick="redirecionarEdicaoEmpresa()">
+                            <img src="../assets/images/icons/empresa-branca.png" alt="icone de empresa da cor branca">
+                            <span>Empresa</span>
+                        </button>
+                    </li>
+                    <li>
+                        <button onclick="redirecionarPerfil()">
+                            <img src="../assets/images/icons/perfil.png" alt="icone de perfil">
+                            <span>Perfil</span>
+                        </button>
+                    </li>
+                    <li>
+                        <button onclick="redirecionarListFuncionario()">
+                            <img src="../assets/images/icons/historico.png" alt="icone de historico">
+                            <span>Funcionários</span>
+                        </button>
+                    </li>
+                    <li>
+                        <button onclick="filtro()">
+                            <img src="../assets/images/icons/filtro.png" alt="icone de filtro">
+                            <span>Filtro</span>
+                        </button>
+                    </li>
+                </ul>
             </nav>
-            <nav>
-                <div class="menu-lista">
-                    <a href="" class="input-box">
-                        <i class="bi bi-box-arrow-left"></i>
-                        <span>Sair</span>
-                    </a>
-                </div>
-            </nav>
-            <a href="../index.html" target="_blank" class="menu-logo">
-                <img src="../assets/images/logo-futour-sight-branco.png" alt="">
-                <h3>FuTour Sight</h3>
-            </a>
+
+            <button class="botao-sair-container" onclick="sair()">
+                <img src="../assets/images/icons/sair.png" alt="icone de sair">
+                <span class="botao-sair">Sair</span>
+            </button>
+
+            <div class="logo">
+                <img src="../assets/images/logo-futour-sight-branco.png" alt="Logo FuTour Sight">
+                <span>FuTour Sight</span>
+            </div>
         </div>
     </header>
 
@@ -83,7 +90,7 @@
 
         <!-- ------------------------- SIDEBAR ------------------------- -->
 
-        <div class="menu-lateral">
+        <!-- <div class="menu-lateral">
             <div class="menu-usuario">
                 <img src="../assets/images/icons/logo-FuTourSight-branco.png" alt="Foto da Empresa"
                     class="img-circular">
@@ -124,7 +131,7 @@
                 <img src="../assets/images/logo-futour-sight-branco.png" alt="">
                 <h3>FuTour Sight</h3>
             </a>
-        </div>
+        </div> -->
         <!-- ------------------------- PÁGINA ------------------------- -->
 
         <div class="conteudo">
