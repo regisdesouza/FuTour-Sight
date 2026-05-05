@@ -1,28 +1,98 @@
-.conteudo hr {
-    padding-bottom: 0px;
+main {
+    padding: 64px;
+    height: 100vh;
+    width: 100%;
 }
 
-.linha-btn {
+.conteudo {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100%;
+}
+
+.conteudo h1 {
+    font-size: var(--texto-grande-plus);
+}
+
+.conteudo h2 {
+    font-size: var(--texto-grande);
+    margin-bottom: 64px;
+}
+
+.empresa-container {
+    background-color: #fff;
+    border-radius: 16px;
+    padding: 32px 24px 64px 24px;
+}
+
+.input-container {
+    max-width: 372px;
+}
+
+.label-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 8px;
+
+    label {
+        font-size: var(--texto-medio);
+        font-weight: var(--medium);
+    }
+
+    img {
+        width: 32px;
+        margin-right: 8px;
+    }
+
+    .icone-arquivo {
+        margin-right: 12px;
+        width: 24px;
+    }
+}
+
+.input-container input,
+.input-container select {
+    width: 100%;
+    background-color: var(--cor-cinza-claro);
+    border: none;
+    padding: 8px 16px;
+    border-radius: 8px;
+    font-size: var(--texto-pequeno);
+}
+
+
+
+.conteudo hr {
+    padding-bottom: 0px;
+    background-color: var(--cor-complementar);
+    height: 3px;
+}
+
+/* .linha-btn {
     display: flex;
     flex-direction: row;
     width: 100%;
     justify-content: space-between;
     padding-left: 40px;
-}
+} */
 
-.linha-btn i {
+/* .linha-btn i {
     color: var(--cor-primaria);
     padding: 10px;
-}
+} */
 
 .linha-btn h3 {
     color: var(--cor-escura);
-    font-size: 0.75rem;
+    font-size: var(--texto-pequeno);
+    font-weight: var(--medium);
+    font-style: italic;
 }
 
-.linha-txt {
+/* .linha-txt {
     padding-left: 40px;
-}
+} */
 
 .linha-txt {
     display: flex;
@@ -31,19 +101,19 @@
     width: 100%;
 }
 
-.linha-txt h3 {
+/* .linha-txt h3 {
     margin: 0;
     flex: 1;
-}
+} */
 
 .emp-div-btn {
     margin-left: auto;
-    padding-right: 60px;
+    /* padding-right: 60px; */
 }
 
-.label-container {
+/* .label-container {
     justify-content: space-between;
-}
+} */
 
 .input-fb-empresa {
     justify-content: space-between;
@@ -67,8 +137,28 @@
     display: flex;
     flex-direction: row;
     width: 100%;
-    padding-left: 80px;
-    padding-right: 80px;
+    justify-content: space-between;
+    /* padding-left: 80px; */
+    /* padding-right: 80px; */
+}
+
+.form-permissao .empresa-container {
+    flex: 2;
+}
+
+.form-permissao .img-container {
+    flex: 1;
+}
+
+.img-container img {
+    width: 100%;
+}
+
+.botao-cadastrar {
+    padding: 12px 64px;
+    font-size: var(--texto-medio);
+    font-weight: var(--semi-bold);
+    border-radius: 8px;
 }
 
 /* --------------------- RESPONSIVIDADE --------------------- */
@@ -125,7 +215,7 @@
 
     .emp-div-btn {
         margin-left: 0;
-padding: 0;
+        padding: 0;
         width: 100%;
         display: flex;
         justify-content: center;
