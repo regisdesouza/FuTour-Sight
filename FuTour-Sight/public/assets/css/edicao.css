@@ -452,7 +452,7 @@
     }
 
     .links {
-        width: 50% !important;
+        /* width: 50% !important; */
         justify-content: flex-start;
         z-index: 10;
     }
