@@ -32,7 +32,7 @@ function salvarEdicao() {
     var permissao = document.getElementById("nivel-permissao").value;
 
     if (!nome || !email || !permissao) {
-        alert("Preencha todos os campos.");
+        exibirToast('erro', 'Preencha todos os campos')
         return;
     }
 
@@ -47,10 +47,12 @@ function salvarEdicao() {
     })
         .then((resposta) => {
             if (!resposta.ok) throw new Error("Erro ao salvar");
+            exibirToast('erro', 'Erro ao salvar')
             return resposta.json();
         })
         .then(() => {
-            alert("Funcionário atualizado com sucesso!");
+            // alert("Funcionário atualizado com sucesso!");
+            ativarToast();
             sessionStorage.removeItem("ID_USUARIO_EDITAR");
             window.location.href = "../usuario/lista-funcionarios.html";
         })

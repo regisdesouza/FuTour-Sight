@@ -15,7 +15,7 @@
     <link rel="shortcut icon" href="../assets/images/icons/favicon.png" type="image/x-icon">
 </head>
 
-<body class="background-branco">
+<body class="background-branco" onload="verificarToast('sucesso', 'Funcionário atualizado com sucesso!')">
     <header>
         <input type="checkbox" id="menu-hamburguer">
 
@@ -111,7 +111,10 @@
 
     </main>
 
+    <div id="toast"></div>
+
     <script src="../assets/js/shared/redirecionamento.js"></script>
+    <script src="../assets/js/shared/sessao.js"></script>
     <script src="../assets/js/pages/usuario/listaUsuarios.js"></script>
 </body>
 

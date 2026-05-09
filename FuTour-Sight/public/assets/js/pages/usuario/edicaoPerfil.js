@@ -9,6 +9,10 @@ document.getElementById("nome").value  = sessionStorage.getItem("NOME_USUARIO");
 document.getElementById("email").value = sessionStorage.getItem("EMAIL_USUARIO");
 
 function editarPerfil() {
+    let nomeVar = document.getElementById('nome').value;
+    let emailVar = document.getElementById('email').value;
+    let senhaVar = document.getElementById('nova-senha').value;
+
     fetch(`/usuarios/editarPerfil/${sessionStorage.getItem("ID_USUARIO")}`, {
         method: "PUT",
         headers: {
@@ -22,10 +26,12 @@ function editarPerfil() {
     })
         .then((resposta) => {
             if (resposta.status == 404) {
+                exibirToast('erro', "Usuário não encontrado!");
                 throw new Error("Usuário não encontrado!");
             }
 
             if (!resposta.ok) {
+                exibirToast('erro', "Houve um erro ao tentar atualizar os dados pessoais! Código da resposta: " + resposta.status);
                 throw new Error("Houve um erro ao tentar atualizar os dados pessoais! Código da resposta: " + resposta.status);
             }
 
@@ -33,7 +39,8 @@ function editarPerfil() {
         })
         .then((dados) => {
             console.log("Perfil atualizado:", dados);
-            window.alert("Dados pessoais atualizados com sucesso pelo usuário de email: " + sessionStorage.getItem("EMAIL_USUARIO") + "!");
+            exibirToast('sucesso', "Dados pessoais atualizados com sucesso pelo usuário de email: " + sessionStorage.getItem("EMAIL_USUARIO") + "!");
+            // window.alert("Dados pessoais atualizados com sucesso pelo usuário de email: " + sessionStorage.getItem("EMAIL_USUARIO") + "!");
         })
         .catch((erro) => {
             console.error("#ERRO:", erro);

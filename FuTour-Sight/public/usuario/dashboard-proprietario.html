@@ -15,7 +15,7 @@
     <link rel="shortcut icon" href="../assets/images/icons/favicon.png" type="image/x-icon">
 </head>
 
-<body class="background-branco">
+<body class="background-branco" onload="verificarToast('sucesso', 'Dados empresariais atualizados com sucesso pelo usuário de email: ' + sessionStorage.getItem('EMAIL_USUARIO') + '!')">
     <header>
         <input type="checkbox" id="menu-hamburguer">
 
@@ -118,20 +118,20 @@
         </div>
 
         <div class="select-container">
-            <span>Intervalo de anos</span>
+            <!-- <span>Intervalo de anos</span>
             <select name="ano-comeco" id="ano-comeco">
                 <option value="#">Selecione um ano</option>
                 <option value="2024">2024</option>
-                <!-- Puxar os anos e renderizar cada um como um option -->
+                Puxar os anos e renderizar cada um como um option
 
             </select>
             <span>até</span>
             <select name="ano-fim" id="ano-fim">
                 <option value="#">Selecione um ano</option>
                 <option value="2025">2025</option>
-                <!-- Puxar os anos e renderizar cada um como um option -->
+                Puxar os anos e renderizar cada um como um option
 
-            </select>
+            </select> -->
             <h2>Filtros</h2>
             <select name="filtros" id="filtros" onchange="atualizarDashboard()">
                 <option value="0">Nenhum</option>
@@ -211,8 +211,10 @@
 
 </html>
 
+<div id="toast"></div>
 
 <script src="../assets/js/shared/redirecionamento.js"></script>
+<script src="../assets/js/shared/sessao.js"></script>
 <script src="../assets/js/pages/usuario/dashboardProprietario.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
@@ -226,12 +228,12 @@
             data = {
                 labels: ['São Paulo', 'Rio de Janeiro', 'Minhas Gerais', 'Bahia', 'Pernambuco'],
                 datasets: [{
-                    label: '2025',
+                    label: '2024',
                     data: [150000, 130000, 100000, 95000, 80000],
                     borderWidth: 1
                 },
                 {
-                    label: '2024',
+                    label: '2025',
                     data: [160000, 140000, 110000, 100000, 85000],
                     borderWidth: 1
                 }]
@@ -295,13 +297,13 @@
             data = {
                 labels: ['Bahia', 'Pernambuco', 'Ceará', 'Rio Grande do Norte', 'Alagoas'],
                 datasets: [{
-                    label: '2025',
-                    data: [11200, 9300, 7000, 6000, 5500],
+                    label: '2024',
+                    data: [10000, 8000, 6500, 5200, 4800],
                     borderWidth: 1
                 },
                 {
-                    label: '2024',
-                    data: [10000, 8000, 6500, 5200, 4800],
+                    label: '2025',
+                    data: [11200, 9300, 7000, 6000, 5500],
                     borderWidth: 1
                 }]
             }

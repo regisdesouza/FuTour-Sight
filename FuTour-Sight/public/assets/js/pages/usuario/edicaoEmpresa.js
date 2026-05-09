@@ -109,6 +109,7 @@ function editarEmpresa() {
         chkTelefone
 
     if (!temErro) {
+        exibirToast('erro', 'Preencha todos os campos corretamente.')
         cardErro.style.display = "block";
         mensagem_erro.innerHTML = "Preencha todos os campos corretamente.";
         setTimeout(sumirMensagem, 3000);
@@ -139,7 +140,8 @@ function editarEmpresa() {
         })
         .then((dados) => {
             console.log("Empresa atualizada:", dados);
-            window.alert("Dados empresariais atualizados com sucesso pelo usuário de email: " + sessionStorage.getItem("EMAIL_USUARIO") + "!");
+            ativarToast();
+            // window.alert("Dados empresariais atualizados com sucesso pelo usuário de email: " + sessionStorage.getItem("EMAIL_USUARIO") + "!");
             window.location = "dashboard-proprietario.html";
         })
         .catch((erro) => {

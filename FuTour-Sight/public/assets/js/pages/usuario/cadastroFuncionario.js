@@ -1,7 +1,7 @@
 iniciarMenu();
 
 document.getElementById("nomeUser").innerHTML  = sessionStorage.getItem("NOME_USUARIO");
-document.getElementById("nomeUser-sidebar").innerHTML = sessionStorage.getItem("NOME_USUARIO");
+// document.getElementById("nomeUser-sidebar").innerHTML = sessionStorage.getItem("NOME_USUARIO");
 
 var chkNome  = false;
 var chkEmail = false;
@@ -49,10 +49,12 @@ function cadastrarFuncionario() {
     onkey_senha();
 
     const temErro = chkNome && chkEmail && chkSenha;
+    const permissao = document.getElementById('nivel').value;
 
-    if (!temErro) {
+    if (!temErro || !permissao) {
         cardErro.style.display = "block";
         mensagem_erro.innerHTML = "Preencha todos os campos corretamente.";
+        exibirToast('erro', 'Preencha todos os campos corretamente.')
         setTimeout(sumirMensagem, 3000);
         return false;
     }
@@ -93,6 +95,7 @@ function cadastrarFuncionario() {
         console.log("Funcionário cadastrado:", dados);
 
         div_msg.innerHTML = "Cadastro de funcionário enviado com sucesso!";
+        exibirToast('sucesso', 'Cadastro de funcionário enviado com sucesso!')
 
         document.getElementById("nome-colab").value  = "";
         document.getElementById("email-colab").value = "";
