@@ -227,3 +227,177 @@ select {
 .filtro .botoes button:last-child:hover {
     background-color: #b10000;
 }
+
+/* --------------------- RESPONSIVIDADE --------------------- */
+
+@media (max-width: 576px) {
+
+    body {
+        background-color: var(--cor-clara);
+    }
+
+    header {
+        display: flex;
+        align-items: center;
+    }
+
+    main {
+        display: flex;
+        flex-direction: column;
+        gap: 24px;
+        padding: 20px;
+        width: 100%;
+        max-height: none;
+    }
+
+    .novo-filtro,
+    .filtros-salvos {
+        width: 100%;
+        gap: 16px;
+    }
+
+    .titulo {
+        text-align: center;
+        gap: 6px;
+    }
+
+    .titulo h2 {
+        font-size: 22px;
+    }
+
+    .titulo p {
+        font-size: 14px;
+        line-height: 1.4;
+    }
+
+    .criar-filtro-container {
+        padding: 16px;
+        gap: 24px;
+        border-radius: 12px;
+        width: 100%;
+    }
+
+    .criar-filtro {
+        gap: 20px;
+    }
+
+    .campo {
+        width: 100%;
+    }
+
+    .campo input,
+    .campo select,
+    .intervalo-meses select {
+        width: 100%;
+        padding: 12px;
+        font-size: 14px;
+    }
+
+    .campo ul {
+        max-height: 120px;
+        overflow-y: auto;
+    }
+
+    .campo .item {
+        width: 100%;
+        justify-content: space-between;
+        padding: 10px 12px;
+        gap: 8px;
+    }
+
+    .campo .item span {
+        word-break: break-word;
+    }
+
+    .intervalo-meses {
+        display: flex;
+        flex-direction: column;
+        align-items: stretch;
+        gap: 12px;
+    }
+
+    .intervalo-meses span {
+        text-align: center;
+        font-size: 14px;
+    }
+
+    .criar-filtro-container .botoes {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+        width: 100%;
+    }
+
+    .botoes button {
+        width: 100%;
+        padding: 14px;
+        font-size: 14px;
+    }
+
+    .filtros-salvos ul {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+        overflow: visible;
+    }
+
+    .filtro {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 16px;
+        padding: 16px;
+        width: 100%;
+    }
+
+    .filtro .infos-filtro-container {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        width: 100%;
+    }
+
+    .icone-filtro {
+        min-width: 56px;
+        width: 56px;
+        height: 56px;
+        font-size: 18px;
+    }
+
+    .infos-filtro {
+        width: 100%;
+    }
+
+    .infos-filtro h4 {
+        font-size: 15px;
+        word-break: break-word;
+    }
+
+    .infos-filtro p {
+        font-size: 13px;
+        word-break: break-word;
+    }
+
+    .filtro .botoes {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        width: 100%;
+    }
+
+    .filtro .botoes button {
+        width: 100%;
+        padding: 12px;
+        font-size: 14px;
+    }
+
+    .links {
+        justify-content: flex-start;
+        z-index: 10;
+    }
+
+    .links span {
+        color: var(--cor-clara);
+    }
+
+}

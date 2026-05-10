@@ -165,75 +165,147 @@ main {
 
 @media (max-width: 576px) {
 
-    .conteudo {
+    main {
         padding: 20px;
+        height: auto;
     }
 
-    .input-fb-empresa {
+    .conteudo {
+        display: flex;
         flex-direction: column;
-        gap: 15px;
-    }
-
-    .input-container {
-        width: 100%;
-    }
-
-    .form-permissao {
-        flex-direction: column;
-        padding-left: 0px;
-        padding-right: 0px;
-        margin: 0;
         gap: 20px;
-    }
-
-    .banner-img {
         width: 100%;
         height: auto;
     }
 
-    .linha-btn {
-        flex-direction: column;
-        padding-left: 0px;
-        gap: 15px;
-        justify-content: center;
+    .titulo-pagina {
+        text-align: center;
     }
 
-    .linha-txt {
+    .conteudo h1 {
+        font-size: var(--texto-grande);
+    }
+
+    .conteudo h2 {
+        font-size: var(--texto-medio);
+        margin-bottom: 24px;
+        text-align: center;
+    }
+
+    .empresa-container {
+        width: 100%;
+        padding: 24px 16px;
+        border-radius: 12px;
+    }
+
+    .form-box-empresa {
         flex-direction: column;
-        align-items: flex-start;
-        justify-content: center;
         align-items: center;
-        text-align: center;
-        gap: 10px;
-        padding-left: 0;
-        gap: 10px;
+        
     }
 
-    .linha-txt h3 {
-        text-align: center;
+    .input-fb-empresa {
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        gap: 20px;
     }
 
-    .emp-div-btn {
-        margin-left: 0;
-        padding: 0;
+    .input-container {
+        width: 100%;
+        max-width: 100%;
+    }
+
+    .input-container input,
+    .input-container select {
+        width: 100%;
+        font-size: var(--texto-pequeno);
+    }
+
+    .label-container {
+        width: 100%;
+    }
+
+    .label-container label {
+        font-size: var(--texto-pequeno);
+    }
+
+    .label-container img {
+        width: 24px;
+        margin-right: 0;
+    }
+    
+
+    .form-permissao {
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+    }
+
+    .form-permissao .empresa-container {
+        width: 100%;
+    }
+
+    .form-permissao .img-container {
         width: 100%;
         display: flex;
         justify-content: center;
+        
+    }
+
+    .banner-img {
+        width: 100%;
+        max-width: 300px;
+        height: auto;
+    }
+
+    .linha-btn {
+        width: 100%;
+    }
+
+    .linha-txt {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        gap: 16px;
+    }
+
+    .linha-txt h3 {
+        font-size: 13px;
+        line-height: 1.5;
+    }
+
+    .linha-txt img {
+        width: 24px;
+    }
+
+    .emp-div-btn {
+        width: 100%;
+        margin-left: 0;
+    }
+
+    .emp-div-btn button {
+        width: 100%;
     }
 
     .botao-cadastrar {
         width: 100%;
+        padding: 14px;
+        font-size: var(--texto-pequeno);
     }
 
-    .label-container {
-        flex-direction: row;
-        align-items: center;
-    }
-
-    .empresa-container.form-box-empresa {
+    .conteudo hr {
         width: 100%;
-        margin: 0;
-        box-sizing: border-box;
+    }
+
+    .links {
+        justify-content: flex-start;
+        z-index: 10;
+    }
+
+    .links span {
+        color: var(--cor-clara);
     }
 
 }

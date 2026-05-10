@@ -92,6 +92,7 @@ header .links {
 
 .logo {
     color: var(--cor-clara);
+    display: none;
 }
 
 .background-branco {
@@ -111,13 +112,15 @@ header .links {
     }
 
     header {
-        height: 48px;
-        padding: 8px;
-        border-radius: 0;
-        justify-content: flex-end;
+        margin: 16px 24px 8px 24px;
+        padding: 8px 16px;
+        border-radius: 32px;
+        justify-content: space-between;
+        align-items: center;
+        height: auto;
         z-index: 100;
     }
-    
+
     .overlay {
         display: none;
     }
@@ -127,7 +130,11 @@ header .links {
     }
 
     header input#menu-hamburguer:checked~.menu-hamburguer {
-        right: inherit;
+        position: absolute;
+        right: 16px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
     }
 
     .usuario-infos .img-container {
@@ -149,6 +156,7 @@ header .links {
     }
 
     .logo {
-        display: none;
+        display: block;
     }
+
 }
