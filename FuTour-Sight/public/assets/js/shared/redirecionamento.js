@@ -1,49 +1,118 @@
-const permissaoUsuario = Number(sessionStorage.getItem("NIVEL_ACESSO"))
+const usuario = {
+    id: Number(sessionStorage.getItem("ID_USUARIO")),
+    nome: sessionStorage.getItem("NOME_USUARIO"),
+    email: sessionStorage.getItem("EMAIL_USUARIO"),
+    nivelAcesso: Number(sessionStorage.getItem("NIVEL_ACESSO")),
+    idEmpresa: Number(sessionStorage.getItem("ID_EMPRESA")),
+    primeiroAcesso: Number(sessionStorage.getItem("PRIMEIRO_ACESSO"))
+};
+
+const permissoes = {
+    PROPRIETARIO: 2,
+    GERENTE: 3
+};
+
+const rotas = {
+    dashboardProprietario: "./dashboard-proprietario.html",
+    dashboardGerente: "./dashboard-gerente.html",
+    editarEmpresa: "./edicao-empresa.html",
+    editarPerfil: "./editar-perfil.html",
+    listarFuncionarios: "./lista-funcionarios.html",
+    cadastrarFuncionario: "./cadastro-func.html",
+    filtros: "./filtros.html",
+    login: "../index.html"
+};
+
+function usuarioLogado() {
+    return !!usuario.id;
+}
+
+function verificarPermissao(permissoesPermitidas = []) {
+    return permissoesPermitidas.includes(usuario.nivelAcesso);
+}
 
 function redirecionarDashboard() {
-    if (permissaoUsuario === 2) {
-        window.location.href = "./dashboard-proprietario.html"
-    } else if (permissaoUsuario === 3) {
-        window.location.href = "./dashboard-gerente.html";
+    if (usuario.nivelAcesso === permissoes.PROPRIETARIO) {
+        window.location.href = rotas.dashboardProprietario;
+        return;
+    }
+
+    if (usuario.nivelAcesso === permissoes.GERENTE) {
+        window.location.href = rotas.dashboardGerente;
     }
 }
 
 function redirecionarEdicaoEmpresa() {
-    if (permissaoUsuario === 2) {
-        window.location.href = "./edicao-empresa.html"
-    } else if (permissaoUsuario === 3) {
-        alert("Você não tem permissão para acessar essa página");
+    if (
+        verificarPermissao([
+            permissoes.PROPRIETARIO
+        ])
+    ) {
+        window.location.href = rotas.editarEmpresa;
     }
 }
 
 function redirecionarPerfil() {
-    window.location.href = "./editar-perfil.html"
+    window.location.href = rotas.editarPerfil;
 }
 
 function redirecionarListFuncionario() {
-    if (permissaoUsuario === 2) {
-        window.location.href = "./lista-funcionarios.html"
-    } else if (permissaoUsuario === 3) {
-        alert("Você não tem permissão para acessar essa página");
+    if (
+        verificarPermissao([
+            permissoes.PROPRIETARIO
+        ])
+    ) {
+        window.location.href = rotas.listarFuncionarios;
     }
 }
 
-function filtro() {
-    window.location.href = "./filtros.html"
+function redirecionarCadastroFuncionario() {
+    if (
+        verificarPermissao([
+            permissoes.PROPRIETARIO
+        ])
+    ) {
+        window.location.href = rotas.cadastrarFuncionario;
+    }
+}
+
+function redirecionarFiltros() {
+    window.location.href = rotas.filtros;
 }
 
 function sair() {
-    sessionStorage.ID_USUARIO = "";
-    sessionStorage.NOME_USUARIO = "";
-    sessionStorage.EMAIL_USUARIO = "";
-    sessionStorage.NIVEL_ACESSO = "";
-    sessionStorage.ID_EMPRESA = "";
-    sessionStorage.PRIMEIRO_ACESSO = "";
+    sessionStorage.clear();
 
-    window.location.href = "../index.html"
+    window.location.href = rotas.login;
 }
 
-function cadastrarFuncionario() {
-    window.location.href = "./cadastro-func.html"
+function ocultarElementosSemPermissao() {
+    const elementosRestritos = document.querySelectorAll(
+        "[data-permissao]"
+    );
 
+    elementosRestritos.forEach((elemento) => {
+        const permissoesPermitidas =
+            elemento.dataset.permissao
+                .split(",")
+                .map(Number);
+
+        const possuiPermissao =
+            verificarPermissao(permissoesPermitidas);
+
+        if (!possuiPermissao) {
+            elemento.style.display = "none";
+        }
+    });
 }
+
+function validarSessao() {
+    if (!usuarioLogado()) {
+        window.location.href = rotas.login;
+    }
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+    validarSessao();
+    ocultarElementosSemPermissao();
+});

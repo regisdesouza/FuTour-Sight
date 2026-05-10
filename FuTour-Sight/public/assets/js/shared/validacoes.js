@@ -1,12 +1,20 @@
 function validarNome(valor) {
     const nome = valor.trim();
 
-    if (nome == '') {
-        return "Preencha o campo Nome Completo";
-    } else if (nome.length < 3) {
+    if (nome == "") {
+        return "Preencha o Nome Completo";
+    }
+
+    if (nome.length < 3) {
         return "Nome muito curto";
-    } else if (nome.indexOf(' ') == -1) {
+    }
+
+    if (nome.indexOf(" ") == -1) {
         return "Digite o nome completo";
+    }
+
+    if (!/^[A-Za-zÀ-ÿ\s]+$/.test(nome)) {
+        return "O nome deve conter apenas letras";
     }
 
     return "";
@@ -15,12 +23,12 @@ function validarNome(valor) {
 function validarNomeEmpresa(valor) {
     const nomeEmpresa = valor.trim();
 
-    if (nomeEmpresa == '') {
-        return "Preencha o campo Empresa";
-    } else if (nomeEmpresa.length < 3) {
+    if (nomeEmpresa == "") {
+        return "Preencha o Nome da Empresa";
+    }
+
+    if (nomeEmpresa.length < 3) {
         return "Nome da empresa muito curto";
-    } else if (nomeEmpresa.indexOf(' ') == -1) {
-        return "Digite o nome da empresa completo";
     }
 
     return "";
@@ -29,14 +37,20 @@ function validarNomeEmpresa(valor) {
 function validarEmail(valor) {
     const email = valor.trim();
 
-    if (email == '') {
-        return "Preencha o campo E-mail de Contato";
-    } else if (email.indexOf("@") == -1 || email.indexOf(".") == -1) {
-        return "E-mail de Contato inválido, insira um '@' e um '.' ; Exemplo: exemplo@exemplo.com";
-    } else if (email.startsWith("@") || email.endsWith("@")) {
-        return "E-mail de Contato inválido. O e-mail não pode iniciar e nem finalizar com '@'";
-    } else if (email.lastIndexOf(".") < email.indexOf("@")) {
-        return "E-mail de Contato inválido, está faltando um '.' depois do '@'";
+    if (email == "") {
+        return "Preencha o E-mail";
+    }
+
+    if (email.indexOf("@") == -1 || email.indexOf(".") == -1) {
+        return "E-mail inválido";
+    }
+
+    if (email.startsWith("@") || email.endsWith("@")) {
+        return "E-mail inválido";
+    }
+
+    if (email.lastIndexOf(".") < email.indexOf("@")) {
+        return "E-mail inválido";
     }
 
     return "";
@@ -45,11 +59,13 @@ function validarEmail(valor) {
 function validarTelefone(valor) {
     const numeros = valor.replace(/\D/g, "");
 
-    if (numeros == '') {
-        return "Preencha o Telefone de Contato";
-    } else if (numeros.length != 11) {
-        return "Telefone de Contato inválido";
-    } 
+    if (numeros == "") {
+        return "Preencha o Telefone";
+    }
+
+    if (numeros.length != 11) {
+        return "Telefone inválido";
+    }
 
     return "";
 }
@@ -57,11 +73,15 @@ function validarTelefone(valor) {
 function validarMensagem(valor) {
     const mensagem = valor.trim();
 
-    if (mensagem == '') {
+    if (mensagem == "") {
         return "Preencha a Mensagem";
-    } else if (mensagem.length < 10) {
+    }
+
+    if (mensagem.length < 10) {
         return "Mensagem muito curta";
-    } else if (mensagem.length > 800) {
+    }
+
+    if (mensagem.length > 800) {
         return "Mensagem muito longa";
     }
 
@@ -71,35 +91,222 @@ function validarMensagem(valor) {
 function validarSenha(valor) {
     const senha = valor.trim();
 
-    if (senha == '') {
-        return "Preencha a senha";
-    } else if (senha.length < 8) {
+    if (senha == "") {
+        return "Preencha a Senha";
+    }
+
+    if (senha.length < 8) {
         return "A senha deve ter pelo menos 8 caracteres";
-    } else if (senha.indexOf(' ') != -1) {
+    }
+
+    if (senha.indexOf(" ") != -1) {
         return "A senha não pode conter espaços";
-    } else if (!/[0-9]/.test(senha)) {
+    }
+
+    if (!/[0-9]/.test(senha)) {
         return "A senha deve conter pelo menos um número";
-    } else if (!/[a-z]/.test(senha)) {
+    }
+
+    if (!/[a-z]/.test(senha)) {
         return "A senha deve conter pelo menos uma letra minúscula";
-    } else if (!/[A-Z]/.test(senha)) {
+    }
+
+    if (!/[A-Z]/.test(senha)) {
         return "A senha deve conter pelo menos uma letra maiúscula";
-    } else if (!/[!@#$%&*]/.test(senha)) {
+    }
+
+    if (!/[!@#$%&*]/.test(senha)) {
         return "A senha deve conter pelo menos um caractere especial";
     }
 
     return "";
 }
 
-function validarCnpj(valor) {
-    const cnpjFormatado = valor.trim();
-    const numeros = cnpjFormatado.replace(/\D/g, "");
+function validarConfirmacaoSenha(senha, confirmacaoSenha) {
+    if (confirmacaoSenha.trim() == "") {
+        return "Confirme a senha";
+    }
 
-    if (cnpjFormatado == '') {
+    if (senha != confirmacaoSenha) {
+        return "As senhas não coincidem";
+    }
+
+    return "";
+}
+
+function validarCnpj(valor) {
+    const cnpj = valor.replace(/\D/g, "");
+
+    if (cnpj == "") {
         return "Preencha o CNPJ";
-    } else if (numeros.length != 14) {
+    }
+
+    if (cnpj.length != 14) {
         return "CNPJ inválido";
-    } else if (/^(\d)\1+$/.test(numeros)) {
+    }
+
+    if (/^(\d)\1+$/.test(cnpj)) {
         return "CNPJ inválido";
+    }
+
+    return "";
+}
+
+function validarCep(valor) {
+    const cep = valor.replace(/\D/g, "");
+
+    if (cep == "") {
+        return "Preencha o CEP";
+    }
+
+    if (cep.length != 8) {
+        return "CEP inválido";
+    }
+
+    return "";
+}
+
+function validarEstado(valor) {
+    const estado = valor.trim();
+
+    if (estado == "") {
+        return "Selecione um Estado";
+    }
+
+    return "";
+}
+
+function validarCidade(valor) {
+    const cidade = valor.trim();
+
+    if (cidade == "") {
+        return "Preencha a Cidade";
+    }
+
+    if (cidade.length < 2) {
+        return "Cidade inválida";
+    }
+
+    return "";
+}
+
+function validarBairro(valor) {
+    const bairro = valor.trim();
+
+    if (bairro == "") {
+        return "Preencha o Bairro";
+    }
+
+    if (bairro.length < 2) {
+        return "Bairro inválido";
+    }
+
+    return "";
+}
+
+function validarLogradouro(valor) {
+    const logradouro = valor.trim();
+
+    if (logradouro == "") {
+        return "Preencha o Logradouro";
+    }
+
+    if (logradouro.length < 3) {
+        return "Logradouro inválido";
+    }
+
+    return "";
+}
+
+function validarNumeroEndereco(valor) {
+    const numero = valor.trim();
+
+    if (numero == "") {
+        return "Preencha o Número";
+    }
+
+    return "";
+}
+
+function validarComplemento(valor) {
+    const complemento = valor.trim();
+
+    if (complemento.length > 100) {
+        return "Complemento muito longo";
+    }
+
+    return "";
+}
+
+function validarPermissao(valor) {
+    if (valor == "" || valor == null) {
+        return "Selecione uma Permissão";
+    }
+
+    return "";
+}
+
+function validarFiltro(valor) {
+    if (valor == "" || valor == null) {
+        return "Selecione uma opção";
+    }
+
+    return "";
+}
+
+function validarNomeFiltro(valor) {
+    const nomeFiltro = valor.trim();
+
+    if (nomeFiltro == "") {
+        return "Preencha o nome do filtro";
+    }
+
+    if (nomeFiltro.length < 3) {
+        return "Nome do filtro muito curto";
+    }
+
+    return "";
+}
+
+function validarAno(valor) {
+    if (valor == "" || valor == null) {
+        return "Selecione um ano";
+    }
+
+    return "";
+}
+
+function validarMes(valor) {
+    if (valor == "" || valor == null) {
+        return "Selecione um mês";
+    }
+
+    return "";
+}
+
+function validarPeriodo(mesInicio, mesFim) {
+    if (mesInicio == "" || mesFim == "") {
+        return "Selecione o período";
+    }
+
+    if (Number(mesInicio) > Number(mesFim)) {
+        return "O mês inicial não pode ser maior que o final";
+    }
+
+    return "";
+}
+
+function validarSelectMultiplo(lista) {
+    if (!lista || lista.length == 0) {
+        return "Selecione pelo menos uma opção";
+    }
+
+    return "";
+}
+
+function validarCampoObrigatorio(valor, nomeCampo) {
+    if (valor.trim() == "") {
+        return `Preencha o campo ${nomeCampo}`;
     }
 
     return "";
