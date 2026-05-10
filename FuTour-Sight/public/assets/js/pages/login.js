@@ -1,104 +1,103 @@
+// ================================================
+// login.js
+// ================================================
+// HTML necessário (adicionar antes do </body>):
+//
+// <!-- Toast de notificação -->
+// <div id="toast" class="toast hidden">
+//   <span id="toastMensagem"></span>
+// </div>
+//
+// Nos campos do formulário, adicionar divs de erro:
+// <div id="div_msg_email" class="msg-erro"></div>
+// <div id="div_msg_senha" class="msg-erro"></div>
+// ================================================
+
 iniciarMenu();
 
 var chkEmail = false;
 var chkSenha = false;
 
 function onkey_email() {
-    var erro = validarEmail(email.value.trim());
+    var erro = validarEmail(document.getElementById("email").value.trim());
 
     if (erro != "") {
-        div_msg_email.innerHTML = erro;
+        document.getElementById("div_msg_email").innerHTML = erro;
         chkEmail = false;
     } else {
-        div_msg_email.innerHTML = "";
+        document.getElementById("div_msg_email").innerHTML = "";
         chkEmail = true;
     }
 }
 
 function onkey_senha() {
-    var erro = validarSenha(senha.value.trim());
+    var erro = validarSenha(document.getElementById("senha").value.trim());
 
     if (erro != "") {
-        div_msg_senha.innerHTML = erro;
+        document.getElementById("div_msg_senha").innerHTML = erro;
         chkSenha = false;
     } else {
-        div_msg_senha.innerHTML = "";
+        document.getElementById("div_msg_senha").innerHTML = "";
         chkSenha = true;
     }
 }
 
 function login() {
-    var emailVar = email.value;
-    var senhaVar = senha.value;
+    onkey_email();
+    onkey_senha();
 
-    if (emailVar == "" || senhaVar == "") {
-        cardErro.style.display = "block";
-        mensagem_erro.innerHTML = "Preencha os campos.";
-        setTimeout(sumirMensagem, 3000);
+    const temErro = chkEmail && chkSenha;
+
+    if (!temErro) {
+        mostrarToast("Preencha todos os campos corretamente.", "erro");
         return false;
-    } else {
-        sumirMensagem();
     }
+
+    var emailVar = document.getElementById("email").value;
+    var senhaVar = document.getElementById("senha").value;
 
     fetch("/usuarios/autenticar", {
         method: "POST",
-        headers: {
-            "Content-Type": "application/json",
-        },
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
             emailServer: emailVar,
             senhaServer: senhaVar,
         }),
     })
-        .then((resposta) => {
-            if (!resposta.ok) {
-                throw new Error("Erro no login. Código da resposta: " + resposta.status);
-            }
-            return resposta.json();
-        })
-        .then((json) => {
-            console.log("Login realizado:", json);
+    .then((resposta) => tratarRespostaFetch(resposta))
+    .then((json) => {
+        console.log("Login realizado:", json);
 
-            sessionStorage.ID_USUARIO = json.id_usuario;
-            sessionStorage.NOME_USUARIO = json.nome;
-            sessionStorage.EMAIL_USUARIO = json.email;
-            sessionStorage.NIVEL_ACESSO = json.nivel_permissao;
-            sessionStorage.ID_EMPRESA = json.empresa;
-            sessionStorage.PRIMEIRO_ACESSO = json.primeiro_acesso;
-            
-            const nivel = Number(sessionStorage.getItem("NIVEL_ACESSO"));
-            const primeiroAcesso = Number(sessionStorage.getItem("PRIMEIRO_ACESSO")) === 1;
+        sessionStorage.setItem("ID_USUARIO",      json.id_usuario);
+        sessionStorage.setItem("NOME_USUARIO",    json.nome);
+        sessionStorage.setItem("EMAIL_USUARIO",   json.email);
+        sessionStorage.setItem("NIVEL_ACESSO",    json.nivel_permissao);
+        sessionStorage.setItem("ID_EMPRESA",      json.empresa);
+        sessionStorage.setItem("PRIMEIRO_ACESSO", json.primeiro_acesso);
 
+        const nivel          = Number(sessionStorage.getItem("NIVEL_ACESSO"));
+        const primeiroAcesso = Number(sessionStorage.getItem("PRIMEIRO_ACESSO")) === 1;
+
+        mostrarToast("Login realizado com sucesso!", "sucesso");
+
+        setTimeout(() => {
             if (nivel === 1) {
-                setTimeout(() => {
-                    window.location.href = "/admin/solicitacoes.html";
-                }, 1000);
-
+                window.location.href = "/admin/solicitacoes.html";
             } else if (nivel === 2 && primeiroAcesso) {
-                setTimeout(() => {
-                    
-                    window.location.href = "/usuario/edicao-empresa.html";
-                }, 1000);
-
+                window.location.href = "/usuario/edicao-empresa.html";
             } else if (nivel === 2 && !primeiroAcesso) {
-                setTimeout(() => {
-                    window.location.href = "/usuario/dashboard-proprietario.html";
-                }, 1000);
-
+                window.location.href = "/usuario/dashboard-proprietario.html";
             } else if (nivel === 3 && primeiroAcesso) {
-                setTimeout(() => {
-                    window.location.href = "/usuario/editar-perfil.html";
-                }, 1000);
-
+                window.location.href = "/usuario/editar-perfil.html";
             } else if (nivel === 3 && !primeiroAcesso) {
-                setTimeout(() => {
-                    window.location.href = "/usuario/dashboard-gerente.html";
-                }, 1000);
+                window.location.href = "/usuario/dashboard-gerente.html";
             }
-        })
-        .catch((erro) => {
-            console.error("#ERRO:", erro);
-        });
+        }, 1500);
+    })
+    .catch((erro) => {
+        console.error("#ERRO:", erro);
+        mostrarToast(erro.message || "E-mail ou senha inválidos.", "erro");
+    });
 
     return false;
 }
