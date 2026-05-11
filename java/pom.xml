@@ -28,12 +28,6 @@
     <dependencies>
 
         <dependency>
-            <groupId>com.slack.api</groupId>
-            <artifactId>slack-api-client</artifactId>
-            <version>1.38.3</version>
-        </dependency>
-
-        <dependency>
             <groupId>software.amazon.awssdk</groupId>
             <artifactId>s3</artifactId>
         </dependency>
