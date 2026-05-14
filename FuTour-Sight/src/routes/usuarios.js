@@ -3,52 +3,52 @@ var router = express.Router();
 
 var usuarioController = require("../controllers/usuarioController");
 
-router.post("/enviarMensagem", function (req, res) {
+router.post("/mensagens", function (req, res) {
     usuarioController.enviarMensagem(req, res);
 });
 
-router.post("/preCadastrar", function (req, res) {
+router.post("/usuarios/pre-cadastro", function (req, res) {
     usuarioController.preCadastrar(req, res);
 });
 
-router.post("/autenticar", function (req, res) {
+router.post("/usuarios/autenticacao", function (req, res) {
     usuarioController.autenticar(req, res);
 });
 
-router.post("/criarFiltro", function(req, res) {
+router.post("/filtros", function(req, res) {
     usuarioController.criarFiltro(req, res);
-})
+});
 
-router.get("/listarFiltros", function(req, res) {
+router.get("/filtros", function(req, res) {
     usuarioController.listarFiltros(req, res);
-})
+});
 
-router.get("/listarEstados", function(req, res) {
-    usuarioController.listarEstados(req, res);
-})
-
-router.get("/listarPaises", function(req, res) {
-    usuarioController.listarPaises(req, res);
-})
-
-router.get("/listarAnos", function(req, res) {
-    usuarioController.listarAnos(req, res);
-})
-
-router.get("/buscarFiltro/:idFiltro", function(req, res) {
+router.get("/filtros/:idFiltro", function(req, res) {
     usuarioController.buscarFiltro(req, res);
-})
+});
 
-router.put("/atualizarFiltro/:idFiltro", function(req, res) {
+router.get("/estados", function(req, res) {
+    usuarioController.listarEstados(req, res);
+});
+
+router.get("/paises", function(req, res) {
+    usuarioController.listarPaises(req, res);
+});
+
+router.get("/anos", function(req, res) {
+    usuarioController.listarAnos(req, res);
+});
+
+router.put("/filtros/:idFiltro", function(req, res) {
     usuarioController.atualizarFiltro(req, res);
-})
+});
 
-router.put("/editarPerfil/:idUsuario", function (req, res) {
+router.put("/usuarios/:idUsuario/perfil", function (req, res) {
     usuarioController.editarPerfil(req, res);
 });
 
-router.delete("/excluirFiltro/:idFiltro", function(req, res) {
+router.delete("/filtros/:idFiltro", function(req, res) {
     usuarioController.excluirFiltro(req, res);
-})
+});
 
 module.exports = router;
