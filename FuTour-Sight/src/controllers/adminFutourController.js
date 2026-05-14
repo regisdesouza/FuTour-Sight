@@ -1,18 +1,82 @@
 const nodemailer = require("nodemailer");
 const crypto = require("crypto");
-
 var adminFutourModel = require("../models/adminFutourModel");
 
+function buscarLogs(req, res) {
+    adminFutourModel.buscarLogs()
+        .then((resultado) => {
+            res.status(200).json(resultado);
+        })
+        .catch((erro) => {
+            console.log(erro);
+            res.status(500).json({ mensagem: erro.sqlMessage });
+        });
+}
+
+function listarEmpresas(req, res) {
+    adminFutourModel.listarEmpresas()
+        .then((resultado) => {
+            res.status(200).json(resultado);
+        })
+        .catch((erro) => {
+            console.log(erro);
+            res.status(500).json({ mensagem: erro.sqlMessage });
+        });
+}
+
+function listarEmpresasProcuradas(req, res) {
+    var nomeEmpresalistarEmpresasProcuradas = req.query.empresaServer;
+
+    adminFutourModel.listarEmpresasProcuradas(nomeEmpresalistarEmpresasProcuradas)
+        .then((resultado) => {
+            if (resultado.length > 0) {
+                res.status(200).json(resultado);
+            } else {
+                res.status(204).json({ mensagem: "Nenhum resultado encontrado!" });
+            }
+        })
+        .catch((erro) => {
+            console.log(erro);
+            res.status(500).json({ mensagem: erro.sqlMessage });
+        });
+}
+
+function editarStatusEmpresa(req, res) {
+    var idEmpresaeditarStatusEmpresa = req.params.idEmpresa;
+
+    adminFutourModel.editarStatusEmpresa(idEmpresaeditarStatusEmpresa)
+        .then(() => {
+            res.status(200).json({ mensagem: "Status atualizado com sucesso." });
+        })
+        .catch((erro) => {
+            console.log(erro);
+            res.status(500).json({ mensagem: erro.sqlMessage });
+        });
+}
+
+function listarSolicitacoes(req, res) {
+    adminFutourModel.listarSolicitacoes()
+        .then((resultado) => {
+            if (resultado.length > 0) {
+                res.status(200).json(resultado);
+            } else {
+                res.status(204).json({ mensagem: "Nenhuma solicitação encontrada!" });
+            }
+        })
+        .catch((erro) => {
+            console.log(erro);
+            res.status(500).json({ mensagem: erro.sqlMessage });
+        });
+}
+
 async function aprovarSolicitacao(req, res) {
-    const idSolicitacao = req.params.idSolicitacao;
+    var idaprovarSolicitacao = req.params.idSolicitacao;
 
     try {
-        const solicitacao = await adminFutourModel.buscarSolicitacaoPorId(idSolicitacao);
+        const solicitacao = await adminFutourModel.buscarSolicitacaoPorId(idaprovarSolicitacao);
 
         if (solicitacao.length === 0) {
-            return res.status(404).json({
-                mensagem: "Solicitação não encontrada."
-            });
+            return res.status(404).json({ mensagem: "Solicitação não encontrada" });
         }
 
         const dados = solicitacao[0];
@@ -23,10 +87,7 @@ async function aprovarSolicitacao(req, res) {
         const letraMaiuscula = maiusculas[Math.floor(Math.random() * maiusculas.length)];
         const caractereEspecial = especiais[Math.floor(Math.random() * especiais.length)];
 
-        const senhaTemp =
-            letraMaiuscula +
-            caractereEspecial +
-            crypto.randomBytes(3).toString("hex");
+        const senhaTemp = letraMaiuscula + caractereEspecial + crypto.randomBytes(3).toString("hex");
 
         const resultadoEmpresa = await adminFutourModel.criarEmpresa(
             dados.nome_empresa,
@@ -34,7 +95,6 @@ async function aprovarSolicitacao(req, res) {
             dados.email_empresa,
             dados.telefone_empresa
         );
-
         const idEmpresa = resultadoEmpresa.insertId;
 
         await adminFutourModel.criarEndereco(idEmpresa);
@@ -46,7 +106,7 @@ async function aprovarSolicitacao(req, res) {
             idEmpresa
         );
 
-        await adminFutourModel.aprovarSolicitacao(idSolicitacao);
+        await adminFutourModel.aprovarSolicitacao(idaprovarSolicitacao);
 
         const transporter = nodemailer.createTransport({
             service: "gmail",
@@ -62,174 +122,56 @@ async function aprovarSolicitacao(req, res) {
             subject: "Sua solicitação foi aprovada!",
             html: `
                 <h2>Bem-vindo ao FuTour Sight!</h2>
-
                 <p>Sua solicitação foi aprovada 🎉</p>
-
-                <p>
-                    <strong>Email:</strong> ${dados.email_responsavel}
-                </p>
-
-                <p>
-                    <strong>Senha temporária:</strong> ${senhaTemp}
-                </p>
-
-                <a href="http://localhost:3333/login.html">
-                    Acessar sistema
-                </a>
-
-                <p>
-                    No primeiro acesso você deverá alterar sua senha.
-                </p>
+                <p><strong>Email:</strong> ${dados.email_responsavel}</p>
+                <p><strong>Senha temporária:</strong> ${senhaTemp}</p>
+                <a href="http://localhost:3333/login.html">Acessar sistema</a>
+                <p>No primeiro acesso você deverá alterar sua senha.</p>
             `,
         });
 
-        return res.status(200).json({
-            mensagem: "Solicitação aprovada e email enviado com sucesso."
-        });
+        return res.status(200).json({ mensagem: "Solicitação aprovada e email enviado!" });
 
     } catch (erro) {
-        console.log(erro);
-
-        return res.status(500).json({
-            mensagem: erro.sqlMessage || erro.message
-        });
+        console.error("ERRO REAL:", erro);
+        return res.status(500).json({ erro: erro.message });
     }
 }
 
-async function cancelarSolicitacao(req, res) {
-    const idSolicitacao = req.params.idSolicitacao;
+function cancelarSolicitacao(req, res) {
+    var idcancelarSolicitacao = req.params.idSolicitacao;
 
-    try {
-        const solicitacao = await adminFutourModel.buscarSolicitacaoPorId(idSolicitacao);
+    adminFutourModel.buscarSolicitacaoPorId(idcancelarSolicitacao)
+        .then((resultado) => {
+            if (resultado.length == 0) {
+                return res.status(404).json({ mensagem: "Solicitação não encontrada" });
+            }
 
-        if (solicitacao.length === 0) {
-            return res.status(404).json({
-                mensagem: "Solicitação não encontrada."
-            });
-        }
+            var status = resultado[0].fk_status;
 
-        const statusSolicitacao = solicitacao[0].fk_status;
+            if (status != 9) {
+                return res.status(400).json({
+                    mensagem: "Só é possível cancelar solicitações pendentes!"
+                });
+            }
 
-        if (statusSolicitacao != 9) {
-            return res.status(400).json({
-                mensagem: "Só é possível cancelar solicitações pendentes."
-            });
-        }
-
-        await adminFutourModel.cancelarSolicitacao(idSolicitacao);
-
-        return res.status(200).json({
-            mensagem: "Solicitação cancelada com sucesso."
+            return adminFutourModel.cancelarSolicitacao(idcancelarSolicitacao);
+        })
+        .then(() => {
+            res.status(200).json({ mensagem: "Solicitação cancelada!" });
+        })
+        .catch((erro) => {
+            console.log(erro);
+            res.status(500).json({ mensagem: erro.sqlMessage });
         });
-
-    } catch (erro) {
-        console.log(erro);
-
-        return res.status(500).json({
-            mensagem: erro.sqlMessage || erro.message
-        });
-    }
-}
-
-async function listarSolicitacoes(req, res) {
-    try {
-        const resultado = await adminFutourModel.listarSolicitacoes();
-
-        if (resultado.length === 0) {
-            return res.status(204).json({
-                mensagem: "Nenhuma solicitação encontrada."
-            });
-        }
-
-        return res.status(200).json(resultado);
-
-    } catch (erro) {
-        console.log(erro);
-
-        return res.status(500).json({
-            mensagem: erro.sqlMessage || erro.message
-        });
-    }
-}
-
-async function buscarLogs(req, res) {
-    try {
-        const resultado = await adminFutourModel.buscarLogs();
-
-        return res.status(200).json(resultado);
-
-    } catch (erro) {
-        console.log(erro);
-
-        return res.status(500).json({
-            mensagem: erro.sqlMessage || erro.message
-        });
-    }
-}
-
-async function listarEmpresas(req, res) {
-    try {
-        const resultado = await adminFutourModel.listarEmpresas();
-
-        return res.status(200).json(resultado);
-
-    } catch (erro) {
-        console.log(erro);
-
-        return res.status(500).json({
-            mensagem: erro.sqlMessage || erro.message
-        });
-    }
-}
-
-async function listarEmpresasProcuradas(req, res) {
-    const empresa = req.query.empresaServer;
-
-    try {
-        const resultado = await adminFutourModel.listarEmpresasProcuradas(empresa);
-
-        if (resultado.length === 0) {
-            return res.status(204).json({
-                mensagem: "Nenhuma empresa encontrada."
-            });
-        }
-
-        return res.status(200).json(resultado);
-
-    } catch (erro) {
-        console.log(erro);
-
-        return res.status(500).json({
-            mensagem: erro.sqlMessage || erro.message
-        });
-    }
-}
-
-async function editarStatusEmpresa(req, res) {
-    const idEmpresa = req.params.idEmpresa;
-
-    try {
-        await adminFutourModel.editarStatusEmpresa(idEmpresa);
-
-        return res.status(200).json({
-            mensagem: "Status da empresa atualizado com sucesso."
-        });
-
-    } catch (erro) {
-        console.log(erro);
-
-        return res.status(500).json({
-            mensagem: erro.sqlMessage || erro.message
-        });
-    }
 }
 
 module.exports = {
-    aprovarSolicitacao,
-    cancelarSolicitacao,
-    listarSolicitacoes,
     buscarLogs,
     listarEmpresas,
     listarEmpresasProcuradas,
-    editarStatusEmpresa
+    editarStatusEmpresa,
+    listarSolicitacoes,
+    aprovarSolicitacao,
+    cancelarSolicitacao
 };

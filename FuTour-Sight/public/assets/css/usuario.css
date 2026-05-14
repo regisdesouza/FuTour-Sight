@@ -7,9 +7,6 @@ header {
     margin: 0;
     padding: 64px;
     border-radius: 0 24px 24px 0;
-    height: 100vh;
-    position: sticky;
-    top: 0;
 }
 
 header .links {
@@ -48,7 +45,7 @@ header .links {
     gap: 16px;
 }
 
-.links nav ul li button {
+.links nav ul li button{
     display: flex;
     align-items: center;
     gap: 16px;
@@ -103,52 +100,4 @@ header .links {
     border: 1px solid var(--cor-cinza-escuro);
     border-radius: 16px;
     padding: 16px;
-}
-
-@media (max-width: 576px) {
-    body {
-        flex-direction: column;
-    }
-
-    header {
-        height: 48px;
-        padding: 8px;
-        border-radius: 0;
-        justify-content: flex-end;
-        z-index: 100;
-    }
-    
-    .overlay {
-        display: none;
-    }
-
-    header input#menu-hamburguer:checked~.overlay {
-        display: block;
-    }
-
-    header input#menu-hamburguer:checked~.menu-hamburguer {
-        right: inherit;
-    }
-
-    .usuario-infos .img-container {
-        width: 50px;
-        height: 50px;
-    }
-
-    header .links {
-        justify-content: flex-start;
-        gap: 32px;
-    }
-
-    .links nav ul li img {
-        width: 18px;
-    }
-
-    .botao-sair-container img {
-        width: 18px;
-    }
-
-    .logo {
-        display: none;
-    }
 }

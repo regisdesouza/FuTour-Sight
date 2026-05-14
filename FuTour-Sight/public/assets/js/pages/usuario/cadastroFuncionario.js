@@ -1,33 +1,7 @@
-// ================================================
-// cadastroFuncionario.js
-// ================================================
-// HTML necessário (adicionar antes do </body>):
-//
-// <!-- Toast de notificação -->
-// <div id="toast" class="toast hidden">
-//   <span id="toastMensagem"></span>
-// </div>
-//
-// <!-- Modal de confirmação -->
-// <div id="modalConfirmacao" class="modal hidden">
-//   <div class="modal-content">
-//     <h3 id="modalTitulo"></h3>
-//     <p id="modalTexto"></p>
-//     <div class="modal-botoes">
-//       <button id="btnCancelarModal">Cancelar</button>
-//       <button id="btnConfirmarModal">Confirmar</button>
-//     </div>
-//   </div>
-// </div>
-//
-// Nos campos do formulário, adicionar divs de erro:
-// <div id="div_msg_nome"   class="msg-erro"></div>
-// <div id="div_msg_email"  class="msg-erro"></div>
-// <div id="div_msg_senha"  class="msg-erro"></div>
-// ================================================
-
 iniciarMenu();
-preencherNomeUsuario();
+
+document.getElementById("nomeUser-header").innerHTML  = sessionStorage.getItem("NOME_USUARIO");
+document.getElementById("nomeUser-sidebar").innerHTML = sessionStorage.getItem("NOME_USUARIO");
 
 var chkNome  = false;
 var chkEmail = false;
@@ -37,10 +11,10 @@ function onkey_nome() {
     var erro = validarNome(document.getElementById("nome-colab").value.trim());
 
     if (erro != "") {
-        document.getElementById("div_msg_nome").innerHTML = erro;
+        div_msg_nome.innerHTML = erro;
         chkNome = false;
     } else {
-        document.getElementById("div_msg_nome").innerHTML = "";
+        div_msg_nome.innerHTML = "";
         chkNome = true;
     }
 }
@@ -49,10 +23,10 @@ function onkey_email() {
     var erro = validarEmail(document.getElementById("email-colab").value.trim());
 
     if (erro != "") {
-        document.getElementById("div_msg_email").innerHTML = erro;
+        div_msg_email.innerHTML = erro;
         chkEmail = false;
     } else {
-        document.getElementById("div_msg_email").innerHTML = "";
+        div_msg_email.innerHTML = "";
         chkEmail = true;
     }
 }
@@ -61,10 +35,10 @@ function onkey_senha() {
     var erro = validarSenha(document.getElementById("senha-colab").value.trim());
 
     if (erro != "") {
-        document.getElementById("div_msg_senha").innerHTML = erro;
+        div_msg_senha.innerHTML = erro;
         chkSenha = false;
     } else {
-        document.getElementById("div_msg_senha").innerHTML = "";
+        div_msg_senha.innerHTML = "";
         chkSenha = true;
     }
 }
@@ -75,10 +49,11 @@ function cadastrarFuncionario() {
     onkey_senha();
 
     const temErro = chkNome && chkEmail && chkSenha;
-    const permissao = document.getElementById('nivel').value;
 
-    if (!temErro || !permissao) {
-        exibirToast('erro', 'Preencha todos os campos corretamente.');
+    if (!temErro) {
+        cardErro.style.display = "block";
+        mensagem_erro.innerHTML = "Preencha todos os campos corretamente.";
+        setTimeout(sumirMensagem, 3000);
         return false;
     }
 
@@ -89,7 +64,9 @@ function cadastrarFuncionario() {
     var idEmpresaVar = sessionStorage.getItem("ID_EMPRESA");
 
     if (!idEmpresaVar) {
-        exibirToast("erro", "Empresa não identificada. Faça login novamente");
+        cardErro.style.display = "block";
+        mensagem_erro.innerHTML = "Empresa não identificada. Faça login novamente.";
+        setTimeout(sumirMensagem, 3000);
         return false;
     }
 
@@ -104,21 +81,31 @@ function cadastrarFuncionario() {
             idEmpresaServer:    idEmpresaVar
         }),
     })
-    .then((resposta) => tratarRespostaFetch(resposta))
+    .then((resposta) => {
+        if (!resposta.ok) {
+            return resposta.json().then(err => {
+                throw new Error(err.mensagem);
+            });
+        }
+        return resposta.json();
+    })
     .then((dados) => {
         console.log("Funcionário cadastrado:", dados);
-        exibirToast("sucesso", "Funcionário cadastrado com sucesso!");
 
-        limparCampos(["nome-colab", "email-colab", "senha-colab"]);
-        document.getElementById("nivel").value = "";
+        div_msg.innerHTML = "Cadastro de funcionário enviado com sucesso!";
 
-        chkNome  = false;
-        chkEmail = false;
-        chkSenha = false;
+        document.getElementById("nome-colab").value  = "";
+        document.getElementById("email-colab").value = "";
+        document.getElementById("senha-colab").value = "";
+        document.getElementById("nivel").value       = "";
+
+        setTimeout(() => {
+            div_msg.innerHTML = "";
+        }, 8000);
     })
     .catch((erro) => {
         console.error("#ERRO:", erro);
-        exibirToast("erro", "Erro ao cadastrar funcionário.");
+        div_msg.innerHTML = erro.message;
     });
 
     return false;

@@ -4,13 +4,13 @@ var nodemailer = require("nodemailer");
 var transporter = nodemailer.createTransport({
     service: "gmail",
     auth: {
-        user: process.env.EMAIL_USER,
-        pass: process.env.EMAIL_PASS
+        user: process.env.EMAIL_USER,      
+        pass: process.env.EMAIL_PASS         
     }
 });
 
-async function cadastrarFuncionario(req, res) {
-    const {
+function cadastrarFuncionario(req, res) {
+    var {
         nomeServer,
         emailPessoalServer,
         senhaServer,
@@ -18,307 +18,176 @@ async function cadastrarFuncionario(req, res) {
         idEmpresaServer
     } = req.body;
 
-    try {
-        if (!nomeServer) {
-            return res.status(400).json({
-                mensagem: "Nome undefined."
-            });
-        }
+    if (!nomeServer)         return res.status(400).json({ mensagem: "Nome undefined!" });
+    if (!emailPessoalServer) return res.status(400).json({ mensagem: "Email undefined!" });
+    if (!senhaServer)        return res.status(400).json({ mensagem: "Senha undefined!" });
+    if (!permissaoServer)    return res.status(400).json({ mensagem: "Permissão undefined!" });
+    if (!idEmpresaServer)    return res.status(400).json({ mensagem: "Empresa undefined!" });
 
-        if (!emailPessoalServer) {
-            return res.status(400).json({
-                mensagem: "Email undefined."
-            });
-        }
-
-        if (!senhaServer) {
-            return res.status(400).json({
-                mensagem: "Senha undefined."
-            });
-        }
-
-        if (!permissaoServer) {
-            return res.status(400).json({
-                mensagem: "Permissão undefined."
-            });
-        }
-
-        if (!idEmpresaServer) {
-            return res.status(400).json({
-                mensagem: "Empresa undefined."
-            });
-        }
-
-        const resultado = await usuarioAdminModel.cadastrarFuncionario(
-            nomeServer,
-            emailPessoalServer,
-            senhaServer,
-            permissaoServer,
-            idEmpresaServer
-        );
-
-        await transporter.sendMail({
-            from: process.env.EMAIL_USER,
+    usuarioAdminModel.cadastrarFuncionario(
+        nomeServer,
+        emailPessoalServer,
+        senhaServer,
+        permissaoServer,
+        idEmpresaServer
+    )
+    .then((resultado) => {
+        var mailOptions = {
+            from: process.env.EMAIL_USER,         
             to: emailPessoalServer,
             subject: "Suas credenciais de acesso",
             html: `
                 <h2>Olá, ${nomeServer}!</h2>
-
-                <p>
-                    Seu cadastro foi realizado com sucesso.
-                </p>
-
-                <p>
-                    <strong>Email:</strong> ${emailPessoalServer}
-                </p>
-
-                <p>
-                    <strong>Senha:</strong> ${senhaServer}
-                </p>
-
+                <p>Seu cadastro foi realizado com sucesso. Seguem suas credenciais de acesso:</p>
+                <p><strong>Email:</strong> ${emailPessoalServer}</p>
+                <p><strong>Senha:</strong> ${senhaServer}</p>
                 <br>
-
-                <p>
-                    Recomendamos que você altere sua senha
-                    após o primeiro acesso.
-                </p>
+                <p>Recomendamos que você altere sua senha após o primeiro acesso.</p>
             `
+        };
+
+        transporter.sendMail(mailOptions, (erro, info) => {
+            if (erro) {
+                console.error("Erro ao enviar email:", erro);
+            } else {
+                console.log("Email enviado:", info.response);
+            }
         });
 
-        return res.status(200).json({
-            mensagem: "Funcionário cadastrado com sucesso.",
-            resultado
-        });
-
-    } catch (erro) {
+        res.status(200).json(resultado);
+    })
+    .catch((erro) => {
         console.log(erro);
-
-        return res.status(500).json({
-            mensagem: erro.sqlMessage || erro.message
-        });
-    }
+        res.status(500).json({ mensagem: erro.sqlMessage });
+    });
 }
 
-async function listarUsuarios(req, res) {
-    const idEmpresa = req.query.idEmpresa;
+function editarEmpresa(req, res) {
+    var idEmpresa = req.params.idEmpresa;
+    var body = req.body;
 
-    try {
-        const resultado = await usuarioAdminModel.listarUsuarios(idEmpresa);
-
-        return res.status(200).json(resultado);
-
-    } catch (erro) {
-        console.log(erro);
-
-        return res.status(500).json({
-            mensagem: erro.sqlMessage || erro.message
+    usuarioAdminModel.editarEmpresa(
+        idEmpresa,
+        body.empresaServer,
+        body.cnpjServer,
+        body.emailCorporativoServer,
+        body.telefoneCorporativoServer,
+        body.cepServer,
+        body.estadoServer,
+        body.cidadeServer,
+        body.bairroServer,
+        body.logradouroServer,
+        body.numeroServer,
+        body.complementoServer
+    )
+        .then((resultado) => {
+            res.status(200).json(resultado);
+        })
+        .catch((erro) => {
+            console.log(erro);
+            res.status(500).json({ mensagem: erro.sqlMessage });
         });
-    }
 }
 
-async function listarUsuariosProcurados(req, res) {
-    const idEmpresa = req.query.idEmpresa;
+function listarUsuarios(req, res) {
+    var idEmpresa = req.query.idEmpresa
 
-    const nomeFuncionario =
-        req.query.nomeFuncionarioServer;
-
-    try {
-        const resultado =
-            await usuarioAdminModel.listarUsuariosProcurados(
-                idEmpresa,
-                nomeFuncionario
-            );
-
-        if (resultado.length === 0) {
-            return res.status(204).json({
-                mensagem: "Nenhum resultado encontrado."
-            });
-        }
-
-        return res.status(200).json(resultado);
-
-    } catch (erro) {
-        console.log(erro);
-
-        return res.status(500).json({
-            mensagem: erro.sqlMessage || erro.message
+    usuarioAdminModel.listarUsuarios(idEmpresa)
+        .then((resultado) => {
+            res.status(200).json(resultado);
+        })
+        .catch((erro) => {
+            console.log(erro);
+            res.status(500).json({ mensagem: erro.sqlMessage });
         });
-    }
 }
 
-async function buscarEmpresa(req, res) {
-    const idEmpresa = req.params.idEmpresa;
+function listarUsuariosProcurados(req, res) {
+    var idEmpresa = req.query.idEmpresa;
+    var nomeFuncionario = req.query.nomeFuncionarioServer;
 
-    try {
-        const resultado =
-            await usuarioAdminModel.buscarEmpresa(idEmpresa);
-
-        if (resultado.length === 0) {
-            return res.status(404).json({
-                mensagem: "Empresa não encontrada."
-            });
-        }
-
-        return res.status(200).json(resultado[0]);
-
-    } catch (erro) {
-        console.log(erro);
-
-        return res.status(500).json({
-            mensagem: erro.sqlMessage || erro.message
+    usuarioAdminModel.listarUsuariosProcurados(idEmpresa, nomeFuncionario)
+        .then((resultado) => {
+            if (resultado.length > 0) {
+                res.status(200).json(resultado);
+            } else {
+                res.status(204).json({ mensagem: "Nenhum resultado encontrado!" });
+            }
+        })
+        .catch((erro) => {
+            console.log(erro);
+            res.status(500).json({ mensagem: erro.sqlMessage });
         });
-    }
 }
 
-async function buscarFuncionario(req, res) {
-    const idUsuario = req.params.idUsuario;
+function editarStatusUsuario(req, res) {
+    var idUsuario = req.params.idUsuario;
+    var status = req.body.status;
 
-    try {
-        const resultado =
-            await usuarioAdminModel.buscarFuncionario(idUsuario);
-
-        if (resultado.length === 0) {
-            return res.status(404).json({
-                mensagem: "Funcionário não encontrado."
-            });
-        }
-
-        return res.status(200).json(resultado[0]);
-
-    } catch (erro) {
-        console.log(erro);
-
-        return res.status(500).json({
-            mensagem: erro.sqlMessage || erro.message
+    usuarioAdminModel.editarStatusUsuario(idUsuario, status)
+        .then(() => {
+            res.status(200).json({ mensagem: "Status atualizado com sucesso." });
+        })
+        .catch((erro) => {
+            console.log(erro);
+            res.status(500).json({ mensagem: erro.sqlMessage });
         });
-    }
 }
 
-async function editarFuncionario(req, res) {
-    const idUsuario = req.params.idUsuario;
+function buscarEmpresa(req, res) {
+    var idEmpresabuscarEmpresa = req.params.idEmpresa;
 
-    const {
-        nomeServer,
-        emailServer,
-        permissaoServer
-    } = req.body;
-
-    try {
-        if (!nomeServer) {
-            return res.status(400).json({
-                mensagem: "Nome undefined."
-            });
-        }
-
-        if (!emailServer) {
-            return res.status(400).json({
-                mensagem: "Email undefined."
-            });
-        }
-
-        if (!permissaoServer) {
-            return res.status(400).json({
-                mensagem: "Permissão undefined."
-            });
-        }
-
-        await usuarioAdminModel.editarFuncionario(
-            idUsuario,
-            nomeServer,
-            emailServer,
-            permissaoServer
-        );
-
-        return res.status(200).json({
-            mensagem: "Funcionário atualizado com sucesso."
+    usuarioAdminModel.buscarEmpresa(idEmpresabuscarEmpresa)
+        .then((resultado) => {
+            if (resultado.length == 0) return res.status(404).json({ mensagem: "Empresa não encontrada!" });
+            res.status(200).json(resultado[0]);
+        })
+        .catch((erro) => {
+            console.log(erro);
+            res.status(500).json({ mensagem: erro.sqlMessage });
         });
-
-    } catch (erro) {
-        console.log(erro);
-
-        return res.status(500).json({
-            mensagem: erro.sqlMessage || erro.message
-        });
-    }
 }
 
-async function editarEmpresa(req, res) {
-    const idEmpresa = req.params.idEmpresa;
+function buscarFuncionario(req, res) {
+    var idUsuario = req.params.idUsuario;
 
-    const {
-        empresaServer,
-        cnpjServer,
-        emailCorporativoServer,
-        telefoneCorporativoServer,
-        cepServer,
-        estadoServer,
-        cidadeServer,
-        bairroServer,
-        logradouroServer,
-        numeroServer,
-        complementoServer
-    } = req.body;
-
-    try {
-        await usuarioAdminModel.editarEmpresa(
-            idEmpresa,
-            empresaServer,
-            cnpjServer,
-            emailCorporativoServer,
-            telefoneCorporativoServer,
-            cepServer,
-            estadoServer,
-            cidadeServer,
-            bairroServer,
-            logradouroServer,
-            numeroServer,
-            complementoServer
-        );
-
-        return res.status(200).json({
-            mensagem: "Empresa atualizada com sucesso."
+    usuarioAdminModel.buscarFuncionario(idUsuario)
+        .then((resultado) => {
+            if (resultado.length == 0)
+                return res.status(404).json({ mensagem: "Funcionário não encontrado!" });
+            res.status(200).json(resultado[0]);
+        })
+        .catch((erro) => {
+            console.log(erro);
+            res.status(500).json({ mensagem: erro.sqlMessage });
         });
-
-    } catch (erro) {
-        console.log(erro);
-
-        return res.status(500).json({
-            mensagem: erro.sqlMessage || erro.message
-        });
-    }
 }
 
-async function editarStatusUsuario(req, res) {
-    const idUsuario = req.params.idUsuario;
+function editarFuncionario(req, res) {
+    var idUsuario = req.params.idUsuario;
+    var { nomeServer, emailServer, permissaoServer } = req.body;
 
-    const { status } = req.body;
+    if (!nomeServer)      return res.status(400).json({ mensagem: "Nome undefined!" });
+    if (!emailServer)     return res.status(400).json({ mensagem: "Email undefined!" });
+    if (!permissaoServer) return res.status(400).json({ mensagem: "Permissão undefined!" });
 
-    try {
-        await usuarioAdminModel.editarStatusUsuario(
-            idUsuario,
-            status
-        );
-
-        return res.status(200).json({
-            mensagem: "Status atualizado com sucesso."
+    usuarioAdminModel.editarFuncionario(idUsuario, nomeServer, emailServer, permissaoServer)
+        .then((resultado) => {
+            res.status(200).json(resultado);
+        })
+        .catch((erro) => {
+            console.log(erro);
+            res.status(500).json({ mensagem: erro.sqlMessage });
         });
-
-    } catch (erro) {
-        console.log(erro);
-
-        return res.status(500).json({
-            mensagem: erro.sqlMessage || erro.message
-        });
-    }
 }
 
 module.exports = {
     cadastrarFuncionario,
+    editarEmpresa,
     listarUsuarios,
     listarUsuariosProcurados,
+    editarStatusUsuario,
     buscarEmpresa,
     buscarFuncionario,
-    editarFuncionario,
-    editarEmpresa,
-    editarStatusUsuario
+    editarFuncionario
 };

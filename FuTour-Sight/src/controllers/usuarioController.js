@@ -1,61 +1,33 @@
 var usuarioModel = require("../models/usuarioModel");
 
-async function enviarMensagem(req, res) {
-    const {
-        nomeServer,
-        emailServer,
-        telefoneServer,
-        mensagemServer
-    } = req.body;
+function enviarMensagem(req, res) {
+    var { nomeServer, emailServer, telefoneServer, mensagemServer } = req.body;
 
-    try {
-        if (!nomeServer) {
-            return res.status(400).json({
-                mensagem: "Nome undefined."
-            });
-        }
-
-        if (!emailServer) {
-            return res.status(400).json({
-                mensagem: "Email undefined."
-            });
-        }
-
-        if (!telefoneServer) {
-            return res.status(400).json({
-                mensagem: "Telefone undefined."
-            });
-        }
-
-        if (!mensagemServer) {
-            return res.status(400).json({
-                mensagem: "Mensagem undefined."
-            });
-        }
-
-        const resultado = await usuarioModel.enviarMensagem(
-            nomeServer,
-            emailServer,
-            telefoneServer,
-            mensagemServer
-        );
-
-        return res.status(200).json({
-            mensagem: "Mensagem enviada com sucesso.",
-            resultado
-        });
-
-    } catch (erro) {
-        console.log(erro);
-
-        return res.status(500).json({
-            mensagem: erro.sqlMessage || erro.message
-        });
+    if (!nomeServer) {
+        return res.status(400).json({ mensagem: "Nome undefined!" });
     }
+    if (!emailServer) {
+        return res.status(400).json({ mensagem: "Email undefined!" });
+    }
+    if (!telefoneServer) {
+        return res.status(400).json({ mensagem: "Telefone undefined!" });
+    }
+    if (!mensagemServer) {
+        return res.status(400).json({ mensagem: "Mensagem undefined!" });
+    }
+
+    usuarioModel.enviarMensagem(nomeServer, emailServer, telefoneServer, mensagemServer)
+        .then((resultado) => {
+            res.status(200).json(resultado);
+        })
+        .catch((erro) => {
+            console.log(erro);
+            res.status(500).json({ mensagem: erro.sqlMessage });
+        });
 }
 
 async function preCadastrar(req, res) {
-    const {
+    var {
         nomeServer,
         emailPessoalServer,
         empresaServer,
@@ -64,43 +36,14 @@ async function preCadastrar(req, res) {
         telefoneCorporativoServer
     } = req.body;
 
+    if (!nomeServer) return res.status(400).json({ mensagem: "Nome undefined!" });
+    if (!emailPessoalServer) return res.status(400).json({ mensagem: "Email pessoal undefined!" });
+    if (!empresaServer) return res.status(400).json({ mensagem: "Empresa undefined!" });
+    if (!emailCorporativoServer) return res.status(400).json({ mensagem: "Email corporativo undefined!" });
+    if (!cnpjServer) return res.status(400).json({ mensagem: "CNPJ undefined!" });
+    if (!telefoneCorporativoServer) return res.status(400).json({ mensagem: "Telefone undefined!" });
+
     try {
-        if (!nomeServer) {
-            return res.status(400).json({
-                mensagem: "Nome undefined."
-            });
-        }
-
-        if (!emailPessoalServer) {
-            return res.status(400).json({
-                mensagem: "Email pessoal undefined."
-            });
-        }
-
-        if (!empresaServer) {
-            return res.status(400).json({
-                mensagem: "Empresa undefined."
-            });
-        }
-
-        if (!emailCorporativoServer) {
-            return res.status(400).json({
-                mensagem: "Email corporativo undefined."
-            });
-        }
-
-        if (!cnpjServer) {
-            return res.status(400).json({
-                mensagem: "CNPJ undefined."
-            });
-        }
-
-        if (!telefoneCorporativoServer) {
-            return res.status(400).json({
-                mensagem: "Telefone undefined."
-            });
-        }
-
         const existe = await usuarioModel.buscarPorCnpj(cnpjServer);
 
         if (existe.length > 0) {
@@ -119,115 +62,54 @@ async function preCadastrar(req, res) {
         );
 
         return res.status(200).json({
-            mensagem: "Pré cadastro realizado com sucesso.",
+            mensagem: "Pré cadastro realizado com sucesso",
             resultado
         });
 
     } catch (erro) {
         console.log(erro);
-
-        return res.status(500).json({
-            mensagem: erro.sqlMessage || erro.message
-        });
+        return res.status(500).json({ mensagem: erro.sqlMessage });
     }
 }
 
-async function autenticar(req, res) {
-    const {
-        emailServer,
-        senhaServer
-    } = req.body;
+function autenticar(req, res) {
+    var { emailServer, senhaServer } = req.body;
 
-    try {
-        if (!emailServer) {
-            return res.status(400).json({
-                mensagem: "Email undefined."
-            });
-        }
+    if (!emailServer) return res.status(400).json({ mensagem: "Email undefined!" });
+    if (!senhaServer) return res.status(400).json({ mensagem: "Senha undefined!" });
 
-        if (!senhaServer) {
-            return res.status(400).json({
-                mensagem: "Senha undefined."
-            });
-        }
-
-        const resultado = await usuarioModel.autenticar(
-            emailServer,
-            senhaServer
-        );
-
-        if (resultado.length === 1) {
-            return res.status(200).json(resultado[0]);
-        }
-
-        if (resultado.length === 0) {
-            return res.status(403).json({
-                mensagem: "Login inválido."
-            });
-        }
-
-        return res.status(403).json({
-            mensagem: "Duplicidade de usuário."
+    usuarioModel.autenticar(emailServer, senhaServer)
+        .then((resultado) => {
+            if (resultado.length == 1) {
+                res.status(200).json(resultado[0]);
+            } else if (resultado.length == 0) {
+                res.status(403).json({ mensagem: "Login inválido" });
+            } else {
+                res.status(403).json({ mensagem: "Duplicidade de usuário" });
+            }
+        })
+        .catch((erro) => {
+            console.log(erro);
+            res.status(500).json({ mensagem: erro.sqlMessage });
         });
-
-    } catch (erro) {
-        console.log(erro);
-
-        return res.status(500).json({
-            mensagem: erro.sqlMessage || erro.message
-        });
-    }
 }
 
 async function criarFiltro(req, res) {
-    const {
-        nomeFiltro,
-        estados,
-        paises,
-        mes_inicio,
-        mes_fim,
-        ano,
-        fkUsuario
-    } = req.body;
+    var { nomeFiltro, estados, paises, mes_inicio, mes_fim, ano, fkUsuario } = req.body;
 
-    try {
-        const filtro = await usuarioModel.criarFiltro(
-            nomeFiltro,
-            mes_inicio,
-            mes_fim,
-            ano,
-            fkUsuario
-        );
+    const filtro = await usuarioModel.criarFiltro(nomeFiltro, mes_inicio, mes_fim, ano, fkUsuario);
 
-        const idFiltro = filtro.insertId;
+    const idFiltro = filtro.insertId;
 
-        for (const estado of estados) {
-            await usuarioModel.criarFiltroItem(
-                idFiltro,
-                "ESTADO",
-                estado
-            );
-        }
+    estados.forEach(estado => {
+        usuarioModel.criarFiltroItem(idFiltro, "ESTADO", estado)
+    });
 
-        for (const pais of paises) {
-            await usuarioModel.criarFiltroItem(
-                idFiltro,
-                "PAIS",
-                pais
-            );
-        }
+    paises.forEach(pais => {
+        usuarioModel.criarFiltroItem(idFiltro, "PAIS", pais)
+    });
 
-        return res.status(200).json({
-            mensagem: "Filtro criado com sucesso."
-        });
-
-    } catch (erro) {
-        console.log(erro);
-
-        return res.status(500).json({
-            mensagem: erro.sqlMessage || erro.message
-        });
-    }
+    return res.status(200).json({ mensagem: "Filtro criado!" });
 }
 
 async function listarFiltros(req, res) {
@@ -236,200 +118,97 @@ async function listarFiltros(req, res) {
     try {
         const resultados = await usuarioModel.listarFiltros(idUsuario);
 
-        const listaFiltros = resultados.map((filtro) => ({
+        const listaFiltros = resultados.map(filtro => ({
             id: filtro.id_filtro,
             nome: filtro.nome,
-            estados: filtro.estados
-                ? filtro.estados.split(",")
-                : [],
-            paises: filtro.paises
-                ? filtro.paises.split(",")
-                : [],
+            estados: filtro.estados ? filtro.estados.split(",") : [],
+            paises: filtro.paises ? filtro.paises.split(",") : [],
             mes_inicio: filtro.mes_inicio,
             mes_fim: filtro.mes_fim,
             ano: filtro.ano_referencia
         }));
 
-        return res.status(200).json(listaFiltros);
+        res.status(200).json(listaFiltros);
 
     } catch (erro) {
         console.log(erro);
-
-        return res.status(500).json({
-            mensagem: erro.sqlMessage || erro.message
-        });
+        res.status(500).json({ mensagem: erro.sqlMessage });
     }
 }
 
-async function buscarFiltro(req, res) {
+function listarEstados(req, res) {
+    usuarioModel.listarEstados()
+        .then(resposta => {
+            res.status(200).json(resposta)
+        })
+}
+
+function listarPaises(req, res) {
+    usuarioModel.listarPaises()
+        .then(resposta => {
+            res.status(200).json(resposta)
+        })
+}
+
+function listarAnos(req, res) {
+    usuarioModel.listarAnos()
+        .then(resposta => {
+            res.status(200).json(resposta)
+        })
+}
+
+function buscarFiltro(req, res) {
     const idFiltro = req.params.idFiltro;
 
-    try {
-        const resultado = await usuarioModel.buscarFiltro(idFiltro);
-
-        if (resultado.length === 0) {
-            return res.status(404).json({
-                mensagem: "Filtro não encontrado."
-            });
-        }
-
-        return res.status(200).json(resultado);
-
-    } catch (erro) {
-        console.log(erro);
-
-        return res.status(500).json({
-            mensagem: erro.sqlMessage || erro.message
-        });
-    }
-}
-
-async function listarEstados(req, res) {
-    try {
-        const resultado = await usuarioModel.listarEstados();
-
-        return res.status(200).json(resultado);
-
-    } catch (erro) {
-        console.log(erro);
-
-        return res.status(500).json({
-            mensagem: erro.sqlMessage || erro.message
-        });
-    }
-}
-
-async function listarPaises(req, res) {
-    try {
-        const resultado = await usuarioModel.listarPaises();
-
-        return res.status(200).json(resultado);
-
-    } catch (erro) {
-        console.log(erro);
-
-        return res.status(500).json({
-            mensagem: erro.sqlMessage || erro.message
-        });
-    }
-}
-
-async function listarAnos(req, res) {
-    try {
-        const resultado = await usuarioModel.listarAnos();
-
-        return res.status(200).json(resultado);
-
-    } catch (erro) {
-        console.log(erro);
-
-        return res.status(500).json({
-            mensagem: erro.sqlMessage || erro.message
-        });
-    }
+    usuarioModel.buscarFiltro(idFiltro)
+        .then((resposta) => {
+            res.status(200).json(resposta)
+        })
 }
 
 async function atualizarFiltro(req, res) {
     const idFiltro = req.params.idFiltro;
+    const { nomeFiltro, estados, paises, mes_inicio, mes_fim, ano, fkUsuario } = req.body;
 
-    const {
-        nomeFiltro,
-        estados,
-        paises,
-        mes_inicio,
-        mes_fim,
-        ano
-    } = req.body;
+    await usuarioModel.atualizarFiltro(nomeFiltro, mes_inicio, mes_fim, ano, idFiltro);
 
-    try {
-        await usuarioModel.atualizarFiltro(
-            nomeFiltro,
-            mes_inicio,
-            mes_fim,
-            ano,
-            idFiltro
-        );
+    await usuarioModel.deletarFiltrosItens(idFiltro);
 
-        await usuarioModel.deletarFiltrosItens(idFiltro);
+    estados.forEach(estado => {
+        usuarioModel.criarFiltroItem(idFiltro, "ESTADO", estado)
+    });
 
-        for (const estado of estados) {
-            await usuarioModel.criarFiltroItem(
-                idFiltro,
-                "ESTADO",
-                estado
-            );
-        }
+    paises.forEach(pais => {
+        usuarioModel.criarFiltroItem(idFiltro, "PAIS", pais)
+    });
 
-        for (const pais of paises) {
-            await usuarioModel.criarFiltroItem(
-                idFiltro,
-                "PAIS",
-                pais
-            );
-        }
-
-        return res.status(200).json({
-            mensagem: "Filtro atualizado com sucesso."
-        });
-
-    } catch (erro) {
-        console.log(erro);
-
-        return res.status(500).json({
-            mensagem: erro.sqlMessage || erro.message
-        });
-    }
+    return res.status(200).json({ mensagem: "Filtro atualizado!" });
 }
 
-async function editarPerfil(req, res) {
-    const idUsuario = req.params.idUsuario;
+function editarPerfil(req, res) {
+    var idUsuario = req.params.idUsuario;
+    var { nomeServer, emailServer, senhaServer } = req.body;
 
-    const {
-        nomeServer,
-        emailServer,
-        senhaServer
-    } = req.body;
-
-    try {
-        await usuarioModel.editarPerfil(
-            idUsuario,
-            nomeServer,
-            emailServer,
-            senhaServer
-        );
-
-        return res.status(200).json({
-            mensagem: "Perfil atualizado com sucesso."
+    usuarioModel.editarPerfil(idUsuario, nomeServer, emailServer, senhaServer)
+        .then((resultado) => {
+            res.status(200).json(resultado);
+        })
+        .catch((erro) => {
+            console.log(erro);
+            res.status(500).json({ mensagem: erro.sqlMessage });
         });
-
-    } catch (erro) {
-        console.log(erro);
-
-        return res.status(500).json({
-            mensagem: erro.sqlMessage || erro.message
-        });
-    }
 }
 
-async function excluirFiltro(req, res) {
+function excluirFiltro(req, res) {
     const idFiltro = req.params.idFiltro;
 
-    try {
-        await usuarioModel.deletarFiltrosItens(idFiltro);
-
-        await usuarioModel.excluirFiltro(idFiltro);
-
-        return res.status(200).json({
-            mensagem: "Filtro excluído com sucesso."
-        });
-
-    } catch (erro) {
-        console.log(erro);
-
-        return res.status(500).json({
-            mensagem: erro.sqlMessage || erro.message
-        });
-    }
+    usuarioModel.deletarFiltrosItens(idFiltro)
+        .then(() => {
+            usuarioModel.excluirFiltro(idFiltro)
+                .then(() => {
+                    return res.status(200).json({ mensagem: "Filtro excluído!" });
+                })
+        })
 }
 
 module.exports = {
@@ -438,10 +217,10 @@ module.exports = {
     autenticar,
     criarFiltro,
     listarFiltros,
-    buscarFiltro,
     listarEstados,
     listarPaises,
     listarAnos,
+    buscarFiltro,
     atualizarFiltro,
     editarPerfil,
     excluirFiltro

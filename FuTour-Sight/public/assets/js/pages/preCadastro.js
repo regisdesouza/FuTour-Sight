@@ -1,102 +1,83 @@
-// ================================================
-// preCadastro.js
-// ================================================
-// HTML necessário (adicionar antes do </body>):
-//
-// <!-- Toast de notificação -->
-// <div id="toast" class="toast hidden">
-//   <span id="toastMensagem"></span>
-// </div>
-//
-// Nos campos do formulário, adicionar divs de erro:
-// <div id="div_msg_nome"              class="msg-erro"></div>
-// <div id="div_msg_email_pessoal"     class="msg-erro"></div>
-// <div id="div_msg_nome_empresa"      class="msg-erro"></div>
-// <div id="div_msg_email_corporativo" class="msg-erro"></div>
-// <div id="div_msg_cnpj"              class="msg-erro"></div>
-// <div id="div_msg_telefone"          class="msg-erro"></div>
-// ================================================
-
 iniciarMenu();
 
 Inputmask("(99) 99999-9999").mask(document.getElementById("telefone"));
 Inputmask("99.999.999/9999-99").mask(document.getElementById("cnpj"));
 
-var chkNome             = false;
-var chkEmailPessoal     = false;
-var chkNomeEmpresa      = false;
+var chkNome = false;
+var chkEmailPessoal = false;
+var chkNomeEmpresa = false;
 var chkEmailCorporativo = false;
-var chkCnpj             = false;
-var chkTelefone         = false;
+var chkCnpj = false;
+var chkTelefone = false;
 
 function onkey_nome() {
-    var erro = validarNome(document.getElementById("nome").value.trim());
+    var erro = validarNome(nome.value.trim());
 
     if (erro != "") {
-        document.getElementById("div_msg_nome").innerHTML = erro;
+        div_msg_nome.innerHTML = erro;
         chkNome = false;
     } else {
-        document.getElementById("div_msg_nome").innerHTML = "";
+        div_msg_nome.innerHTML = "";
         chkNome = true;
     }
 }
 
 function onkey_email_pessoal() {
-    var erro = validarEmail(document.getElementById("emailPessoal").value.trim());
+    var erro = validarEmail(emailPessoal.value.trim());
 
     if (erro != "") {
-        document.getElementById("div_msg_email_pessoal").innerHTML = erro;
+        div_msg_email_pessoal.innerHTML = erro;
         chkEmailPessoal = false;
     } else {
-        document.getElementById("div_msg_email_pessoal").innerHTML = "";
+        div_msg_email_pessoal.innerHTML = "";
         chkEmailPessoal = true;
     }
 }
 
 function onkey_nome_empresa() {
-    var erro = validarNomeEmpresa(document.getElementById("empresa").value.trim());
+    var erro = validarNomeEmpresa(empresa.value.trim());
 
     if (erro != "") {
-        document.getElementById("div_msg_nome_empresa").innerHTML = erro;
+        div_msg_nome_empresa.innerHTML = erro;
         chkNomeEmpresa = false;
     } else {
-        document.getElementById("div_msg_nome_empresa").innerHTML = "";
+        div_msg_nome_empresa.innerHTML = "";
         chkNomeEmpresa = true;
     }
 }
 
 function onkey_email_corporativo() {
-    var erro = validarEmail(document.getElementById("emailCorporativo").value.trim());
+    var erro = validarEmail(emailCorporativo.value.trim());
 
     if (erro != "") {
-        document.getElementById("div_msg_email_corporativo").innerHTML = erro;
+        div_msg_email_corporativo.innerHTML = erro;
         chkEmailCorporativo = false;
     } else {
-        document.getElementById("div_msg_email_corporativo").innerHTML = "";
+        div_msg_email_corporativo.innerHTML = "";
         chkEmailCorporativo = true;
     }
 }
 
 function onkey_cnpj() {
-    var erro = validarCnpj(document.getElementById("cnpj").value.trim());
+    var erro = validarCnpj(cnpj.value.trim());
 
     if (erro != "") {
-        document.getElementById("div_msg_cnpj").innerHTML = erro;
+        div_msg_cnpj.innerHTML = erro;
         chkCnpj = false;
     } else {
-        document.getElementById("div_msg_cnpj").innerHTML = "";
+        div_msg_cnpj.innerHTML = "";
         chkCnpj = true;
     }
 }
 
 function onkey_telefone() {
-    var erro = validarTelefone(document.getElementById("telefone").value.trim());
+    var erro = validarTelefone(telefone.value.trim());
 
     if (erro != "") {
-        document.getElementById("div_msg_telefone").innerHTML = erro;
+        div_msg_telefone.innerHTML = erro;
         chkTelefone = false;
     } else {
-        document.getElementById("div_msg_telefone").innerHTML = "";
+        div_msg_telefone.innerHTML = "";
         chkTelefone = true;
     }
 }
@@ -117,46 +98,61 @@ function preCadastrar() {
         chkTelefone;
 
     if (!temErro) {
-        exibirToast("erro", "Preencha todos os campos corretamente");
+        cardErro.style.display = "block";
+        mensagem_erro.innerHTML = "Preencha todos os campos corretamente.";
+        setTimeout(sumirMensagem, 3000);
         return false;
     }
 
-    var nomeVar                = document.getElementById("nome").value;
-    var emailPessoalVar        = document.getElementById("emailPessoal").value;
-    var empresaVar             = document.getElementById("empresa").value;
-    var emailCorporativoVar    = document.getElementById("emailCorporativo").value;
-    var cnpjVar                = document.getElementById("cnpj").value.replace(/\D/g, "");
-    var telefoneCorporativoVar = document.getElementById("telefone").value.replace(/\D/g, "");
+    var nomeVar = nome.value;
+    var emailPessoalVar = emailPessoal.value;
+    var empresaVar = empresa.value;
+    var emailCorporativoVar = emailCorporativo.value;
+    var cnpjVar = cnpj.value.replace(/\D/g, "");
+    var telefoneCorporativoVar = telefone.value.replace(/\D/g, "");
 
-    fetch("/usuarios/usuarios/pre-cadastro", {
+    fetch("/usuarios/preCadastrar", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: {
+            "Content-Type": "application/json",
+        },
         body: JSON.stringify({
-            nomeServer:               nomeVar,
-            emailPessoalServer:       emailPessoalVar,
-            empresaServer:            empresaVar,
-            emailCorporativoServer:   emailCorporativoVar,
-            cnpjServer:               cnpjVar,
+            nomeServer: nomeVar,
+            emailPessoalServer: emailPessoalVar,
+            empresaServer: empresaVar,
+            emailCorporativoServer: emailCorporativoVar,
+            cnpjServer: cnpjVar,
             telefoneCorporativoServer: telefoneCorporativoVar,
         }),
     })
-    .then((resposta) => tratarRespostaFetch(resposta))
+    .then((resposta) => {
+        if (!resposta.ok) {
+            return resposta.json().then(err => {
+                throw new Error(err.mensagem);
+            });
+        }
+        return resposta.json();
+    })
     .then((dados) => {
         console.log("Pré cadastro realizado:", dados);
-        exibirToast("sucesso", "Pré cadastro enviado com sucesso!");
 
-        limparCampos(["nome", "emailPessoal", "empresa", "emailCorporativo", "cnpj", "telefone"]);
+        div_msg.innerHTML = "Pré cadastro enviado com sucesso!";
 
-        chkNome             = false;
-        chkEmailPessoal     = false;
-        chkNomeEmpresa      = false;
-        chkEmailCorporativo = false;
-        chkCnpj             = false;
-        chkTelefone         = false;
+        nome.value = "";
+        emailPessoal.value = "";
+        empresa.value = "";
+        emailCorporativo.value = "";
+        cnpj.value = "";
+        telefone.value = "";
+
+        setTimeout(() => {
+            div_msg.innerHTML = "";
+        }, 8000);
     })
     .catch((erro) => {
         console.error("#ERRO:", erro);
-        exibirToast("erro", "Erro ao enviar pré cadastro");
+
+        div_msg.innerHTML = erro.message;
     });
 
     return false;
