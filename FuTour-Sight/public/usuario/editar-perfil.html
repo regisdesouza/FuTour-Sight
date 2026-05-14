@@ -162,6 +162,7 @@
                                 <img src="../assets/images/icons/pessoa.png" alt="ícone de pessoa">
                             </div>
                             <input type="text" id="nome" placeholder="Nome Completo">
+                            <div id="div_msg_nome"  class="msg-erro"></div>
                         </div>
 
                         <div class="input-container">
@@ -170,6 +171,7 @@
                                 <img src="../assets/images/icons/email.png" alt="ícone de email">
                             </div>
                             <input type="text" id="email" placeholder="E-mail">
+                            <div id="div_msg_email" class="msg-erro"></div>
                         </div>
 
                         <div class="input-container">
@@ -178,6 +180,7 @@
                                 <img src="../assets/images/icons/senha.png" alt="ícone de senha">
                             </div>
                             <input type="password" id="senha-atual" placeholder="Senha Atual">
+                            <div id="div_msg_senha" class="msg-erro"></div>
                         </div>
 
                         <div class="input-container">
@@ -214,7 +217,9 @@
 
     <div id="toast"></div>
     
-    <script src="../assets/js/shared/redirecionamento.js"></script>
+    <script src="../assets/js/utils/redirecionamento.js"></script>
+    <script src="../assets/js/utils/utils.js"></script>
+    <script src="../assets/js/utils/validacoes.js"></script>
     <script src="../assets/js/shared/sessao.js"></script>
     <script src="../assets/js/pages/usuario/edicaoPerfil.js"></script>
 </body>

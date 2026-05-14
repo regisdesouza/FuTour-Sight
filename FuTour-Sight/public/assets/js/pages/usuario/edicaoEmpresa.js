@@ -1,153 +1,186 @@
+// ================================================
+// edicaoEmpresa.js
+// ================================================
+// HTML necessário (adicionar antes do </body>):
+//
+// <!-- Toast de notificação -->
+// <div id="toast" class="toast hidden">
+//   <span id="toastMensagem"></span>
+// </div>
+//
+// <!-- Modal de confirmação -->
+// <div id="modalConfirmacao" class="modal hidden">
+//   <div class="modal-content">
+//     <h3 id="modalTitulo"></h3>
+//     <p id="modalTexto"></p>
+//     <div class="modal-botoes">
+//       <button id="btnCancelarModal">Cancelar</button>
+//       <button id="btnConfirmarModal">Confirmar</button>
+//     </div>
+//   </div>
+// </div>
+//
+// Nos campos do formulário, adicionar divs de erro:
+// <div id="div_msg_nome_empresa"      class="msg-erro"></div>
+// <div id="div_msg_cnpj"              class="msg-erro"></div>
+// <div id="div_msg_email_corporativo" class="msg-erro"></div>
+// <div id="div_msg_telefone"          class="msg-erro"></div>
+// ================================================
+
 iniciarMenu();
+preencherNomeUsuario();
 
 Inputmask("(99) 99999-9999").mask(document.getElementById("telefone"));
 Inputmask("99.999.999/9999-99").mask(document.getElementById("cnpj"));
 Inputmask("99999-999").mask(document.getElementById("cep"));
 
-document.getElementById("nomeUser").innerHTML = sessionStorage.getItem("NOME_USUARIO")
-
-var chkNomeEmpresa = false;
-var chkCnpj = false;
+var chkNomeEmpresa      = false;
+var chkCnpj             = false;
 var chkEmailCorporativo = false;
-var chkTelefone = false;
+var chkTelefone         = false;
 
-fetch(`/usuariosAdmin/buscarEmpresa/${sessionStorage.getItem("ID_EMPRESA")}`)
-    .then((res) => res.json())
-    .then((dados) => {
-        empresa.value = dados.empresa || "";
-        cnpj.value = dados.cnpj || "";
-        emailCorporativo.value = dados.emailCorporativo || "";
-        telefone.value = dados.telefoneCorporativo || "";
-        cep.value = dados.cep || "";
-        estado.value = dados.estado || "";
-        cidade.value = dados.cidade || "";
-        bairro.value = dados.bairro || "";
-        rua.value = dados.logradouro || "";
-        numero.value = dados.numero || "";
-        complemento.value = dados.complemento || "";
+fetch(`/usuariosAdmin/empresas/${sessionStorage.getItem("ID_EMPRESA")}`)
+.then((res) => tratarRespostaFetch(res))
+.then((dados) => {
+    document.getElementById("empresa").value          = dados.empresa          || "";
+    document.getElementById("cnpj").value             = dados.cnpj             || "";
+    document.getElementById("emailCorporativo").value = dados.emailCorporativo  || "";
+    document.getElementById("telefone").value         = dados.telefoneCorporativo || "";
+    document.getElementById("cep").value              = dados.cep              || "";
+    document.getElementById("estado").value           = dados.estado           || "";
+    document.getElementById("cidade").value           = dados.cidade           || "";
+    document.getElementById("bairro").value           = dados.bairro           || "";
+    document.getElementById("rua").value              = dados.logradouro       || "";
+    document.getElementById("numero").value           = dados.numero           || "";
+    document.getElementById("complemento").value      = dados.complemento      || "";
 
-        document.getElementById("banner-nome-empresa").innerHTML = dados.empresa || "";
-        document.getElementById("banner-email-empresa").innerHTML = dados.emailCorporativo || "";
+    document.getElementById("banner-nome-empresa").innerHTML  = dados.empresa          || "";
+    document.getElementById("banner-email-empresa").innerHTML = dados.emailCorporativo  || "";
 
-    })
-    .catch((erro) => console.error("#ERRO ao carregar empresa:", erro));
+    chkNomeEmpresa      = true;
+    chkCnpj             = true;
+    chkEmailCorporativo = true;
+    chkTelefone         = true;
+})
+.catch((erro) => {
+    console.error("#ERRO ao carregar empresa:", erro);
+    exibirToast("erro", "Erro ao carregar dados da empresa");
+});
 
-cep.addEventListener("blur", () => {
-    var cepLimpo = cep.value.replace(/\D/g, "");
+document.getElementById("cep").addEventListener("blur", () => {
+    var cepLimpo = document.getElementById("cep").value.replace(/\D/g, "");
     if (cepLimpo.length !== 8) return;
 
     fetch(`https://viacep.com.br/ws/${cepLimpo}/json/`)
-        .then((res) => res.json())
-        .then((dados) => {
-            if (dados.erro) return;
-            estado.value = dados.uf || "";
-            cidade.value = dados.localidade || "";
-            bairro.value = dados.bairro || "";
-            rua.value = dados.logradouro || "";
-            numero.focus();
-        });
+    .then((res) => res.json())
+    .then((dados) => {
+        if (dados.erro) {
+            exibirToast("erro", "CEP não encontrado");
+            return;
+        }
+        document.getElementById("estado").value = dados.uf         || "";
+        document.getElementById("cidade").value = dados.localidade || "";
+        document.getElementById("bairro").value = dados.bairro     || "";
+        document.getElementById("rua").value    = dados.logradouro || "";
+        document.getElementById("numero").focus();
+    })
+    .catch(() => {
+        exibirToast("erro", "Erro ao buscar CEP");
+    });
 });
 
-
 function onkey_nome_empresa() {
-    var erro = validarNomeEmpresa(empresa.value.trim());
+    var erro = validarNomeEmpresa(document.getElementById("empresa").value.trim());
 
     if (erro != "") {
-        div_msg_nome_empresa.innerHTML = erro;
+        document.getElementById("div_msg_nome_empresa").innerHTML = erro;
         chkNomeEmpresa = false;
     } else {
-        div_msg_nome_empresa.innerHTML = "";
+        document.getElementById("div_msg_nome_empresa").innerHTML = "";
         chkNomeEmpresa = true;
     }
 }
 
 function onkey_cnpj() {
-    var erro = validarCnpj(cnpj.value.trim());
+    var erro = validarCnpj(document.getElementById("cnpj").value.trim());
 
     if (erro != "") {
-        div_msg_cnpj.innerHTML = erro;
+        document.getElementById("div_msg_cnpj").innerHTML = erro;
         chkCnpj = false;
     } else {
-        div_msg_cnpj.innerHTML = "";
+        document.getElementById("div_msg_cnpj").innerHTML = "";
         chkCnpj = true;
     }
 }
 
 function onkey_email_corporativo() {
-    var erro = validarEmail(emailCorporativo.value.trim());
+    var erro = validarEmail(document.getElementById("emailCorporativo").value.trim());
 
     if (erro != "") {
-        div_msg_email_corporativo.innerHTML = erro;
+        document.getElementById("div_msg_email_corporativo").innerHTML = erro;
         chkEmailCorporativo = false;
     } else {
-        div_msg_email_corporativo.innerHTML = "";
+        document.getElementById("div_msg_email_corporativo").innerHTML = "";
         chkEmailCorporativo = true;
     }
 }
 
 function onkey_telefone() {
-    var erro = validarTelefone(telefone.value.trim());
+    var erro = validarTelefone(document.getElementById("telefone").value.trim());
 
     if (erro != "") {
-        div_msg_telefone.innerHTML = erro;
+        document.getElementById("div_msg_telefone").innerHTML = erro;
         chkTelefone = false;
     } else {
-        div_msg_telefone.innerHTML = "";
+        document.getElementById("div_msg_telefone").innerHTML = "";
         chkTelefone = true;
     }
 }
 
 function editarEmpresa() {
     onkey_nome_empresa();
-    onkey_email_corporativo();
     onkey_cnpj();
+    onkey_email_corporativo();
     onkey_telefone();
 
-    const temErro = chkNomeEmpresa &&
-        chkCnpj &&
-        chkEmailCorporativo &&
-        chkTelefone
+    const temErro = chkNomeEmpresa && chkCnpj && chkEmailCorporativo && chkTelefone;
 
     if (!temErro) {
-        exibirToast('erro', 'Preencha todos os campos corretamente.')
-        cardErro.style.display = "block";
-        mensagem_erro.innerHTML = "Preencha todos os campos corretamente.";
-        setTimeout(sumirMensagem, 3000);
+        exibirToast("erro", "Preencha todos os campos corretamente");
         return false;
     }
 
-    fetch(`/usuariosAdmin/editarEmpresa/${sessionStorage.getItem("ID_EMPRESA")}`, {
+    fetch(`/usuariosAdmin/empresas/${sessionStorage.getItem("ID_EMPRESA")}`, {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-            empresaServer: empresa.value.trim(),
-            cnpjServer: cnpj.value.replace(/\D/g, ""),
-            emailCorporativoServer: emailCorporativo.value.trim(),
-            telefoneCorporativoServer: telefone.value.replace(/\D/g, ""),
-            cepServer: cep.value.replace(/\D/g, ""),
-            estadoServer: estado.value.trim(),
-            cidadeServer: cidade.value.trim(),
-            bairroServer: bairro.value.trim(),
-            logradouroServer: rua.value.trim(),
-            numeroServer: numero.value.trim(),
-            complementoServer: complemento.value.trim()
+            empresaServer:            document.getElementById("empresa").value.trim(),
+            cnpjServer:               document.getElementById("cnpj").value.replace(/\D/g, ""),
+            emailCorporativoServer:   document.getElementById("emailCorporativo").value.trim(),
+            telefoneCorporativoServer: document.getElementById("telefone").value.replace(/\D/g, ""),
+            cepServer:                document.getElementById("cep").value.replace(/\D/g, ""),
+            estadoServer:             document.getElementById("estado").value.trim(),
+            cidadeServer:             document.getElementById("cidade").value.trim(),
+            bairroServer:             document.getElementById("bairro").value.trim(),
+            logradouroServer:         document.getElementById("rua").value.trim(),
+            numeroServer:             document.getElementById("numero").value.trim(),
+            complementoServer:        document.getElementById("complemento").value.trim()
         }),
     })
-        .then((resposta) => {
-            if (resposta.status == 404) throw new Error("Empresa não encontrada!");
-            if (!resposta.ok) throw new Error("Houve um erro ao tentar atualizar os dados empresariais! Código: " + resposta.status);
-            return resposta.json();
-        })
-        .then((dados) => {
-            console.log("Empresa atualizada:", dados);
-            ativarToast();
-            // window.alert("Dados empresariais atualizados com sucesso pelo usuário de email: " + sessionStorage.getItem("EMAIL_USUARIO") + "!");
-            window.location = "dashboard-proprietario.html";
-        })
-        .catch((erro) => {
-            console.error("#ERRO:", erro);
-            alert(erro.message);
-        });
+    .then((resposta) => tratarRespostaFetch(resposta))
+    .then((dados) => {
+        console.log("Empresa atualizada:", dados);
+        // mostrarToast("Dados empresariais atualizados com sucesso!", "sucesso");
+        ativarToast();
+
+        // setTimeout(() => {
+            window.location.href = "dashboard-proprietario.html";
+        // }, 2000);
+    })
+    .catch((erro) => {
+        console.error("#ERRO:", erro);
+        exibirToast("erro", "Erro ao atualizar empresa");
+    });
 
     return false;
 }

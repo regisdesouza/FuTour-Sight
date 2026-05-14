@@ -139,7 +139,7 @@
               <img src="./assets/images/icons/pessoa.png" alt="icone de pessoa">
             </div>
             <input type="text" name="nome" id="nome" placeholder="Seu nome" required onkeyup="onkey_nome()">
-            <div class="msg_erro" id="div_msg_nome"></div>
+            <div class="msg-erro" id="div_msg_nome"></div>
           </div>
           <div class="campo">
             <div class="label-container">
@@ -147,7 +147,7 @@
               <img src="./assets/images/icons/email.png" alt="icone de email">
             </div>
             <input type="text" name="email" id="email" placeholder="Seu email" required onkeyup="onkey_email()">
-            <div class="msg_erro" id="div_msg_email"></div>
+            <div class="msg-erro" id="div_msg_email"></div>
           </div>
           <div class="campo">
             <div class="label-container">
@@ -156,7 +156,7 @@
             </div>
             <input type="text" name="telefone" id="telefone" placeholder="Seu telefone" required
               onkeyup="onkey_telefone()" maxlength="15">
-            <div class="msg_erro" id="div_msg_telefone"></div>
+            <div class="msg-erro" id="div_msg_telefone"></div>
           </div>
         </div>
 
@@ -170,12 +170,12 @@
               <textarea name="mensagem" id="mensagem" placeholder="Sua mensagem" required onkeyup="onkey_mensagem()"
                 maxlength="1000"></textarea>
               <div id="contador_mensagem">0/1000</div>
-              <div class="msg_erro" id="div_msg_msg"></div>
+              <div class="msg-erro" id="div_msg_msg"></div>
             </div>
 
             <button class="botao" type="button" onclick="enviarMensagem()">Enviar</button>
 
-            <div class="msg_erro" id="div_msg"
+            <div class="msg-erro" id="div_msg"
               style="color: green; text-align: center; font-weight: 500; margin-top: 10px;"></div>
 
             <div class="alerta_erro">
@@ -224,9 +224,12 @@
     </div>
   </footer>
 
-  <script src="../assets/js/shared/menu.js"></script>
-  <script src="../assets/js/shared/validacoes.js"></script>
-  <script src="../assets/js/shared/sessao.js"></script>
+  <div id="toast"></div>
+
+  <script src="./assets/js/shared/menu.js"></script>
+  <script src="./assets/js/utils/validacoes.js"></script>
+  <script src="./assets/js/shared/sessao.js"></script>
+  <script src="./assets/js/utils/utils.js"></script>
   <script src="https://unpkg.com/inputmask@5.0.8/dist/inputmask.min.js"></script>
   <script src="./assets/js/pages/index.js"></script>
 </body>
