@@ -537,7 +537,7 @@ footer .footer-acima {
     border-radius: 4px;
     /* opacity: 0; */
     transition: .2s ease-in-out;
-
+    z-index: 1000;
     overflow: hidden;
 }
 
@@ -559,6 +559,10 @@ footer .footer-acima {
     align-items: center;
     gap: 48px;
     width: 100%;
+}
+
+.toast-info p {
+    font-size: var(--texto-pequeno);
 }
 
 #toast img {
@@ -676,5 +680,24 @@ footer .footer-acima {
     .label-container img {
         width: 24px;
         margin-right: 6px;
+    }
+
+    #toast {
+        top: 16px;
+        right: -300px;
+        width: 300px;
+    }
+
+    #toast.exibindo {
+        right: 16px;
+    }
+
+    #toast img {
+        width: 32px;
+        height: 32px;
+    }
+
+    .toast-info {
+        gap: 24px;
     }
 }
