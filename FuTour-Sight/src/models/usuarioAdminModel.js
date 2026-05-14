@@ -1,124 +1,65 @@
-var database = require("../database/config.js")
+const database = require("../database/config.js");
 
 function cadastrarFuncionario(
-    nomeCadastroFuncionario,
-    emailPessoalCadastroFuncionario,
-    senhaCadastroFuncionario,
-    permissaoCadastroFuncionario,
-    idEmpresaCadastroFuncionario
+    nome,
+    email,
+    senha,
+    permissao,
+    idEmpresa
 ) {
-    var instrucaoSql = `
-        INSERT INTO usuario 
-        (nome, email, senha, fk_nivel_permissao, fk_empresa, fk_status) 
-        VALUES (?, ?, ?, ?, ?, 1);
+    const instrucaoSql = `
+        INSERT INTO usuario (
+            nome,
+            email,
+            senha,
+            fk_nivel_permissao,
+            fk_empresa,
+            fk_status
+        )
+        VALUES (?, ?, ?, ?, ?, ?);
     `;
 
     return database.executar(instrucaoSql, [
-        nomeCadastroFuncionario,
-        emailPessoalCadastroFuncionario,
-        senhaCadastroFuncionario,
-        permissaoCadastroFuncionario,
-        idEmpresaCadastroFuncionario
+        nome,
+        email,
+        senha,
+        permissao,
+        idEmpresa,
+        1
     ]);
 }
 
-function editarEmpresa(
-    idEmpresaEditarEmpresa,
-    empresaEditarEmpresa,
-    cnpjEditarEmpresa,
-    emailCorporativoEditarEmpresa,
-    telefoneCorporativoEditarEmpresa,
-    cepEditarEmpresa,
-    estadoEditarEmpresa,
-    cidadeEditarEmpresa,
-    bairroEditarEmpresa,
-    logradouroEditarEmpresa,
-    numeroEditarEmpresa,
-    complementoEditarEmpresa
-) {
-
-    var instrucaoSqlUpdateEmpresa = `
-        UPDATE empresa 
-        SET nome = ?, cnpj = ?, email = ?, telefone = ? 
-        WHERE id_empresa = ?;
-    `;
-
-    var instrucaoSqlUpdateEndereco = `
-        UPDATE endereco 
-        SET cidade = ?, estado = ?, cep = ?, logradouro = ?, numero = ?, bairro = ?, complemento = ? 
-        WHERE fk_empresa = ?;
-    `;
-
-    var instrucaoSqlUpdatePrimeiroAcesso = `
-        UPDATE usuario
-        SET primeiro_acesso = 0
-        WHERE fk_empresa = ?;
-    `;
-
-    return database.executar(instrucaoSqlUpdateEmpresa, [
-        empresaEditarEmpresa,
-        cnpjEditarEmpresa,
-        emailCorporativoEditarEmpresa,
-        telefoneCorporativoEditarEmpresa,
-        idEmpresaEditarEmpresa
-    ]).then(() => {
-        return database.executar(instrucaoSqlUpdateEndereco, [
-            cidadeEditarEmpresa,
-            estadoEditarEmpresa,
-            cepEditarEmpresa,
-            logradouroEditarEmpresa,
-            numeroEditarEmpresa,
-            bairroEditarEmpresa,
-            complementoEditarEmpresa,
-            idEmpresaEditarEmpresa
-        ]);
-    }).then(() => {
-        return database.executar(instrucaoSqlUpdatePrimeiroAcesso, [
-            idEmpresaEditarEmpresa
-        ]);
-    });
-
-}
-
 function listarUsuarios(idEmpresa) {
-    var instrucaoSql = `
-        SELECT * FROM vw_usuarios
+    const instrucaoSql = `
+        SELECT *
+        FROM vw_usuarios
         WHERE status != 'PENDENTE'
         AND id_empresa = ?
-        ORDER BY nome ASC;`;
+        ORDER BY nome ASC;
+    `;
 
     return database.executar(instrucaoSql, [idEmpresa]);
 }
 
-function listarUsuariosProcurados(idEmpresa, nomeFuncionariolistarUsuariosProcurados) {
-    var instrucaoSql = `
-        SELECT * FROM vw_usuarios
+function listarUsuariosProcurados(idEmpresa, nomeFuncionario) {
+    const instrucaoSql = `
+        SELECT *
+        FROM vw_usuarios
         WHERE status != 'PENDENTE'
         AND id_empresa = ?
         AND nome LIKE ?
         ORDER BY nome ASC;
     `;
 
-    console.log("Executando SQL:", instrucaoSql);
-
     return database.executar(instrucaoSql, [
         idEmpresa,
-        `%${nomeFuncionariolistarUsuariosProcurados}%`
+        `%${nomeFuncionario}%`
     ]);
 }
 
-function editarStatusUsuario(idEditarStatusUsuario, statusEditarStatusUsuario) {
-    var instrucaoSql = `
-        UPDATE usuario
-        SET fk_status = ?
-        WHERE id_usuario = ?;`;
-
-    return database.executar(instrucaoSql, [5, idEditarStatusUsuario]);
-}
-
-function buscarEmpresa(idEmpresaBuscarEmpresa) {
-    var instrucaoSql = `
-        SELECT 
+function buscarEmpresa(idEmpresa) {
+    const instrucaoSql = `
+        SELECT
             e.nome AS empresa,
             e.cnpj,
             e.email AS emailCorporativo,
@@ -131,16 +72,17 @@ function buscarEmpresa(idEmpresaBuscarEmpresa) {
             end.numero,
             end.complemento
         FROM empresa e
-        INNER JOIN endereco end ON end.fk_empresa = e.id_empresa
+        INNER JOIN endereco end
+            ON end.fk_empresa = e.id_empresa
         WHERE e.id_empresa = ?;
     `;
 
-    return database.executar(instrucaoSql, [idEmpresaBuscarEmpresa]);
+    return database.executar(instrucaoSql, [idEmpresa]);
 }
 
 function buscarFuncionario(idUsuario) {
-    var instrucaoSql = `
-        SELECT 
+    const instrucaoSql = `
+        SELECT
             id_usuario,
             nome,
             email,
@@ -152,23 +94,119 @@ function buscarFuncionario(idUsuario) {
     return database.executar(instrucaoSql, [idUsuario]);
 }
 
-function editarFuncionario(idUsuario, nome, email, permissao) {
-    var instrucaoSql = `
+function editarFuncionario(
+    idUsuario,
+    nome,
+    email,
+    permissao
+) {
+    const instrucaoSql = `
         UPDATE usuario
-        SET nome = ?, email = ?, fk_nivel_permissao = ?
+        SET
+            nome = ?,
+            email = ?,
+            fk_nivel_permissao = ?
         WHERE id_usuario = ?;
     `;
 
-    return database.executar(instrucaoSql, [nome, email, permissao, idUsuario]);
+    return database.executar(instrucaoSql, [
+        nome,
+        email,
+        permissao,
+        idUsuario
+    ]);
+}
+
+function editarEmpresa(
+    idEmpresa,
+    empresa,
+    cnpj,
+    emailCorporativo,
+    telefoneCorporativo,
+    cep,
+    estado,
+    cidade,
+    bairro,
+    logradouro,
+    numero,
+    complemento
+) {
+    const instrucaoSqlEmpresa = `
+        UPDATE empresa
+        SET
+            nome = ?,
+            cnpj = ?,
+            email = ?,
+            telefone = ?
+        WHERE id_empresa = ?;
+    `;
+
+    const instrucaoSqlEndereco = `
+        UPDATE endereco
+        SET
+            cidade = ?,
+            estado = ?,
+            cep = ?,
+            logradouro = ?,
+            numero = ?,
+            bairro = ?,
+            complemento = ?
+        WHERE fk_empresa = ?;
+    `;
+
+    const instrucaoSqlPrimeiroAcesso = `
+        UPDATE usuario
+        SET primeiro_acesso = ?
+        WHERE fk_empresa = ?;
+    `;
+
+    return database.executar(instrucaoSqlEmpresa, [
+        empresa,
+        cnpj,
+        emailCorporativo,
+        telefoneCorporativo,
+        idEmpresa
+    ])
+    .then(() => {
+        return database.executar(instrucaoSqlEndereco, [
+            cidade,
+            estado,
+            cep,
+            logradouro,
+            numero,
+            bairro,
+            complemento,
+            idEmpresa
+        ]);
+    })
+    .then(() => {
+        return database.executar(
+            instrucaoSqlPrimeiroAcesso,
+            [0, idEmpresa]
+        );
+    });
+}
+
+function editarStatusUsuario(idUsuario, status) {
+    const instrucaoSql = `
+        UPDATE usuario
+        SET fk_status = ?
+        WHERE id_usuario = ?;
+    `;
+
+    return database.executar(instrucaoSql, [
+        status,
+        idUsuario
+    ]);
 }
 
 module.exports = {
     cadastrarFuncionario,
-    editarEmpresa,
     listarUsuarios,
     listarUsuariosProcurados,
-    editarStatusUsuario,
     buscarEmpresa,
     buscarFuncionario,
-    editarFuncionario
+    editarFuncionario,
+    editarEmpresa,
+    editarStatusUsuario
 };
