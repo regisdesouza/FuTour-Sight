@@ -1,7 +1,3 @@
-/* header {
-    display: none;
-} */
-
 .body-empresa main {
     background-color: var(--cor-clara);
     width: 100%;
@@ -11,8 +7,6 @@
     display: flex;
     flex: 1;
     flex-direction: column;
-    /* margin-left: 350px; */
-    /* width: calc(100% - 350px); */
     align-items: center;
     gap: 1.5vh;
     justify-content: space-between;
@@ -320,7 +314,7 @@
 
 .input-box select {
     flex: 1;
-    padding: 10px 12px;
+    padding: 12px;
     border: 1px solid #e5e7eb;
     border-radius: 10px;
     background: #fdfdfd;
@@ -344,8 +338,6 @@
 .menu-lista button span {
     font-size: var(--texto-medio);
 }
-
-/* --------------------- RESPONSIVIDADE --------------------- */
 
 .menu-toggle {
     display: none;
@@ -452,7 +444,6 @@
     }
 
     .links {
-        /* width: 50% !important; */
         justify-content: flex-start;
         z-index: 10;
     }
