@@ -53,13 +53,13 @@
                 <div class="campo">
                     <label for="email">E-mail</label>
                     <input type="text" id="email" placeholder="E-mail" required onkeyup="onkey_email()">
-                    <div class="msg-erro" id="div_msg_email"> </div>
+                    <div class="msg_erro" id="div_msg_email"> </div>
                 </div>
 
                 <div class="campo">
                     <label for="senha">Senha</label>
                     <input type="password" id="senha" placeholder="Senha" required onkeyup="onkey_senha()">
-                    <div class="msg-erro" id="div_msg_senha"></div>
+                    <div class="msg_erro" id="div_msg_senha"></div>
                 </div>
 
                 <button class="botao-esqueceu-senha">Esqueceu a senha?</button>
@@ -120,12 +120,9 @@
         </div>
     </footer>
 
-    <div id="toast"></div>
-
     <script src="./assets/js/shared/menu.js"></script>
-    <script src="./assets/js/utils/validacoes.js"></script>
+    <script src="./assets/js/shared/validacoes.js"></script>
     <script src="./assets/js/shared/sessao.js"></script>
-    <script src="./assets/js/utils/utils.js"></script>
     <script src="./assets/js/pages/login.js"></script>
 </body>
 

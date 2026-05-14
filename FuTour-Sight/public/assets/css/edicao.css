@@ -1,18 +1,17 @@
-/* header {
+header {
     display: none;
-} */
+}
 
 .body-empresa main {
     background-color: var(--cor-clara);
-    width: 100%;
 }
 
 .conteudo {
     display: flex;
     flex: 1;
     flex-direction: column;
-    /* margin-left: 350px; */
-    /* width: calc(100% - 350px); */
+    margin-left: 350px;
+    width: calc(100% - 350px);
     align-items: center;
     gap: 1.5vh;
     justify-content: space-between;
@@ -452,7 +451,7 @@
     }
 
     .links {
-        /* width: 50% !important; */
+        width: 50% !important;
         justify-content: flex-start;
         z-index: 10;
     }

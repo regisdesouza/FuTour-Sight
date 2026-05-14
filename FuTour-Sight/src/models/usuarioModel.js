@@ -1,28 +1,36 @@
-const database = require("../database/config.js");
+var database = require("../database/config.js")
 
-function enviarMensagem(nome, email, telefone, mensagem) {
-    const instrucaoSql = `
-        INSERT INTO contato (
-            nome,
-            email,
-            telefone,
-            mensagem
-        )
+function enviarMensagem(
+    nomeMensagem,
+    emailMensagem,
+    telefoneMensagem,
+    mensagemMensagem
+) {
+    console.log("function enviarMensagem():",
+        nomeMensagem,
+        emailMensagem,
+        telefoneMensagem,
+        mensagemMensagem
+    );
+
+    var instrucaoSql = `
+        INSERT INTO contato (nome, email, telefone, mensagem) 
         VALUES (?, ?, ?, ?);
     `;
 
+    console.log("Executando a instrução SQL: \n" + instrucaoSql);
     return database.executar(instrucaoSql, [
-        nome,
-        email,
-        telefone,
-        mensagem
+        nomeMensagem,
+        emailMensagem,
+        telefoneMensagem,
+        mensagemMensagem
     ]);
 }
 
 function buscarPorCnpj(cnpj) {
-    const instrucaoSql = `
-        SELECT id_solicitacao
-        FROM solicitacao_cadastro
+    var instrucaoSql = `
+        SELECT id_solicitacao 
+        FROM solicitacao_cadastro 
         WHERE cnpj_empresa = ?;
     `;
 
@@ -30,110 +38,148 @@ function buscarPorCnpj(cnpj) {
 }
 
 function preCadastrar(
-    nome,
-    emailPessoal,
-    empresa,
-    emailCorporativo,
-    cnpj,
-    telefoneCorporativo
+    nomePreCadastro,
+    emailPessoalPreCadastro,
+    empresaPreCadastro,
+    emailCorporativoPreCadastro,
+    cnpjPreCadastro,
+    telefoneCorporativoPreCadastro
 ) {
-    const instrucaoSql = `
-        INSERT INTO solicitacao_cadastro (
-            nome_responsavel,
-            email_responsavel,
-            nome_empresa,
-            cnpj_empresa,
-            email_empresa,
-            telefone_empresa
-        )
+    console.log("function preCadastrar():",
+        nomePreCadastro,
+        emailPessoalPreCadastro,
+        empresaPreCadastro,
+        emailCorporativoPreCadastro,
+        cnpjPreCadastro,
+        telefoneCorporativoPreCadastro
+    );
+
+    var instrucaoSql = `
+        INSERT INTO solicitacao_cadastro 
+        (nome_responsavel, email_responsavel, nome_empresa, cnpj_empresa, email_empresa, telefone_empresa) 
         VALUES (?, ?, ?, ?, ?, ?);
     `;
 
+    console.log("Executando a instrução SQL: \n" + instrucaoSql);
     return database.executar(instrucaoSql, [
-        nome,
-        emailPessoal,
-        empresa,
-        cnpj,
-        emailCorporativo,
-        telefoneCorporativo
+        nomePreCadastro,
+        emailPessoalPreCadastro,
+        empresaPreCadastro,
+        cnpjPreCadastro,
+        emailCorporativoPreCadastro,
+        telefoneCorporativoPreCadastro
     ]);
 }
 
-function autenticar(email, senha) {
-    const instrucaoSql = `
-        SELECT
-            id_usuario,
-            nome,
-            email,
-            fk_nivel_permissao AS nivel_permissao,
-            fk_empresa AS empresa,
-            primeiro_acesso
-        FROM usuario
-        WHERE email = ?
-        AND senha = ?;
+function autenticar(
+    emailLogin,
+    senhaLogin
+) {
+    console.log("function autenticar(): ",
+        emailLogin,
+        senhaLogin
+    )
+
+    var instrucaoSql = `
+        SELECT id_usuario, nome, email, fk_nivel_permissao as nivel_permissao, fk_empresa as empresa, primeiro_acesso 
+        FROM usuario 
+        WHERE email = ? AND senha = ?;
     `;
 
+    console.log("Executando a instrução SQL: \n" + instrucaoSql);
     return database.executar(instrucaoSql, [
-        email,
-        senha
+        emailLogin,
+        senhaLogin
     ]);
 }
 
 function criarFiltro(
-    nome,
-    mesInicio,
-    mesFim,
+    nomeFiltro,
+    mes_inicio,
+    mes_fim,
     ano,
     fkUsuario
 ) {
-    const instrucaoSql = `
-        INSERT INTO filtro_personalizado (
-            nome,
-            mes_inicio,
-            mes_fim,
-            ano_referencia,
-            fk_usuario
-        )
-        VALUES (?, ?, ?, ?, ?);
+    var instrucaoSql = `
+        INSERT INTO filtro_personalizado (nome, mes_inicio, mes_fim, ano_referencia, fk_usuario) VALUES
+        (?, ?, ?, ?, ?);
     `;
 
     return database.executar(instrucaoSql, [
-        nome,
-        mesInicio,
-        mesFim,
+        nomeFiltro,
+        mes_inicio,
+        mes_fim,
         ano,
         fkUsuario
-    ]);
+    ])
+}
+
+function criarFiltroItem(
+    fkFiltro,
+    tipo,
+    valor
+) {
+    var instrucaoSql = `
+        INSERT INTO filtro_item (fk_filtro, tipo, valor) VALUES
+        (?, ?, ?);
+    `;
+
+    return database.executar(instrucaoSql, [
+        fkFiltro,
+        tipo,
+        valor
+    ])
 }
 
 function listarFiltros(idUsuario) {
-    const instrucaoSql = `
+    var instrucaoSql = `
         SELECT
             fp.id_filtro,
             fp.nome,
             fp.mes_inicio,
             fp.mes_fim,
             fp.ano_referencia,
-            GROUP_CONCAT(
-                CASE
-                    WHEN fi.tipo = 'ESTADO'
-                    THEN fi.valor
-                END
-            ) AS estados,
-            GROUP_CONCAT(
-                CASE
-                    WHEN fi.tipo = 'PAIS'
-                    THEN fi.valor
-                END
-            ) AS paises
+            GROUP_CONCAT(CASE WHEN fi.tipo = 'ESTADO' THEN fi.valor END) AS estados,
+            GROUP_CONCAT(CASE WHEN fi.tipo = 'PAIS' THEN fi.valor END) AS paises
         FROM filtro_personalizado fp
-        LEFT JOIN filtro_item fi
-            ON fi.fk_filtro = fp.id_filtro
+        LEFT JOIN filtro_item fi ON fi.fk_filtro = fp.id_filtro
         WHERE fp.fk_usuario = ?
         GROUP BY fp.id_filtro;
-    `;
+    `
 
-    return database.executar(instrucaoSql, [idUsuario]);
+    return database.executar(instrucaoSql, [
+        idUsuario
+    ])
+}
+
+function listarEstados() {
+    const instrucaoSql = `
+        SELECT DISTINCT uf
+        FROM chegadas_turistas
+        ORDER BY uf;
+    `
+
+    return database.executar(instrucaoSql)
+}
+
+function listarPaises() {
+    const instrucaoSql = `
+        SELECT DISTINCT nome_pais_origem
+        FROM chegadas_turistas
+        ORDER BY nome_pais_origem;
+    `
+
+    return database.executar(instrucaoSql)
+}
+
+function listarAnos() {
+    const instrucaoSql = `
+        SELECT DISTINCT ano
+        FROM chegadas_turistas
+        ORDER BY ano DESC;
+    `
+
+    return database.executar(instrucaoSql)
 }
 
 function buscarFiltro(idFiltro) {
@@ -144,135 +190,84 @@ function buscarFiltro(idFiltro) {
             fp.mes_inicio,
             fp.mes_fim,
             fp.ano_referencia,
-            GROUP_CONCAT(
-                CASE
-                    WHEN fi.tipo = 'ESTADO'
-                    THEN fi.valor
-                END
-            ) AS estados,
-            GROUP_CONCAT(
-                CASE
-                    WHEN fi.tipo = 'PAIS'
-                    THEN fi.valor
-                END
-            ) AS paises
+            GROUP_CONCAT(CASE WHEN fi.tipo = 'ESTADO' THEN fi.valor END) AS estados,
+            GROUP_CONCAT(CASE WHEN fi.tipo = 'PAIS' THEN fi.valor END) AS paises
         FROM filtro_personalizado fp
-        LEFT JOIN filtro_item fi
-            ON fi.fk_filtro = fp.id_filtro
+        LEFT JOIN filtro_item fi ON fi.fk_filtro = fp.id_filtro
         WHERE fp.id_filtro = ?
         GROUP BY fp.id_filtro;
-    `;
+    `
 
-    return database.executar(instrucaoSql, [idFiltro]);
-}
-
-function listarEstados() {
-    const instrucaoSql = `
-        SELECT DISTINCT uf
-        FROM chegadas_turistas
-        ORDER BY uf;
-    `;
-
-    return database.executar(instrucaoSql);
-}
-
-function listarPaises() {
-    const instrucaoSql = `
-        SELECT DISTINCT nome_pais_origem
-        FROM chegadas_turistas
-        ORDER BY nome_pais_origem;
-    `;
-
-    return database.executar(instrucaoSql);
-}
-
-function listarAnos() {
-    const instrucaoSql = `
-        SELECT DISTINCT ano
-        FROM chegadas_turistas
-        ORDER BY ano DESC;
-    `;
-
-    return database.executar(instrucaoSql);
+    return database.executar(instrucaoSql, [
+        idFiltro
+    ])
 }
 
 function atualizarFiltro(
-    nome,
-    mesInicio,
-    mesFim,
+    nomeFiltro,
+    mes_inicio,
+    mes_fim,
     ano,
     idFiltro
 ) {
-    const instrucaoSql = `
-        UPDATE filtro_personalizado
-        SET
-            nome = ?,
-            mes_inicio = ?,
-            mes_fim = ?,
-            ano_referencia = ?
+    var instrucaoSql = `
+        UPDATE filtro_personalizado 
+        SET nome = ?, 
+        mes_inicio = ?, 
+        mes_fim = ?, 
+        ano_referencia = ? 
         WHERE id_filtro = ?;
     `;
 
     return database.executar(instrucaoSql, [
-        nome,
-        mesInicio,
-        mesFim,
+        nomeFiltro,
+        mes_inicio,
+        mes_fim,
         ano,
         idFiltro
-    ]);
+    ])
 }
 
-function editarPerfil(idUsuario, nome, email, senha) {
-    const instrucaoSql = `
-        UPDATE usuario
-        SET
-            nome = ?,
-            email = ?,
-            senha = ?
+function deletarFiltrosItens (idFiltro) {
+    var instrucaoSql = `
+        DELETE FROM filtro_item 
+        WHERE fk_filtro = ?;
+    `;
+
+    return database.executar(instrucaoSql, [
+        idFiltro
+    ])
+}
+
+function excluirFiltro(idFiltro) {
+    var instrucaoSql = `
+        DELETE FROM filtro_personalizado 
+        WHERE id_filtro = ?;
+    `;
+
+    return database.executar(instrucaoSql, [
+        idFiltro
+    ])
+}
+
+function editarPerfil(
+    idUsuarioEditarPerfil,
+    nomeEditarPerfil,
+    emailEditarPerfil,
+    senhaEditarPerfil
+) {
+    var instrucaoSql = `
+        UPDATE usuario 
+        SET nome = ?, email = ?, senha = ? 
         WHERE id_usuario = ?;
     `;
 
     return database.executar(instrucaoSql, [
-        nome,
-        email,
-        senha,
-        idUsuario
-    ]);
-}
-
-function deletarFiltrosItens(idFiltro) {
-    const instrucaoSql = `
-        DELETE FROM filtro_item
-        WHERE fk_filtro = ?;
-    `;
-
-    return database.executar(instrucaoSql, [idFiltro]);
-}
-
-function excluirFiltro(idFiltro) {
-    const instrucaoSql = `
-        DELETE FROM filtro_personalizado
-        WHERE id_filtro = ?;
-    `;
-
-    return database.executar(instrucaoSql, [idFiltro]);
-}
-
-function criarFiltroItem(fkFiltro, tipo, valor) {
-    const instrucaoSql = `
-        INSERT INTO filtro_item (
-            fk_filtro,
-            tipo,
-            valor
-        )
-        VALUES (?, ?, ?);
-    `;
-
-    return database.executar(instrucaoSql, [
-        fkFiltro,
-        tipo,
-        valor
-    ]);
+        nomeEditarPerfil,
+        emailEditarPerfil,
+        senhaEditarPerfil,
+        idUsuarioEditarPerfil
+    ])
 }
 
 module.exports = {
@@ -281,14 +276,14 @@ module.exports = {
     preCadastrar,
     autenticar,
     criarFiltro,
+    criarFiltroItem,
     listarFiltros,
-    buscarFiltro,
     listarEstados,
     listarPaises,
     listarAnos,
+    buscarFiltro,
     atualizarFiltro,
-    editarPerfil,
     deletarFiltrosItens,
-    excluirFiltro,
-    criarFiltroItem
+    editarPerfil,
+    excluirFiltro
 };
