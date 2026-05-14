@@ -93,7 +93,7 @@ function cadastrarFuncionario() {
         return false;
     }
 
-    fetch("/usuariosAdmin/cadastrarFuncionario/", {
+    fetch("/usuariosAdmin/funcionarios/", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
