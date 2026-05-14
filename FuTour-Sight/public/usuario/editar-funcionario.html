@@ -90,6 +90,7 @@
                     <div class="campo">
                         <label for="nome-funcionario">Nome do funcionário</label>
                         <input id="nome-funcionario" type="text" placeholder="Nome do funcionário">
+                        <div id="div_msg_nome"       class="msg-erro"></div>
                     </div>
 
                     <div class="campo">
@@ -99,11 +100,13 @@
                             <option value="2">EMPRESA_ADMIN</option>
                             <option value="3">EMPRESA_USER</option>
                         </select>
+                        <div id="div_msg_permissao"  class="msg-erro"></div>
                     </div>
 
                     <div class="campo">
                         <label for="email">Email</label>
                         <input id="email" type="text" placeholder="Email">
+                        <div id="div_msg_email"      class="msg-erro"></div>
                     </div>
 
                 </div>
@@ -116,7 +119,11 @@
         </section>
     </main>
 
-    <script src="../assets/js/shared/redirecionamento.js"></script>
+    <div id="toast"></div>
+
+    <script src="../assets/js/utils/redirecionamento.js"></script>
+    <script src="../assets/js/utils/utils.js"></script>
+    <script src="../assets/js/utils/validacoes.js"></script>
     <script src="../assets/js/shared/sessao.js"></script>
     <script src="../assets/js/pages/usuario/editarFuncionario.js"></script>
 

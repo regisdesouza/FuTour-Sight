@@ -60,7 +60,7 @@
                         <img src="./assets/images/icons/pessoa.png" alt="ícone de pessoa">
                     </div>
                     <input type="text" id="nome" placeholder="Nome Completo" onkeyup="onkey_nome()">
-                    <div class="msg_erro" id="div_msg_nome"></div>
+                    <div class="msg-erro" id="div_msg_nome"></div>
 
                 </div>
 
@@ -70,7 +70,7 @@
                         <img src="./assets/images/icons/email.png" alt="ícone de email">
                     </div>
                     <input type="text" id="emailPessoal" placeholder="E-mail Pessoal" onkeyup="onkey_email_pessoal()">
-                    <div class="msg_erro" id="div_msg_email_pessoal"></div>
+                    <div class="msg-erro" id="div_msg_email_pessoal"></div>
 
                 </div>
 
@@ -80,7 +80,7 @@
                         <img src="./assets/images/icons/empresa.png" alt="ícone de empresa">
                     </div>
                     <input type="text" id="empresa" placeholder="Empresa" onkeyup="onkey_nome_empresa()">
-                    <div class="msg_erro" id="div_msg_nome_empresa"></div>
+                    <div class="msg-erro" id="div_msg_nome_empresa"></div>
 
                 </div>
 
@@ -91,7 +91,7 @@
                     </div>
                     <input type="text" id="emailCorporativo" placeholder="E-mail Corporativo"
                         onkeyup="onkey_email_corporativo()">
-                    <div class="msg_erro" id="div_msg_email_corporativo"></div>
+                    <div class="msg-erro" id="div_msg_email_corporativo"></div>
 
                 </div>
 
@@ -102,7 +102,7 @@
                     </div>
                     <input type="text" name="cnpj" id="cnpj" placeholder="Seu CNPJ" required onkeyup="onkey_cnpj()"
                         maxlength="18">
-                    <div class="msg_erro" id="div_msg_cnpj"></div>
+                    <div class="msg-erro" id="div_msg_cnpj"></div>
 
                 </div>
 
@@ -113,7 +113,7 @@
                     </div>
                     <input type="text" name="telefone" id="telefone" placeholder="Seu telefone" required
                         onkeyup="onkey_telefone()" maxlength="15">
-                    <div class="msg_erro" id="div_msg_telefone"></div>
+                    <div class="msg-erro" id="div_msg_telefone"></div>
 
                 </div>
             </div>
@@ -177,9 +177,11 @@
         </div>
     </footer>
 
+    <div id="toast"></div>
 
     <script src="./assets/js/shared/menu.js"></script>
-    <script src="./assets/js/shared/validacoes.js"></script>
+    <script src="./assets/js/utils/validacoes.js"></script>
+    <script src="./assets/js/utils/utils.js"></script>
     <script src="./assets/js/shared/sessao.js"></script>
     <script src="https://unpkg.com/inputmask@5.0.8/dist/inputmask.min.js"></script>
     <script src="assets/js/pages/preCadastro.js"></script>

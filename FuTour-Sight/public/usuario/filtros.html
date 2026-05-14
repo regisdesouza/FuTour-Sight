@@ -15,7 +15,7 @@
     <link rel="shortcut icon" href="../assets/images/icons/favicon.png" type="image/x-icon">
 </head>
 
-<body class="background-branco">
+<body class="background-branco" onload="verificarToast('sucesso', 'Filtro atualizado com sucesso!')">
     <header>
         <a href="../index.html" class="logo">
             <img src="../assets/images/logo-futour-sight-branco.png" alt="Logo FuTour Sight">
@@ -93,6 +93,7 @@
                     <div class="campo">
                         <label for="nome-filtro">Nome do filtro</label>
                         <input id="nome-filtro" type="text" placeholder="Nome do filtro">
+                        <div id="div_msg_nome_filtro"  class="msg-erro"></div>
                     </div>
                     <div class="campo">
                         <label for="estado-destino">Estado de destino</label>
@@ -102,6 +103,7 @@
                         <ul>
 
                         </ul>
+                        <div id="div_msg_estados"      class="msg-erro"></div>
                     </div>
                     <div class="campo">
                         <label for="pais-origem">País de origem</label>
@@ -111,6 +113,7 @@
                         <ul>
 
                         </ul>
+                        <div id="div_msg_paises"       class="msg-erro"></div>
                     </div>
 
                     <div class="intervalo-meses-container">
@@ -146,6 +149,8 @@
                                 <option value="Dezembro">Dezembro</option>
                             </select>
                         </div>
+                        <div id="div_msg_mes_inicio"   class="msg-erro"></div>
+                        <div id="div_msg_mes_final"    class="msg-erro"></div>
                     </div>
 
                     <div class="campo">
@@ -153,6 +158,7 @@
                         <select name="ano-referencia" id="ano-referencia">
 
                         </select>
+                        <div id="div_msg_ano"          class="msg-erro"></div>
                     </div>
                 </div>
 
@@ -191,10 +197,26 @@
             </ul>
         </section>
     </main>
+
+    <div id="toast"></div>
+
+    <div id="modalConfirmacao" class="modal hidden">
+        <div class="modal-content">
+            <h3 id="modalTitulo">Confirmação</h3>
+            <p id="modalTexto">Deseja continuar?</p>
+            <div class="modal-botoes">
+                <button id="btnCancelarModal">Cancelar</button>
+                <button id="btnConfirmarModal">Confirmar</button>
+            </div>
+        </div>
+    </div>
+
 </body>
 
 </html>
 
-<script src="../assets/js/shared/redirecionamento.js"></script>
+<script src="../assets/js/utils/redirecionamento.js"></script>
+<script src="../assets/js/utils/utils.js"></script>
+<script src="../assets/js/utils/validacoes.js"></script>
 
 <script src="../assets/js/pages/usuario/filtros.js"></script>

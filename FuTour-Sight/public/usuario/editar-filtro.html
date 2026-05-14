@@ -93,6 +93,7 @@
                     <div class="campo">
                         <label for="nome-filtro">Nome do filtro</label>
                         <input id="nome-filtro" type="text" placeholder="Nome do filtro">
+                        <div id="div_msg_nome_filtro" class="msg-erro"></div>
                     </div>
                     <div class="campo">
                         <label for="estado-destino">Estado de destino</label>
@@ -100,8 +101,9 @@
                             <option value="">Selecione um estado...</option>
                         </select>
                         <ul>
-                            
+
                         </ul>
+                        <div id="div_msg_estados" class="msg-erro"></div>
                     </div>
                     <div class="campo">
                         <label for="pais-origem">País de origem</label>
@@ -109,8 +111,9 @@
                             <option value="">Selecione um país...</option>
                         </select>
                         <ul>
-                            
+
                         </ul>
+                        <div id="div_msg_paises" class="msg-erro"></div>
                     </div>
 
                     <div class="intervalo-meses-container">
@@ -146,13 +149,16 @@
                                 <option value="Dezembro">Dezembro</option>
                             </select>
                         </div>
+                        <div id="div_msg_mes_inicio" class="msg-erro"></div>
+                        <div id="div_msg_mes_final" class="msg-erro"></div>
                     </div>
 
                     <div class="campo">
                         <label for="ano-referencia">Ano de referência</label>
                         <select name="ano-referencia" id="ano-referencia">
-                            
+
                         </select>
+                        <div id="div_msg_ano"         class="msg-erro"></div>
                     </div>
                 </div>
 
@@ -165,8 +171,12 @@
     </main>
 </body>
 
+<div id="toast"></div>
+
 </html>
 
 <script src="../assets/js/pages/usuario/editarFiltro.js"></script>
 
-<script src="../assets/js/shared/redirecionamento.js"></script>
+<script src="../assets/js/utils/redirecionamento.js"></script>
+<script src="../assets/js/utils/utils.js"></script>
+<script src="../assets/js/utils/validacoes.js"></script>

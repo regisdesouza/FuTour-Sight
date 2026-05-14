@@ -15,7 +15,7 @@
     <link rel="shortcut icon" href="../assets/images/icons/favicon.png" type="image/x-icon">
 </head>
 
-<body class="background-branco">
+<body class="background-branco" onload="verificarToast()">
     <header>
         <a href="../index.html" class="logo">
             <img src="../assets/images/logo-futour-sight-branco.png" alt="Logo FuTour Sight">
@@ -66,7 +66,7 @@
                         </button>
                     </li>
                     <li>
-                        <button onclick="filtro()">
+                        <button onclick="redirecionarFiltros()">
                             <img src="../assets/images/icons/filtro.png" alt="icone de filtro">
                             <span>Filtro</span>
                         </button>
@@ -111,7 +111,22 @@
 
     </main>
 
-    <script src="../assets/js/shared/redirecionamento.js"></script>
+    <div id="toast"></div>
+
+    <div id="modalConfirmacao" class="modal hidden">
+        <div class="modal-content">
+            <h3 id="modalTitulo">Confirmação</h3>
+            <p id="modalTexto">Deseja continuar?</p>
+            <div class="modal-botoes">
+                <button id="btnCancelarModal">Cancelar</button>
+                <button id="btnConfirmarModal">Confirmar</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="../assets/js/utils/redirecionamento.js"></script>
+    <script src="../assets/js/shared/sessao.js"></script>
+    <script src="../assets/js/utils/utils.js"></script>
     <script src="../assets/js/pages/usuario/listaUsuarios.js"></script>
 </body>
 
