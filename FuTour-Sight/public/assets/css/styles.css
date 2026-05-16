@@ -97,8 +97,11 @@ header .links {
     font-weight: var(--extra-bold);
 }
 
+.logo img {
+    width: 64px;
+}
+
 .logo span {
-    margin-left: -4px;
     width: max-content;
 }
 

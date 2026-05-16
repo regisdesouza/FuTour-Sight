@@ -156,7 +156,7 @@ header .links {
     }
 
     .logo {
-        display: block;
+        display: flex;
     }
 
 }
