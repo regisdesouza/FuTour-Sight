@@ -318,9 +318,13 @@ function renderizarOptionsAnos() {
     fetch("/usuarios/anos", { method: "GET" })
     .then((resposta) => resposta.json())
     .then((anos) => {
-        const select = document.getElementById("ano-referencia");
+        // const select = document.getElementById("ano-referencia");
+        const selects = document.querySelectorAll(".select-anos-comparacao");
         anos.forEach(ano => {
-            select.innerHTML += `<option value="${ano.ano}">${ano.ano}</option>`;
+            // select.innerHTML += `<option value="${ano.ano}">${ano.ano}</option>`;
+            selects.forEach(select => {
+                select.innerHTML += `<option value="${ano.ano}">${ano.ano}</option>`;
+            })
         });
     });
 }
