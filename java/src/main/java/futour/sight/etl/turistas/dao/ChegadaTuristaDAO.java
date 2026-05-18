@@ -7,7 +7,7 @@ import java.util.List;
 
 public class ChegadaTuristaDAO {
 
-    private static final int TAMANHO_LOTE = 500;
+    private static final int TAMANHO_LOTE = 1000;
 
     private JdbcTemplate jdbc;
 

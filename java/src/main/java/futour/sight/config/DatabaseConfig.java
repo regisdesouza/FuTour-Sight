@@ -17,7 +17,7 @@ public class DatabaseConfig {
             String dbUser = System.getenv("DB_USER");
             String dbPassword = System.getenv("DB_PASSWORD");
 
-            String jdbcUrl = String.format("jdbc:mysql://%s:%s/%s", dbHost, dbPort, dbName);
+            String jdbcUrl = String.format("jdbc:mysql://%s:%s/%s?rewriteBatchedStatements=true", dbHost, dbPort, dbName);
 
             BasicDataSource ds = new BasicDataSource();
             ds.setDriverClassName("com.mysql.cj.jdbc.Driver");
