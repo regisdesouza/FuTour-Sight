@@ -24,7 +24,7 @@
 preencherNomeUsuario();
 
 const inputBusca = document.getElementById("input-busca");
-const btnBusca   = document.getElementById("btn-busca");
+const btnBusca = document.getElementById("btn-busca");
 
 btnBusca.addEventListener("click", listarUsuariosProcurados);
 
@@ -68,18 +68,18 @@ function listarUsuarios() {
     fetch(`/usuariosAdmin/usuarios?idEmpresa=${idEmpresaVar}`, {
         method: "GET",
     })
-    .then((resposta) => tratarRespostaFetch(resposta))
-    .then((usuarios) => {
-        renderizarUsuarios(usuarios);
-    })
-    .catch((erro) => {
-        console.error("#ERRO:", erro);
-        exibirToast("erro", "Erro ao listar funcionários");
-    });
+        .then((resposta) => tratarRespostaFetch(resposta))
+        .then((usuarios) => {
+            renderizarUsuarios(usuarios);
+        })
+        .catch((erro) => {
+            console.error("#ERRO:", erro);
+            exibirToast("erro", "Erro ao listar funcionários");
+        });
 }
 
 function listarUsuariosProcurados() {
-    var idEmpresaVar       = sessionStorage.getItem("ID_EMPRESA");
+    var idEmpresaVar = sessionStorage.getItem("ID_EMPRESA");
     var nomeFuncionarioVar = inputBusca.value.trim();
 
     if (!nomeFuncionarioVar) {
@@ -90,27 +90,27 @@ function listarUsuariosProcurados() {
     fetch(`/usuariosAdmin/usuarios/procurados?idEmpresa=${idEmpresaVar}&nomeFuncionarioServer=${nomeFuncionarioVar}`, {
         method: "GET",
     })
-    .then((resposta) => {
-        if (resposta.status === 204) {
-            renderizarUsuarios([]);
-            return null;
-        }
-        return tratarRespostaFetch(resposta);
-    })
-    .then((dados) => {
-        if (!dados) return;
-        renderizarUsuarios(dados);
-    })
-    .catch((erro) => {
-        console.error("#ERRO:", erro);
-        exibirToast("erro", "Erro ao buscar funcionários");
-    });
+        .then((resposta) => {
+            if (resposta.status === 204) {
+                renderizarUsuarios([]);
+                return null;
+            }
+            return tratarRespostaFetch(resposta);
+        })
+        .then((dados) => {
+            if (!dados) return;
+            renderizarUsuarios(dados);
+        })
+        .catch((erro) => {
+            console.error("#ERRO:", erro);
+            exibirToast("erro", "Erro ao buscar funcionários");
+        });
 }
 
 function confirmarAlterarStatus(id) {
     abrirModalConfirmacao({
         titulo: "Alterar status",
-        texto:  "Tem certeza que deseja alterar o status deste funcionário?",
+        texto: "Tem certeza que deseja alterar o status deste funcionário?",
         onConfirm: () => alterarStatus(id)
     });
 }
@@ -119,18 +119,18 @@ function alterarStatus(id) {
     fetch(`/usuariosAdmin/usuarios/${id}/status`, {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ status: "INATIVO" }),
+        body: JSON.stringify({ status: 5 }),
     })
-    .then((resposta) => tratarRespostaFetch(resposta))
-    .then((resultado) => {
-        console.log(resultado.mensagem);
-        exibirToast("sucesso", "Status alterado com sucesso!");
-        listarUsuarios();
-    })
-    .catch((erro) => {
-        console.error("#ERRO:", erro);
-        exibirToast("erro", "Erro ao atualizar status");
-    });
+        .then((resposta) => tratarRespostaFetch(resposta))
+        .then((resultado) => {
+            console.log(resultado.mensagem);
+            exibirToast("sucesso", "Status alterado com sucesso!");
+            listarUsuarios();
+        })
+        .catch((erro) => {
+            console.error("#ERRO:", erro);
+            exibirToast("erro", "Erro ao atualizar status");
+        });
 }
 
 function editarPerfil(id) {
