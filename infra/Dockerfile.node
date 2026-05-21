@@ -1,0 +1,17 @@
+FROM node:18
+
+WORKDIR /usr/src/app
+
+ARG BRANCH=dev
+
+RUN git clone -b ${BRANCH} https://github.com/regisdesouza/FuTour-Sight.git
+
+RUN rm -rf /usr/src/app/FuTour-Sight/java
+
+WORKDIR /usr/src/app/FuTour-Sight/FuTour-Sight
+
+RUN npm install
+
+EXPOSE 3333
+
+CMD ["npm", "start"]

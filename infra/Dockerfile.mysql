@@ -1,0 +1,7 @@
+FROM mysql:8.0
+
+COPY ./arquivos_sql/001-tabelas.sql /docker-entrypoint-initdb.d/
+
+COPY ./arquivos_sql/002-usuario.sql /docker-entrypoint-initdb.d/
+
+EXPOSE 3306
