@@ -52,13 +52,6 @@ public class TuristaEtlService {
 
             lista = reader.ler(caminho);
 
-            logDAO.inserir(
-                    "chegadas_turistas",
-                    lista.size(),
-                    true,
-                    null
-            );
-
             log(
                     "SUCESSO",
                     "Leitura do Excel concluida — "
@@ -92,7 +85,7 @@ public class TuristaEtlService {
                     "chegadas_turistas",
                     lista.size(),
                     true,
-                    null
+                    "ETL executado com sucesso"
             );
 
             log(
