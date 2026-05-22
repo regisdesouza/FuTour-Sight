@@ -68,3 +68,127 @@ main {
 .status p.erro {
     background-color: #C60000;
 }
+
+.painel-configuracoes {
+    background-color: var(--cor-clara);
+    border: 1px solid var(--cor-cinza-escuro);
+    border-radius: 16px;
+    padding: 24px;
+    margin-top: 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
+.painel-configuracoes h2 {
+    font-size: var(--texto-medio);
+    font-weight: var(--semi-bold);
+}
+
+.config-card {
+    border: 1px solid var(--cor-cinza-escuro);
+    border-radius: 12px;
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.config-card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.config-card-header span {
+    font-size: var(--texto-medio);
+    font-weight: var(--semi-bold);
+}
+
+.toggle {
+    position: relative;
+    width: 48px;
+    height: 26px;
+}
+
+.toggle input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.toggle-slider {
+    position: absolute;
+    inset: 0;
+    background-color: #C60000;
+    border-radius: 26px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.toggle-slider::before {
+    content: "";
+    position: absolute;
+    width: 18px;
+    height: 18px;
+    left: 4px;
+    top: 4px;
+    background-color: white;
+    border-radius: 50%;
+    transition: transform 0.3s;
+}
+
+.toggle input:checked + .toggle-slider {
+    background-color: #14C600;
+}
+
+.toggle input:checked + .toggle-slider::before {
+    transform: translateX(22px);
+}
+
+.config-intervalo {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-size: var(--texto-pequeno);
+}
+
+.config-intervalo input {
+    width: 80px;
+    padding: 6px 10px;
+    border: 1px solid var(--cor-cinza-escuro);
+    border-radius: 8px;
+    font-size: var(--texto-pequeno);
+    text-align: center;
+}
+
+.config-intervalo button {
+    padding: 6px 14px;
+    border: none;
+    border-radius: 8px;
+    background-color: var(--cor-primaria);
+    color: var(--cor-clara);
+    cursor: pointer;
+    font-size: var(--texto-pequeno);
+}
+
+.config-destinatarios {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.config-destinatarios p {
+    font-size: var(--texto-pequeno);
+    font-weight: var(--semi-bold);
+}
+
+.destinatario-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px 12px;
+    border: 1px solid var(--cor-cinza-escuro);
+    border-radius: 8px;
+    font-size: var(--texto-pequeno);
+}
