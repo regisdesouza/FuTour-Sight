@@ -14,31 +14,57 @@ public class NotificacaoService {
 
     private ConfiguracaoNotificacaoDAO configuracaoDAO;
 
-    public NotificacaoService(ConfiguracaoNotificacaoDAO configuracaoDAO) {
+    public NotificacaoService(
+            ConfiguracaoNotificacaoDAO configuracaoDAO
+    ) {
+
         this.configuracaoDAO = configuracaoDAO;
     }
 
-    public void notificarEtlSucesso(String tabela, int registros, long tempoSegundos) {
+    public void notificarEtlSucesso(
+            String tabela,
+            int registros,
+            long tempoSegundos
+    ) {
 
         if (!configuracaoDAO.isAtivo("ETL_SUCESSO")) {
-            System.out.println("[SLACK] ETL_SUCESSO desativado");
+
+            System.out.println(
+                    "[SLACK] ETL_SUCESSO desativado"
+            );
+
             return;
         }
 
         List<String> destinatarios =
-                configuracaoDAO.getDestinatariosAtivos("ETL_SUCESSO");
+                configuracaoDAO.getDestinatariosAtivos(
+                        "ETL_SUCESSO"
+                );
 
         if (destinatarios.isEmpty()) {
-            System.out.println("[SLACK] Nenhum destinatário ativo");
+
+            System.out.println(
+                    "[SLACK] Nenhum destinatário ativo"
+            );
+
             return;
         }
 
+        String mentions = "";
+
+        for (String id : destinatarios) {
+            mentions += "<@" + id + "> ";
+        }
+
         String mensagem = String.format("""
+                %s
+
                 *Tabela:* %s
                 *Registros processados:* %,d
                 *Tempo:* %d segundos
                 *Horário:* %s
                 """,
+                mentions,
                 tabela,
                 registros,
                 tempoSegundos,
@@ -52,28 +78,50 @@ public class NotificacaoService {
         );
     }
 
-    public void notificarEtlErro(String tabela, String erro) {
+    public void notificarEtlErro(
+            String tabela,
+            String erro
+    ) {
 
         if (!configuracaoDAO.isAtivo("ETL_ERRO")) {
-            System.out.println("[SLACK] ETL_ERRO desativado");
+
+            System.out.println(
+                    "[SLACK] ETL_ERRO desativado"
+            );
+
             return;
         }
 
         List<String> destinatarios =
-                configuracaoDAO.getDestinatariosAtivos("ETL_ERRO");
+                configuracaoDAO.getDestinatariosAtivos(
+                        "ETL_ERRO"
+                );
 
         if (destinatarios.isEmpty()) {
-            System.out.println("[SLACK] Nenhum destinatário ativo");
+
+            System.out.println(
+                    "[SLACK] Nenhum destinatário ativo"
+            );
+
             return;
         }
 
+        String mentions = "";
+
+        for (String id : destinatarios) {
+            mentions += "<@" + id + "> ";
+        }
+
         String mensagem = String.format("""
+                %s
+
                 *Tabela:* %s
                 *Erro:* %s
                 *Horário:* %s
 
                 ⚠️ *Ação necessária:* Verificar logs
                 """,
+                mentions,
                 tabela,
                 erro,
                 LocalDateTime.now().format(FORMATTER)
