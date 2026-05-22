@@ -31,16 +31,17 @@ public class ConfiguracaoNotificacaoDAO extends BaseDAO {
     public List<String> getDestinatariosAtivos(String tipo) {
 
         String sql = """
-            SELECT u.email
-            FROM usuario u
-            INNER JOIN usuario_notificacao un
-                ON un.fk_usuario = u.id_usuario
-            INNER JOIN configuracao_notificacao cn
-                ON cn.id_configuracao_notificacao = un.fk_configuracao_notificacao
-            WHERE cn.tipo = ?
-              AND cn.ativo = true
-              AND un.receber = true
-        """;
+        SELECT u.slack_id
+        FROM usuario u
+        INNER JOIN usuario_notificacao un
+            ON un.fk_usuario = u.id_usuario
+        INNER JOIN configuracao_notificacao cn
+            ON cn.id_configuracao_notificacao = un.fk_configuracao_notificacao
+        WHERE cn.tipo = ?
+          AND cn.ativo = true
+          AND un.receber = true
+          AND u.slack_id IS NOT NULL
+    """;
 
         return jdbc.queryForList(sql, String.class, tipo);
     }

@@ -9,8 +9,6 @@ public class ChegadaTuristaDAO extends BaseDAO {
 
     private static final int TAMANHO_LOTE = 1000;
 
-    private JdbcTemplate jdbc;
-
     public ChegadaTuristaDAO(JdbcTemplate jdbc) {
         super(jdbc);
     }
