@@ -152,6 +152,52 @@ function criarEndereco(idEmpresa) {
     return database.executar(instrucaoSql, [idEmpresa]);
 }
 
+function listarConfiguracoesNotificacao() {
+    const sql = `
+        SELECT
+            cn.id_configuracao_notificacao,
+            cn.nome,
+            cn.tipo,
+            cn.ativo,
+            cn.intervalo_minutos,
+            JSON_ARRAYAGG(
+                JSON_OBJECT(
+                    'id_usuario', u.id_usuario,
+                    'nome',       u.nome,
+                    'email',      u.email,
+                    'receber',    un.receber
+                )
+            ) AS destinatarios
+        FROM configuracao_notificacao cn
+        LEFT JOIN usuario_notificacao un
+            ON un.fk_configuracao_notificacao = cn.id_configuracao_notificacao
+        LEFT JOIN usuario u
+            ON u.id_usuario = un.fk_usuario
+        WHERE cn.tipo IN ('ETL_SUCESSO', 'ETL_ERRO')
+        GROUP BY cn.id_configuracao_notificacao
+        ORDER BY cn.id_configuracao_notificacao;
+    `;
+    return database.executar(sql);
+}
+
+function atualizarConfiguracao(id, ativo, intervalo) {
+    const sql = `
+        UPDATE configuracao_notificacao
+        SET ativo = ?, intervalo_minutos = ?
+        WHERE id_configuracao_notificacao = ?;
+    `;
+    return database.executar(sql, [ativo, intervalo, id]);
+}
+
+function atualizarDestinatario(idUsuario, idConfiguracao, receber) {
+    const sql = `
+        UPDATE usuario_notificacao
+        SET receber = ?
+        WHERE fk_usuario = ? AND fk_configuracao_notificacao = ?;
+    `;
+    return database.executar(sql, [receber, idUsuario, idConfiguracao]);
+}
+
 module.exports = {
     aprovarSolicitacao,
     cancelarSolicitacao,
@@ -164,5 +210,8 @@ module.exports = {
     buscarEmpresaPorCnpj,
     criarEmpresa,
     criarUsuario,
-    criarEndereco
+    criarEndereco, 
+    listarConfiguracoesNotificacao,
+    atualizarConfiguracao,
+    atualizarDestinatario 
 };

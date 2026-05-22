@@ -224,6 +224,37 @@ async function editarStatusEmpresa(req, res) {
     }
 }
 
+async function listarConfiguracoes(req, res) {
+    try {
+        const resultado = await adminFutourModel.listarConfiguracoesNotificacao();
+        return res.status(200).json(resultado);
+    } catch (erro) {
+        return res.status(500).json(erro);
+    }
+}
+
+async function atualizarConfiguracao(req, res) {
+    const id = req.params.id;
+    const { ativo, intervalo } = req.body;
+
+    try {
+        await adminFutourModel.atualizarConfiguracao(id, ativo, intervalo);
+        return res.status(200).json({ mensagem: "Configuração atualizada" });
+    } catch (erro) {
+        return res.status(500).json(erro);
+    }
+}
+
+async function atualizarDestinatario(req, res) {
+    const { idUsuario, idConfiguracao, receber } = req.body;
+    try {
+        await adminFutourModel.atualizarDestinatario(idUsuario, idConfiguracao, receber);
+        return res.status(200).json({ mensagem: "Destinatário atualizado" });
+    } catch (erro) {
+        return res.status(500).json({ mensagem: erro.sqlMessage || erro.message });
+    }
+}
+
 module.exports = {
     aprovarSolicitacao,
     cancelarSolicitacao,
@@ -231,5 +262,8 @@ module.exports = {
     buscarLogs,
     listarEmpresas,
     listarEmpresasProcuradas,
-    editarStatusEmpresa
+    editarStatusEmpresa,
+    listarConfiguracoes,
+    atualizarConfiguracao,
+    atualizarDestinatario
 };
