@@ -80,33 +80,96 @@ CREATE TABLE usuario (
     nome VARCHAR(150),
     email VARCHAR(150) NOT NULL UNIQUE,
     senha VARCHAR(255),
+    slack_id VARCHAR(50),
     fk_nivel_permissao INT NOT NULL,
     fk_empresa INT,
     fk_status INT NOT NULL DEFAULT 6,
     primeiro_acesso BOOLEAN DEFAULT TRUE,
     data_criacao DATETIME DEFAULT CURRENT_TIMESTAMP,
     data_atualizacao DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-    FOREIGN KEY (fk_nivel_permissao) REFERENCES nivel_permissao(id_nivel_permissao),
-    FOREIGN KEY (fk_empresa) REFERENCES empresa(id_empresa),
-    FOREIGN KEY (fk_status) REFERENCES status(id_status)
+
+    FOREIGN KEY (fk_nivel_permissao)
+        REFERENCES nivel_permissao(id_nivel_permissao),
+
+    FOREIGN KEY (fk_empresa)
+        REFERENCES empresa(id_empresa),
+
+    FOREIGN KEY (fk_status)
+        REFERENCES status(id_status)
 );
 
 INSERT INTO usuario (
     nome,
     email,
     senha,
+    slack_id,
     fk_nivel_permissao,
     fk_empresa,
     fk_status
 ) VALUES
-('Reginaldo de Souza', 'reginaldo@futoursight.com.br', 'Senha@1234', 1, 1, 4),
-('Debora Marsal', 'deboramarsal@futoursight.com.br', 'Senha@4321', 1, 1, 4),
-('Lucas Eiki Gushiken', 'lucaseiki@futoursight.com.br', 'Senha@1232', 1, 1, 4),
-('Gabriel Rodrigues', 'gabrielrodrigues@futoursight.com.br', 'Senha@1333', 1, 1, 4),
-('Lucas Frossi', 'lucasfrossi@futoursight.com.br', 'Senha@4123', 1, 1, 4),
-('Jorge Araújo', 'jorgearaujo@haddock.com.br', 'Codig0@123', 2, 2, 4),
-('Mariana Martins', 'marianamartins@haddock.com.br', 'Codig0@224', 3, 2, 4);
-
+(
+    'Reginaldo de Souza',
+    'reginaldo@futoursight.com.br',
+    'Senha@1234',
+    'U0B1A0A664T',
+    1,
+    1,
+    4
+),
+(
+    'Debora Marsal',
+    'deboramarsal@futoursight.com.br',
+    'Senha@4321',
+    'U0B2JP8P38D',
+    1,
+    1,
+    4
+),
+(
+    'Lucas Eiki Gushiken',
+    'lucaseiki@futoursight.com.br',
+    'Senha@1232',
+    'U0B3GDNGHT2',
+    1,
+    1,
+    4
+),
+(
+    'Gabriel Rodrigues',
+    'gabrielrodrigues@futoursight.com.br',
+    'Senha@1333',
+    'U0B2JPCLRQD',
+    1,
+    1,
+    4
+),
+(
+    'Lucas Frossi',
+    'lucasfrossi@futoursight.com.br',
+    'Senha@4123',
+    'U0B2L3H9RM4',
+    1,
+    1,
+    4
+),
+(
+    'Jorge Araújo',
+    'jorgearaujo@haddock.com.br',
+    'Codig0@123',
+    NULL,
+    2,
+    2,
+    4
+),
+(
+    'Mariana Martins',
+    'marianamartins@haddock.com.br',
+    'Codig0@224',
+    NULL,
+    3,
+    2,
+    4
+);
 CREATE TABLE configuracao_notificacao (
     id_configuracao_notificacao INT AUTO_INCREMENT PRIMARY KEY,
     nome VARCHAR(100) NOT NULL,

@@ -151,7 +151,6 @@ function criarEndereco(idEmpresa) {
 
     return database.executar(instrucaoSql, [idEmpresa]);
 }
-
 function listarConfiguracoesNotificacao() {
     const sql = `
         SELECT
@@ -165,6 +164,7 @@ function listarConfiguracoesNotificacao() {
                     'id_usuario', u.id_usuario,
                     'nome',       u.nome,
                     'email',      u.email,
+                    'slack_id',   u.slack_id,
                     'receber',    un.receber
                 )
             ) AS destinatarios
@@ -179,7 +179,6 @@ function listarConfiguracoesNotificacao() {
     `;
     return database.executar(sql);
 }
-
 function atualizarConfiguracao(id, ativo, intervalo) {
     const sql = `
         UPDATE configuracao_notificacao
