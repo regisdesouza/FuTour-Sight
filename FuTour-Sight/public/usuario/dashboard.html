@@ -15,7 +15,7 @@
     <link rel="shortcut icon" href="../assets/images/icons/favicon.png" type="image/x-icon">
 </head>
 
-<body onload="renderizarDashboard()">
+<body onload="renderizarDashboard(), verificarToast()">
     <header>
         <a href="../index.html" class="logo">
             <img src="../assets/images/logo-futour-sight-branco.png" alt="Logo FuTour Sight">
@@ -493,6 +493,8 @@
             </div>
         </div>
     </main>
+
+    <div id="toast"></div>
 </body>
 
 </html>
