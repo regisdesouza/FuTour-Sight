@@ -171,10 +171,10 @@ function editarEmpresa() {
     .then((dados) => {
         console.log("Empresa atualizada:", dados);
         // mostrarToast("Dados empresariais atualizados com sucesso!", "sucesso");
-        ativarToast();
+        ativarToast('sucesso', 'Dados empresariais atualizados com sucesso pelo usuário de email: ' + sessionStorage.getItem('EMAIL_USUARIO') + '!');
 
         // setTimeout(() => {
-            window.location.href = "dashboard-proprietario.html";
+            redirecionarDashboard();
         // }, 2000);
     })
     .catch((erro) => {

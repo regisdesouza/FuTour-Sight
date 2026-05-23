@@ -1,0 +1,594 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FuTour Sight | Dashboard</title>
+
+    <link rel="stylesheet" href="../assets/css/reset.css">
+    <link rel="stylesheet" href="../assets/css/styles.css">
+    <link rel="stylesheet" href="../assets/css/responsive.css">
+    <link rel="stylesheet" href="../assets/css/usuario.css">
+    <link rel="stylesheet" href="../assets/css/dashboard.css">
+
+    <link rel="shortcut icon" href="../assets/images/icons/favicon.png" type="image/x-icon">
+</head>
+
+<body onload="renderizarDashboard(), verificarToast()">
+    <header>
+        <a href="../index.html" class="logo">
+            <img src="../assets/images/logo-futour-sight-branco.png" alt="Logo FuTour Sight">
+            <span>FuTour Sight</span>
+        </a>
+        <input type="checkbox" id="menu-hamburguer">
+
+        <label for="menu-hamburguer" class="menu-hamburguer">
+            <div class="menu">
+                <span class="hamburguer"></span>
+            </div>
+        </label>
+
+        <div class="overlay"></div>
+
+        <div class="links">
+            <div class="usuario-infos">
+                <div class="img-container">
+                    <img src="../assets/images/icons/logo-FuTourSight-branco.png" alt="Imagem da empresa">
+                </div>
+                <span id="nomeUser"></span>
+            </div>
+
+            <nav>
+                <ul>
+                    <li>
+                        <button onclick="redirecionarDashboard()">
+                            <img src="../assets/images/icons/dashboard.png" alt="icone de dashboard">
+                            <span>Dashboard</span>
+                        </button>
+                    </li>
+                    <li>
+                        <button onclick="redirecionarEdicaoEmpresa()">
+                            <img src="../assets/images/icons/empresa-branca.png" alt="icone de empresa da cor branca">
+                            <span>Empresa</span>
+                        </button>
+                    </li>
+                    <li>
+                        <button onclick="redirecionarPerfil()">
+                            <img src="../assets/images/icons/perfil.png" alt="icone de perfil">
+                            <span>Perfil</span>
+                        </button>
+                    </li>
+                    <li>
+                        <button onclick="redirecionarListFuncionario()">
+                            <img src="../assets/images/icons/historico.png" alt="icone de historico">
+                            <span>Funcionários</span>
+                        </button>
+                    </li>
+                    <li>
+                        <button onclick="redirecionarFiltros()">
+                            <img src="../assets/images/icons/filtro.png" alt="icone de filtro">
+                            <span>Filtro</span>
+                        </button>
+                    </li>
+                </ul>
+            </nav>
+
+            <button class="botao-sair-container" onclick="sair()">
+                <img src="../assets/images/icons/sair.png" alt="icone de sair">
+                <span class="botao-sair">Sair</span>
+            </button>
+        </div>
+    </header>
+
+    <main>
+        <h1>Dashboard <span id="span-perfil-dashboard"></span></h1>
+
+        <div class="configs-dashboard">
+            <div class="filtros-container">
+                <h2>Filtros</h2>
+                <select name="filtros" id="select-filtros">
+                    <option value="">Nenhum filtro selecionado</option>
+                    <!-- renderizar os options pegando do banco os filtros -->
+                </select>
+            </div>
+
+            <div class="parametros-container">
+                <div class="parametro">
+                    <div class="parametro-header">
+                        <h3>Estado de referência</h3>
+                        <img src="../assets/images/icons/alerta.png" alt="ícone de alerta">
+                    </div>
+                    <div class="parametro-valor">
+                        <!-- DADO MOCKADO! TIRAR DEPOIS -->
+                        <span id="span-paramatro-valor">São Paulo</span>
+                    </div>
+                </div>
+
+                <div class="parametro">
+                    <div class="parametro-header">
+                        <h3>Anos de comparação</h3>
+                        <img src="../assets/images/icons/alerta.png" alt="ícone de alerta">
+                    </div>
+                    <div class="parametro-valor anos">
+                        <!-- DADO MOCKADO! TIRAR DEPOIS -->
+                        <span id="span-paramatro-valor">2024</span>
+                        |
+                        <span id="span-paramatro-valor">2025</span>
+                    </div>
+                </div>
+
+                <div class="parametro">
+                    <div class="parametro-header">
+                        <h3>Continente de referência</h3>
+                        <img src="../assets/images/icons/alerta.png" alt="ícone de alerta">
+                    </div>
+                    <div class="parametro-valor" id="paramatro-valor">
+                        <span id="span-paramatro-valor">América Central e Caribe</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="kpis-container gerente">
+            <div class="kpi">
+                <div class="titulo-container">
+                    <h3>Taxa de crescimento</h3>
+                    <div class="info-extra-container">
+                        <img class="info-extra-icon" src="../assets/images/icons/info-extra.png" alt="ícone de info">
+                        <div class="info-extra">
+                            <p>
+                                <!-- DADOS MOCKADOS -->
+                                Estado com maior crescimento de turistas, porcentagem e número absoluto do crescimento,
+                                do continente de referência (América do Sul), nos Anos de Comparação (2024-2025)
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="kpi-info">
+                    <!-- <div class="kpi-valor"></div> -->
+                    <div class="kpi-numeros">
+                        <!-- DADOS MOCKADOS! -->
+                        <span class="porcentagem">+24%</span>
+                        <span class="absoluto">+52.000 turistas</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="kpi">
+                <div class="titulo-container">
+                    <h3>Mês com maior crescimento</h3>
+                    <div class="info-extra-container">
+                        <img class="info-extra-icon" src="../assets/images/icons/info-extra.png" alt="ícone de info">
+                        <div class="info-extra">
+                            <p>
+                                Mês com maior crescimento de turistas, porcentagem e número absoluto do crescimento, do
+                                continente de referência (América do Sul), nos Anos de Comparação (2024-2025)
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="kpi-info">
+                    <div class="kpi-valor">Julho</div>
+                    <div class="kpi-numeros">
+                        <!-- DADOS MOCKADOS! -->
+                        <span class="porcentagem">+8%</span>
+                        <span class="absoluto">+4.000 turistas</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="kpi">
+                <div class="titulo-container">
+                    <h3>Mês com maior déficit</h3>
+                    <div class="info-extra-container">
+                        <img class="info-extra-icon" src="../assets/images/icons/info-extra.png" alt="ícone de info">
+                        <div class="info-extra">
+                            <p>
+                                Mês com maior déficit de turistas, porcentagem e número absoluto do déficit, do
+                                continente de referência (América do Sul), nos Anos de Comparação (2024-2025)
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="kpi-info">
+                    <div class="kpi-valor"></div>
+                    <div class="kpi-numeros">
+                        <span class="porcentagem"></span>
+                        <span class="absoluto"></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="kpis-container marketing">
+            <div class="kpi">
+                <div class="titulo-container">
+                    <h3>Mês com maior crescimento</h3>
+                    <div class="info-extra-container">
+                        <img class="info-extra-icon" src="../assets/images/icons/info-extra.png" alt="ícone de info">
+                        <div class="info-extra">
+                            <p>
+                                Mês com maior crescimento de turistas, país que representa maior parcela e número absoluto do crescimento, do continente de referência (América do Sul), nos Anos de Comparação (2024-2025) 
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="kpi-info">
+                    <div class="kpi-valor">Julho</div>
+                    <div class="kpi-numeros">
+                        <!-- DADOS MOCKADOS! -->
+                        <span class="porcentagem">+8%</span>
+                        <span class="absoluto">+4.000 turistas</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="kpi">
+                <div class="titulo-container">
+                    <h3>País com maior crescimento</h3>
+                    <div class="info-extra-container">
+                        <img class="info-extra-icon" src="../assets/images/icons/info-extra.png" alt="ícone de info">
+                        <div class="info-extra">
+                            <p>
+                                País com maior crescimento de turistas, porcentagem e número absoluto, do continente de referência (América do Sul), nos Anos de Comparação (2024-2025)
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="kpi-info">
+                    <div class="kpi-valor">Portugal</div>
+                    <div class="kpi-numeros">
+                        <!-- DADOS MOCKADOS! -->
+                        <span class="porcentagem">+8%</span>
+                        <span class="absoluto">+4.000 turistas</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="kpi">
+                <div class="titulo-container">
+                    <h3>Principal via de acesso</h3>
+                    <div class="info-extra-container">
+                        <img class="info-extra-icon" src="../assets/images/icons/info-extra.png" alt="ícone de info">
+                        <div class="info-extra">
+                            <p>
+                                Principal via de acesso de turistas, porcentagem e número absoluto, do continente de referência (América do Sul), nos Anos de Comparação (2024-2025) 
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="kpi-info">
+                    <div class="kpi-valor">Julho</div>
+                    <div class="kpi-numeros">
+                        <!-- DADOS MOCKADOS! -->
+                        <span class="porcentagem">+8%</span>
+                        <span class="absoluto">+4.000 turistas</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="graficos-container gerente">
+            <div class="grafico-container">
+                <div class="titulo-container">
+                    <h3>Fluxo de turistas</h3>
+                    <div class="info-extra-container">
+                        <img class="info-extra-icon" src="../assets/images/icons/info-extra.png" alt="ícone de info">
+                        <div class="info-extra">
+                            <p>
+                                Fluxo de turistas, por mês, do continente de referência (América do Sul), nos Anos de
+                                Comparação (2024-2025)
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="grafico">
+                    <canvas id="grafico-fluxo-turistas-gerente"></canvas>
+                </div>
+            </div>
+
+            <div class="graficos">
+                <div class="grafico-container">
+                    <div class="titulo-container">
+                        <h3>Top 3 países de origem dos turistas com maior crescimento</h3>
+                        <div class="info-extra-container">
+                            <img class="info-extra-icon" src="../assets/images/icons/info-extra.png"
+                                alt="ícone de info">
+                            <div class="info-extra">
+                                <p>
+                                    Top 3 países de origem dos turistas com maior crescimento, porcentagem e número
+                                    absoluto
+                                    do crescimento, do continente de referência (América do Sul), nos Anos de Comparação
+                                    (2024-2025)
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="grafico">
+                        <ol class="ranking-pais-origem">
+                            <!-- DADOS MOCKADOS -->
+                            <li>
+                                <div class="pais-header">
+                                    <span>1º Argentina</span>
+                                    <div class="pais-dados">
+                                        <span class="porcentagem">+24%</span>
+                                        <span class="absoluto">+14.000 turistas</span>
+                                    </div>
+                                </div>
+                                <div class="barra-porcentagem">
+                                    <div class="barra-porcentagem-atual"> </div>
+                                </div>
+                            </li>
+
+                            <li>
+                                <div class="pais-header">
+                                    <span>1º Argentina</span>
+                                    <div class="pais-dados">
+                                        <span class="porcentagem">+24%</span>
+                                        <span class="absoluto">+14.000 turistas</span>
+                                    </div>
+                                </div>
+                                <div class="barra-porcentagem">
+                                    <div class="barra-porcentagem-atual"> </div>
+                                </div>
+                            </li>
+
+                            <li>
+                                <div class="pais-header">
+                                    <span>1º Argentina</span>
+                                    <div class="pais-dados">
+                                        <span class="porcentagem">+24%</span>
+                                        <span class="absoluto">+14.000 turistas</span>
+                                    </div>
+                                </div>
+                                <div class="barra-porcentagem">
+                                    <div class="barra-porcentagem-atual"> </div>
+                                </div>
+                            </li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="graficos-container marketing">
+            <div class="grafico-container">
+                <div class="titulo-container">
+                    <h3>Fluxo de turistas Top 3 nacionalidades</h3>
+                    <div class="info-extra-container">
+                        <img class="info-extra-icon" src="../assets/images/icons/info-extra.png" alt="ícone de info">
+                        <div class="info-extra">
+                            <p>
+                                Fluxo de turistas, por mês, dos top 3 países do continente de referência (América do Sul), nos Anos de Comparação (2024-2025) 
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="grafico">
+                    <canvas id="grafico-fluxo-turistas-marketing"></canvas>
+                </div>
+            </div>
+
+            <div class="graficos">
+                <div class="grafico-container">
+                    <div class="titulo-container">
+                        <h3>Top 3 países de origem dos turistas com maior crescimento</h3>
+                        <div class="info-extra-container">
+                            <img class="info-extra-icon" src="../assets/images/icons/info-extra.png"
+                                alt="ícone de info">
+                            <div class="info-extra">
+                                <p>
+                                    Top 3 países de origem dos turistas com maior crescimento, porcentagem e número absoluto, do continente de referência (América do Sul), nos Anos de Comparação (2024-2025) 
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="grafico">
+                        <ol class="ranking-pais-origem">
+                            <!-- DADOS MOCKADOS -->
+                            <li>
+                                <div class="pais-header">
+                                    <span>1º Argentina</span>
+                                    <div class="pais-dados">
+                                        <span class="porcentagem">+24%</span>
+                                        <span class="absoluto">+14.000 turistas</span>
+                                    </div>
+                                </div>
+                                <div class="barra-porcentagem">
+                                    <div class="barra-porcentagem-atual"> </div>
+                                </div>
+                            </li>
+
+                            <li>
+                                <div class="pais-header">
+                                    <span>1º Argentina</span>
+                                    <div class="pais-dados">
+                                        <span class="porcentagem">+24%</span>
+                                        <span class="absoluto">+14.000 turistas</span>
+                                    </div>
+                                </div>
+                                <div class="barra-porcentagem">
+                                    <div class="barra-porcentagem-atual"> </div>
+                                </div>
+                            </li>
+
+                            <li>
+                                <div class="pais-header">
+                                    <span>1º Argentina</span>
+                                    <div class="pais-dados">
+                                        <span class="porcentagem">+24%</span>
+                                        <span class="absoluto">+14.000 turistas</span>
+                                    </div>
+                                </div>
+                                <div class="barra-porcentagem">
+                                    <div class="barra-porcentagem-atual"> </div>
+                                </div>
+                            </li>
+                        </ol>
+                    </div>
+                </div>
+
+                <div class="grafico-container">
+                    <div class="titulo-container">
+                        <h3>Principal via de acesso das Top 3 nacionalidades</h3>
+                        <div class="info-extra-container">
+                            <img class="info-extra-icon" src="../assets/images/icons/info-extra.png"
+                                alt="ícone de info">
+                            <div class="info-extra">
+                                <p>
+                                    Principal via de acesso das Top 3 nacionalidades do continente de referência (América do Sul), em porcentagem, nos Anos de Comparação (2024-2025) 
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="grafico-dados">
+                        <ol class="ranking-via-acesso">
+                            <!-- DADOS MOCKADOS -->
+                            <li>
+                                <div class="via-header">
+                                    <span>1º Argentina</span>
+                                    <div class="via-dados">
+                                        <span class="porcentagem">48%</span>
+                                        <img src="../assets/images/icons/maritimo.png" alt="ícone da via">
+                                    </div>
+                                </div>
+                                <div class="barra-porcentagem">
+                                    <div class="barra-porcentagem-atual"> </div>
+                                </div>
+                            </li>
+
+                            <li>
+                                <div class="via-header">
+                                    <span>1º Argentina</span>
+                                    <div class="via-dados">
+                                        <span class="porcentagem">32%</span>
+                                        <img src="../assets/images/icons/aereo.png" alt="ícone da via">
+                                    </div>
+                                </div>
+                                <div class="barra-porcentagem">
+                                    <div class="barra-porcentagem-atual"> </div>
+                                </div>
+                            </li>
+
+                            <li>
+                                <div class="via-header">
+                                    <span>1º Argentina</span>
+                                    <div class="via-dados">
+                                        <span class="porcentagem">20%</span>
+                                        <img src="../assets/images/icons/terrestre.png" alt="ícone da via">
+                                    </div>
+                                </div>
+                                <div class="barra-porcentagem">
+                                    <div class="barra-porcentagem-atual"> </div>
+                                </div>
+                            </li>
+                        </ol>
+                        <div class="grafico donut">
+                            <canvas id="grafico-principal-via-acesso"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <div id="toast"></div>
+</body>
+
+</html>
+
+
+<script src="../assets/js/utils/redirecionamento.js"></script>
+<script src="../assets/js/utils/utils.js"></script>
+<script src="../assets/js/pages/usuario/dashboard.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<script>
+    const grafico_fluxo_turistas_gerente = document.getElementById('grafico-fluxo-turistas-gerente');
+
+    new Chart(grafico_fluxo_turistas_gerente, {
+        type: 'line',
+        data: {
+            labels: ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'],
+            datasets: [{
+                label: '2025',
+                data: [7700, 6600, 6050, 5000, 5500, 6050, 8800, 6050, 5500, 7150, 7700, 9200],
+                borderWidth: 1
+            },
+            {
+                label: '2024',
+                data: [7000, 6000, 5500, 4500, 5000, 5500, 8000, 5500, 5000, 6500, 7000, 8600],
+                borderWidth: 1
+            }]
+        },
+        options: {
+            scales: {
+                y: {
+                    beginAtZero: true
+                },
+                x: {
+                    stacked: false
+                }
+            }
+        }
+    });
+
+
+
+    const grafico_fluxo_turistas_marketing = document.getElementById('grafico-fluxo-turistas-marketing');
+
+    new Chart(grafico_fluxo_turistas_marketing, {
+        type: 'line',
+        data: {
+            labels: ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'],
+            datasets: [{
+                label: 'Alemanha',
+                data: [7700, 6600, 6050, 5000, 5500, 6050, 8800, 6050, 5500, 7150, 7700, 9200],
+                borderWidth: 1
+            },
+            {
+                label: 'Portugal',
+                data: [7000, 6000, 5500, 4500, 5000, 5500, 8000, 5500, 5000, 6500, 7000, 8600],
+                borderWidth: 1
+            },
+            {
+                label: 'Itália',
+                data: [6000, 5000, 8500, 7500, 4000, 6500, 9000, 2500, 3000, 7500, 10000, 9600],
+                borderWidth: 1
+            }]
+        },
+        options: {
+            scales: {
+                y: {
+                    beginAtZero: true
+                },
+                x: {
+                    stacked: false
+                }
+            }
+        }
+    });
+
+    const grafico_principal_via_acesso = document.getElementById('grafico-principal-via-acesso');
+
+    new Chart(grafico_principal_via_acesso, {
+        type: 'doughnut',
+        data: {
+            labels: ['Marítmo', 'Aéreo', 'Terrestre'],
+            datasets: [{
+                data: [48, 32, 20],
+                borderWidth: 1
+            }]
+        },
+        options: {
+            plugins: {
+                legend: {
+                    display: false
+                }
+            }
+        }
+    });
+
+</script>
