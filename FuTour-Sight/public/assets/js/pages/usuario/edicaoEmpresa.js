@@ -174,7 +174,7 @@ function editarEmpresa() {
         ativarToast();
 
         // setTimeout(() => {
-            window.location.href = "dashboard-proprietario.html";
+            redirecionarDashboard();
         // }, 2000);
     })
     .catch((erro) => {

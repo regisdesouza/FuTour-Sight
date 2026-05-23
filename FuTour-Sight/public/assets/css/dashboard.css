@@ -280,6 +280,7 @@ h1 {
 }
 
 .grafico.donut {
+    width: 150px;
     height: 150px;
 }
 

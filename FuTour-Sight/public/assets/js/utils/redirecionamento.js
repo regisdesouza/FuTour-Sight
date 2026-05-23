@@ -13,6 +13,7 @@ const permissoes = {
 };
 
 const rotas = {
+    dashboard: './dashboard.html',
     dashboardProprietario: "./dashboard-proprietario.html",
     dashboardGerente: "./dashboard-gerente.html",
     editarEmpresa: "./edicao-empresa.html",
@@ -32,13 +33,31 @@ function verificarPermissao(permissoesPermitidas = []) {
 }
 
 function redirecionarDashboard() {
+    window.location.href = rotas.dashboard;
+}
+
+function renderizarDashboard() {
+    const elementosGerente = document.querySelectorAll('.gerente');
+    const elementosMarketing = document.querySelectorAll('.marketing');
+
     if (usuario.nivelAcesso === permissoes.PROPRIETARIO) {
-        window.location.href = rotas.dashboardProprietario;
-        return;
+        elementosGerente.forEach(elemento => {
+            elemento.classList.remove('exibindo');
+        });
+
+        elementosMarketing.forEach(elemento => {
+            elemento.classList.add('exibindo');
+        });
     }
 
     if (usuario.nivelAcesso === permissoes.GERENTE) {
-        window.location.href = rotas.dashboardGerente;
+        elementosMarketing.forEach(elemento => {
+            elemento.classList.remove('exibindo');
+        });
+
+        elementosGerente.forEach(elemento => {
+            elemento.classList.add('exibindo');
+        });
     }
 }
 
