@@ -31,4 +31,18 @@ router.put("/empresas/:idEmpresa/status", function (req, res) {
     adminFutourController.editarStatusEmpresa(req, res);
 });
 
+router.get("/notificacoes", function (req, res) {
+    adminFutourController.listarConfiguracoes(req, res);
+});
+
+router.put("/notificacoes/destinatario", function (req, res) {
+    adminFutourController.atualizarDestinatario(req, res);
+});
+
+router.put("/notificacoes/:id", function (req, res) {
+    adminFutourController.atualizarConfiguracao(req, res);
+});
+
+
+
 module.exports = router;

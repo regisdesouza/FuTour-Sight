@@ -1,169 +1,260 @@
 CREATE DATABASE IF NOT EXISTS futour_sight;
- 
+
 USE futour_sight;
- 
- 
+
+
 CREATE TABLE nivel_permissao (
     id_nivel_permissao INT AUTO_INCREMENT PRIMARY KEY,
-    nome               VARCHAR(50)  NOT NULL UNIQUE,
-    descricao          VARCHAR(255)
-);
- 
-INSERT INTO nivel_permissao (nome, descricao) VALUES
-('PLATAFORMA_ADMIN', 'Administrador da FuTour Sight - acesso total ao sistema'),
-('EMPRESA_ADMIN',    'Administrador da empresa cliente - gerencia sua equipe'),
-('EMPRESA_USER',     'Funcionario da empresa - acesso ao dashboard');
- 
- 
-CREATE TABLE status (
-    id_status INT AUTO_INCREMENT PRIMARY KEY,
-    contexto  VARCHAR(50) NOT NULL,
-    nome      VARCHAR(50) NOT NULL,
+    nome VARCHAR(50) NOT NULL UNIQUE,
     descricao VARCHAR(255)
 );
- 
-INSERT INTO status (contexto, nome, descricao) VALUES
-('EMPRESA',     'ATIVA',      'Empresa ativa na plataforma'),
-('EMPRESA',     'SUSPENSA',   'Empresa temporariamente suspensa'),
-('EMPRESA',     'PENDENTE',   'Aguardando ativacao'),
-('USUARIO',     'ATIVO',      'Usuario com acesso liberado'),
-('USUARIO',     'INATIVO',    'Usuario desativado'),
-('USUARIO',     'PENDENTE',   'Aguardando primeiro acesso'),
-('UNIDADE',     'ATIVA',      'Unidade em operacao'),
-('UNIDADE',     'INATIVA',    'Unidade desativada'),
-('SOLICITACAO', 'PENDENTE',   'Aguardando analise do administrador'),
-('SOLICITACAO', 'EM_ANALISE', 'Em analise pelo administrador'),
-('SOLICITACAO', 'APROVADA',   'Solicitacao aprovada e processada'),
-('SOLICITACAO', 'RECUSADA',   'Solicitacao recusada pelo administrador');
- 
- 
-CREATE TABLE contato (
-    id_contato   INT AUTO_INCREMENT PRIMARY KEY,
-    nome         VARCHAR(150) NOT NULL,
-    email        VARCHAR(150) NOT NULL,
-    telefone     VARCHAR(20),
-    mensagem     TEXT         NOT NULL,
-    data_criacao DATETIME DEFAULT CURRENT_TIMESTAMP
+
+INSERT INTO nivel_permissao (nome, descricao) VALUES
+('PLATAFORMA_ADMIN', 'Administrador da FuTour Sight - acesso total ao sistema'),
+('EMPRESA_ADMIN', 'Administrador da empresa cliente - gerencia sua equipe'),
+('EMPRESA_USER', 'Funcionario da empresa - acesso ao dashboard');
+
+CREATE TABLE status (
+    id_status INT AUTO_INCREMENT PRIMARY KEY,
+    contexto VARCHAR(50) NOT NULL,
+    nome VARCHAR(50) NOT NULL,
+    descricao VARCHAR(255)
 );
- 
- 
-CREATE TABLE empresa (
-    id_empresa       INT AUTO_INCREMENT PRIMARY KEY,
-    nome             VARCHAR(150) NOT NULL,
-    cnpj             CHAR(14)     NOT NULL UNIQUE,
-    email            VARCHAR(150) UNIQUE,
-    telefone         VARCHAR(20),
-    fk_status        INT          NOT NULL DEFAULT 3,
-    data_criacao     DATETIME DEFAULT CURRENT_TIMESTAMP,
+
+INSERT INTO status (contexto, nome, descricao) VALUES
+('EMPRESA', 'ATIVA', 'Empresa ativa na plataforma'),
+('EMPRESA', 'SUSPENSA', 'Empresa temporariamente suspensa'),
+('EMPRESA', 'PENDENTE', 'Aguardando ativacao'),
+('USUARIO', 'ATIVO', 'Usuario com acesso liberado'),
+('USUARIO', 'INATIVO', 'Usuario desativado'),
+('USUARIO', 'PENDENTE', 'Aguardando primeiro acesso'),
+('UNIDADE', 'ATIVA', 'Unidade em operacao'),
+('UNIDADE', 'INATIVA', 'Unidade desativada'),
+('SOLICITACAO', 'PENDENTE', 'Aguardando analise do administrador'),
+('SOLICITACAO', 'EM_ANALISE', 'Em analise pelo administrador'),
+('SOLICITACAO', 'APROVADA', 'Solicitacao aprovada e processada'),
+('SOLICITACAO', 'RECUSADA', 'Solicitacao recusada pelo administrador');
+
+CREATE TABLE solicitacao_cadastro (
+    id_solicitacao INT AUTO_INCREMENT PRIMARY KEY,
+    nome_responsavel VARCHAR(150) NOT NULL,
+    email_responsavel VARCHAR(150) NOT NULL,
+    telefone_responsavel VARCHAR(20),
+    nome_empresa VARCHAR(150) NOT NULL,
+    cnpj_empresa CHAR(14) NOT NULL,
+    email_empresa VARCHAR(150),
+    telefone_empresa VARCHAR(20),
+    fk_status INT NOT NULL DEFAULT 9,
+    data_criacao DATETIME DEFAULT CURRENT_TIMESTAMP,
     data_atualizacao DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     FOREIGN KEY (fk_status) REFERENCES status(id_status)
 );
- 
+
+CREATE TABLE contato (
+    id_contato INT AUTO_INCREMENT PRIMARY KEY,
+    nome VARCHAR(150) NOT NULL,
+    email VARCHAR(150) NOT NULL,
+    telefone VARCHAR(20),
+    mensagem TEXT NOT NULL,
+    data_criacao DATETIME DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE empresa (
+    id_empresa INT AUTO_INCREMENT PRIMARY KEY,
+    nome VARCHAR(150) NOT NULL,
+    cnpj CHAR(14) NOT NULL UNIQUE,
+    email VARCHAR(150) UNIQUE,
+    telefone VARCHAR(20),
+    fk_status INT NOT NULL DEFAULT 3,
+    data_criacao DATETIME DEFAULT CURRENT_TIMESTAMP,
+    data_atualizacao DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    FOREIGN KEY (fk_status) REFERENCES status(id_status)
+);
+
 INSERT INTO empresa (nome, cnpj, email, telefone, fk_status) VALUES
 ('FutourSight', '01253456200015', 'futoursight@gmail.com', '11944444444', 1),
 ('Hotel Haddock', '53145733000180', 'hotelhaddock@gmail.com', '1127888634', 1);
- 
- 
+
 CREATE TABLE usuario (
-    id_usuario         INT AUTO_INCREMENT PRIMARY KEY,
-    nome               VARCHAR(150),
-    email              VARCHAR(150) NOT NULL UNIQUE,
-    senha              VARCHAR(255),
-    fk_nivel_permissao INT          NOT NULL,
-    fk_empresa         INT,
-    fk_status          INT          NOT NULL DEFAULT 6,
-    primeiro_acesso    BOOLEAN DEFAULT TRUE,
-    data_criacao       DATETIME DEFAULT CURRENT_TIMESTAMP,
-    data_atualizacao   DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-    FOREIGN KEY (fk_nivel_permissao) REFERENCES nivel_permissao(id_nivel_permissao),
-    FOREIGN KEY (fk_empresa)         REFERENCES empresa(id_empresa),
-    FOREIGN KEY (fk_status)          REFERENCES status(id_status)
-);
- 
-INSERT INTO usuario (nome, email, senha, fk_nivel_permissao, fk_empresa, fk_status) VALUES
-('Reginaldo de Souza',  'reginaldo@futoursight.com.br',        'Senha@1234', 1, 1, 4),
-('Debora Marsal',       'deboramarsal@futoursight.com.br',     'Senha@4321', 1, 1, 4),
-('Lucas Eiki Gushiken', 'lucaseiki@futoursight.com.br',        'Senha@1232', 1, 1, 4),
-('Gabriel Rodrigues',   'gabrielrodrigues@futoursight.com.br', 'Senha@1333', 1, 1, 4),
-('Lucas Frossi',        'lucasfrossi@futoursight.com.br',      'Senha@4123', 1, 1, 4),
-('Jorge Araújo',        'jorgearaujo@haddock.com.br',      'Codig0@123', 2, 2, 4),
-('Mariana Martins',        'marianamartins@haddock.com.br',      'Codig0@224', 3, 2, 4);
- 
-CREATE TABLE solicitacao_cadastro (
-    id_solicitacao       INT AUTO_INCREMENT PRIMARY KEY,
-    nome_responsavel     VARCHAR(150) NOT NULL,
-    email_responsavel    VARCHAR(150) NOT NULL,
-    telefone_responsavel VARCHAR(20),
-    nome_empresa         VARCHAR(150) NOT NULL,
-    cnpj_empresa         CHAR(14)     NOT NULL,
-    email_empresa        VARCHAR(150),
-    telefone_empresa     VARCHAR(20),
-    fk_status            INT          NOT NULL DEFAULT 9,
-    data_criacao         DATETIME DEFAULT CURRENT_TIMESTAMP,
-    data_atualizacao     DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-    FOREIGN KEY (fk_status) REFERENCES status(id_status)
-);
- 
- 
-CREATE TABLE endereco (
-    id_endereco  INT AUTO_INCREMENT PRIMARY KEY,
-    cep          CHAR(8),
-    logradouro   VARCHAR(100),
-    numero       CHAR(6),
-    bairro       VARCHAR(100),
-    cidade       VARCHAR(100),
-    estado       VARCHAR(100),
-    complemento  VARCHAR(100),
-    fk_status    INT NOT NULL DEFAULT 7,
-    fk_empresa   INT NOT NULL,
+    id_usuario INT AUTO_INCREMENT PRIMARY KEY,
+    nome VARCHAR(150),
+    email VARCHAR(150) NOT NULL UNIQUE,
+    senha VARCHAR(255),
+    slack_id VARCHAR(50),
+    fk_nivel_permissao INT NOT NULL,
+    fk_empresa INT,
+    fk_status INT NOT NULL DEFAULT 6,
+    primeiro_acesso BOOLEAN DEFAULT TRUE,
     data_criacao DATETIME DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY (fk_status)  REFERENCES status(id_status),
+    data_atualizacao DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+
+    FOREIGN KEY (fk_nivel_permissao)
+        REFERENCES nivel_permissao(id_nivel_permissao),
+
+    FOREIGN KEY (fk_empresa)
+        REFERENCES empresa(id_empresa),
+
+    FOREIGN KEY (fk_status)
+        REFERENCES status(id_status)
+);
+
+INSERT INTO usuario (
+    nome,
+    email,
+    senha,
+    slack_id,
+    fk_nivel_permissao,
+    fk_empresa,
+    fk_status
+) VALUES
+(
+    'Reginaldo de Souza',
+    'reginaldo@futoursight.com.br',
+    'Senha@1234',
+    'U0B1A0A664T',
+    1,
+    1,
+    4
+),
+(
+    'Debora Marsal',
+    'deboramarsal@futoursight.com.br',
+    'Senha@4321',
+    'U0B2JP8P38D',
+    1,
+    1,
+    4
+),
+(
+    'Lucas Eiki Gushiken',
+    'lucaseiki@futoursight.com.br',
+    'Senha@1232',
+    'U0B3GDNGHT2',
+    1,
+    1,
+    4
+),
+(
+    'Gabriel Rodrigues',
+    'gabrielrodrigues@futoursight.com.br',
+    'Senha@1333',
+    'U0B2JPCLRQD',
+    1,
+    1,
+    4
+),
+(
+    'Lucas Frossi',
+    'lucasfrossi@futoursight.com.br',
+    'Senha@4123',
+    'U0B2L3H9RM4',
+    1,
+    1,
+    4
+),
+(
+    'Jorge Araújo',
+    'jorgearaujo@haddock.com.br',
+    'Codig0@123',
+    NULL,
+    2,
+    2,
+    4
+),
+(
+    'Mariana Martins',
+    'marianamartins@haddock.com.br',
+    'Codig0@224',
+    NULL,
+    3,
+    2,
+    4
+);
+CREATE TABLE configuracao_notificacao (
+    id_configuracao_notificacao INT AUTO_INCREMENT PRIMARY KEY,
+    nome VARCHAR(100) NOT NULL,
+    tipo VARCHAR(50) NOT NULL,
+    ativo BOOLEAN DEFAULT TRUE,
+    intervalo_minutos INT DEFAULT 60,
+    data_criacao DATETIME DEFAULT CURRENT_TIMESTAMP,
+    data_atualizacao DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+);
+
+INSERT INTO configuracao_notificacao (nome, tipo, ativo, intervalo_minutos) VALUES
+('ETL Turistas Sucesso', 'ETL_SUCESSO', true, 60),
+('ETL Turistas Erro',    'ETL_ERRO',    true, 5);
+
+CREATE TABLE usuario_notificacao (
+    id_usuario_notificacao INT AUTO_INCREMENT PRIMARY KEY,
+    fk_usuario INT NOT NULL,
+    fk_configuracao_notificacao INT NOT NULL,
+    receber BOOLEAN DEFAULT TRUE,
+    data_criacao DATETIME DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (fk_usuario) REFERENCES usuario(id_usuario),
+    FOREIGN KEY (fk_configuracao_notificacao)
+        REFERENCES configuracao_notificacao(id_configuracao_notificacao)
+);
+
+INSERT INTO usuario_notificacao (fk_usuario, fk_configuracao_notificacao, receber) VALUES
+(1, 1, true), (2, 1, true), (3, 1, true), (4, 1, true), (5, 1, true),
+(1, 2, true), (2, 2, true), (3, 2, true), (4, 2, true), (5, 2, true);
+
+CREATE TABLE endereco (
+    id_endereco INT AUTO_INCREMENT PRIMARY KEY,
+    cep CHAR(8),
+    logradouro VARCHAR(100),
+    numero CHAR(6),
+    bairro VARCHAR(100),
+    cidade VARCHAR(100),
+    estado VARCHAR(100),
+    complemento VARCHAR(100),
+    fk_status INT NOT NULL DEFAULT 7,
+    fk_empresa INT NOT NULL,
+    data_criacao DATETIME DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (fk_status) REFERENCES status(id_status),
     FOREIGN KEY (fk_empresa) REFERENCES empresa(id_empresa)
 );
 
 INSERT INTO endereco (cep, logradouro, numero, bairro, cidade, estado, complemento, fk_status, fk_empresa) VALUES
 ('11706230', 'Rua São Cristóvão', '331', 'Caiçara', 'Praia Grande', 'São Paulo', null, 7, 2);
- 
+
 CREATE TABLE log (
-    id_log          INT AUTO_INCREMENT PRIMARY KEY,
-    tabela          VARCHAR(100) NOT NULL,
+    id_log INT AUTO_INCREMENT PRIMARY KEY,
+    tabela VARCHAR(100) NOT NULL,
     registros_lidos INT DEFAULT 0,
-    sucesso         BOOLEAN      NOT NULL,
-    mensagem        TEXT,
-    data_criacao    DATETIME DEFAULT CURRENT_TIMESTAMP
-);
- 
- 
-CREATE TABLE chegadas_turistas (
-    id               INT AUTO_INCREMENT PRIMARY KEY,
-    via_de_acesso    VARCHAR(20),
-    uf               VARCHAR(50),
-    nome_pais_origem VARCHAR(100),
-    mes              VARCHAR(20),
-    ano              INT,
-    chegadas         INT
+    sucesso BOOLEAN NOT NULL,
+    mensagem TEXT,
+    data_criacao DATETIME DEFAULT CURRENT_TIMESTAMP
 );
 
- 
+CREATE TABLE chegadas_turistas (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    via_de_acesso VARCHAR(20),
+    uf VARCHAR(50),
+    nome_pais_origem VARCHAR(100),
+    mes VARCHAR(20),
+    ano INT,
+    chegadas INT
+);
+
 CREATE TABLE filtro_personalizado (
-    id_filtro        INT AUTO_INCREMENT PRIMARY KEY,
-    nome             VARCHAR(100) NOT NULL,
-    descricao        VARCHAR(255),
-    ano_referencia   INT,
-    mes_inicio       VARCHAR(20),
-    mes_fim          VARCHAR(20),
-    fk_usuario       INT NOT NULL,
-    data_criacao     DATETIME DEFAULT CURRENT_TIMESTAMP,
+    id_filtro INT AUTO_INCREMENT PRIMARY KEY,
+    nome VARCHAR(100) NOT NULL,
+    descricao VARCHAR(255),
+    ano_referencia INT,
+    mes_inicio VARCHAR(20),
+    mes_fim VARCHAR(20),
+    fk_usuario INT NOT NULL,
+    data_criacao DATETIME DEFAULT CURRENT_TIMESTAMP,
     data_atualizacao DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     FOREIGN KEY (fk_usuario) REFERENCES usuario(id_usuario)
 );
- 
- 
+
 CREATE TABLE filtro_item (
     id_filtro_item INT AUTO_INCREMENT PRIMARY KEY,
-    fk_filtro      INT          NOT NULL,
-    tipo           VARCHAR(6)   NOT NULL,
-    valor          VARCHAR(100) NOT NULL,
+    fk_filtro INT NOT NULL,
+    tipo VARCHAR(6) NOT NULL,
+    valor VARCHAR(100) NOT NULL,
     CONSTRAINT chk_tipo CHECK (tipo IN ('PAIS', 'ESTADO')),
     FOREIGN KEY (fk_filtro) REFERENCES filtro_personalizado(id_filtro) ON DELETE CASCADE
 );
