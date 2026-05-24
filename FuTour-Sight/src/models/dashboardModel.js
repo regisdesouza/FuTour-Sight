@@ -1,49 +1,18 @@
 const database = require("../database/config.js");
 
-const MESES_NUMERO = {
-    'Janeiro': 1, 'Fevereiro': 2, 'Março': 3, 'Abril': 4,
-    'Maio': 5, 'Junho': 6, 'Julho': 7, 'Agosto': 8,
-    'Setembro': 9, 'Outubro': 10, 'Novembro': 11, 'Dezembro': 12
-};
-
-const PAISES_POR_CONTINENTE = {
-    'América do Sul': ['Argentina','Bolívia','Chile','Colômbia','Equador','Guiana','Guiana Francesa','Paraguai','Peru','Suriname','Uruguai','Venezuela'],
-    'América do Norte': ['Canadá','Estados Unidos','México'],
-    'América Central e Caribe': ['Costa Rica','Cuba','El Salvador','Guatemala','Haiti','Honduras','Nicarágua','Panamá','República Dominicana','Trinidad e Tobago'],
-    'Europa': ['Alemanha','Áustria','Bélgica','Bulgária','Croácia','Dinamarca','Eslováquia','Eslovênia','Espanha','Estônia','Finlândia','França','Grécia','Holanda','Hungria','Irlanda','Itália','Letônia','Lituânia','Luxemburgo','Noruega','Polônia','Portugal','Reino Unido','República Tcheca','Romênia','Rússia','Sérvia','Suécia','Suíça','Turquia','Ucrânia'],
-    'Ásia': ['Arábia Saudita','Bangladesh','China','China, Hong Kong','Cingapura','Filipinas','Índia','Indonésia','Irã','Israel','Japão','Líbano','Malásia','Paquistão','República da Coreia','Síria','Taiwan','Tailândia'],
-    'África': ['África do Sul','Angola','Cabo Verde','Egito','Gana','Quênia','Marrocos','Moçambique','Nigéria','Tunísia'],
-    'Oceania': ['Austrália','Nova Zelândia']
-};
-
-function getMesesValidos(mesInicio, mesFim) {
-    const ini = MESES_NUMERO[mesInicio];
-    const fim = MESES_NUMERO[mesFim];
-    return Object.entries(MESES_NUMERO)
-        .filter(([, n]) => n >= ini && n <= fim)
-        .map(([m]) => m);
-}
-
 function buildWhere(filtro) {
-    const meses = getMesesValidos(filtro.mes_inicio, filtro.mes_fim);
-    const paises = PAISES_POR_CONTINENTE[filtro.continente] || [];
-
-    const placeholderMeses  = meses.map(() => '?').join(',');
-    const placeholderPaises = paises.map(() => '?').join(',');
-
     return {
         clause: `
-            WHERE ct.uf = ?
+            JOIN vw_continente_turistas vc ON vc.id = ct.id
+            WHERE vc.continente = ?
+              AND ct.uf = ?
               AND ct.ano IN (?, ?)
-              AND ct.mes IN (${placeholderMeses})
-              AND ct.nome_pais_origem IN (${placeholderPaises})
         `,
         params: [
-            filtro.uf,
+            filtro.continente,
+            filtro.estado,
             filtro.ano_inicio,
-            filtro.ano_fim,
-            ...meses,
-            ...paises
+            filtro.ano_fim
         ]
     };
 }

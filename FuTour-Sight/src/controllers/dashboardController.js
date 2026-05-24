@@ -1,9 +1,9 @@
 const model = require('../models/dashboardModel');
 
-const MESES = ['Janeiro','Fevereiro','Marco','Abril','Maio','Junho','Julho','Agosto','Setembro','Outubro','Novembro','Dezembro'];
+const MESES = ['Janeiro','Fevereiro','Março','Abril','Maio','Junho','Julho','Agosto','Setembro','Outubro','Novembro','Dezembro'];
 
 function calcularCrescimento(atual, anterior) {
-    if (!anterior) return null;
+    if (!anterior) return 100;
     return parseFloat((((atual - anterior) / anterior) * 100).toFixed(1));
 }
 
@@ -18,8 +18,7 @@ function separarPorAno(rows, anoInicio, anoFim) {
 }
 
 function topCrescimento(inicio, fim, n = 3) {
-    const chaves = Object.keys(fim);
-    return chaves
+    return Object.keys(fim)
         .map(k => ({
             nome: k,
             totalInicio: inicio[k] || 0,
@@ -29,6 +28,34 @@ function topCrescimento(inicio, fim, n = 3) {
         }))
         .sort((a, b) => b.diferenca - a.diferenca)
         .slice(0, n);
+}
+
+function topVolume(fim, n = 3) {
+    return Object.entries(fim)
+        .map(([nome, total]) => ({ nome, total }))
+        .sort((a, b) => b.total - a.total)
+        .slice(0, n);
+}
+
+function kpiDeficit(inicio, fim) {
+    return Object.keys({ ...inicio, ...fim })
+        .map(k => ({
+            nome: k,
+            diferenca: (fim[k] || 0) - (inicio[k] || 0),
+            crescimento: calcularCrescimento(fim[k] || 0, inicio[k] || 0)
+        }))
+        .filter(k => k.diferenca < 0)
+        .sort((a, b) => a.diferenca - b.diferenca)[0] || null;
+}
+
+function totalPorMes(rows, ano) {
+    const totais = {};
+    for (const r of rows) {
+        if (r.ano == ano) {
+            totais[r.mes] = (totais[r.mes] || 0) + Number(r.total);
+        }
+    }
+    return MESES.map(mes => totais[mes] || 0);
 }
 
 async function getDashboard(req, res) {
@@ -46,30 +73,44 @@ async function getDashboard(req, res) {
 
         const { inicio: mesI, fim: mesF } = separarPorAno(mensal, filtro.ano_inicio, filtro.ano_fim);
         const { inicio: paisI, fim: paisF } = separarPorAno(paises, filtro.ano_inicio, filtro.ano_fim);
-        const { inicio: viaI, fim: viaF } = separarPorAno(vias, filtro.ano_inicio, filtro.ano_fim);
+        const { inicio: viaI, fim: viaF }   = separarPorAno(vias, filtro.ano_inicio, filtro.ano_fim);
 
-        const kpiMes = topCrescimento(mesI, mesF, 1)[0];
+        const kpiMes  = topCrescimento(mesI, mesF, 1)[0];
         const kpiPais = topCrescimento(paisI, paisF, 1)[0];
-        const kpiVia = topCrescimento(viaI, viaF, 1)[0];
+        const kpiVia  = topCrescimento(viaI, viaF, 1)[0];
 
-        const top3Paises = topCrescimento(paisI, paisF, 3);
-        const nomesPaises = top3Paises.map(p => p.nome);
+        const totalInicio = Object.values(mesI).reduce((a, b) => a + b, 0);
+        const totalFim    = Object.values(mesF).reduce((a, b) => a + b, 0);
+        const kpiDeficitMes = kpiDeficit(mesI, mesF);
+
+        const top3Crescimento = topCrescimento(paisI, paisF, 3);
+
+        const top3Volume  = topVolume(paisF, 3);
+        const nomesVolume = top3Volume.map(p => p.nome);
 
         const [fluxo, viaTop3] = await Promise.all([
-            model.getFluxoMensalPorPais(filtro, nomesPaises),
-            model.getTotaisPorVia(filtro, nomesPaises)
+            model.getFluxoMensalPorPais(filtro, nomesVolume),
+            model.getTotaisPorVia(filtro, nomesVolume)
         ]);
 
-        const { fim: viaTop3F, inicio: viaTop3I } = separarPorAno(viaTop3, filtro.ano_inicio, filtro.ano_fim);
+        const { fim: viaTop3F } = separarPorAno(viaTop3, filtro.ano_inicio, filtro.ano_fim);
         const totalViaTop3 = Object.values(viaTop3F).reduce((a, b) => a + b, 0);
 
-        const graficoLinha = nomesPaises.map(pais => ({
-            pais,
-            dados: MESES.map(mes => {
-                const r = fluxo.find(f => f.nome_pais_origem === pais && f.mes === mes && f.ano == filtro.ano_fim);
-                return r ? Number(r.total) : 0;
-            })
-        }));
+        const graficoLinhaMarketing = nomesVolume.map(pais => ({
+    pais,
+    dados: MESES.map(mes => {
+        const total = [filtro.ano_inicio, filtro.ano_fim].reduce((acc, ano) => {
+            const r = fluxo.find(f => f.nome_pais_origem === pais && f.mes === mes && f.ano == ano);
+            return acc + (r ? Number(r.total) : 0);
+        }, 0);
+        return total;
+    })
+}));
+
+        const graficoLinhaGerente = [
+            { ano: filtro.ano_inicio, dados: totalPorMes(mensal, filtro.ano_inicio) },
+            { ano: filtro.ano_fim,    dados: totalPorMes(mensal, filtro.ano_fim) }
+        ];
 
         const graficoDoughnut = Object.entries(viaTop3F).map(([via, total]) => ({
             via,
@@ -80,7 +121,7 @@ async function getDashboard(req, res) {
         return res.json({
             filtro: {
                 nome: filtro.nome,
-                uf: filtro.uf,
+                estado: filtro.estado,
                 continente: filtro.continente,
                 ano_inicio: filtro.ano_inicio,
                 ano_fim: filtro.ano_fim
@@ -100,13 +141,26 @@ async function getDashboard(req, res) {
                     via: kpiVia?.nome,
                     crescimento_percentual: kpiVia?.crescimento,
                     diferenca_chegadas: kpiVia?.diferenca
-                }
+                },
+                taxa_crescimento_geral: {
+                    crescimento_percentual: calcularCrescimento(totalFim, totalInicio),
+                    diferenca_turistas: totalFim - totalInicio
+                },
+                mes_maior_deficit: kpiDeficitMes ? {
+                    mes: kpiDeficitMes.nome,
+                    crescimento_percentual: kpiDeficitMes.crescimento,
+                    diferenca_turistas: kpiDeficitMes.diferenca
+                } : null
             },
-            grafico_linha: {
+            grafico_linha_marketing: {
                 meses: MESES,
-                series: graficoLinha
+                series: graficoLinhaMarketing
             },
-            ranking_paises: top3Paises.map((p, i) => ({
+            grafico_linha_gerente: {
+                meses: MESES,
+                series: graficoLinhaGerente
+            },
+            ranking_paises: top3Crescimento.map((p, i) => ({
                 posicao: i + 1,
                 pais: p.nome,
                 total_ano_inicio: p.totalInicio,
