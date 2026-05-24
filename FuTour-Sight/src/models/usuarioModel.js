@@ -36,48 +36,112 @@ function autenticar(email, senha) {
     `, [email, senha]);
 }
 
-function criarFiltro(nome, anoInicio, anoFim, mesInicio, mesFim, uf, continente, fkUsuario) {
-    return database.executar(`
+function criarFiltro(
+    nome,
+    estado,
+    continente,
+    anoInicio,
+    anoFim,
+    fkUsuario
+) {
+    const instrucaoSql = `
         INSERT INTO filtro_personalizado (
-            nome, ano_inicio, ano_fim, mes_inicio, mes_fim, uf, continente, fk_usuario
-        ) VALUES (?, ?, ?, ?, ?, ?, ?, ?);
-    `, [nome, anoInicio, anoFim, mesInicio, mesFim, uf, continente, fkUsuario]);
+            nome,
+            estado,
+            continente,
+            ano_inicio,
+            ano_fim,
+            fk_usuario
+        )
+        VALUES (?, ?, ?, ?, ?, ?);
+    `;
+
+    return database.executar(instrucaoSql, [
+        nome,
+        estado,
+        continente,
+        anoInicio,
+        anoFim,
+        fkUsuario
+    ]);
 }
 
 function listarFiltros(idUsuario) {
-    return database.executar(`
-        SELECT id_filtro, nome, ano_inicio, ano_fim, mes_inicio, mes_fim, uf, continente
-        FROM filtro_personalizado
-        WHERE fk_usuario = ?;
-    `, [idUsuario]);
+    const instrucaoSql = `
+        SELECT 
+            id_filtro,
+            nome, 
+            estado, 
+            continente, 
+            ano_inicio, 
+            ano_fim 
+        FROM 
+            filtro_personalizado 
+        WHERE fk_usuario = ?
+    `;
+
+    return database.executar(instrucaoSql, [idUsuario]);
 }
 
 function buscarFiltro(idFiltro) {
-    return database.executar(`
-        SELECT id_filtro, nome, ano_inicio, ano_fim, mes_inicio, mes_fim, uf, continente
-        FROM filtro_personalizado
-        WHERE id_filtro = ?;
-    `, [idFiltro]);
+    const instrucaoSql = `
+        SELECT 
+            nome, 
+            estado, 
+            continente, 
+            ano_inicio, 
+            ano_fim 
+        FROM 
+            filtro_personalizado 
+        WHERE id_filtro = ?
+    `;
+
+    return database.executar(instrucaoSql, [idFiltro]);
 }
 
 function listarEstados() {
     return database.executar(`SELECT DISTINCT uf FROM chegadas_turistas ORDER BY uf;`);
 }
 
-function listarPaises() {
-    return database.executar(`SELECT DISTINCT nome_pais_origem FROM chegadas_turistas ORDER BY nome_pais_origem;`);
+function listarContinentes() {
+    const instrucaoSql = `
+        SELECT DISTINCT(continente) FROM vw_continente_turistas ORDER BY continente;
+    `;
+
+    return database.executar(instrucaoSql);
 }
 
 function listarAnos() {
     return database.executar(`SELECT DISTINCT ano FROM chegadas_turistas ORDER BY ano DESC;`);
 }
 
-function atualizarFiltro(nome, anoInicio, anoFim, mesInicio, mesFim, uf, continente, idFiltro) {
-    return database.executar(`
+function atualizarFiltro(
+    nomeFiltro,
+    estado,
+    continente,
+    ano_inicio,
+    ano_fim,
+    idFiltro
+) {
+    const instrucaoSql = `
         UPDATE filtro_personalizado
-        SET nome = ?, ano_inicio = ?, ano_fim = ?, mes_inicio = ?, mes_fim = ?, uf = ?, continente = ?
+        SET
+            nome = ?,
+            estado = ?,
+            continente = ?,
+            ano_inicio = ?,
+            ano_fim = ?
         WHERE id_filtro = ?;
-    `, [nome, anoInicio, anoFim, mesInicio, mesFim, uf, continente, idFiltro]);
+    `;
+
+    return database.executar(instrucaoSql, [
+        nomeFiltro,
+        estado,
+        continente,
+        ano_inicio,
+        ano_fim,
+        idFiltro
+    ]);
 }
 
 function editarPerfil(idUsuario, nome, email, senha) {
@@ -101,7 +165,7 @@ module.exports = {
     listarFiltros,
     buscarFiltro,
     listarEstados,
-    listarPaises,
+    listarContinentes,
     listarAnos,
     atualizarFiltro,
     editarPerfil,

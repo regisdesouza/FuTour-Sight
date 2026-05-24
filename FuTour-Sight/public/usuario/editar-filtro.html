@@ -97,26 +97,20 @@
                     </div>
                     <div class="campo">
                         <label for="estado-destino">Estado de destino</label>
-                        <select name="estado-destino" id="estado-destino" onchange="adicionarEstado()">
+                        <select name="estado-destino" id="estado-destino">
                             <option value="">Selecione um estado...</option>
                         </select>
-                        <ul>
-
-                        </ul>
-                        <div id="div_msg_estados" class="msg-erro"></div>
+                        <div id="div_msg_estado" class="msg-erro"></div>
                     </div>
                     <div class="campo">
-                        <label for="pais-origem">País de origem</label>
-                        <select name="pais-origem" id="pais-origem" onchange="adicionarPais()">
-                            <option value="">Selecione um país...</option>
+                        <label for="continente-origem">Continente</label>
+                        <select name="continente-origem" id="continente-origem">
+                            <option value="">Selecione um continente...</option>
                         </select>
-                        <ul>
-
-                        </ul>
-                        <div id="div_msg_paises" class="msg-erro"></div>
+                        <div id="div_msg_continente" class="msg-erro"></div>
                     </div>
 
-                    <div class="intervalo-meses-container">
+                    <!-- <div class="intervalo-meses-container">
                         <label for="">Intervalo de meses</label>
                         <div class="intervalo-meses">
                             <select name="" id="mes-inicio">
@@ -149,16 +143,34 @@
                                 <option value="Dezembro">Dezembro</option>
                             </select>
                         </div>
-                        <div id="div_msg_mes_inicio" class="msg-erro"></div>
-                        <div id="div_msg_mes_final" class="msg-erro"></div>
-                    </div>
+                        <div id="div_msg_mes_inicio"   class="msg-erro"></div>
+                        <div id="div_msg_mes_final"    class="msg-erro"></div>
+                    </div> -->
 
-                    <div class="campo">
+                    <!-- <div class="campo">
                         <label for="ano-referencia">Ano de referência</label>
                         <select name="ano-referencia" id="ano-referencia">
 
                         </select>
-                        <div id="div_msg_ano"         class="msg-erro"></div>
+                        <div id="div_msg_ano" class="msg-erro"></div>
+                    </div> -->
+
+                    <div class="campo">
+                        <label for="ano-referencia">Anos de comparação</label>
+                        <div class="anos-comparacao">
+                            <select name="ano-referencia" id="ano-inicio" class="select-anos-comparacao">
+
+                            </select>
+
+                            <select name="ano-referencia" id="ano-fim" class="select-anos-comparacao">
+
+
+                                <!-- <option value="">2025</option> -->
+
+
+                            </select>
+                        </div>
+                        <div id="div_msg_ano" class="msg-erro"></div>
                     </div>
                 </div>
 
@@ -175,8 +187,8 @@
 
 </html>
 
-<script src="../assets/js/pages/usuario/editarFiltro.js"></script>
-
 <script src="../assets/js/utils/redirecionamento.js"></script>
 <script src="../assets/js/utils/utils.js"></script>
 <script src="../assets/js/utils/validacoes.js"></script>
+
+<script src="../assets/js/pages/usuario/editarFiltro.js"></script>
