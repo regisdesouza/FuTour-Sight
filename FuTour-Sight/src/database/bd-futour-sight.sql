@@ -244,15 +244,12 @@ CREATE TABLE filtro_personalizado (
     nome  VARCHAR(100) NOT NULL,
     ano_inicio INT NOT NULL,
     ano_fim INT NOT NULL,
-    mes_inicio  VARCHAR(20)  NOT NULL,
-    mes_fim  VARCHAR(20)  NOT NULL,
-    uf VARCHAR(50)  NOT NULL,
-    continente VARCHAR(60)  NOT NULL,
+    estado VARCHAR(50) NOT NULL,
+    continente VARCHAR(60) NOT NULL,
     fk_usuario INT NOT NULL,
     data_criacao  DATETIME DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (fk_usuario) REFERENCES usuario(id_usuario)
 );
- 
 
 CREATE VIEW vw_solicitacoes AS
 SELECT
@@ -268,8 +265,8 @@ SELECT
     s.nome AS status
 FROM solicitacao_cadastro sc
 INNER JOIN status s ON s.id_status = sc.fk_status;
- 
- 
+
+
 CREATE VIEW vw_empresas AS
 SELECT
     e.id_empresa,
@@ -284,8 +281,8 @@ FROM empresa e
 INNER JOIN status s  ON s.id_status  = e.fk_status
 LEFT  JOIN usuario u ON u.fk_empresa = e.id_empresa
 GROUP BY e.id_empresa, e.nome, e.cnpj, e.email, e.telefone, s.nome, e.data_criacao;
- 
- 
+
+
 CREATE VIEW vw_usuarios AS
 SELECT
     u.id_usuario,
@@ -301,8 +298,8 @@ FROM usuario u
 INNER JOIN nivel_permissao np ON np.id_nivel_permissao = u.fk_nivel_permissao
 INNER JOIN status s           ON s.id_status           = u.fk_status
 LEFT  JOIN empresa e          ON e.id_empresa          = u.fk_empresa;
- 
- 
+
+
 CREATE VIEW vw_metricas_filtro AS
 SELECT
     ct.ano,
@@ -321,14 +318,14 @@ SELECT
             SELECT SUM(chegadas)
             FROM chegadas_turistas ct2
             WHERE ct2.ano = ct.ano
-              AND ct2.nome_pais_origem = (
-                  SELECT nome_pais_origem
-                  FROM chegadas_turistas ct3
-                  WHERE ct3.ano = ct.ano
-                  GROUP BY nome_pais_origem
-                  ORDER BY SUM(chegadas) DESC
-                  LIMIT 1
-              )
+                AND ct2.nome_pais_origem = (
+                    SELECT nome_pais_origem
+                    FROM chegadas_turistas ct3
+                    WHERE ct3.ano = ct.ano
+                    GROUP BY nome_pais_origem
+                    ORDER BY SUM(chegadas) DESC
+                    LIMIT 1
+                )
         ) * 100.0 / SUM(ct.chegadas), 0
     ) AS percentual_pais_lider,
     (
@@ -343,19 +340,19 @@ SELECT
         SELECT SUM(chegadas)
         FROM chegadas_turistas ct2
         WHERE ct2.ano = ct.ano
-          AND ct2.mes = (
-              SELECT mes
-              FROM chegadas_turistas ct3
-              WHERE ct3.ano = ct.ano
-              GROUP BY mes
-              ORDER BY SUM(chegadas) DESC
-              LIMIT 1
-          )
+            AND ct2.mes = (
+                SELECT mes
+                FROM chegadas_turistas ct3
+                WHERE ct3.ano = ct.ano
+                GROUP BY mes
+                ORDER BY SUM(chegadas) DESC
+                LIMIT 1
+            )
     ) AS turistas_melhor_mes
 FROM chegadas_turistas ct
 GROUP BY ct.ano;
- 
- 
+
+
 CREATE VIEW vw_fluxo_mensal AS
 SELECT
     ano,
@@ -378,8 +375,8 @@ SELECT
 FROM chegadas_turistas
 GROUP BY ano, mes
 ORDER BY ano, mes_numero;
- 
- 
+
+
 CREATE VIEW vw_ranking_paises AS
 SELECT
     ano,
@@ -395,8 +392,8 @@ SELECT
 FROM chegadas_turistas ct
 GROUP BY ano, nome_pais_origem
 ORDER BY ano, total_turistas DESC;
- 
- 
+
+
 CREATE VIEW vw_dashboard_filtrado AS
 SELECT
     ct.ano,
@@ -407,24 +404,24 @@ SELECT
     SUM(ct.chegadas) AS total_turistas
 FROM chegadas_turistas ct
 GROUP BY ct.ano, ct.mes, ct.uf, ct.nome_pais_origem, ct.via_de_acesso;
- 
- 
+
+
 SELECT * FROM vw_empresas ORDER BY nome ASC;
- 
+
 SELECT * FROM vw_empresas WHERE nome LIKE '%empresa teste%' ORDER BY nome ASC;
- 
+
 SELECT * FROM vw_usuarios WHERE status != 'PENDENTE' ORDER BY nome ASC;
- 
+
 SELECT * FROM vw_usuarios
 WHERE status     != 'PENDENTE'
-  AND id_empresa  = 1
-  AND nome LIKE '%joao%'
+    AND id_empresa  = 1
+    AND nome LIKE '%joao%'
 ORDER BY nome ASC;
- 
+
 SELECT * FROM vw_solicitacoes ORDER BY data_criacao DESC;
- 
+
 SELECT * FROM vw_solicitacoes WHERE id_solicitacao = 1;
- 
+
 SELECT id_log, tabela, registros_lidos, sucesso, mensagem, data_criacao
 FROM log
 ORDER BY data_criacao DESC;
@@ -488,8 +485,8 @@ SELECT
     END AS continente
 FROM chegadas_turistas ct
 WHERE ct.nome_pais_origem NOT LIKE 'Outros países%'
-  AND ct.nome_pais_origem != 'Países não especificados';
-  
+    AND ct.nome_pais_origem != 'Países não especificados';
+
 CREATE VIEW vw_regiao_turistas AS
 SELECT
     ct.id,
@@ -550,7 +547,7 @@ SELECT *
 FROM vw_continente_turistas ct
 JOIN vw_regiao_turistas rt ON rt.id = ct.id
 WHERE ct.continente = 'Europa' AND rt.regiao = 'Sudeste';
-  
+
 SELECT SUM(ct.chegadas) AS total_turistas FROM vw_continente_turistas ct
 JOIN vw_regiao_turistas rt  ON rt.id = ct.id
 WHERE ct.continente = 'Europa' AND rt.regiao = 'Sudeste';
