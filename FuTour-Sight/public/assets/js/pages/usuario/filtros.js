@@ -182,8 +182,8 @@ function carregarFiltros() {
                         </div>
                     </div>
                     <div class="botoes">
-                        <button onclick="editarFiltro(${filtro.id})">Editar</button>
-                        <button onclick="confirmarExcluirFiltro(${filtro.id})">Excluir</button>
+                        <button onclick="editarFiltro(${filtro.id_filtro})">Editar</button>
+                        <button onclick="confirmarExcluirFiltro(${filtro.id_filtro})">Excluir</button>
                     </div>
                 </li>
             `;
