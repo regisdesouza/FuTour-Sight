@@ -111,29 +111,15 @@ function criarFiltro(
 
 function listarFiltros(idUsuario) {
     const instrucaoSql = `
-        SELECT
-            fp.id_filtro,
-            fp.nome,
-            fp.mes_inicio,
-            fp.mes_fim,
-            fp.ano_referencia,
-            GROUP_CONCAT(
-                CASE
-                    WHEN fi.tipo = 'ESTADO'
-                    THEN fi.valor
-                END
-            ) AS estados,
-            GROUP_CONCAT(
-                CASE
-                    WHEN fi.tipo = 'PAIS'
-                    THEN fi.valor
-                END
-            ) AS paises
-        FROM filtro_personalizado fp
-        LEFT JOIN filtro_item fi
-            ON fi.fk_filtro = fp.id_filtro
-        WHERE fp.fk_usuario = ?
-        GROUP BY fp.id_filtro;
+        SELECT 
+            nome, 
+            estado, 
+            continente, 
+            ano_inicio, 
+            ano_fim 
+        FROM 
+            filtro_personalizado 
+        WHERE fk_usuario = ?
     `;
 
     return database.executar(instrucaoSql, [idUsuario]);
