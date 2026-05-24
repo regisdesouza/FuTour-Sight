@@ -218,21 +218,7 @@ async function listarFiltros(req, res) {
     try {
         const resultados = await usuarioModel.listarFiltros(idUsuario);
 
-        const listaFiltros = resultados.map((filtro) => ({
-            id: filtro.id_filtro,
-            nome: filtro.nome,
-            estados: filtro.estados
-                ? filtro.estados.split(",")
-                : [],
-            paises: filtro.paises
-                ? filtro.paises.split(",")
-                : [],
-            mes_inicio: filtro.mes_inicio,
-            mes_fim: filtro.mes_fim,
-            ano: filtro.ano_referencia
-        }));
-
-        return res.status(200).json(listaFiltros);
+        return res.status(200).json(resultados);
 
     } catch (erro) {
         console.log(erro);
@@ -316,39 +302,22 @@ async function atualizarFiltro(req, res) {
 
     const {
         nomeFiltro,
-        estados,
-        paises,
-        mes_inicio,
-        mes_fim,
-        ano
+        estado,
+        continente,
+        ano_inicio,
+        ano_fim,
+        fkUsuario
     } = req.body;
 
     try {
         await usuarioModel.atualizarFiltro(
             nomeFiltro,
-            mes_inicio,
-            mes_fim,
-            ano,
+            estado,
+            continente,
+            ano_inicio,
+            ano_fim,
             idFiltro
         );
-
-        await usuarioModel.deletarFiltrosItens(idFiltro);
-
-        for (const estado of estados) {
-            await usuarioModel.criarFiltroItem(
-                idFiltro,
-                "ESTADO",
-                estado
-            );
-        }
-
-        for (const pais of paises) {
-            await usuarioModel.criarFiltroItem(
-                idFiltro,
-                "PAIS",
-                pais
-            );
-        }
 
         return res.status(200).json({
             mensagem: "Filtro atualizado com sucesso."

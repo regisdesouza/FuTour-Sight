@@ -111,29 +111,16 @@ function criarFiltro(
 
 function listarFiltros(idUsuario) {
     const instrucaoSql = `
-        SELECT
-            fp.id_filtro,
-            fp.nome,
-            fp.mes_inicio,
-            fp.mes_fim,
-            fp.ano_referencia,
-            GROUP_CONCAT(
-                CASE
-                    WHEN fi.tipo = 'ESTADO'
-                    THEN fi.valor
-                END
-            ) AS estados,
-            GROUP_CONCAT(
-                CASE
-                    WHEN fi.tipo = 'PAIS'
-                    THEN fi.valor
-                END
-            ) AS paises
-        FROM filtro_personalizado fp
-        LEFT JOIN filtro_item fi
-            ON fi.fk_filtro = fp.id_filtro
-        WHERE fp.fk_usuario = ?
-        GROUP BY fp.id_filtro;
+        SELECT 
+            id_filtro,
+            nome, 
+            estado, 
+            continente, 
+            ano_inicio, 
+            ano_fim 
+        FROM 
+            filtro_personalizado 
+        WHERE fk_usuario = ?
     `;
 
     return database.executar(instrucaoSql, [idUsuario]);
@@ -141,29 +128,15 @@ function listarFiltros(idUsuario) {
 
 function buscarFiltro(idFiltro) {
     const instrucaoSql = `
-        SELECT
-            fp.id_filtro,
-            fp.nome,
-            fp.mes_inicio,
-            fp.mes_fim,
-            fp.ano_referencia,
-            GROUP_CONCAT(
-                CASE
-                    WHEN fi.tipo = 'ESTADO'
-                    THEN fi.valor
-                END
-            ) AS estados,
-            GROUP_CONCAT(
-                CASE
-                    WHEN fi.tipo = 'PAIS'
-                    THEN fi.valor
-                END
-            ) AS paises
-        FROM filtro_personalizado fp
-        LEFT JOIN filtro_item fi
-            ON fi.fk_filtro = fp.id_filtro
-        WHERE fp.id_filtro = ?
-        GROUP BY fp.id_filtro;
+        SELECT 
+            nome, 
+            estado, 
+            continente, 
+            ano_inicio, 
+            ano_fim 
+        FROM 
+            filtro_personalizado 
+        WHERE id_filtro = ?
     `;
 
     return database.executar(instrucaoSql, [idFiltro]);
@@ -198,27 +171,30 @@ function listarAnos() {
 }
 
 function atualizarFiltro(
-    nome,
-    mesInicio,
-    mesFim,
-    ano,
+    nomeFiltro,
+    estado,
+    continente,
+    ano_inicio,
+    ano_fim,
     idFiltro
 ) {
     const instrucaoSql = `
         UPDATE filtro_personalizado
         SET
             nome = ?,
-            mes_inicio = ?,
-            mes_fim = ?,
-            ano_referencia = ?
+            estado = ?,
+            continente = ?,
+            ano_inicio = ?,
+            ano_fim = ?
         WHERE id_filtro = ?;
     `;
 
     return database.executar(instrucaoSql, [
-        nome,
-        mesInicio,
-        mesFim,
-        ano,
+        nomeFiltro,
+        estado,
+        continente,
+        ano_inicio,
+        ano_fim,
         idFiltro
     ]);
 }

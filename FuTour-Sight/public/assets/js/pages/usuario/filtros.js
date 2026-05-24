@@ -32,6 +32,8 @@
 preencherNomeUsuario();
 
 var chkNomeFiltro = false;
+var chkEstado = false;
+var chkContinente = false;
 var chkAno        = false;
 
 function onkey_nome_filtro() {
@@ -46,13 +48,53 @@ function onkey_nome_filtro() {
     }
 }
 
-function onkey_ano() {
-    var erro = validarAno(document.getElementById("ano-referencia").value);
+function onkey_estado() {
+    var erro = validarEstado(document.getElementById("estado-destino").value.trim());
 
     if (erro != "") {
-        document.getElementById("div_msg_ano").innerHTML = erro;
-        chkAno = false;
+        document.getElementById("div_msg_estado").innerHTML = erro;
+        chkEstado = false;
+        console.log('erro estado');
+
     } else {
+        document.getElementById("div_msg_estado").innerHTML = "";
+        chkEstado = true;
+    }
+}
+
+function onkey_continente() {
+    var erro = validarContinente(document.getElementById("continente-origem").value.trim());
+
+    if (erro != "") {
+        document.getElementById("div_msg_continente").innerHTML = erro;
+        chkcontinente = false;
+        console.log('erro continente');
+        
+    } else {
+        document.getElementById("div_msg_continente").innerHTML = "";
+        chkContinente = true;
+    }
+}
+
+function onkey_ano() {
+    var erroAnoInicio = validarAno(document.getElementById("ano-inicio").value);
+    var erroAnoFim = validarAno(document.getElementById("ano-fim").value);
+
+    if (erroAnoInicio != "") {
+        document.getElementById("div_msg_ano").innerHTML += erroAnoInicio + "<br>";
+        chkAno = false;
+        console.log('erro ano inicio');
+
+    } 
+    
+    if (erroAnoFim != "") {
+        document.getElementById("div_msg_ano").innerHTML += erroAnoFim;
+        chkAno = false;
+        console.log('erro ano fim');
+
+    } 
+    
+    if (erroAnoInicio == "" && erroAnoFim == "") {
         document.getElementById("div_msg_ano").innerHTML = "";
         chkAno = true;
     }
@@ -60,16 +102,11 @@ function onkey_ano() {
 
 function salvarFiltro() {
     onkey_nome_filtro();
+    onkey_estado();
+    onkey_continente();
     onkey_ano();
 
-    var erroEstados = validarSelectMultiplo(estadosSelecionados);
-    document.getElementById("div_msg_estados").innerHTML = erroEstados;
-
-    var erroPaises = validarSelectMultiplo(paisesSelecionados);
-    document.getElementById("div_msg_paises").innerHTML = erroPaises;
-
-    const temErro = chkNomeFiltro && chkMesInicio && chkMesFinal && chkAno
-        && erroEstados === "" && erroPaises === "";
+    const temErro = chkNomeFiltro && chkEstado && chkContinente && chkAno;
 
     if (!temErro) {
         exibirToast("erro", "Preencha todos os campos corretamente");
@@ -129,19 +166,9 @@ function carregarFiltros() {
         ul_filtros.innerHTML = "";
 
         filtros.forEach(filtro => {
-            const primeirosEstados  = filtro.estados.slice(0, 3);
-            const restanteEstados   = filtro.estados.length - 3;
-            let stringEstados       = primeirosEstados.join(", ");
-            if (restanteEstados > 0) stringEstados += ` +${restanteEstados}`;
-
-            const primeirosPaises   = filtro.paises.slice(0, 1);
-            const restantePaises    = filtro.paises.length - 1;
-            let stringPaises        = primeirosPaises.join(", ");
-            if (restantePaises > 0) stringPaises += ` +${restantePaises}`;
-
-            const stringInfoFiltro  = stringEstados
-                + (stringPaises !== "" && stringEstados !== "" ? " - " : "")
-                + stringPaises;
+            console.log(filtro);
+            
+            const stringInfoFiltro = `${filtro.estado} - ${filtro.continente}`;
 
             ul_filtros.innerHTML += `
                 <li class="filtro">
@@ -155,8 +182,8 @@ function carregarFiltros() {
                         </div>
                     </div>
                     <div class="botoes">
-                        <button onclick="editarFiltro(${filtro.id})">Editar</button>
-                        <button onclick="confirmarExcluirFiltro(${filtro.id})">Excluir</button>
+                        <button onclick="editarFiltro(${filtro.id_filtro})">Editar</button>
+                        <button onclick="confirmarExcluirFiltro(${filtro.id_filtro})">Excluir</button>
                     </div>
                 </li>
             `;

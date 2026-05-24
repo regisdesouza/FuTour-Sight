@@ -311,3 +311,13 @@ function validarCampoObrigatorio(valor, nomeCampo) {
 
     return "";
 }
+
+function validarContinente(valor) {
+    const continente = valor.trim();
+
+    if (continente == "") {
+        return "Selecione um continente";
+    }
+
+    return "";
+}
