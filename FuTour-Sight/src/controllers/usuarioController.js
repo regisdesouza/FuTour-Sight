@@ -363,7 +363,6 @@ async function excluirFiltro(req, res) {
     const idFiltro = req.params.idFiltro;
 
     try {
-        await usuarioModel.deletarFiltrosItens(idFiltro);
 
         await usuarioModel.excluirFiltro(idFiltro);
 
