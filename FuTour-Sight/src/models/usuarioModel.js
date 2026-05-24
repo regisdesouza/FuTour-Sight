@@ -171,27 +171,30 @@ function listarAnos() {
 }
 
 function atualizarFiltro(
-    nome,
-    mesInicio,
-    mesFim,
-    ano,
+    nomeFiltro,
+    estado,
+    continente,
+    ano_inicio,
+    ano_fim,
     idFiltro
 ) {
     const instrucaoSql = `
         UPDATE filtro_personalizado
         SET
             nome = ?,
-            mes_inicio = ?,
-            mes_fim = ?,
-            ano_referencia = ?
+            estado = ?,
+            continente = ?,
+            ano_inicio = ?,
+            ano_fim = ?
         WHERE id_filtro = ?;
     `;
 
     return database.executar(instrucaoSql, [
-        nome,
-        mesInicio,
-        mesFim,
-        ano,
+        nomeFiltro,
+        estado,
+        continente,
+        ano_inicio,
+        ano_fim,
         idFiltro
     ]);
 }
