@@ -81,27 +81,30 @@ function autenticar(email, senha) {
 
 function criarFiltro(
     nome,
-    mesInicio,
-    mesFim,
-    ano,
+    estado,
+    continente,
+    anoInicio,
+    anoFim,
     fkUsuario
 ) {
     const instrucaoSql = `
         INSERT INTO filtro_personalizado (
             nome,
-            mes_inicio,
-            mes_fim,
-            ano_referencia,
+            estado,
+            continente,
+            ano_inicio,
+            ano_fim,
             fk_usuario
         )
-        VALUES (?, ?, ?, ?, ?);
+        VALUES (?, ?, ?, ?, ?, ?);
     `;
 
     return database.executar(instrucaoSql, [
         nome,
-        mesInicio,
-        mesFim,
-        ano,
+        estado,
+        continente,
+        anoInicio,
+        anoFim,
         fkUsuario
     ]);
 }
@@ -176,11 +179,9 @@ function listarEstados() {
     return database.executar(instrucaoSql);
 }
 
-function listarPaises() {
+function listarContinentes() {
     const instrucaoSql = `
-        SELECT DISTINCT nome_pais_origem
-        FROM chegadas_turistas
-        ORDER BY nome_pais_origem;
+        SELECT DISTINCT(continente) FROM vw_continente_turistas ORDER BY continente;
     `;
 
     return database.executar(instrucaoSql);
@@ -284,7 +285,7 @@ module.exports = {
     listarFiltros,
     buscarFiltro,
     listarEstados,
-    listarPaises,
+    listarContinentes,
     listarAnos,
     atualizarFiltro,
     editarPerfil,
