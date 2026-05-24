@@ -14,7 +14,15 @@
     <link rel="shortcut icon" href="../assets/images/icons/favicon.png" type="image/x-icon">
 </head>
 
-<body class="background-branco">
+<script>
+    function toggleConfig(btn) {
+        const conteudo = btn.nextElementSibling;
+        const seta = btn.querySelector('.config-seta');
+        conteudo.classList.toggle('aberto');
+        seta.classList.toggle('rotacionado');
+    }
+</script>
+<body>
     <header>
         <a href="../index.html" class="logo">
             <img src="../assets/images/logo-futour-sight-branco.png" alt="Logo FuTour Sight">
@@ -45,43 +53,96 @@
         </div>
     </header>
 
-    <main>
-        <section class="painel-configuracoes" id="painel-configuracoes">
-            <h2>Configurações de Notificação</h2>
-            <div id="lista-configuracoes"></div>
-        </section>
-        <div class="container">
-            <div class="legendas">
-                <p class="data-hora">Data/Hora</p>
-                <p class="mensagem">Mensagem</p>
-                <p class="status">Status</p>
+    <ma<section class="painel-configuracoes" id="painel-configuracoes">
+    <h2>Configurações de Notificação</h2>
+    <div class="config-menu">
+        <div class="config-menu-item">
+            <button class="config-menu-btn" onclick="toggleConfig(this)">
+                <span>Notificações</span>
+                <i class="config-seta">▾</i>
+            </button>
+            <div class="config-menu-conteudo">
+                <div id="lista-configuracoes"></div>
+            </div>
+        </div>
+    </div>
+</section>
+
+        <div>
+            <div class="logs-header">
+                <h2>
+                    Histórico de execuções
+                    <span class="badge-total" id="badge-total">0</span>
+                </h2>
+                <div class="filtros-log">
+                    <button class="filtro-btn ativo" onclick="filtrarLogs('todos', this)">Todos</button>
+                    <button class="filtro-btn" onclick="filtrarLogs('sucesso', this)">Sucesso</button>
+                    <button class="filtro-btn" onclick="filtrarLogs('erro', this)">Erro</button>
+                </div>
             </div>
 
-            <ul class="logs" id="lista-logs">
-                <!-- Itens usados para testar o frontend -->
-
-                <!-- <li class="log">
-                    <p class="data-hora">06/04/2026, 12:45</p>
-                    <p class="mensagem">Lendo tabela</p>
-                    <div class="status">
-                        <p class="sucesso">Sucesso</p>
-                    </div>
-                </li>
-                <li class="log">
-                    <p class="data-hora">06/04/2026, 11:34</p>
-                    <p class="mensagem">Lendo tabela</p>
-                    <div class="status">
-                        <p class="erro">Erro</p>
-                    </div>
-                </li> -->
-            </ul>
+            <div class="container">
+                <div class="logs-table-header">
+                    <span>Data / Hora</span>
+                    <span>Mensagem</span>
+                    <span>Status</span>
+                </div>
+                <ul class="logs" id="lista-logs"></ul>
+            </div>
         </div>
     </main>
 
     <div id="toast"></div>
+
+    <script src="../assets/js/utils/utils.js"></script>
+    <script src="../assets/js/pages/admin/logs.js"></script>
+    <script>
+        let todosOsLogs = [];
+
+        function filtrarLogs(tipo, btn) {
+            document.querySelectorAll('.filtro-btn').forEach(b => b.classList.remove('ativo'));
+            btn.classList.add('ativo');
+
+            const filtrados = tipo === 'todos'
+                ? todosOsLogs
+                : todosOsLogs.filter(l => (tipo === 'sucesso' ? l.sucesso : !l.sucesso));
+
+            renderizarLogs(filtrados);
+        }
+
+        function renderizarLogs(logs) {
+            const lista = document.getElementById('lista-logs');
+
+            if (!logs.length) {
+                lista.innerHTML = '<li class="sem-logs">Nenhum log encontrado.</li>';
+                return;
+            }
+
+            lista.innerHTML = logs.map(log => `
+                <li class="log">
+                    <p class="data-hora">${new Date(log.data_criacao).toLocaleString('pt-BR')}</p>
+                    <p class="mensagem">${log.mensagem || '—'}</p>
+                    <div class="status">
+                        <span class="badge-status ${log.sucesso ? 'sucesso' : 'erro'}">
+                            ${log.sucesso ? 'Sucesso' : 'Erro'}
+                        </span>
+                    </div>
+                </li>
+            `).join('');
+        }
+
+        async function carregarLogs() {
+            try {
+                const res = await fetch('/adminFutour/logs');
+                todosOsLogs = await res.json();
+                document.getElementById('badge-total').textContent = todosOsLogs.length;
+                renderizarLogs(todosOsLogs);
+            } catch (e) {
+                console.error(e);
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', carregarLogs);
+    </script>
 </body>
-
 </html>
-
-<script src="../assets/js/utils/utils.js"></script>
-<script src="../assets/js/pages/admin/logs.js"></script>
