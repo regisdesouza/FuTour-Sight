@@ -31,8 +31,8 @@ router.get("/estados", function(req, res) {
     usuarioController.listarEstados(req, res);
 });
 
-router.get("/paises", function(req, res) {
-    usuarioController.listarPaises(req, res);
+router.get("/continentes", function(req, res) {
+    usuarioController.listarContinentes(req, res);
 });
 
 router.get("/anos", function(req, res) {
