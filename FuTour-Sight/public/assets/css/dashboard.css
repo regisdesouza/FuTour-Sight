@@ -202,8 +202,8 @@ h1 {
 
 .grafico {
     margin-top: 16px;
+    height: 300px;
 }
-
 .ranking-pais-origem {
     display: flex;
     flex-direction: column;
@@ -303,3 +303,4 @@ h1 {
 .marketing.exibindo {
     display: flex;
 }
+

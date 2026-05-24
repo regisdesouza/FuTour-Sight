@@ -9,6 +9,7 @@ CREATE TABLE nivel_permissao (
     descricao VARCHAR(255)
 );
 
+
 INSERT INTO nivel_permissao (nome, descricao) VALUES
 ('PLATAFORMA_ADMIN', 'Administrador da FuTour Sight - acesso total ao sistema'),
 ('EMPRESA_ADMIN', 'Administrador da empresa cliente - gerencia sua equipe'),
@@ -110,7 +111,7 @@ INSERT INTO usuario (
 (
     'Reginaldo de Souza',
     'reginaldo@futoursight.com.br',
-    'Senha@1234',
+    'Senha1234@',
     'U0B1A0A664T',
     1,
     1,
@@ -119,7 +120,7 @@ INSERT INTO usuario (
 (
     'Debora Marsal',
     'deboramarsal@futoursight.com.br',
-    'Senha@4321',
+    'Senha1234@',
     'U0B2JP8P38D',
     1,
     1,
@@ -128,7 +129,7 @@ INSERT INTO usuario (
 (
     'Lucas Eiki Gushiken',
     'lucaseiki@futoursight.com.br',
-    'Senha@1232',
+    'Senha1234@',
     'U0B3GDNGHT2',
     1,
     1,
@@ -137,7 +138,7 @@ INSERT INTO usuario (
 (
     'Gabriel Rodrigues',
     'gabrielrodrigues@futoursight.com.br',
-    'Senha@1333',
+    'Senha1234@',
     'U0B2JPCLRQD',
     1,
     1,
@@ -146,7 +147,7 @@ INSERT INTO usuario (
 (
     'Lucas Frossi',
     'lucasfrossi@futoursight.com.br',
-    'Senha@4123',
+    'Senha1234@',
     'U0B2L3H9RM4',
     1,
     1,
@@ -155,7 +156,7 @@ INSERT INTO usuario (
 (
     'Jorge Araújo',
     'jorgearaujo@haddock.com.br',
-    'Codig0@123',
+    'Senha1234@',
     NULL,
     2,
     2,
@@ -164,7 +165,7 @@ INSERT INTO usuario (
 (
     'Mariana Martins',
     'marianamartins@haddock.com.br',
-    'Codig0@224',
+    'Senha1234@',
     NULL,
     3,
     2,
@@ -237,29 +238,22 @@ CREATE TABLE chegadas_turistas (
     chegadas INT
 );
 
+
 CREATE TABLE filtro_personalizado (
     id_filtro INT AUTO_INCREMENT PRIMARY KEY,
-    nome VARCHAR(100) NOT NULL,
-    descricao VARCHAR(255),
-    ano_referencia INT,
-    mes_inicio VARCHAR(20),
-    mes_fim VARCHAR(20),
+    nome  VARCHAR(100) NOT NULL,
+    ano_inicio INT NOT NULL,
+    ano_fim INT NOT NULL,
+    mes_inicio  VARCHAR(20)  NOT NULL,
+    mes_fim  VARCHAR(20)  NOT NULL,
+    uf VARCHAR(50)  NOT NULL,
+    continente VARCHAR(60)  NOT NULL,
     fk_usuario INT NOT NULL,
-    data_criacao DATETIME DEFAULT CURRENT_TIMESTAMP,
-    data_atualizacao DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    data_criacao  DATETIME DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (fk_usuario) REFERENCES usuario(id_usuario)
 );
+ 
 
-CREATE TABLE filtro_item (
-    id_filtro_item INT AUTO_INCREMENT PRIMARY KEY,
-    fk_filtro INT NOT NULL,
-    tipo VARCHAR(6) NOT NULL,
-    valor VARCHAR(100) NOT NULL,
-    CONSTRAINT chk_tipo CHECK (tipo IN ('PAIS', 'ESTADO')),
-    FOREIGN KEY (fk_filtro) REFERENCES filtro_personalizado(id_filtro) ON DELETE CASCADE
-);
- 
- 
 CREATE VIEW vw_solicitacoes AS
 SELECT
     sc.id_solicitacao,
@@ -435,6 +429,8 @@ SELECT id_log, tabela, registros_lidos, sucesso, mensagem, data_criacao
 FROM log
 ORDER BY data_criacao DESC;
 
+ALTER TABLE chegadas_turistas
+    CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
 CREATE VIEW vw_continente_turistas AS
 SELECT

@@ -15,7 +15,7 @@
     <link rel="shortcut icon" href="../assets/images/icons/favicon.png" type="image/x-icon">
 </head>
 
-<body onload="renderizarDashboard(), verificarToast()">
+<body onload="verificarToast()">
     <header>
         <a href="../index.html" class="logo">
             <img src="../assets/images/logo-futour-sight-branco.png" alt="Logo FuTour Sight">
@@ -89,7 +89,6 @@
                 <h2>Filtros</h2>
                 <select name="filtros" id="select-filtros">
                     <option value="">Nenhum filtro selecionado</option>
-                    <!-- renderizar os options pegando do banco os filtros -->
                 </select>
             </div>
 
@@ -100,8 +99,7 @@
                         <img src="../assets/images/icons/alerta.png" alt="ícone de alerta">
                     </div>
                     <div class="parametro-valor">
-                        <!-- DADO MOCKADO! TIRAR DEPOIS -->
-                        <span id="span-paramatro-valor">São Paulo</span>
+                        <span id="span-uf">—</span>
                     </div>
                 </div>
 
@@ -111,10 +109,9 @@
                         <img src="../assets/images/icons/alerta.png" alt="ícone de alerta">
                     </div>
                     <div class="parametro-valor anos">
-                        <!-- DADO MOCKADO! TIRAR DEPOIS -->
-                        <span id="span-paramatro-valor">2024</span>
+                        <span id="span-ano-inicio">—</span>
                         |
-                        <span id="span-paramatro-valor">2025</span>
+                        <span id="span-ano-fim">—</span>
                     </div>
                 </div>
 
@@ -123,8 +120,8 @@
                         <h3>Continente de referência</h3>
                         <img src="../assets/images/icons/alerta.png" alt="ícone de alerta">
                     </div>
-                    <div class="parametro-valor" id="paramatro-valor">
-                        <span id="span-paramatro-valor">América Central e Caribe</span>
+                    <div class="parametro-valor">
+                        <span id="span-continente">—</span>
                     </div>
                 </div>
             </div>
@@ -136,21 +133,13 @@
                     <h3>Taxa de crescimento</h3>
                     <div class="info-extra-container">
                         <img class="info-extra-icon" src="../assets/images/icons/info-extra.png" alt="ícone de info">
-                        <div class="info-extra">
-                            <p>
-                                <!-- DADOS MOCKADOS -->
-                                Estado com maior crescimento de turistas, porcentagem e número absoluto do crescimento,
-                                do continente de referência (América do Sul), nos Anos de Comparação (2024-2025)
-                            </p>
-                        </div>
+                        <div class="info-extra"><p>Estado com maior crescimento de turistas do continente de referência nos Anos de Comparação</p></div>
                     </div>
                 </div>
                 <div class="kpi-info">
-                    <!-- <div class="kpi-valor"></div> -->
                     <div class="kpi-numeros">
-                        <!-- DADOS MOCKADOS! -->
-                        <span class="porcentagem">+24%</span>
-                        <span class="absoluto">+52.000 turistas</span>
+                        <span class="porcentagem">—</span>
+                        <span class="absoluto">—</span>
                     </div>
                 </div>
             </div>
@@ -160,20 +149,14 @@
                     <h3>Mês com maior crescimento</h3>
                     <div class="info-extra-container">
                         <img class="info-extra-icon" src="../assets/images/icons/info-extra.png" alt="ícone de info">
-                        <div class="info-extra">
-                            <p>
-                                Mês com maior crescimento de turistas, porcentagem e número absoluto do crescimento, do
-                                continente de referência (América do Sul), nos Anos de Comparação (2024-2025)
-                            </p>
-                        </div>
+                        <div class="info-extra"><p>Mês com maior crescimento de turistas do continente de referência nos Anos de Comparação</p></div>
                     </div>
                 </div>
                 <div class="kpi-info">
-                    <div class="kpi-valor">Julho</div>
+                    <div class="kpi-valor">—</div>
                     <div class="kpi-numeros">
-                        <!-- DADOS MOCKADOS! -->
-                        <span class="porcentagem">+8%</span>
-                        <span class="absoluto">+4.000 turistas</span>
+                        <span class="porcentagem">—</span>
+                        <span class="absoluto">—</span>
                     </div>
                 </div>
             </div>
@@ -183,19 +166,14 @@
                     <h3>Mês com maior déficit</h3>
                     <div class="info-extra-container">
                         <img class="info-extra-icon" src="../assets/images/icons/info-extra.png" alt="ícone de info">
-                        <div class="info-extra">
-                            <p>
-                                Mês com maior déficit de turistas, porcentagem e número absoluto do déficit, do
-                                continente de referência (América do Sul), nos Anos de Comparação (2024-2025)
-                            </p>
-                        </div>
+                        <div class="info-extra"><p>Mês com maior déficit de turistas do continente de referência nos Anos de Comparação</p></div>
                     </div>
                 </div>
                 <div class="kpi-info">
-                    <div class="kpi-valor"></div>
+                    <div class="kpi-valor">—</div>
                     <div class="kpi-numeros">
-                        <span class="porcentagem"></span>
-                        <span class="absoluto"></span>
+                        <span class="porcentagem">—</span>
+                        <span class="absoluto">—</span>
                     </div>
                 </div>
             </div>
@@ -207,19 +185,14 @@
                     <h3>Mês com maior crescimento</h3>
                     <div class="info-extra-container">
                         <img class="info-extra-icon" src="../assets/images/icons/info-extra.png" alt="ícone de info">
-                        <div class="info-extra">
-                            <p>
-                                Mês com maior crescimento de turistas, país que representa maior parcela e número absoluto do crescimento, do continente de referência (América do Sul), nos Anos de Comparação (2024-2025) 
-                            </p>
-                        </div>
+                        <div class="info-extra"><p>Mês com maior crescimento de turistas do continente de referência nos Anos de Comparação</p></div>
                     </div>
                 </div>
                 <div class="kpi-info">
-                    <div class="kpi-valor">Julho</div>
+                    <div class="kpi-valor" id="kpi-mes-valor">—</div>
                     <div class="kpi-numeros">
-                        <!-- DADOS MOCKADOS! -->
-                        <span class="porcentagem">+8%</span>
-                        <span class="absoluto">+4.000 turistas</span>
+                        <span class="porcentagem" id="kpi-mes-pct">—</span>
+                        <span class="absoluto" id="kpi-mes-abs">—</span>
                     </div>
                 </div>
             </div>
@@ -229,41 +202,31 @@
                     <h3>País com maior crescimento</h3>
                     <div class="info-extra-container">
                         <img class="info-extra-icon" src="../assets/images/icons/info-extra.png" alt="ícone de info">
-                        <div class="info-extra">
-                            <p>
-                                País com maior crescimento de turistas, porcentagem e número absoluto, do continente de referência (América do Sul), nos Anos de Comparação (2024-2025)
-                            </p>
-                        </div>
+                        <div class="info-extra"><p>País com maior crescimento de turistas do continente de referência nos Anos de Comparação</p></div>
                     </div>
                 </div>
                 <div class="kpi-info">
-                    <div class="kpi-valor">Portugal</div>
+                    <div class="kpi-valor" id="kpi-pais-valor">—</div>
                     <div class="kpi-numeros">
-                        <!-- DADOS MOCKADOS! -->
-                        <span class="porcentagem">+8%</span>
-                        <span class="absoluto">+4.000 turistas</span>
+                        <span class="porcentagem" id="kpi-pais-pct">—</span>
+                        <span class="absoluto" id="kpi-pais-abs">—</span>
                     </div>
                 </div>
             </div>
 
             <div class="kpi">
                 <div class="titulo-container">
-                    <h3>Principal via de acesso</h3>
+                    <h3>Via de acesso com maior crescimento</h3>
                     <div class="info-extra-container">
                         <img class="info-extra-icon" src="../assets/images/icons/info-extra.png" alt="ícone de info">
-                        <div class="info-extra">
-                            <p>
-                                Principal via de acesso de turistas, porcentagem e número absoluto, do continente de referência (América do Sul), nos Anos de Comparação (2024-2025) 
-                            </p>
-                        </div>
+                        <div class="info-extra"><p>Via de acesso com maior crescimento entre os Anos de Comparação</p></div>
                     </div>
                 </div>
                 <div class="kpi-info">
-                    <div class="kpi-valor">Julho</div>
+                    <div class="kpi-valor" id="kpi-via-valor">—</div>
                     <div class="kpi-numeros">
-                        <!-- DADOS MOCKADOS! -->
-                        <span class="porcentagem">+8%</span>
-                        <span class="absoluto">+4.000 turistas</span>
+                        <span class="porcentagem" id="kpi-via-pct">—</span>
+                        <span class="absoluto" id="kpi-via-abs">—</span>
                     </div>
                 </div>
             </div>
@@ -275,12 +238,7 @@
                     <h3>Fluxo de turistas</h3>
                     <div class="info-extra-container">
                         <img class="info-extra-icon" src="../assets/images/icons/info-extra.png" alt="ícone de info">
-                        <div class="info-extra">
-                            <p>
-                                Fluxo de turistas, por mês, do continente de referência (América do Sul), nos Anos de
-                                Comparação (2024-2025)
-                            </p>
-                        </div>
+                        <div class="info-extra"><p>Fluxo de turistas por mês do continente de referência nos Anos de Comparação</p></div>
                     </div>
                 </div>
                 <div class="grafico">
@@ -293,60 +251,12 @@
                     <div class="titulo-container">
                         <h3>Top 3 países de origem dos turistas com maior crescimento</h3>
                         <div class="info-extra-container">
-                            <img class="info-extra-icon" src="../assets/images/icons/info-extra.png"
-                                alt="ícone de info">
-                            <div class="info-extra">
-                                <p>
-                                    Top 3 países de origem dos turistas com maior crescimento, porcentagem e número
-                                    absoluto
-                                    do crescimento, do continente de referência (América do Sul), nos Anos de Comparação
-                                    (2024-2025)
-                                </p>
-                            </div>
+                            <img class="info-extra-icon" src="../assets/images/icons/info-extra.png" alt="ícone de info">
+                            <div class="info-extra"><p>Top 3 países com maior crescimento do continente de referência nos Anos de Comparação</p></div>
                         </div>
                     </div>
                     <div class="grafico">
-                        <ol class="ranking-pais-origem">
-                            <!-- DADOS MOCKADOS -->
-                            <li>
-                                <div class="pais-header">
-                                    <span>1º Argentina</span>
-                                    <div class="pais-dados">
-                                        <span class="porcentagem">+24%</span>
-                                        <span class="absoluto">+14.000 turistas</span>
-                                    </div>
-                                </div>
-                                <div class="barra-porcentagem">
-                                    <div class="barra-porcentagem-atual"> </div>
-                                </div>
-                            </li>
-
-                            <li>
-                                <div class="pais-header">
-                                    <span>1º Argentina</span>
-                                    <div class="pais-dados">
-                                        <span class="porcentagem">+24%</span>
-                                        <span class="absoluto">+14.000 turistas</span>
-                                    </div>
-                                </div>
-                                <div class="barra-porcentagem">
-                                    <div class="barra-porcentagem-atual"> </div>
-                                </div>
-                            </li>
-
-                            <li>
-                                <div class="pais-header">
-                                    <span>1º Argentina</span>
-                                    <div class="pais-dados">
-                                        <span class="porcentagem">+24%</span>
-                                        <span class="absoluto">+14.000 turistas</span>
-                                    </div>
-                                </div>
-                                <div class="barra-porcentagem">
-                                    <div class="barra-porcentagem-atual"> </div>
-                                </div>
-                            </li>
-                        </ol>
+                        <ol class="ranking-pais-origem" id="ranking-gerente"></ol>
                     </div>
                 </div>
             </div>
@@ -358,11 +268,7 @@
                     <h3>Fluxo de turistas Top 3 nacionalidades</h3>
                     <div class="info-extra-container">
                         <img class="info-extra-icon" src="../assets/images/icons/info-extra.png" alt="ícone de info">
-                        <div class="info-extra">
-                            <p>
-                                Fluxo de turistas, por mês, dos top 3 países do continente de referência (América do Sul), nos Anos de Comparação (2024-2025) 
-                            </p>
-                        </div>
+                        <div class="info-extra"><p>Fluxo mensal dos top 3 países do continente de referência nos Anos de Comparação</p></div>
                     </div>
                 </div>
                 <div class="grafico">
@@ -375,57 +281,12 @@
                     <div class="titulo-container">
                         <h3>Top 3 países de origem dos turistas com maior crescimento</h3>
                         <div class="info-extra-container">
-                            <img class="info-extra-icon" src="../assets/images/icons/info-extra.png"
-                                alt="ícone de info">
-                            <div class="info-extra">
-                                <p>
-                                    Top 3 países de origem dos turistas com maior crescimento, porcentagem e número absoluto, do continente de referência (América do Sul), nos Anos de Comparação (2024-2025) 
-                                </p>
-                            </div>
+                            <img class="info-extra-icon" src="../assets/images/icons/info-extra.png" alt="ícone de info">
+                            <div class="info-extra"><p>Top 3 países com maior crescimento do continente de referência nos Anos de Comparação</p></div>
                         </div>
                     </div>
                     <div class="grafico">
-                        <ol class="ranking-pais-origem">
-                            <!-- DADOS MOCKADOS -->
-                            <li>
-                                <div class="pais-header">
-                                    <span>1º Argentina</span>
-                                    <div class="pais-dados">
-                                        <span class="porcentagem">+24%</span>
-                                        <span class="absoluto">+14.000 turistas</span>
-                                    </div>
-                                </div>
-                                <div class="barra-porcentagem">
-                                    <div class="barra-porcentagem-atual"> </div>
-                                </div>
-                            </li>
-
-                            <li>
-                                <div class="pais-header">
-                                    <span>1º Argentina</span>
-                                    <div class="pais-dados">
-                                        <span class="porcentagem">+24%</span>
-                                        <span class="absoluto">+14.000 turistas</span>
-                                    </div>
-                                </div>
-                                <div class="barra-porcentagem">
-                                    <div class="barra-porcentagem-atual"> </div>
-                                </div>
-                            </li>
-
-                            <li>
-                                <div class="pais-header">
-                                    <span>1º Argentina</span>
-                                    <div class="pais-dados">
-                                        <span class="porcentagem">+24%</span>
-                                        <span class="absoluto">+14.000 turistas</span>
-                                    </div>
-                                </div>
-                                <div class="barra-porcentagem">
-                                    <div class="barra-porcentagem-atual"> </div>
-                                </div>
-                            </li>
-                        </ol>
+                        <ol class="ranking-pais-origem" id="ranking-marketing"></ol>
                     </div>
                 </div>
 
@@ -433,58 +294,13 @@
                     <div class="titulo-container">
                         <h3>Principal via de acesso das Top 3 nacionalidades</h3>
                         <div class="info-extra-container">
-                            <img class="info-extra-icon" src="../assets/images/icons/info-extra.png"
-                                alt="ícone de info">
-                            <div class="info-extra">
-                                <p>
-                                    Principal via de acesso das Top 3 nacionalidades do continente de referência (América do Sul), em porcentagem, nos Anos de Comparação (2024-2025) 
-                                </p>
-                            </div>
+                            <img class="info-extra-icon" src="../assets/images/icons/info-extra.png" alt="ícone de info">
+                            <div class="info-extra"><p>Principal via de acesso das Top 3 nacionalidades em porcentagem nos Anos de Comparação</p></div>
                         </div>
                     </div>
 
                     <div class="grafico-dados">
-                        <ol class="ranking-via-acesso">
-                            <!-- DADOS MOCKADOS -->
-                            <li>
-                                <div class="via-header">
-                                    <span>1º Argentina</span>
-                                    <div class="via-dados">
-                                        <span class="porcentagem">48%</span>
-                                        <img src="../assets/images/icons/maritimo.png" alt="ícone da via">
-                                    </div>
-                                </div>
-                                <div class="barra-porcentagem">
-                                    <div class="barra-porcentagem-atual"> </div>
-                                </div>
-                            </li>
-
-                            <li>
-                                <div class="via-header">
-                                    <span>1º Argentina</span>
-                                    <div class="via-dados">
-                                        <span class="porcentagem">32%</span>
-                                        <img src="../assets/images/icons/aereo.png" alt="ícone da via">
-                                    </div>
-                                </div>
-                                <div class="barra-porcentagem">
-                                    <div class="barra-porcentagem-atual"> </div>
-                                </div>
-                            </li>
-
-                            <li>
-                                <div class="via-header">
-                                    <span>1º Argentina</span>
-                                    <div class="via-dados">
-                                        <span class="porcentagem">20%</span>
-                                        <img src="../assets/images/icons/terrestre.png" alt="ícone da via">
-                                    </div>
-                                </div>
-                                <div class="barra-porcentagem">
-                                    <div class="barra-porcentagem-atual"> </div>
-                                </div>
-                            </li>
-                        </ol>
+                        <ol class="ranking-via-acesso" id="ranking-via"></ol>
                         <div class="grafico donut">
                             <canvas id="grafico-principal-via-acesso"></canvas>
                         </div>
@@ -495,100 +311,10 @@
     </main>
 
     <div id="toast"></div>
+
+    <script src="../assets/js/utils/redirecionamento.js"></script>
+    <script src="../assets/js/utils/utils.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="../assets/js/pages/usuario/dashboard.js"></script>
 </body>
-
 </html>
-
-
-<script src="../assets/js/utils/redirecionamento.js"></script>
-<script src="../assets/js/utils/utils.js"></script>
-<script src="../assets/js/pages/usuario/dashboard.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-
-<script>
-    const grafico_fluxo_turistas_gerente = document.getElementById('grafico-fluxo-turistas-gerente');
-
-    new Chart(grafico_fluxo_turistas_gerente, {
-        type: 'line',
-        data: {
-            labels: ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'],
-            datasets: [{
-                label: '2025',
-                data: [7700, 6600, 6050, 5000, 5500, 6050, 8800, 6050, 5500, 7150, 7700, 9200],
-                borderWidth: 1
-            },
-            {
-                label: '2024',
-                data: [7000, 6000, 5500, 4500, 5000, 5500, 8000, 5500, 5000, 6500, 7000, 8600],
-                borderWidth: 1
-            }]
-        },
-        options: {
-            scales: {
-                y: {
-                    beginAtZero: true
-                },
-                x: {
-                    stacked: false
-                }
-            }
-        }
-    });
-
-
-
-    const grafico_fluxo_turistas_marketing = document.getElementById('grafico-fluxo-turistas-marketing');
-
-    new Chart(grafico_fluxo_turistas_marketing, {
-        type: 'line',
-        data: {
-            labels: ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'],
-            datasets: [{
-                label: 'Alemanha',
-                data: [7700, 6600, 6050, 5000, 5500, 6050, 8800, 6050, 5500, 7150, 7700, 9200],
-                borderWidth: 1
-            },
-            {
-                label: 'Portugal',
-                data: [7000, 6000, 5500, 4500, 5000, 5500, 8000, 5500, 5000, 6500, 7000, 8600],
-                borderWidth: 1
-            },
-            {
-                label: 'Itália',
-                data: [6000, 5000, 8500, 7500, 4000, 6500, 9000, 2500, 3000, 7500, 10000, 9600],
-                borderWidth: 1
-            }]
-        },
-        options: {
-            scales: {
-                y: {
-                    beginAtZero: true
-                },
-                x: {
-                    stacked: false
-                }
-            }
-        }
-    });
-
-    const grafico_principal_via_acesso = document.getElementById('grafico-principal-via-acesso');
-
-    new Chart(grafico_principal_via_acesso, {
-        type: 'doughnut',
-        data: {
-            labels: ['Marítmo', 'Aéreo', 'Terrestre'],
-            datasets: [{
-                data: [48, 32, 20],
-                borderWidth: 1
-            }]
-        },
-        options: {
-            plugins: {
-                legend: {
-                    display: false
-                }
-            }
-        }
-    });
-
-</script>

@@ -235,29 +235,10 @@ async function listarFiltros(req, res) {
 
     try {
         const resultados = await usuarioModel.listarFiltros(idUsuario);
-
-        const listaFiltros = resultados.map((filtro) => ({
-            id: filtro.id_filtro,
-            nome: filtro.nome,
-            estados: filtro.estados
-                ? filtro.estados.split(",")
-                : [],
-            paises: filtro.paises
-                ? filtro.paises.split(",")
-                : [],
-            mes_inicio: filtro.mes_inicio,
-            mes_fim: filtro.mes_fim,
-            ano: filtro.ano_referencia
-        }));
-
-        return res.status(200).json(listaFiltros);
-
+        return res.status(200).json(resultados);
     } catch (erro) {
         console.log(erro);
-
-        return res.status(500).json({
-            mensagem: erro.sqlMessage || erro.message
-        });
+        return res.status(500).json({ mensagem: erro.sqlMessage || erro.message });
     }
 }
 

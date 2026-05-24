@@ -230,38 +230,26 @@ function carregarFiltros() {
         ul_filtros.innerHTML = "";
 
         filtros.forEach(filtro => {
-            const primeirosEstados  = filtro.estados.slice(0, 3);
-            const restanteEstados   = filtro.estados.length - 3;
-            let stringEstados       = primeirosEstados.join(", ");
-            if (restanteEstados > 0) stringEstados += ` +${restanteEstados}`;
+    const stringInfoFiltro = `${filtro.uf} · ${filtro.continente} · ${filtro.ano_inicio}–${filtro.ano_fim}`;
 
-            const primeirosPaises   = filtro.paises.slice(0, 1);
-            const restantePaises    = filtro.paises.length - 1;
-            let stringPaises        = primeirosPaises.join(", ");
-            if (restantePaises > 0) stringPaises += ` +${restantePaises}`;
-
-            const stringInfoFiltro  = stringEstados
-                + (stringPaises !== "" && stringEstados !== "" ? " - " : "")
-                + stringPaises;
-
-            ul_filtros.innerHTML += `
-                <li class="filtro">
-                    <div class="infos-filtro-container">
-                        <div class="icone-filtro">
-                            <span>${filtro.nome[0]}</span>
-                        </div>
-                        <div class="infos-filtro">
-                            <h4>${filtro.nome}</h4>
-                            <p>${stringInfoFiltro}</p>
-                        </div>
-                    </div>
-                    <div class="botoes">
-                        <button onclick="editarFiltro(${filtro.id})">Editar</button>
-                        <button onclick="confirmarExcluirFiltro(${filtro.id})">Excluir</button>
-                    </div>
-                </li>
-            `;
-        });
+    ul_filtros.innerHTML += `
+        <li class="filtro">
+            <div class="infos-filtro-container">
+                <div class="icone-filtro">
+                    <span>${filtro.nome[0]}</span>
+                </div>
+                <div class="infos-filtro">
+                    <h4>${filtro.nome}</h4>
+                    <p>${stringInfoFiltro}</p>
+                </div>
+            </div>
+            <div class="botoes">
+                <button onclick="editarFiltro(${filtro.id_filtro})">Editar</button>
+                <button onclick="confirmarExcluirFiltro(${filtro.id_filtro})">Excluir</button>
+            </div>
+        </li>
+    `;
+});
     })
     .catch((erro) => {
         console.error("#ERRO:", erro);
