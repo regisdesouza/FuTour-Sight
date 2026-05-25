@@ -8,7 +8,7 @@ main {
 }
 
 main header {
-    margin: 32px 0;
+    margin: 32px 48px 0 48px;
     position: sticky;
     top: 32px;
 }
