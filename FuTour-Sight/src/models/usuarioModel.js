@@ -62,21 +62,24 @@ function preCadastrar(
 function autenticar(email, senha) {
     const instrucaoSql = `
         SELECT
-            id_usuario,
-            nome,
-            email,
-            fk_nivel_permissao AS nivel_permissao,
-            fk_empresa AS empresa,
-            primeiro_acesso
-        FROM usuario
-        WHERE email = ?
-        AND senha = ?;
+            vu.id_usuario,
+            vu.nome,
+            vu.email,
+            vu.nivel_permissao,
+            vu.id_empresa AS empresa,
+            vu.primeiro_acesso,
+            vu.status     AS status_usuario,
+            e.nome        AS nome_empresa,
+            s.nome        AS status_empresa
+        FROM vw_usuarios vu
+        INNER JOIN usuario u ON u.id_usuario = vu.id_usuario
+        LEFT JOIN empresa e  ON e.id_empresa = vu.id_empresa
+        LEFT JOIN status  s  ON s.id_status  = e.fk_status
+        WHERE vu.email = ?
+          AND u.senha  = ?;
     `;
 
-    return database.executar(instrucaoSql, [
-        email,
-        senha
-    ]);
+    return database.executar(instrucaoSql, [email, senha]);
 }
 
 function criarFiltro(

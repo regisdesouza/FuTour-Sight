@@ -8,6 +8,7 @@
 //   <span id="toastMensagem"></span>
 // </div>
 // ================================================
+verificarNivel("PLATAFORMA_ADMIN");
 
 function buscarLogs() {
     fetch("/adminFutour/logs", { method: "GET" })

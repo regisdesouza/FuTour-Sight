@@ -15,12 +15,12 @@ router.get("/usuarios/procurados", function (req, res) {
     usuarioAdminController.listarUsuariosProcurados(req, res);
 });
 
-router.get("/empresas/:idEmpresa", function (req, res) {
-    usuarioAdminController.buscarEmpresa(req, res);
-});
-
 router.get("/funcionarios/:idUsuario", function (req, res) {
     usuarioAdminController.buscarFuncionario(req, res);
+});
+
+router.get("/empresas/:idEmpresa", function (req, res) {
+    usuarioAdminController.buscarEmpresa(req, res);
 });
 
 router.put("/funcionarios/:idUsuario", function (req, res) {

@@ -167,6 +167,43 @@ async function buscarLogs(req, res) {
     }
 }
 
+async function buscarEmpresaPorId(req, res) {
+    const idEmpresa = req.params.idEmpresa;
+
+    try {
+        const resultado = await adminFutourModel.buscarEmpresaPorId(idEmpresa);
+
+        if (resultado.length === 0) {
+            return res.status(404).json({ mensagem: "Empresa não encontrada." });
+        }
+
+        return res.status(200).json(resultado[0]);
+
+    } catch (erro) {
+        console.log(erro);
+        return res.status(500).json({ mensagem: erro.sqlMessage || erro.message });
+    }
+}
+
+async function atualizarEmpresa(req, res) {
+    const idEmpresa = req.params.idEmpresa;
+    const { nome, cnpj, email, telefone } = req.body;
+
+    try {
+        if (!nome || !cnpj || !email || !telefone) {
+            return res.status(400).json({ mensagem: "Preencha todos os campos." });
+        }
+
+        await adminFutourModel.atualizarEmpresa(idEmpresa, nome, cnpj, email, telefone);
+
+        return res.status(200).json({ mensagem: "Empresa atualizada com sucesso." });
+
+    } catch (erro) {
+        console.log(erro);
+        return res.status(500).json({ mensagem: erro.sqlMessage || erro.message });
+    }
+}
+
 async function listarEmpresas(req, res) {
     try {
         const resultado = await adminFutourModel.listarEmpresas();
@@ -229,6 +266,8 @@ module.exports = {
     cancelarSolicitacao,
     listarSolicitacoes,
     buscarLogs,
+    buscarEmpresaPorId,
+    atualizarEmpresa,
     listarEmpresas,
     listarEmpresasProcuradas,
     editarStatusEmpresa

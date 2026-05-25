@@ -1,18 +1,3 @@
-// ================================================
-// login.js
-// ================================================
-// HTML necessário (adicionar antes do </body>):
-//
-// <!-- Toast de notificação -->
-// <div id="toast" class="toast hidden">
-//   <span id="toastMensagem"></span>
-// </div>
-//
-// Nos campos do formulário, adicionar divs de erro:
-// <div id="div_msg_email" class="msg-erro"></div>
-// <div id="div_msg_senha" class="msg-erro"></div>
-// ================================================
-
 iniciarMenu();
 
 var chkEmail = false;
@@ -64,40 +49,55 @@ function login() {
             senhaServer: senhaVar,
         }),
     })
-    .then((resposta) => tratarRespostaFetch(resposta))
-    .then((json) => {
-        console.log("Login realizado:", json);
+        .then((resposta) => tratarRespostaFetch(resposta))
+        .then((json) => {
+            console.log("Login realizado:", json);
 
-        sessionStorage.setItem("ID_USUARIO",      json.id_usuario);
-        sessionStorage.setItem("NOME_USUARIO",    json.nome);
-        sessionStorage.setItem("EMAIL_USUARIO",   json.email);
-        sessionStorage.setItem("NIVEL_ACESSO",    json.nivel_permissao);
-        sessionStorage.setItem("ID_EMPRESA",      json.empresa);
-        sessionStorage.setItem("PRIMEIRO_ACESSO", json.primeiro_acesso);
-
-        const nivel          = Number(sessionStorage.getItem("NIVEL_ACESSO"));
-        const primeiroAcesso = Number(sessionStorage.getItem("PRIMEIRO_ACESSO")) === 1;
-
-        exibirToast("sucesso", "Login realizado com sucesso!");
-
-        setTimeout(() => {
-            if (nivel === 1) {
-                window.location.href = "/admin/solicitacoes.html";
-            } else if (nivel === 2 && primeiroAcesso) {
-                window.location.href = "/usuario/edicao-empresa.html";
-            } else if (nivel === 2 && !primeiroAcesso) {
-                window.location.href = "/usuario/dashboard-proprietario.html";
-            } else if (nivel === 3 && primeiroAcesso) {
-                window.location.href = "/usuario/editar-perfil.html";
-            } else if (nivel === 3 && !primeiroAcesso) {
-                window.location.href = "/usuario/dashboard-gerente.html";
+            if (json.status_usuario !== "ATIVA") {
+                exibirToast("erro", "Seu acesso está desativado. Entre em contato com o administrador.");
+                return;
             }
-        }, 1500);
-    })
-    .catch((erro) => {
-        console.error("#ERRO:", erro);
-        exibirToast("erro", "E-mail ou senha inválidos");
-    });
+
+            if (json.nivel_permissao !== 1 && json.status_empresa !== "ATIVA") {
+                exibirToast("erro", "Sua empresa está inativa ou suspensa. Entre em contato com o suporte.");
+                return;
+            }
+
+            sessionStorage.setItem("ID_USUARIO", json.id_usuario);
+            sessionStorage.setItem("NOME_USUARIO", json.nome);
+            sessionStorage.setItem("EMAIL_USUARIO", json.email);
+            sessionStorage.setItem("NIVEL_ACESSO", json.nivel_permissao);
+            sessionStorage.setItem("ID_EMPRESA", json.empresa);
+            sessionStorage.setItem("PRIMEIRO_ACESSO", json.primeiro_acesso);
+
+            const nivel = json.nivel_permissao; 
+            const primeiroAcesso = json.primeiro_acesso === 1 || json.primeiro_acesso === true;
+
+            if (nivel !== "PLATAFORMA_ADMIN" && json.status_empresa !== "ATIVA") {
+                exibirToast("erro", "Sua empresa está inativa ou suspensa. Entre em contato com o suporte.");
+                return;
+            }
+
+            exibirToast("sucesso", "Login realizado com sucesso!");
+
+            setTimeout(() => {
+                if (nivel === "PLATAFORMA_ADMIN") {
+                    window.location.href = "/admin/solicitacoes.html";
+                } else if (nivel === "EMPRESA_ADMIN" && primeiroAcesso) {
+                    window.location.href = "/usuario/edicao-empresa.html";
+                } else if (nivel === "EMPRESA_ADMIN" && !primeiroAcesso) {
+                    window.location.href = "/usuario/dashboard-proprietario.html";
+                } else if (nivel === "EMPRESA_USER" && primeiroAcesso) {
+                    window.location.href = "/usuario/editar-perfil.html";
+                } else if (nivel === "EMPRESA_USER" && !primeiroAcesso) {
+                    window.location.href = "/usuario/dashboard-gerente.html";
+                }
+            }, 1500);
+        })
+        .catch((erro) => {
+            console.error("#ERRO:", erro);
+            exibirToast("erro", "E-mail ou senha inválidos");
+        });
 
     return false;
 }

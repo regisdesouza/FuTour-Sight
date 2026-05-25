@@ -10,6 +10,25 @@
 //     }, 4000);
 // }
 
+function verificarAutenticacao() {
+    const id = sessionStorage.getItem("ID_USUARIO");
+
+    if (!id) {
+        window.location.href = "/login.html";
+        return;
+    }
+}
+
+function verificarNivel(...niveisPermitidos) {
+    verificarAutenticacao();
+
+    const nivel = sessionStorage.getItem("NIVEL_ACESSO");
+
+    if (!niveisPermitidos.includes(nivel)) {
+        window.location.href = "/login.html";
+    }
+}
+
 function abrirModalConfirmacao({
     titulo = "Confirmação",
     texto = "Deseja continuar?",

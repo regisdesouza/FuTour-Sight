@@ -25,6 +25,7 @@
 // <div id="div_msg_email"      class="msg-erro"></div>
 // <div id="div_msg_permissao"  class="msg-erro"></div>
 // ================================================
+verificarNivel("EMPRESA_ADMIN");
 
 preencherNomeUsuario();
 

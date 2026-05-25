@@ -8,5 +8,6 @@
 //   <span id="toastMensagem"></span>
 // </div>
 // ================================================
+verificarNivel("EMPRESA_ADMIN");
 
 preencherNomeUsuario();

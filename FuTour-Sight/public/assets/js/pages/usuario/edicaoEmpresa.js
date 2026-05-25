@@ -26,6 +26,7 @@
 // <div id="div_msg_email_corporativo" class="msg-erro"></div>
 // <div id="div_msg_telefone"          class="msg-erro"></div>
 // ================================================
+verificarNivel("EMPRESA_ADMIN");
 
 iniciarMenu();
 preencherNomeUsuario();

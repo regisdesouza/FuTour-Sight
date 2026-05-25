@@ -43,7 +43,8 @@ function renderizarUsuarios(usuarios) {
 
     usuarios.forEach((usuario) => {
         const tr = document.createElement("tr");
-        tr.innerHTML = `
+        if (usuario.status != "INATIVO") {
+            tr.innerHTML = `
             <td>${usuario.nome}</td>
             <td>${usuario.nivel_permissao}</td>
             <td>${usuario.empresa}</td>
@@ -58,6 +59,7 @@ function renderizarUsuarios(usuarios) {
                 </button>
             </td>
         `;
+        }
         tbody.appendChild(tr);
     });
 }

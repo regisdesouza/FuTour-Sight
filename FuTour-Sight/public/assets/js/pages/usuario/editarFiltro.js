@@ -28,6 +28,7 @@
 // <div id="div_msg_estados"     class="msg-erro"></div>
 // <div id="div_msg_paises"      class="msg-erro"></div>
 // ================================================
+verificarNivel("EMPRESA_ADMIN", "EMPRESA_USER");
 
 var chkNomeFiltro = false;
 var chkMesInicio  = false;
