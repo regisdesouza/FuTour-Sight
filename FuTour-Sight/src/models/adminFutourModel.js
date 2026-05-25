@@ -128,16 +128,18 @@ function criarEmpresa(nome, cnpj, email, telefone) {
             nome,
             cnpj,
             email,
-            telefone
+            telefone,
+            fk_status
         )
-        VALUES (?, ?, ?, ?);
+        VALUES (?, ?, ?, ?, ?);
     `;
 
     return database.executar(instrucaoSql, [
         nome,
         cnpj,
         email,
-        telefone
+        telefone,
+        1
     ]);
 }
 
@@ -160,7 +162,7 @@ function criarUsuario(nome, email, senha, idEmpresa) {
         senha,
         2,
         idEmpresa,
-        1
+        4
     ]);
 }
 

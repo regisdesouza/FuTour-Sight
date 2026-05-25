@@ -53,7 +53,7 @@ function login() {
         .then((json) => {
             console.log("Login realizado:", json);
 
-            if (json.status_usuario !== "ATIVA") {
+            if (json.status_usuario !== "ATIVO") {
                 exibirToast("erro", "Seu acesso está desativado. Entre em contato com o administrador.");
                 return;
             }
