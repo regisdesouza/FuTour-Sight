@@ -25,7 +25,7 @@ function cadastrarFuncionario(
         senha,
         permissao,
         idEmpresa,
-        1
+        4
     ]);
 }
 

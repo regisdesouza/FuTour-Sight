@@ -17,6 +17,8 @@
 
 iniciarMenu();
 
+sessionStorage.clear();
+
 Inputmask("(99) 99999-9999").mask(document.getElementById("telefone"));
 
 const textarea = document.getElementById("mensagem");

@@ -89,6 +89,29 @@ function buscarSolicitacaoPorId(idSolicitacao) {
     return database.executar(instrucaoSql, [idSolicitacao]);
 }
 
+function buscarEmpresaPorId(idEmpresa) {
+    const instrucaoSql = `
+        SELECT id_empresa, nome, cnpj, email, telefone
+        FROM empresa
+        WHERE id_empresa = ?;
+    `;
+
+    return database.executar(instrucaoSql, [idEmpresa]);
+}
+
+function atualizarEmpresa(idEmpresa, nome, cnpj, email, telefone) {
+    const instrucaoSql = `
+        UPDATE empresa
+        SET nome     = ?,
+            cnpj     = ?,
+            email    = ?,
+            telefone = ?
+        WHERE id_empresa = ?;
+    `;
+
+    return database.executar(instrucaoSql, [nome, cnpj, email, telefone, idEmpresa]);
+}
+
 function buscarEmpresaPorCnpj(cnpj) {
     const instrucaoSql = `
         SELECT id_empresa
@@ -105,16 +128,18 @@ function criarEmpresa(nome, cnpj, email, telefone) {
             nome,
             cnpj,
             email,
-            telefone
+            telefone,
+            fk_status
         )
-        VALUES (?, ?, ?, ?);
+        VALUES (?, ?, ?, ?, ?);
     `;
 
     return database.executar(instrucaoSql, [
         nome,
         cnpj,
         email,
-        telefone
+        telefone,
+        1
     ]);
 }
 
@@ -137,7 +162,7 @@ function criarUsuario(nome, email, senha, idEmpresa) {
         senha,
         2,
         idEmpresa,
-        1
+        4
     ]);
 }
 
@@ -206,6 +231,8 @@ module.exports = {
     listarEmpresasProcuradas,
     editarStatusEmpresa,
     buscarSolicitacaoPorId,
+    buscarEmpresaPorId,
+    atualizarEmpresa,
     buscarEmpresaPorCnpj,
     criarEmpresa,
     criarUsuario,
