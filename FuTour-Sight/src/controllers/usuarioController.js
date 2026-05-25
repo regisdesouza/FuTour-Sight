@@ -182,40 +182,22 @@ async function autenticar(req, res) {
 async function criarFiltro(req, res) {
     const {
         nomeFiltro,
-        estados,
-        paises,
-        mes_inicio,
-        mes_fim,
-        ano,
+        estado,
+        continente,
+        ano_inicio,
+        ano_fim,
         fkUsuario
     } = req.body;
 
     try {
         const filtro = await usuarioModel.criarFiltro(
             nomeFiltro,
-            mes_inicio,
-            mes_fim,
-            ano,
+            estado,
+            continente,
+            ano_inicio,
+            ano_fim,
             fkUsuario
         );
-
-        const idFiltro = filtro.insertId;
-
-        for (const estado of estados) {
-            await usuarioModel.criarFiltroItem(
-                idFiltro,
-                "ESTADO",
-                estado
-            );
-        }
-
-        for (const pais of paises) {
-            await usuarioModel.criarFiltroItem(
-                idFiltro,
-                "PAIS",
-                pais
-            );
-        }
 
         return res.status(200).json({
             mensagem: "Filtro criado com sucesso."
@@ -236,28 +218,11 @@ async function listarFiltros(req, res) {
     try {
         const resultados = await usuarioModel.listarFiltros(idUsuario);
 
-        const listaFiltros = resultados.map((filtro) => ({
-            id: filtro.id_filtro,
-            nome: filtro.nome,
-            estados: filtro.estados
-                ? filtro.estados.split(",")
-                : [],
-            paises: filtro.paises
-                ? filtro.paises.split(",")
-                : [],
-            mes_inicio: filtro.mes_inicio,
-            mes_fim: filtro.mes_fim,
-            ano: filtro.ano_referencia
-        }));
-
-        return res.status(200).json(listaFiltros);
+        return res.status(200).json(resultados);
 
     } catch (erro) {
         console.log(erro);
-
-        return res.status(500).json({
-            mensagem: erro.sqlMessage || erro.message
-        });
+        return res.status(500).json({ mensagem: erro.sqlMessage || erro.message });
     }
 }
 
@@ -299,9 +264,9 @@ async function listarEstados(req, res) {
     }
 }
 
-async function listarPaises(req, res) {
+async function listarContinentes(req, res) {
     try {
-        const resultado = await usuarioModel.listarPaises();
+        const resultado = await usuarioModel.listarContinentes();
 
         return res.status(200).json(resultado);
 
@@ -334,39 +299,22 @@ async function atualizarFiltro(req, res) {
 
     const {
         nomeFiltro,
-        estados,
-        paises,
-        mes_inicio,
-        mes_fim,
-        ano
+        estado,
+        continente,
+        ano_inicio,
+        ano_fim,
+        fkUsuario
     } = req.body;
 
     try {
         await usuarioModel.atualizarFiltro(
             nomeFiltro,
-            mes_inicio,
-            mes_fim,
-            ano,
+            estado,
+            continente,
+            ano_inicio,
+            ano_fim,
             idFiltro
         );
-
-        await usuarioModel.deletarFiltrosItens(idFiltro);
-
-        for (const estado of estados) {
-            await usuarioModel.criarFiltroItem(
-                idFiltro,
-                "ESTADO",
-                estado
-            );
-        }
-
-        for (const pais of paises) {
-            await usuarioModel.criarFiltroItem(
-                idFiltro,
-                "PAIS",
-                pais
-            );
-        }
 
         return res.status(200).json({
             mensagem: "Filtro atualizado com sucesso."
@@ -415,7 +363,6 @@ async function excluirFiltro(req, res) {
     const idFiltro = req.params.idFiltro;
 
     try {
-        await usuarioModel.deletarFiltrosItens(idFiltro);
 
         await usuarioModel.excluirFiltro(idFiltro);
 
@@ -440,7 +387,7 @@ module.exports = {
     listarFiltros,
     buscarFiltro,
     listarEstados,
-    listarPaises,
+    listarContinentes,
     listarAnos,
     atualizarFiltro,
     editarPerfil,

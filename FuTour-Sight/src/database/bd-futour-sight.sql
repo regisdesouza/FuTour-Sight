@@ -1,174 +1,261 @@
-CREATE DATABASE IF NOT EXISTS futour_sight;
- 
+CREATE DATABASE IF NOT EXISTS futour_sight
+    CHARACTER SET utf8mb4
+    COLLATE utf8mb4_0900_ai_ci;
+
 USE futour_sight;
- 
- 
+
+USE futour_sight;
+
+
+
 CREATE TABLE nivel_permissao (
     id_nivel_permissao INT AUTO_INCREMENT PRIMARY KEY,
-    nome               VARCHAR(50)  NOT NULL UNIQUE,
-    descricao          VARCHAR(255)
-);
- 
-INSERT INTO nivel_permissao (nome, descricao) VALUES
-('PLATAFORMA_ADMIN', 'Administrador da FuTour Sight - acesso total ao sistema'),
-('EMPRESA_ADMIN',    'Administrador da empresa cliente - gerencia sua equipe'),
-('EMPRESA_USER',     'Funcionario da empresa - acesso ao dashboard');
- 
- 
-CREATE TABLE status (
-    id_status INT AUTO_INCREMENT PRIMARY KEY,
-    contexto  VARCHAR(50) NOT NULL,
-    nome      VARCHAR(50) NOT NULL,
+    nome VARCHAR(50) NOT NULL UNIQUE,
     descricao VARCHAR(255)
 );
- 
-INSERT INTO status (contexto, nome, descricao) VALUES
-('EMPRESA',     'ATIVA',      'Empresa ativa na plataforma'),
-('EMPRESA',     'SUSPENSA',   'Empresa temporariamente suspensa'),
-('EMPRESA',     'PENDENTE',   'Aguardando ativacao'),
-('USUARIO',     'ATIVO',      'Usuario com acesso liberado'),
-('USUARIO',     'INATIVO',    'Usuario desativado'),
-('USUARIO',     'PENDENTE',   'Aguardando primeiro acesso'),
-('UNIDADE',     'ATIVA',      'Unidade em operacao'),
-('UNIDADE',     'INATIVA',    'Unidade desativada'),
-('SOLICITACAO', 'PENDENTE',   'Aguardando analise do administrador'),
-('SOLICITACAO', 'EM_ANALISE', 'Em analise pelo administrador'),
-('SOLICITACAO', 'APROVADA',   'Solicitacao aprovada e processada'),
-('SOLICITACAO', 'RECUSADA',   'Solicitacao recusada pelo administrador');
- 
- 
-CREATE TABLE contato (
-    id_contato   INT AUTO_INCREMENT PRIMARY KEY,
-    nome         VARCHAR(150) NOT NULL,
-    email        VARCHAR(150) NOT NULL,
-    telefone     VARCHAR(20),
-    mensagem     TEXT         NOT NULL,
-    data_criacao DATETIME DEFAULT CURRENT_TIMESTAMP
+
+
+INSERT INTO nivel_permissao (nome, descricao) VALUES
+('PLATAFORMA_ADMIN', 'Administrador da FuTour Sight - acesso total ao sistema'),
+('EMPRESA_ADMIN', 'Administrador da empresa cliente - gerencia sua equipe'),
+('EMPRESA_USER', 'Funcionario da empresa - acesso ao dashboard');
+
+CREATE TABLE status (
+    id_status INT AUTO_INCREMENT PRIMARY KEY,
+    contexto VARCHAR(50) NOT NULL,
+    nome VARCHAR(50) NOT NULL,
+    descricao VARCHAR(255)
 );
- 
- 
-CREATE TABLE empresa (
-    id_empresa       INT AUTO_INCREMENT PRIMARY KEY,
-    nome             VARCHAR(150) NOT NULL,
-    cnpj             CHAR(14)     NOT NULL UNIQUE,
-    email            VARCHAR(150) UNIQUE,
-    telefone         VARCHAR(20),
-    fk_status        INT          NOT NULL DEFAULT 3,
-    data_criacao     DATETIME DEFAULT CURRENT_TIMESTAMP,
+
+INSERT INTO status (contexto, nome, descricao) VALUES
+('EMPRESA', 'ATIVA', 'Empresa ativa na plataforma'),
+('EMPRESA', 'SUSPENSA', 'Empresa temporariamente suspensa'),
+('EMPRESA', 'PENDENTE', 'Aguardando ativacao'),
+('USUARIO', 'ATIVO', 'Usuario com acesso liberado'),
+('USUARIO', 'INATIVO', 'Usuario desativado'),
+('USUARIO', 'PENDENTE', 'Aguardando primeiro acesso'),
+('UNIDADE', 'ATIVA', 'Unidade em operacao'),
+('UNIDADE', 'INATIVA', 'Unidade desativada'),
+('SOLICITACAO', 'PENDENTE', 'Aguardando analise do administrador'),
+('SOLICITACAO', 'EM_ANALISE', 'Em analise pelo administrador'),
+('SOLICITACAO', 'APROVADA', 'Solicitacao aprovada e processada'),
+('SOLICITACAO', 'RECUSADA', 'Solicitacao recusada pelo administrador');
+
+CREATE TABLE solicitacao_cadastro (
+    id_solicitacao INT AUTO_INCREMENT PRIMARY KEY,
+    nome_responsavel VARCHAR(150) NOT NULL,
+    email_responsavel VARCHAR(150) NOT NULL,
+    telefone_responsavel VARCHAR(20),
+    nome_empresa VARCHAR(150) NOT NULL,
+    cnpj_empresa CHAR(14) NOT NULL,
+    email_empresa VARCHAR(150),
+    telefone_empresa VARCHAR(20),
+    fk_status INT NOT NULL DEFAULT 9,
+    data_criacao DATETIME DEFAULT CURRENT_TIMESTAMP,
     data_atualizacao DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     FOREIGN KEY (fk_status) REFERENCES status(id_status)
 );
- 
+
+CREATE TABLE contato (
+    id_contato INT AUTO_INCREMENT PRIMARY KEY,
+    nome VARCHAR(150) NOT NULL,
+    email VARCHAR(150) NOT NULL,
+    telefone VARCHAR(20),
+    mensagem TEXT NOT NULL,
+    data_criacao DATETIME DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE empresa (
+    id_empresa INT AUTO_INCREMENT PRIMARY KEY,
+    nome VARCHAR(150) NOT NULL,
+    cnpj CHAR(14) NOT NULL UNIQUE,
+    email VARCHAR(150) UNIQUE,
+    telefone VARCHAR(20),
+    fk_status INT NOT NULL DEFAULT 3,
+    data_criacao DATETIME DEFAULT CURRENT_TIMESTAMP,
+    data_atualizacao DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    FOREIGN KEY (fk_status) REFERENCES status(id_status)
+);
+
 INSERT INTO empresa (nome, cnpj, email, telefone, fk_status) VALUES
 ('FutourSight', '01253456200015', 'futoursight@gmail.com', '11944444444', 1),
 ('Hotel Haddock', '53145733000180', 'hotelhaddock@gmail.com', '1127888634', 1);
- 
- 
+
 CREATE TABLE usuario (
-    id_usuario         INT AUTO_INCREMENT PRIMARY KEY,
-    nome               VARCHAR(150),
-    email              VARCHAR(150) NOT NULL UNIQUE,
-    senha              VARCHAR(255),
-    fk_nivel_permissao INT          NOT NULL,
-    fk_empresa         INT,
-    fk_status          INT          NOT NULL DEFAULT 6,
-    primeiro_acesso    BOOLEAN DEFAULT TRUE,
-    data_criacao       DATETIME DEFAULT CURRENT_TIMESTAMP,
-    data_atualizacao   DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-    FOREIGN KEY (fk_nivel_permissao) REFERENCES nivel_permissao(id_nivel_permissao),
-    FOREIGN KEY (fk_empresa)         REFERENCES empresa(id_empresa),
-    FOREIGN KEY (fk_status)          REFERENCES status(id_status)
-);
- 
-INSERT INTO usuario (nome, email, senha, fk_nivel_permissao, fk_empresa, fk_status) VALUES
-('Reginaldo de Souza',  'reginaldo@futoursight.com.br',        'Senha@1234', 1, 1, 4),
-('Debora Marsal',       'deboramarsal@futoursight.com.br',     'Senha@4321', 1, 1, 4),
-('Lucas Eiki Gushiken', 'lucaseiki@futoursight.com.br',        'Senha@1232', 1, 1, 4),
-('Gabriel Rodrigues',   'gabrielrodrigues@futoursight.com.br', 'Senha@1333', 1, 1, 4),
-('Lucas Frossi',        'lucasfrossi@futoursight.com.br',      'Senha@4123', 1, 1, 4),
-('Jorge Araújo',        'jorgearaujo@haddock.com.br',      'Codig0@123', 2, 2, 4),
-('Mariana Martins',        'marianamartins@haddock.com.br',      'Codig0@224', 3, 2, 4);
- 
-CREATE TABLE solicitacao_cadastro (
-    id_solicitacao       INT AUTO_INCREMENT PRIMARY KEY,
-    nome_responsavel     VARCHAR(150) NOT NULL,
-    email_responsavel    VARCHAR(150) NOT NULL,
-    telefone_responsavel VARCHAR(20),
-    nome_empresa         VARCHAR(150) NOT NULL,
-    cnpj_empresa         CHAR(14)     NOT NULL,
-    email_empresa        VARCHAR(150),
-    telefone_empresa     VARCHAR(20),
-    fk_status            INT          NOT NULL DEFAULT 9,
-    data_criacao         DATETIME DEFAULT CURRENT_TIMESTAMP,
-    data_atualizacao     DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-    FOREIGN KEY (fk_status) REFERENCES status(id_status)
-);
- 
- 
-CREATE TABLE endereco (
-    id_endereco  INT AUTO_INCREMENT PRIMARY KEY,
-    cep          CHAR(8),
-    logradouro   VARCHAR(100),
-    numero       CHAR(6),
-    bairro       VARCHAR(100),
-    cidade       VARCHAR(100),
-    estado       VARCHAR(100),
-    complemento  VARCHAR(100),
-    fk_status    INT NOT NULL DEFAULT 7,
-    fk_empresa   INT NOT NULL,
+    id_usuario INT AUTO_INCREMENT PRIMARY KEY,
+    nome VARCHAR(150),
+    email VARCHAR(150) NOT NULL UNIQUE,
+    senha VARCHAR(255),
+    slack_id VARCHAR(50),
+    fk_nivel_permissao INT NOT NULL,
+    fk_empresa INT,
+    fk_status INT NOT NULL DEFAULT 6,
+    primeiro_acesso BOOLEAN DEFAULT TRUE,
     data_criacao DATETIME DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY (fk_status)  REFERENCES status(id_status),
+    data_atualizacao DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+
+    FOREIGN KEY (fk_nivel_permissao)
+        REFERENCES nivel_permissao(id_nivel_permissao),
+
+    FOREIGN KEY (fk_empresa)
+        REFERENCES empresa(id_empresa),
+
+    FOREIGN KEY (fk_status)
+        REFERENCES status(id_status)
+);
+
+INSERT INTO usuario (
+    nome,
+    email,
+    senha,
+    slack_id,
+    fk_nivel_permissao,
+    fk_empresa,
+    fk_status
+) VALUES
+(
+    'Reginaldo de Souza',
+    'reginaldo@futoursight.com.br',
+    'Senha1234@',
+    'U0B1A0A664T',
+    1,
+    1,
+    4
+),
+(
+    'Debora Marsal',
+    'deboramarsal@futoursight.com.br',
+    'Senha1234@',
+    'U0B2JP8P38D',
+    1,
+    1,
+    4
+),
+(
+    'Lucas Eiki Gushiken',
+    'lucaseiki@futoursight.com.br',
+    'Senha1234@',
+    'U0B3GDNGHT2',
+    1,
+    1,
+    4
+),
+(
+    'Gabriel Rodrigues',
+    'gabrielrodrigues@futoursight.com.br',
+    'Senha1234@',
+    'U0B2JPCLRQD',
+    1,
+    1,
+    4
+),
+(
+    'Lucas Frossi',
+    'lucasfrossi@futoursight.com.br',
+    'Senha1234@',
+    'U0B2L3H9RM4',
+    1,
+    1,
+    4
+),
+(
+    'Mariana Martins',
+    'marianamartins@haddock.com.br',
+    'Senha1234@',
+    NULL,
+    2,
+    2,
+    4
+),
+(
+    'Rafaela Martins',
+    'rafaelaamartins@haddock.com.br',
+    'Senha1234@',
+    NULL,
+    3,
+    2,
+    4
+);
+CREATE TABLE configuracao_notificacao (
+    id_configuracao_notificacao INT AUTO_INCREMENT PRIMARY KEY,
+    nome VARCHAR(100) NOT NULL,
+    tipo VARCHAR(50) NOT NULL,
+    ativo BOOLEAN DEFAULT TRUE,
+    intervalo_minutos INT DEFAULT 60,
+    data_criacao DATETIME DEFAULT CURRENT_TIMESTAMP,
+    data_atualizacao DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+);
+
+INSERT INTO configuracao_notificacao (nome, tipo, ativo, intervalo_minutos) VALUES
+('ETL Turistas Sucesso', 'ETL_SUCESSO', true, 60),
+('ETL Turistas Erro',    'ETL_ERRO',    true, 5);
+
+CREATE TABLE usuario_notificacao (
+    id_usuario_notificacao INT AUTO_INCREMENT PRIMARY KEY,
+    fk_usuario INT NOT NULL,
+    fk_configuracao_notificacao INT NOT NULL,
+    receber BOOLEAN DEFAULT TRUE,
+    data_criacao DATETIME DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (fk_usuario) REFERENCES usuario(id_usuario),
+    FOREIGN KEY (fk_configuracao_notificacao)
+        REFERENCES configuracao_notificacao(id_configuracao_notificacao)
+);
+
+INSERT INTO usuario_notificacao (fk_usuario, fk_configuracao_notificacao, receber) VALUES
+(1, 1, true), (2, 1, true), (3, 1, true), (4, 1, true), (5, 1, true),
+(1, 2, true), (2, 2, true), (3, 2, true), (4, 2, true), (5, 2, true);
+
+CREATE TABLE endereco (
+    id_endereco INT AUTO_INCREMENT PRIMARY KEY,
+    cep CHAR(8),
+    logradouro VARCHAR(100),
+    numero CHAR(6),
+    bairro VARCHAR(100),
+    cidade VARCHAR(100),
+    estado VARCHAR(100),
+    complemento VARCHAR(100),
+    fk_status INT NOT NULL DEFAULT 7,
+    fk_empresa INT NOT NULL,
+    data_criacao DATETIME DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (fk_status) REFERENCES status(id_status),
     FOREIGN KEY (fk_empresa) REFERENCES empresa(id_empresa)
 );
 
 INSERT INTO endereco (cep, logradouro, numero, bairro, cidade, estado, complemento, fk_status, fk_empresa) VALUES
 ('11706230', 'Rua São Cristóvão', '331', 'Caiçara', 'Praia Grande', 'São Paulo', null, 7, 2);
- 
+
 CREATE TABLE log (
-    id_log          INT AUTO_INCREMENT PRIMARY KEY,
-    tabela          VARCHAR(100) NOT NULL,
+    id_log INT AUTO_INCREMENT PRIMARY KEY,
+    tabela VARCHAR(100) NOT NULL,
     registros_lidos INT DEFAULT 0,
-    sucesso         BOOLEAN      NOT NULL,
-    mensagem        TEXT,
-    data_criacao    DATETIME DEFAULT CURRENT_TIMESTAMP
-);
- 
- 
-CREATE TABLE chegadas_turistas (
-    id               INT AUTO_INCREMENT PRIMARY KEY,
-    via_de_acesso    VARCHAR(20),
-    uf               VARCHAR(50),
-    nome_pais_origem VARCHAR(100),
-    mes              VARCHAR(20),
-    ano              INT,
-    chegadas         INT
+    sucesso BOOLEAN NOT NULL,
+    mensagem TEXT,
+    data_criacao DATETIME DEFAULT CURRENT_TIMESTAMP
 );
 
- 
+CREATE TABLE chegadas_turistas (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    via_de_acesso VARCHAR(20),
+    uf VARCHAR(50),
+    nome_pais_origem VARCHAR(100),
+    mes VARCHAR(20),
+    ano INT,
+    chegadas INT
+);
+
+
 CREATE TABLE filtro_personalizado (
-    id_filtro        INT AUTO_INCREMENT PRIMARY KEY,
-    nome             VARCHAR(100) NOT NULL,
-    descricao        VARCHAR(255),
-    ano_referencia   INT,
-    mes_inicio       VARCHAR(20),
-    mes_fim          VARCHAR(20),
-    fk_usuario       INT NOT NULL,
-    data_criacao     DATETIME DEFAULT CURRENT_TIMESTAMP,
-    data_atualizacao DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    id_filtro INT AUTO_INCREMENT PRIMARY KEY,
+    nome  VARCHAR(100) NOT NULL,
+    ano_inicio INT NOT NULL,
+    ano_fim INT NOT NULL,
+    estado VARCHAR(50) NOT NULL,
+    continente VARCHAR(60) NOT NULL,
+    fk_usuario INT NOT NULL,
+    data_criacao  DATETIME DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (fk_usuario) REFERENCES usuario(id_usuario)
 );
- 
- 
-CREATE TABLE filtro_item (
-    id_filtro_item INT AUTO_INCREMENT PRIMARY KEY,
-    fk_filtro      INT          NOT NULL,
-    tipo           VARCHAR(6)   NOT NULL,
-    valor          VARCHAR(100) NOT NULL,
-    CONSTRAINT chk_tipo CHECK (tipo IN ('PAIS', 'ESTADO')),
-    FOREIGN KEY (fk_filtro) REFERENCES filtro_personalizado(id_filtro) ON DELETE CASCADE
-);
- 
- 
+
 CREATE VIEW vw_solicitacoes AS
 SELECT
     sc.id_solicitacao,
@@ -183,8 +270,8 @@ SELECT
     s.nome AS status
 FROM solicitacao_cadastro sc
 INNER JOIN status s ON s.id_status = sc.fk_status;
- 
- 
+
+
 CREATE VIEW vw_empresas AS
 SELECT
     e.id_empresa,
@@ -199,8 +286,8 @@ FROM empresa e
 INNER JOIN status s  ON s.id_status  = e.fk_status
 LEFT  JOIN usuario u ON u.fk_empresa = e.id_empresa
 GROUP BY e.id_empresa, e.nome, e.cnpj, e.email, e.telefone, s.nome, e.data_criacao;
- 
- 
+
+
 CREATE VIEW vw_usuarios AS
 SELECT
     u.id_usuario,
@@ -216,8 +303,8 @@ FROM usuario u
 INNER JOIN nivel_permissao np ON np.id_nivel_permissao = u.fk_nivel_permissao
 INNER JOIN status s           ON s.id_status           = u.fk_status
 LEFT  JOIN empresa e          ON e.id_empresa          = u.fk_empresa;
- 
- 
+
+
 CREATE VIEW vw_metricas_filtro AS
 SELECT
     ct.ano,
@@ -236,14 +323,14 @@ SELECT
             SELECT SUM(chegadas)
             FROM chegadas_turistas ct2
             WHERE ct2.ano = ct.ano
-              AND ct2.nome_pais_origem = (
-                  SELECT nome_pais_origem
-                  FROM chegadas_turistas ct3
-                  WHERE ct3.ano = ct.ano
-                  GROUP BY nome_pais_origem
-                  ORDER BY SUM(chegadas) DESC
-                  LIMIT 1
-              )
+                AND ct2.nome_pais_origem = (
+                    SELECT nome_pais_origem
+                    FROM chegadas_turistas ct3
+                    WHERE ct3.ano = ct.ano
+                    GROUP BY nome_pais_origem
+                    ORDER BY SUM(chegadas) DESC
+                    LIMIT 1
+                )
         ) * 100.0 / SUM(ct.chegadas), 0
     ) AS percentual_pais_lider,
     (
@@ -258,19 +345,19 @@ SELECT
         SELECT SUM(chegadas)
         FROM chegadas_turistas ct2
         WHERE ct2.ano = ct.ano
-          AND ct2.mes = (
-              SELECT mes
-              FROM chegadas_turistas ct3
-              WHERE ct3.ano = ct.ano
-              GROUP BY mes
-              ORDER BY SUM(chegadas) DESC
-              LIMIT 1
-          )
+            AND ct2.mes = (
+                SELECT mes
+                FROM chegadas_turistas ct3
+                WHERE ct3.ano = ct.ano
+                GROUP BY mes
+                ORDER BY SUM(chegadas) DESC
+                LIMIT 1
+            )
     ) AS turistas_melhor_mes
 FROM chegadas_turistas ct
 GROUP BY ct.ano;
- 
- 
+
+
 CREATE VIEW vw_fluxo_mensal AS
 SELECT
     ano,
@@ -293,8 +380,8 @@ SELECT
 FROM chegadas_turistas
 GROUP BY ano, mes
 ORDER BY ano, mes_numero;
- 
- 
+
+
 CREATE VIEW vw_ranking_paises AS
 SELECT
     ano,
@@ -310,8 +397,8 @@ SELECT
 FROM chegadas_turistas ct
 GROUP BY ano, nome_pais_origem
 ORDER BY ano, total_turistas DESC;
- 
- 
+
+
 CREATE VIEW vw_dashboard_filtrado AS
 SELECT
     ct.ano,
@@ -322,28 +409,30 @@ SELECT
     SUM(ct.chegadas) AS total_turistas
 FROM chegadas_turistas ct
 GROUP BY ct.ano, ct.mes, ct.uf, ct.nome_pais_origem, ct.via_de_acesso;
- 
- 
+
+
 SELECT * FROM vw_empresas ORDER BY nome ASC;
- 
+
 SELECT * FROM vw_empresas WHERE nome LIKE '%empresa teste%' ORDER BY nome ASC;
- 
+
 SELECT * FROM vw_usuarios WHERE status != 'PENDENTE' ORDER BY nome ASC;
- 
+
 SELECT * FROM vw_usuarios
 WHERE status     != 'PENDENTE'
-  AND id_empresa  = 1
-  AND nome LIKE '%joao%'
+    AND id_empresa  = 1
+    AND nome LIKE '%joao%'
 ORDER BY nome ASC;
- 
+
 SELECT * FROM vw_solicitacoes ORDER BY data_criacao DESC;
- 
+
 SELECT * FROM vw_solicitacoes WHERE id_solicitacao = 1;
- 
+
 SELECT id_log, tabela, registros_lidos, sucesso, mensagem, data_criacao
 FROM log
 ORDER BY data_criacao DESC;
 
+ALTER TABLE chegadas_turistas
+    CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
 CREATE VIEW vw_continente_turistas AS
 SELECT
@@ -401,8 +490,8 @@ SELECT
     END AS continente
 FROM chegadas_turistas ct
 WHERE ct.nome_pais_origem NOT LIKE 'Outros países%'
-  AND ct.nome_pais_origem != 'Países não especificados';
-  
+    AND ct.nome_pais_origem != 'Países não especificados';
+
 CREATE VIEW vw_regiao_turistas AS
 SELECT
     ct.id,
@@ -463,7 +552,130 @@ SELECT *
 FROM vw_continente_turistas ct
 JOIN vw_regiao_turistas rt ON rt.id = ct.id
 WHERE ct.continente = 'Europa' AND rt.regiao = 'Sudeste';
-  
+
 SELECT SUM(ct.chegadas) AS total_turistas FROM vw_continente_turistas ct
 JOIN vw_regiao_turistas rt  ON rt.id = ct.id
 WHERE ct.continente = 'Europa' AND rt.regiao = 'Sudeste';
+
+
+
+INSERT INTO filtro_personalizado (nome, ano_inicio, ano_fim, estado, continente, fk_usuario)
+VALUES
+('Estados Unidos RJ', 2023, 2024, 'Rio de Janeiro', 'América do Norte', 6),
+('América do Sul Sul', 2023, 2024, 'Rio Grande do Sul', 'América do Sul', 6),
+('Turistas Europa Sudeste', 2023, 2024, 'São Paulo', 'Europa', 6);
+
+SELECT id_filtro, nome FROM filtro_personalizado;
+
+INSERT INTO filtro_personalizado (nome, ano_inicio, ano_fim, estado, continente, fk_usuario)
+VALUES
+('Turismo Europeu em SP', 2023, 2024, 'São Paulo', 'Europa', 7),
+('Vizinhos do Sul no RS', 2023, 2024, 'Rio Grande do Sul', 'América do Sul', 7),
+('EUA e Canadá no RJ', 2023, 2024, 'Rio de Janeiro', 'América do Norte', 7);
+
+
+
+SELECT nome_pais_origem, ano, SUM(chegadas) 
+FROM chegadas_turistas 
+WHERE uf = 'São Paulo' AND nome_pais_origem IN ('Alemanha','Portugal','Reino Unido')
+GROUP BY nome_pais_origem, ano;
+
+
+
+INSERT INTO chegadas_turistas (ano, mes, uf, nome_pais_origem, via_de_acesso, chegadas)
+VALUES
+(2023, 'Janeiro', 'São Paulo', 'Alemanha', 'Aérea', 6200),
+(2023, 'Fevereiro', 'São Paulo', 'Alemanha', 'Aérea', 5800),
+(2023, 'Março', 'São Paulo', 'Alemanha', 'Aérea', 6500),
+(2023, 'Abril', 'São Paulo', 'Alemanha', 'Aérea', 7100),
+(2023, 'Maio', 'São Paulo', 'Alemanha', 'Aérea', 7400),
+(2023, 'Junho', 'São Paulo', 'Alemanha', 'Aérea', 7800),
+(2023, 'Julho', 'São Paulo', 'Alemanha', 'Aérea', 8900),
+(2023, 'Agosto', 'São Paulo', 'Alemanha', 'Aérea', 8200),
+(2023, 'Setembro', 'São Paulo', 'Alemanha', 'Aérea', 7600),
+(2023, 'Outubro', 'São Paulo', 'Alemanha', 'Aérea', 7900),
+(2023, 'Novembro', 'São Paulo', 'Alemanha', 'Aérea', 8700),
+(2023, 'Dezembro', 'São Paulo', 'Alemanha', 'Aérea', 9800),
+
+(2023, 'Janeiro', 'São Paulo', 'Portugal', 'Aérea', 6100),
+(2023, 'Fevereiro', 'São Paulo', 'Portugal', 'Aérea', 5700),
+(2023, 'Março', 'São Paulo', 'Portugal', 'Aérea', 6400),
+(2023, 'Abril', 'São Paulo', 'Portugal', 'Aérea', 7000),
+(2023, 'Maio', 'São Paulo', 'Portugal', 'Aérea', 7300),
+(2023, 'Junho', 'São Paulo', 'Portugal', 'Aérea', 7700),
+(2023, 'Julho', 'São Paulo', 'Portugal', 'Aérea', 8800),
+(2023, 'Agosto', 'São Paulo', 'Portugal', 'Aérea', 8100),
+(2023, 'Setembro', 'São Paulo', 'Portugal', 'Aérea', 7500),
+(2023, 'Outubro', 'São Paulo', 'Portugal', 'Aérea', 7800),
+(2023, 'Novembro', 'São Paulo', 'Portugal', 'Aérea', 8600),
+(2023, 'Dezembro', 'São Paulo', 'Portugal', 'Aérea', 9700),
+
+(2023, 'Janeiro', 'São Paulo', 'Reino Unido', 'Aérea', 5200),
+(2023, 'Fevereiro', 'São Paulo', 'Reino Unido', 'Aérea', 4900),
+(2023, 'Março', 'São Paulo', 'Reino Unido', 'Aérea', 5500),
+(2023, 'Abril', 'São Paulo', 'Reino Unido', 'Aérea', 6000),
+(2023, 'Maio', 'São Paulo', 'Reino Unido', 'Aérea', 6300),
+(2023, 'Junho', 'São Paulo', 'Reino Unido', 'Aérea', 6700),
+(2023, 'Julho', 'São Paulo', 'Reino Unido', 'Aérea', 7600),
+(2023, 'Agosto', 'São Paulo', 'Reino Unido', 'Aérea', 7000),
+(2023, 'Setembro', 'São Paulo', 'Reino Unido', 'Aérea', 6500),
+(2023, 'Outubro', 'São Paulo', 'Reino Unido', 'Aérea', 6700),
+(2023, 'Novembro', 'São Paulo', 'Reino Unido', 'Aérea', 7400),
+(2023, 'Dezembro', 'São Paulo', 'Reino Unido', 'Aérea', 8400);
+
+
+
+SELECT nome_pais_origem, ano, SUM(chegadas)
+FROM chegadas_turistas
+WHERE uf = 'São Paulo' AND nome_pais_origem IN ('Itália','França','Espanha')
+GROUP BY nome_pais_origem, ano
+ORDER BY nome_pais_origem, ano;
+
+INSERT INTO chegadas_turistas (ano, mes, uf, nome_pais_origem, via_de_acesso, chegadas)
+VALUES
+(2023, 'Janeiro', 'São Paulo', 'Itália', 'Aérea', 4800),
+(2023, 'Fevereiro', 'São Paulo', 'Itália', 'Aérea', 4500),
+(2023, 'Março', 'São Paulo', 'Itália', 'Aérea', 5100),
+(2023, 'Abril', 'São Paulo', 'Itália', 'Aérea', 5600),
+(2023, 'Maio', 'São Paulo', 'Itália', 'Aérea', 5900),
+(2023, 'Junho', 'São Paulo', 'Itália', 'Aérea', 6300),
+(2023, 'Julho', 'São Paulo', 'Itália', 'Aérea', 7200),
+(2023, 'Agosto', 'São Paulo', 'Itália', 'Aérea', 6600),
+(2023, 'Setembro', 'São Paulo', 'Itália', 'Aérea', 6100),
+(2023, 'Outubro', 'São Paulo', 'Itália', 'Aérea', 6400),
+(2023, 'Novembro', 'São Paulo', 'Itália', 'Aérea', 7100),
+(2023, 'Dezembro', 'São Paulo', 'Itália', 'Aérea', 8000),
+
+(2023, 'Janeiro', 'São Paulo', 'França', 'Aérea', 4600),
+(2023, 'Fevereiro', 'São Paulo', 'França', 'Aérea', 4300),
+(2023, 'Março', 'São Paulo', 'França', 'Aérea', 4900),
+(2023, 'Abril', 'São Paulo', 'França', 'Aérea', 5400),
+(2023, 'Maio', 'São Paulo', 'França', 'Aérea', 5700),
+(2023, 'Junho', 'São Paulo', 'França', 'Aérea', 6100),
+(2023, 'Julho', 'São Paulo', 'França', 'Aérea', 6900),
+(2023, 'Agosto', 'São Paulo', 'França', 'Aérea', 6400),
+(2023, 'Setembro', 'São Paulo', 'França', 'Aérea', 5900),
+(2023, 'Outubro', 'São Paulo', 'França', 'Aérea', 6200),
+(2023, 'Novembro', 'São Paulo', 'França', 'Aérea', 6800),
+(2023, 'Dezembro', 'São Paulo', 'França', 'Aérea', 7700),
+
+(2023, 'Janeiro', 'São Paulo', 'Espanha', 'Aérea', 4200),
+(2023, 'Fevereiro', 'São Paulo', 'Espanha', 'Aérea', 3900),
+(2023, 'Março', 'São Paulo', 'Espanha', 'Aérea', 4400),
+(2023, 'Abril', 'São Paulo', 'Espanha', 'Aérea', 4900),
+(2023, 'Maio', 'São Paulo', 'Espanha', 'Aérea', 5200),
+(2023, 'Junho', 'São Paulo', 'Espanha', 'Aérea', 5600),
+(2023, 'Julho', 'São Paulo', 'Espanha', 'Aérea', 6300),
+(2023, 'Agosto', 'São Paulo', 'Espanha', 'Aérea', 5800),
+(2023, 'Setembro', 'São Paulo', 'Espanha', 'Aérea', 5400),
+(2023, 'Outubro', 'São Paulo', 'Espanha', 'Aérea', 5600),
+(2023, 'Novembro', 'São Paulo', 'Espanha', 'Aérea', 6200),
+(2023, 'Dezembro', 'São Paulo', 'Espanha', 'Aérea', 7000);
+
+
+SELECT nome_pais_origem, COUNT(DISTINCT ano) as anos
+FROM chegadas_turistas
+WHERE uf = 'São Paulo'
+AND nome_pais_origem IN ('Alemanha','Áustria','Bélgica','Bulgária','Croácia','Dinamarca','Eslováquia','Eslovênia','Espanha','Estônia','Finlândia','França','Grécia','Holanda','Hungria','Irlanda','Itália','Letônia','Lituânia','Luxemburgo','Noruega','Polônia','Portugal','Reino Unido','República Tcheca','Romênia','Rússia','Sérvia','Suécia','Suíça','Turquia','Ucrânia')
+GROUP BY nome_pais_origem
+ORDER BY anos, nome_pais_origem;

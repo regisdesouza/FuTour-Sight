@@ -49,9 +49,9 @@ function login() {
             senhaServer: senhaVar,
         }),
     })
-        .then((resposta) => tratarRespostaFetch(resposta))
-        .then((json) => {
-            console.log("Login realizado:", json);
+    .then((resposta) => tratarRespostaFetch(resposta))
+    .then((json) => {
+        console.log("Login realizado:", json);
 
             if (json.status_usuario !== "ATIVO") {
                 exibirToast("erro", "Seu acesso está desativado. Entre em contato com o administrador.");
@@ -63,12 +63,12 @@ function login() {
                 return;
             }
 
-            sessionStorage.setItem("ID_USUARIO", json.id_usuario);
-            sessionStorage.setItem("NOME_USUARIO", json.nome);
-            sessionStorage.setItem("EMAIL_USUARIO", json.email);
-            sessionStorage.setItem("NIVEL_ACESSO", json.nivel_permissao);
-            sessionStorage.setItem("ID_EMPRESA", json.empresa);
-            sessionStorage.setItem("PRIMEIRO_ACESSO", json.primeiro_acesso);
+        sessionStorage.setItem("ID_USUARIO",      json.id_usuario);
+        sessionStorage.setItem("NOME_USUARIO",    json.nome);
+        sessionStorage.setItem("EMAIL_USUARIO",   json.email);
+        sessionStorage.setItem("NIVEL_ACESSO",    json.nivel_permissao);
+        sessionStorage.setItem("ID_EMPRESA",      json.empresa);
+        sessionStorage.setItem("PRIMEIRO_ACESSO", json.primeiro_acesso);
 
             const nivel = json.nivel_permissao; 
             const primeiroAcesso = json.primeiro_acesso === 1 || json.primeiro_acesso === true;

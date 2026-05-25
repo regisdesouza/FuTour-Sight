@@ -82,23 +82,9 @@
     </header>
 
     <main>
-        <h1>Dashboard</h1>
+        <h1>Dashboard do Gerente</h1>
 
         <div class="select-container">
-            <span>Comparação de anos</span>
-            <select name="ano-comeco" id="ano-comeco">
-                <option value="#">Selecione um ano</option>
-                <option value="2024">2024</option>
-                <!-- Puxar os anos e renderizar cada um como um option -->
-
-            </select>
-            <span>até</span>
-            <select name="ano-fim" id="ano-fim">
-                <option value="#">Selecione um ano</option>
-                <option value="2025">2025</option>
-                <!-- Puxar os anos e renderizar cada um como um option -->
-
-            </select>
             <h2>Filtros</h2>
             <select name="filtros" id="filtros">
                 <option value="">Nenhum</option>
@@ -107,7 +93,7 @@
 
         <div class="kpis">
             <div class="kpi-container container">
-                <p class="descricao">Aumento de turistas entre 2024 e 2025</p>
+                <p class="descricao">Estado com maior crescimento</p>
                 <div class="kpi-infos">
                     <span class="info">+8.93%</span>
                     <div class="kpi-dados">
@@ -116,7 +102,16 @@
                 </div>
             </div>
             <div class="kpi-container container">
-                <p class="descricao">Mês com maior aumento de turistas</p>
+                <p class="descricao">Mês com maior crescimento</p>
+                <div class="kpi-infos">
+                    <span class="info">Julho</span>
+                    <div class="kpi-dados">
+                        <p><span>+800</span> turistas</p>
+                    </div>
+                </div>
+            </div>
+            <div class="kpi-container container">
+                <p class="descricao">Mês com maior déficit</p>
                 <div class="kpi-infos">
                     <span class="info">Julho</span>
                     <div class="kpi-dados">
