@@ -1,66 +1,29 @@
 const database = require("../database/config.js");
 
 function enviarMensagem(nome, email, telefone, mensagem) {
-    const instrucaoSql = `
-        INSERT INTO contato (
-            nome,
-            email,
-            telefone,
-            mensagem
-        )
+    return database.executar(`
+        INSERT INTO contato (nome, email, telefone, mensagem)
         VALUES (?, ?, ?, ?);
-    `;
-
-    return database.executar(instrucaoSql, [
-        nome,
-        email,
-        telefone,
-        mensagem
-    ]);
+    `, [nome, email, telefone, mensagem]);
 }
 
 function buscarPorCnpj(cnpj) {
-    const instrucaoSql = `
-        SELECT id_solicitacao
-        FROM solicitacao_cadastro
-        WHERE cnpj_empresa = ?;
-    `;
-
-    return database.executar(instrucaoSql, [cnpj]);
+    return database.executar(`
+        SELECT id_solicitacao FROM solicitacao_cadastro WHERE cnpj_empresa = ?;
+    `, [cnpj]);
 }
 
-function preCadastrar(
-    nome,
-    emailPessoal,
-    empresa,
-    emailCorporativo,
-    cnpj,
-    telefoneCorporativo
-) {
-    const instrucaoSql = `
+function preCadastrar(nome, emailPessoal, empresa, emailCorporativo, cnpj, telefoneCorporativo) {
+    return database.executar(`
         INSERT INTO solicitacao_cadastro (
-            nome_responsavel,
-            email_responsavel,
-            nome_empresa,
-            cnpj_empresa,
-            email_empresa,
-            telefone_empresa
-        )
-        VALUES (?, ?, ?, ?, ?, ?);
-    `;
-
-    return database.executar(instrucaoSql, [
-        nome,
-        emailPessoal,
-        empresa,
-        cnpj,
-        emailCorporativo,
-        telefoneCorporativo
-    ]);
+            nome_responsavel, email_responsavel, nome_empresa,
+            cnpj_empresa, email_empresa, telefone_empresa
+        ) VALUES (?, ?, ?, ?, ?, ?);
+    `, [nome, emailPessoal, empresa, cnpj, emailCorporativo, telefoneCorporativo]);
 }
 
 function autenticar(email, senha) {
-    const instrucaoSql = `
+    return database.executar(`
         SELECT
             id_usuario,
             nome,
@@ -69,14 +32,8 @@ function autenticar(email, senha) {
             fk_empresa AS empresa,
             primeiro_acesso
         FROM usuario
-        WHERE email = ?
-        AND senha = ?;
-    `;
-
-    return database.executar(instrucaoSql, [
-        email,
-        senha
-    ]);
+        WHERE email = ? AND senha = ?;
+    `, [email, senha]);
 }
 
 function criarFiltro(
@@ -143,13 +100,7 @@ function buscarFiltro(idFiltro) {
 }
 
 function listarEstados() {
-    const instrucaoSql = `
-        SELECT DISTINCT uf
-        FROM chegadas_turistas
-        ORDER BY uf;
-    `;
-
-    return database.executar(instrucaoSql);
+    return database.executar(`SELECT DISTINCT uf FROM chegadas_turistas ORDER BY uf;`);
 }
 
 function listarContinentes() {
@@ -161,13 +112,7 @@ function listarContinentes() {
 }
 
 function listarAnos() {
-    const instrucaoSql = `
-        SELECT DISTINCT ano
-        FROM chegadas_turistas
-        ORDER BY ano DESC;
-    `;
-
-    return database.executar(instrucaoSql);
+    return database.executar(`SELECT DISTINCT ano FROM chegadas_turistas ORDER BY ano DESC;`);
 }
 
 function atualizarFiltro(
@@ -200,56 +145,15 @@ function atualizarFiltro(
 }
 
 function editarPerfil(idUsuario, nome, email, senha) {
-    const instrucaoSql = `
-        UPDATE usuario
-        SET
-            nome = ?,
-            email = ?,
-            senha = ?
-        WHERE id_usuario = ?;
-    `;
-
-    return database.executar(instrucaoSql, [
-        nome,
-        email,
-        senha,
-        idUsuario
-    ]);
-}
-
-function deletarFiltrosItens(idFiltro) {
-    const instrucaoSql = `
-        DELETE FROM filtro_item
-        WHERE fk_filtro = ?;
-    `;
-
-    return database.executar(instrucaoSql, [idFiltro]);
+    return database.executar(`
+        UPDATE usuario SET nome = ?, email = ?, senha = ? WHERE id_usuario = ?;
+    `, [nome, email, senha, idUsuario]);
 }
 
 function excluirFiltro(idFiltro) {
-    const instrucaoSql = `
-        DELETE FROM filtro_personalizado
-        WHERE id_filtro = ?;
-    `;
-
-    return database.executar(instrucaoSql, [idFiltro]);
-}
-
-function criarFiltroItem(fkFiltro, tipo, valor) {
-    const instrucaoSql = `
-        INSERT INTO filtro_item (
-            fk_filtro,
-            tipo,
-            valor
-        )
-        VALUES (?, ?, ?);
-    `;
-
-    return database.executar(instrucaoSql, [
-        fkFiltro,
-        tipo,
-        valor
-    ]);
+    return database.executar(`
+        DELETE FROM filtro_personalizado WHERE id_filtro = ?;
+    `, [idFiltro]);
 }
 
 module.exports = {
@@ -265,7 +169,5 @@ module.exports = {
     listarAnos,
     atualizarFiltro,
     editarPerfil,
-    deletarFiltrosItens,
-    excluirFiltro,
-    criarFiltroItem
+    excluirFiltro
 };

@@ -222,10 +222,7 @@ async function listarFiltros(req, res) {
 
     } catch (erro) {
         console.log(erro);
-
-        return res.status(500).json({
-            mensagem: erro.sqlMessage || erro.message
-        });
+        return res.status(500).json({ mensagem: erro.sqlMessage || erro.message });
     }
 }
 
