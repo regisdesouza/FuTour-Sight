@@ -39,8 +39,8 @@ function autenticar(email, senha) {
         LEFT JOIN empresa e  ON e.id_empresa = vu.id_empresa
         LEFT JOIN status  s  ON s.id_status  = e.fk_status
         WHERE vu.email = ?
-          AND u.senha  = ?;
-    `;
+        AND u.senha  = ?;
+    `);
 
     return database.executar(instrucaoSql, [email, senha]);
 }
