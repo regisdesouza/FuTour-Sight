@@ -131,22 +131,22 @@ select {
     transition: var(--transition);
 }
 
-.botoes button:first-child {
+.criar-filtro-container .botoes button:first-child {
     border: 1px solid var(--cor-complementar);
     color: var(--cor-complementar);
 }
 
-.botoes button:first-child:hover {
+.criar-filtro-container .botoes button:first-child:hover {
     background-color: var(--cor-complementar);
     color: var(--cor-clara);
 }
 
-.botoes button:last-child {
+.criar-filtro-container .botoes button:last-child {
     color: var(--cor-clara);
     background-color: var(--cor-complementar);
 }
 
-.botoes button:last-child:hover {
+.criar-filtro-container .botoes button:last-child:hover {
     background-color: var(--cor-complementar-escura);
 }
 
