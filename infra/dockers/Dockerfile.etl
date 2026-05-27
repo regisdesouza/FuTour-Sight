@@ -1,0 +1,23 @@
+FROM maven:3.9-eclipse-temurin-21 AS build
+
+WORKDIR /build
+
+COPY java/pom.xml .
+
+RUN mvn dependency:go-offline
+
+COPY java/src ./src
+
+RUN mvn clean package
+
+FROM eclipse-temurin:21-jre
+
+WORKDIR /app
+
+RUN useradd  usuarioetl
+
+COPY --from=build /build/target/futour-java-1.0.0.jar etl.jar
+
+USER usuarioetl
+
+ENTRYPOINT ["java", "-jar", "etl.jar"]
