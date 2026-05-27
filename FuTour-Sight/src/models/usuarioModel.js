@@ -23,7 +23,7 @@ function preCadastrar(nome, emailPessoal, empresa, emailCorporativo, cnpj, telef
 }
 
 function autenticar(email, senha) {
-    return database.executar(`
+    const instrucaoSql = `
         SELECT
             vu.id_usuario,
             vu.nome,
@@ -40,7 +40,7 @@ function autenticar(email, senha) {
         LEFT JOIN status  s  ON s.id_status  = e.fk_status
         WHERE vu.email = ?
         AND u.senha  = ?;
-    `);
+    `;
 
     return database.executar(instrucaoSql, [email, senha]);
 }
