@@ -1,0 +1,7 @@
+FROM node:24
+WORKDIR /app
+COPY FuTour-Sight/package*.json /app/
+RUN npm install
+COPY FuTour-Sight /app/
+EXPOSE 3333
+CMD ["npm", "start"]

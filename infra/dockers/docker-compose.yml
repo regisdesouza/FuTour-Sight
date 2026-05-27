@@ -1,0 +1,49 @@
+services:
+ mysql:
+  container_name: ContainerBD
+  build:
+   context: /opt/futour-sight/repo
+   dockerfile: infra/dockers/Dockerfile.mysql
+  restart: always
+  environment:
+   MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
+  volumes:
+   - mysql_data:/var/lib/mysql
+  ports:
+   - "${DB_PORT}:3306"
+ site:
+  container_name: ContainerSite
+  build:
+   context: /opt/futour-sight/repo
+   dockerfile: infra/dockers/Dockerfile.node
+  restart: always
+  depends_on:
+   - mysql
+  environment:
+   AMBIENTE_PROCESSO: ${AMBIENTE_PROCESSO}
+   DB_HOST: ${DB_HOST}
+   DB_DATABASE: ${DB_DATABASE}
+   DB_USER: ${DB_USER}
+   DB_PASSWORD: ${DB_PASSWORD}
+   DB_PORT: ${DB_PORT}
+   APP_PORT: ${APP_PORT}
+   APP_HOST: ${APP_HOST}
+   EMAIL_USER: ${EMAIL_USER}
+   EMAIL_PASS: ${EMAIL_PASS}
+  ports:
+   - "${APP_PORT}:3333"
+ etl:
+  container_name: ContainerETL
+  build:
+   context: /opt/futour-sight/repo
+   dockerfile: infra/dockers/Dockerfile.etl
+  restart: no
+  environment:
+   AWS_ACCESS_KEY_ID: ${AWS_ACCESS_KEY_ID}
+   AWS_SECRET_ACCESS_KEY: ${AWS_SECRET_ACCESS_KEY}
+   AWS_SESSION_TOKEN: ${AWS_SESSION_TOKEN}
+   AWS_REGION: ${AWS_REGION}
+   S3_BUCKET_NAME: ${S3_BUCKET_NAME}
+
+volumes:
+ mysql_data:
