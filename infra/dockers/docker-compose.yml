@@ -11,6 +11,13 @@ services:
    - mysql_data:/var/lib/mysql
   ports:
    - "${DB_PORT}:3306"
+  healthcheck:
+   test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-uroot", "-p${DB_PASSWORD}"]
+   interval: 10s
+   timeout: 5s
+   retries: 5
+   start_period: 30s
+
  site:
   container_name: ContainerSite
   build:
@@ -18,7 +25,8 @@ services:
    dockerfile: infra/dockers/Dockerfile.node
   restart: always
   depends_on:
-   - mysql
+   mysql:
+    condition: service_healthy
   environment:
    AMBIENTE_PROCESSO: ${AMBIENTE_PROCESSO}
    DB_HOST: ${DB_HOST}
@@ -32,13 +40,22 @@ services:
    EMAIL_PASS: ${EMAIL_PASS}
   ports:
    - "${APP_PORT}:3333"
+
  etl:
   container_name: ContainerETL
   build:
    context: /opt/futour-sight/repo
    dockerfile: infra/dockers/Dockerfile.etl
   restart: no
+  depends_on:
+   mysql:
+    condition: service_healthy
   environment:
+   DB_HOST: ${DB_HOST}
+   DB_DATABASE: ${DB_DATABASE}
+   DB_USER: ${DB_USER}
+   DB_PASSWORD: ${DB_PASSWORD}
+   DB_PORT: ${DB_PORT}
    AWS_ACCESS_KEY_ID: ${AWS_ACCESS_KEY_ID}
    AWS_SECRET_ACCESS_KEY: ${AWS_SECRET_ACCESS_KEY}
    AWS_SESSION_TOKEN: ${AWS_SESSION_TOKEN}
