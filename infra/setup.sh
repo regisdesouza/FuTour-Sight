@@ -34,7 +34,10 @@ echo ""
 read -p "Gostaria de preencher agora? (S/N): " RESPOSTA
 
 if [[ "$RESPOSTA" == "S" || "$RESPOSTA" == "s" ]]; then
-    sudo nano "$DIR_BASE/.env"
+    ./editarEnv.sh
+
+    else 
+    echo "Para preencher o .env, execute ./infra/editarEnv.sh"
 fi
 
 echo "Setup concluído!"
