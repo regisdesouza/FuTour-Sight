@@ -17,7 +17,7 @@ fi
 echo "Verificando Docker Compose..."
 if ! docker compose version >/dev/null 2>&1; then
     echo "Instalando Docker Compose..."
-    sudo apt install docker-compose-plugin -y
+    sudo apt install docker-compose -y
 
     else
         echo "Docker Compose já está instalado."
