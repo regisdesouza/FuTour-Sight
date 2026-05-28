@@ -1,13 +1,3 @@
-// ================================================
-// logs.js
-// ================================================
-// HTML necessário (adicionar antes do </body>):
-//
-// <!-- Toast de notificação -->
-// <div id="toast" class="toast hidden">
-//   <span id="toastMensagem"></span>
-// </div>
-// ================================================
 verificarNivel("PLATAFORMA_ADMIN");
 
 function buscarLogs() {
@@ -50,7 +40,6 @@ function buscarLogs() {
     })
     .catch((erro) => {
         console.error("#ERRO:", erro);
-        // mostrarToast("Erro ao carregar logs.", "erro");
         exibirToast("erro", "Erro ao carregar logs");
     });
 }

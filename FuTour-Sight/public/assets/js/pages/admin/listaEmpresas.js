@@ -1,27 +1,3 @@
-// ================================================
-// listaEmpresas.js
-// ================================================
-// HTML necessário (adicionar antes do </body>):
-//
-// <!-- Toast de notificação -->
-// <div id="toast" class="toast hidden">
-//   <span id="toastMensagem"></span>
-// </div>
-//
-// <!-- Modal de confirmação -->
-// <div id="modalConfirmacao" class="modal hidden">
-//   <div class="modal-content">
-//     <h3 id="modalTitulo"></h3>
-//     <p id="modalTexto"></p>
-//     <div class="modal-botoes">
-//       <button id="btnCancelarModal">Cancelar</button>
-//       <button id="btnConfirmarModal">Confirmar</button>
-//     </div>
-//   </div>
-// </div>
-// ================================================
-
-
 const inputBusca = document.getElementById("input-busca");
 const btnBusca = document.getElementById("btn-busca");
 
@@ -73,7 +49,6 @@ function listarEmpresas() {
         })
         .catch((erro) => {
             console.error("#ERRO:", erro);
-            // mostrarToast("Erro ao listar empresas.", "erro");
             exibirToast("erro", "Erro ao listar empresas");
         });
 }
@@ -102,7 +77,6 @@ function listarEmpresasProcuradas() {
         })
         .catch((erro) => {
             console.error("#ERRO:", erro);
-            // mostrarToast("Erro ao buscar empresas.", "erro");
             exibirToast("erro", "Erro ao buscar empresas");
         });
 }
@@ -123,13 +97,11 @@ function alterarStatusEmpresa(id) {
         .then((resposta) => tratarRespostaFetch(resposta))
         .then((resultado) => {
             console.log(resultado.mensagem);
-            // mostrarToast("Status da empresa alterado com sucesso!", "sucesso");
             exibirToast("sucesso", "Status da empresa alterado com sucesso!");
             listarEmpresas();
         })
         .catch((erro) => {
             console.error("#ERRO:", erro);
-            // mostrarToast(erro.message || "Erro ao atualizar status da empresa.", "erro");
             exibirToast("erro", "Erro ao atualizar status da empresa")
         });
 }

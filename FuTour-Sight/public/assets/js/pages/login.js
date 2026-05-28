@@ -86,11 +86,11 @@ function login() {
                 } else if (nivel === "EMPRESA_ADMIN" && primeiroAcesso) {
                     window.location.href = "/usuario/edicao-empresa.html";
                 } else if (nivel === "EMPRESA_ADMIN" && !primeiroAcesso) {
-                    window.location.href = "/usuario/dashboard-proprietario.html";
+                    window.location.href = "/usuario/dashboard.html";
                 } else if (nivel === "EMPRESA_USER" && primeiroAcesso) {
                     window.location.href = "/usuario/editar-perfil.html";
                 } else if (nivel === "EMPRESA_USER" && !primeiroAcesso) {
-                    window.location.href = "/usuario/dashboard-gerente.html";
+                    window.location.href = "/usuario/dashboard.html";
                 }
             }, 1500);
         })

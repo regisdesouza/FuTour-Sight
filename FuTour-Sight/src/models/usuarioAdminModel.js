@@ -1,12 +1,10 @@
 const database = require("../database/config.js");
 
-function cadastrarFuncionario(
-    nome,
-    email,
-    senha,
-    permissao,
-    idEmpresa
-) {
+// ============================================================
+// POST — cadastrarFuncionario
+// ============================================================
+
+function cadastrarFuncionario(nome, email, senha, permissao, idEmpresa) {
     const instrucaoSql = `
         INSERT INTO usuario (
             nome,
@@ -29,41 +27,72 @@ function cadastrarFuncionario(
     ]);
 }
 
+// ============================================================
+// GET — listarUsuarios
+// ============================================================
+
 function listarUsuarios(idEmpresa) {
     const instrucaoSql = `
         SELECT *
         FROM vw_usuarios
-        WHERE status != 'PENDENTE'
-        AND id_empresa = ?
+        WHERE status    != ?
+          AND id_empresa = ?
         ORDER BY nome ASC;
     `;
 
-    return database.executar(instrucaoSql, [idEmpresa]);
+    return database.executar(instrucaoSql, ['PENDENTE', idEmpresa]);
 }
+
+// ============================================================
+// GET — listarUsuariosProcurados
+// ============================================================
 
 function listarUsuariosProcurados(idEmpresa, nomeFuncionario) {
     const instrucaoSql = `
         SELECT *
         FROM vw_usuarios
-        WHERE status != 'PENDENTE'
-        AND id_empresa = ?
-        AND nome LIKE ?
+        WHERE status    != ?
+          AND id_empresa = ?
+          AND nome LIKE ?
         ORDER BY nome ASC;
     `;
 
     return database.executar(instrucaoSql, [
+        'PENDENTE',
         idEmpresa,
         `%${nomeFuncionario}%`
     ]);
 }
 
+// ============================================================
+// GET — buscarFuncionario
+// ============================================================
+
+function buscarFuncionario(idUsuario) {
+    const instrucaoSql = `
+        SELECT
+            id_usuario,
+            nome,
+            email,
+            fk_nivel_permissao
+        FROM usuario
+        WHERE id_usuario = ?;
+    `;
+
+    return database.executar(instrucaoSql, [idUsuario]);
+}
+
+// ============================================================
+// GET — buscarEmpresa
+// ============================================================
+
 function buscarEmpresa(idEmpresa) {
     const instrucaoSql = `
         SELECT
-            e.nome AS empresa,
+            e.nome          AS empresa,
             e.cnpj,
-            e.email AS emailCorporativo,
-            e.telefone AS telefoneCorporativo,
+            e.email         AS emailCorporativo,
+            e.telefone      AS telefoneCorporativo,
             end.cep,
             end.estado,
             end.cidade,
@@ -80,42 +109,26 @@ function buscarEmpresa(idEmpresa) {
     return database.executar(instrucaoSql, [idEmpresa]);
 }
 
-function buscarFuncionario(idUsuario) {
-    const instrucaoSql = `
-        SELECT
-            id_usuario,
-            nome,
-            email,
-            fk_nivel_permissao
-        FROM usuario
-        WHERE id_usuario = ?;
-    `;
+// ============================================================
+// PUT — editarFuncionario
+// ============================================================
 
-    return database.executar(instrucaoSql, [idUsuario]);
-}
-
-function editarFuncionario(
-    idUsuario,
-    nome,
-    email,
-    permissao
-) {
+function editarFuncionario(idUsuario, nome, email, permissao) {
     const instrucaoSql = `
         UPDATE usuario
         SET
-            nome = ?,
-            email = ?,
+            nome               = ?,
+            email              = ?,
             fk_nivel_permissao = ?
         WHERE id_usuario = ?;
     `;
 
-    return database.executar(instrucaoSql, [
-        nome,
-        email,
-        permissao,
-        idUsuario
-    ]);
+    return database.executar(instrucaoSql, [nome, email, permissao, idUsuario]);
 }
+
+// ============================================================
+// PUT — editarEmpresa
+// ============================================================
 
 function editarEmpresa(
     idEmpresa,
@@ -134,9 +147,9 @@ function editarEmpresa(
     const instrucaoSqlEmpresa = `
         UPDATE empresa
         SET
-            nome = ?,
-            cnpj = ?,
-            email = ?,
+            nome     = ?,
+            cnpj     = ?,
+            email    = ?,
             telefone = ?
         WHERE id_empresa = ?;
     `;
@@ -144,12 +157,12 @@ function editarEmpresa(
     const instrucaoSqlEndereco = `
         UPDATE endereco
         SET
-            cidade = ?,
-            estado = ?,
-            cep = ?,
-            logradouro = ?,
-            numero = ?,
-            bairro = ?,
+            cep         = ?,
+            estado      = ?,
+            cidade      = ?,
+            bairro      = ?,
+            logradouro  = ?,
+            numero      = ?,
             complemento = ?
         WHERE fk_empresa = ?;
     `;
@@ -167,25 +180,22 @@ function editarEmpresa(
         telefoneCorporativo,
         idEmpresa
     ])
-    .then(() => {
-        return database.executar(instrucaoSqlEndereco, [
-            cidade,
-            estado,
-            cep,
-            logradouro,
-            numero,
-            bairro,
-            complemento,
-            idEmpresa
-        ]);
-    })
-    .then(() => {
-        return database.executar(
-            instrucaoSqlPrimeiroAcesso,
-            [0, idEmpresa]
-        );
-    });
+    .then(() => database.executar(instrucaoSqlEndereco, [
+        cep,
+        estado,
+        cidade,
+        bairro,
+        logradouro,
+        numero,
+        complemento,
+        idEmpresa
+    ]))
+    .then(() => database.executar(instrucaoSqlPrimeiroAcesso, [0, idEmpresa]));
 }
+
+// ============================================================
+// PUT — editarStatusUsuario
+// ============================================================
 
 function editarStatusUsuario(idUsuario, status) {
     const instrucaoSql = `
@@ -194,18 +204,15 @@ function editarStatusUsuario(idUsuario, status) {
         WHERE id_usuario = ?;
     `;
 
-    return database.executar(instrucaoSql, [
-        status,
-        idUsuario
-    ]);
+    return database.executar(instrucaoSql, [status, idUsuario]);
 }
 
 module.exports = {
     cadastrarFuncionario,
     listarUsuarios,
     listarUsuariosProcurados,
-    buscarEmpresa,
     buscarFuncionario,
+    buscarEmpresa,
     editarFuncionario,
     editarEmpresa,
     editarStatusUsuario

@@ -58,28 +58,53 @@
                     <div class="campo">
                         <label for="nome-empresa">Nome da empresa</label>
                         <input id="nome-empresa" type="text" placeholder="Nome da empresa">
+                        <div class="msg-erro" id="div_msg_nome"></div>
                     </div>
                     <div class="campo">
                         <label for="cnpj">CNPJ</label>
                         <input id="cnpj" type="text" placeholder="CNPJ">
+                        <div class="msg-erro" id="div_msg_cnpj"></div>
                     </div>
                     <div class="campo">
                         <label for="email">Email</label>
                         <input id="email" type="text" placeholder="Email">
+                        <div class="msg-erro" id="div_msg_email"></div>
                     </div>
                     <div class="campo">
                         <label for="telefone">Telefone</label>
                         <input id="telefone" type="text" placeholder="Telefone">
+                        <div class="msg-erro" id="div_msg_telefone"></div>
+                    </div>
+                    <div class="campo">
+                        <label for="nivel">Nível</label>
+                        <select id="nivel" required>
+                            <option value="1">ATIVA </option>
+                            <option value="2">SUSPENSA</option>
+                            <option value="3">PENDENTE</option>
+                        </select>
                     </div>
                 </div>
 
                 <div class="botoes">
-                    <button>Cancelar</button>
+                    <button id="btn-cancelar">Cancelar</button>
                     <button id="btn-salvar">Atualizar empresa</button>
                 </div>
+
+                <div class="msg-erro" id="div_msg"
+                    style="color: green; text-align: center; font-weight: 500; margin-top: 10px;"></div>
+
+                <div class="alerta_erro">
+                    <div class="card_erro" id="cardErro">
+                        <span id="mensagem_erro"></span>
+                    </div>
+                </div>
+                <div id="div_erros"></div>
             </div>
         </section>
     </main>
+
+    <div id="toast"></div>
+
 
     <script src="../assets/js/shared/menu.js"></script>
     <script src="../assets/js/utils/validacoes.js"></script>
@@ -91,5 +116,3 @@
 </body>
 
 </html>
-
-

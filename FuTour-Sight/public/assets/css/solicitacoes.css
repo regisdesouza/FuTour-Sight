@@ -169,6 +169,32 @@ main header {
     background-color: #fff;
 }
 
+#btnConfirmarModal {
+    color: white;
+    border: none;
+    transition: 0.2s;
+}
+
+#btnConfirmarModal:hover {
+    transform: scale(1.02);
+}
+
+.btn-confirmar-aprovar {
+    background: #22c55e !important;
+}
+
+.btn-confirmar-aprovar:hover {
+    background: #16a34a !important;
+}
+
+.btn-confirmar-recusar {
+    background: #ef4444 !important;
+}
+
+.btn-confirmar-recusar:hover {
+    background: #dc2626 !important;
+}
+
 @media (max-width: 592px) {
     main {
         padding: 16px;

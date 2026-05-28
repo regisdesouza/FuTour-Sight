@@ -1,30 +1,3 @@
-// ================================================
-// editarFuncionario.js
-// ================================================
-// HTML necessário (adicionar antes do </body>):
-//
-// <!-- Toast de notificação -->
-// <div id="toast" class="toast hidden">
-//   <span id="toastMensagem"></span>
-// </div>
-//
-// <!-- Modal de confirmação -->
-// <div id="modalConfirmacao" class="modal hidden">
-//   <div class="modal-content">
-//     <h3 id="modalTitulo"></h3>
-//     <p id="modalTexto"></p>
-//     <div class="modal-botoes">
-//       <button id="btnCancelarModal">Cancelar</button>
-//       <button id="btnConfirmarModal">Confirmar</button>
-//     </div>
-//   </div>
-// </div>
-//
-// Nos campos do formulário, adicionar divs de erro:
-// <div id="div_msg_nome"       class="msg-erro"></div>
-// <div id="div_msg_email"      class="msg-erro"></div>
-// <div id="div_msg_permissao"  class="msg-erro"></div>
-// ================================================
 verificarNivel("EMPRESA_ADMIN");
 
 preencherNomeUsuario();
@@ -36,11 +9,10 @@ var chkPermissao = false;
 var idUsuario = sessionStorage.getItem("ID_USUARIO_EDITAR");
 
 if (!idUsuario) {
-    // mostrarToast("Nenhum funcionário selecionado.", "erro");
     ativarToast("erro", "Nenhum funcionário selecionado");
-    // setTimeout(() => {
+    setTimeout(() => {
         window.location.href = "../usuario/lista-funcionarios.html";
-    // }, 2000);
+    }, 2000);
 }
 
 function onkey_nome() {
@@ -127,10 +99,10 @@ function salvarEdicao() {
     .then((resposta) => tratarRespostaFetch(resposta))
     .then(() => {
         ativarToast("sucesso", "Funcionário atualizado com sucesso!");
-        // setTimeout(() => {
+        setTimeout(() => {
             sessionStorage.removeItem("ID_USUARIO_EDITAR");
             window.location.href = "../usuario/lista-funcionarios.html";
-        // }, 2000);
+        }, 2000);
     })
     .catch((erro) => {
         console.error("#ERRO:", erro);

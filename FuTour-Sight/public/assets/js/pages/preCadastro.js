@@ -1,22 +1,3 @@
-// ================================================
-// preCadastro.js
-// ================================================
-// HTML necessário (adicionar antes do </body>):
-//
-// <!-- Toast de notificação -->
-// <div id="toast" class="toast hidden">
-//   <span id="toastMensagem"></span>
-// </div>
-//
-// Nos campos do formulário, adicionar divs de erro:
-// <div id="div_msg_nome"              class="msg-erro"></div>
-// <div id="div_msg_email_pessoal"     class="msg-erro"></div>
-// <div id="div_msg_nome_empresa"      class="msg-erro"></div>
-// <div id="div_msg_email_corporativo" class="msg-erro"></div>
-// <div id="div_msg_cnpj"              class="msg-erro"></div>
-// <div id="div_msg_telefone"          class="msg-erro"></div>
-// ================================================
-
 iniciarMenu();
 
 Inputmask("(99) 99999-9999").mask(document.getElementById("telefone"));

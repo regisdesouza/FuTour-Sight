@@ -1,7 +1,14 @@
-const express = require('express');
-const router = express.Router();
-const { getDashboard } = require('../controllers/dashboardController');
+var express = require("express");
+var router  = express.Router();
 
-router.get('/:idFiltro', getDashboard);
+var dashboardController = require("../controllers/dashboardController");
+
+// ============================================================
+// GET
+// ============================================================
+
+router.get("/:idFiltro", function (req, res) {
+    dashboardController.getDashboard(req, res);
+});
 
 module.exports = router;
