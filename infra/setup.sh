@@ -5,11 +5,23 @@ set -e
 echo "Atualizando pacotes..."
 sudo apt update && sudo apt upgrade -y
 
-echo "Instalando Docker..."
-sudo apt install docker.io -y
+echo "Verificando Docker..."
+if ! command -v docker >/dev/null 2>&1; then
+    echo "Instalando Docker..."
+    sudo apt install docker.io -y
 
-echo "Instalando Docker Compose..."
-sudo apt install docker-compose -y
+    else
+        echo "Docker já está instalado."
+fi
+
+echo "Verificando Docker Compose..."
+if ! docker compose version >/dev/null 2>&1; then
+    echo "Instalando Docker Compose..."
+    sudo apt install docker-compose-plugin -y
+
+    else
+        echo "Docker Compose já está instalado."
+fi
 
 DIR_BASE="/opt/futour-sight"
 DIR_REPO="${DIR_BASE}/repo"
