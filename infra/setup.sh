@@ -36,7 +36,7 @@ echo ""
 read -p "Gostaria de preencher agora? (S/N): " RESPOSTA
 
 if [[ "$RESPOSTA" == "S" || "$RESPOSTA" == "s" ]]; then
-    ./editarEnv.sh
+    ./infra/editarEnv.sh
 
     else 
     echo "Para preencher o .env, execute ./infra/editarEnv.sh"
