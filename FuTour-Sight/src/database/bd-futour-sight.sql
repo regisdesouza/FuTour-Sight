@@ -227,8 +227,9 @@ INSERT INTO endereco (cep, logradouro, numero, bairro, cidade, estado, complemen
 CREATE TABLE log (
     id_log INT AUTO_INCREMENT PRIMARY KEY,
     tabela VARCHAR(100) NOT NULL,
+    arquivo VARCHAR(100) NULL,
     registros_lidos INT DEFAULT 0,
-    sucesso BOOLEAN NOT NULL,
+    sucesso TINYINT(1) NOT NULL,
     mensagem TEXT,
     data_criacao DATETIME DEFAULT CURRENT_TIMESTAMP
 );
@@ -679,3 +680,7 @@ WHERE uf = 'São Paulo'
 AND nome_pais_origem IN ('Alemanha','Áustria','Bélgica','Bulgária','Croácia','Dinamarca','Eslováquia','Eslovênia','Espanha','Estônia','Finlândia','França','Grécia','Holanda','Hungria','Irlanda','Itália','Letônia','Lituânia','Luxemburgo','Noruega','Polônia','Portugal','Reino Unido','República Tcheca','Romênia','Rússia','Sérvia','Suécia','Suíça','Turquia','Ucrânia')
 GROUP BY nome_pais_origem
 ORDER BY anos, nome_pais_origem;
+
+
+
+DESCRIBE log;
