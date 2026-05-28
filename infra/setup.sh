@@ -5,9 +5,6 @@ set -e
 echo "Atualizando pacotes..."
 sudo apt update && sudo apt upgrade -y
 
-echo "Instalando Git..."
-sudo apt install git -y
-
 echo "Instalando Docker..."
 sudo apt install docker.io -y
 
