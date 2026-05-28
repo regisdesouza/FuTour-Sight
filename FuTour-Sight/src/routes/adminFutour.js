@@ -27,6 +27,14 @@ router.get("/empresas/procuradas", function (req, res) {
     adminFutourController.listarEmpresasProcuradas(req, res);
 });
 
+router.get("/empresas/:idEmpresa", function (req, res) {
+    adminFutourController.buscarEmpresaPorId(req, res);
+});
+
+router.put("/empresas/:idEmpresa", function (req, res) {
+    adminFutourController.atualizarEmpresa(req, res);
+});
+
 router.put("/empresas/:idEmpresa/status", function (req, res) {
     adminFutourController.editarStatusEmpresa(req, res);
 });

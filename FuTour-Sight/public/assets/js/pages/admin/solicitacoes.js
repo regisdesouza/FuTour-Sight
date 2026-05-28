@@ -23,6 +23,7 @@
 // Elemento de mensagem de erro já existente no HTML:
 // <p id="mensagemErro" class="msg-erro"></p>
 // ================================================
+verificarNivel("PLATAFORMA_ADMIN");
 
 const div_empresa_selecionada = document.querySelector(".empresa-selecionada");
 const botao_fechar_empresa    = document.querySelector(".botao-fechar-empresa");

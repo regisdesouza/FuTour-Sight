@@ -11,14 +11,12 @@ public class Main {
     public static void main(String[] args) throws Exception {
 
         String bucketName = System.getenv("S3_BUCKET_NAME");
-        String objectKey = "chegadas-2024.xlsx";
-
 
         S3Client s3Client = S3Provider.getS3Client();
         JdbcTemplate jdbc = DatabaseConfig.getJdbcTemplate();
 
         TuristaEtlService etl = new TuristaEtlService(jdbc);
 
-        etl.executarDoS3(s3Client, bucketName, objectKey);
+        etl.executarTodosDoS3(s3Client, bucketName, "chegadas-");
     }
 }

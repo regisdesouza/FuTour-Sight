@@ -41,7 +41,7 @@
                 </ul>
             </nav>
             <div class="botoes-autenticacao">
-                <a href="./login.html" class="botao botao-cadastrar">Sair</a>
+                <a href="../login.html" class="botao botao-cadastrar">Sair</a>
             </div>
         </div>
     </header>
@@ -75,44 +75,21 @@
 
                 <div class="botoes">
                     <button>Cancelar</button>
-                    <button>Atualizar empresa</button>
+                    <button id="btn-salvar">Atualizar empresa</button>
                 </div>
             </div>
         </section>
     </main>
+
+    <script src="../assets/js/shared/menu.js"></script>
+    <script src="../assets/js/utils/validacoes.js"></script>
+    <script src="../assets/js/shared/sessao.js"></script>
+
+    <script src="../assets/js/utils/utils.js"></script>
+    <script src="https://unpkg.com/inputmask@5.0.8/dist/inputmask.min.js"></script>
+    <script src="../assets/js/pages/admin/editarEmpresa.js"></script>
 </body>
 
 </html>
 
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
-<script>
-    const ctx = document.getElementById('myChart');
-
-    new Chart(ctx, {
-        type: 'line',
-        data: {
-            labels: ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'],
-            datasets: [{
-                label: '2025',
-                data: [12, 19, 3, 5, 2],
-                borderWidth: 1
-            },
-            {
-                label: '2024',
-                data: [10, 13, 2, 5, 4],
-                borderWidth: 1
-            }]
-        },
-        options: {
-            scales: {
-                y: {
-                    beginAtZero: true
-                },
-                x: {
-                    stacked: false
-                }
-            }
-        }
-    });
-</script>
