@@ -1,4 +1,4 @@
-package futour.sight.service;
+package futour.sight.etl.turistas.service;
 
 import jakarta.mail.*;
 import jakarta.mail.internet.InternetAddress;

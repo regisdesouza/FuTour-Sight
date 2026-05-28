@@ -3,6 +3,7 @@ package futour.sight.service;
 import futour.sight.config.SlackConfig;
 import futour.sight.dao.ConfiguracaoNotificacaoDAO;
 import futour.sight.dao.EmpresaAdminDAO;
+import futour.sight.etl.turistas.service.EmailService;
 import org.springframework.jdbc.core.JdbcTemplate;
 
 import java.time.LocalDateTime;
