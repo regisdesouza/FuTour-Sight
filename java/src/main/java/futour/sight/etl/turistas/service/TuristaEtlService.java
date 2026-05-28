@@ -29,12 +29,15 @@ public class TuristaEtlService {
     private static final DateTimeFormatter FORMATTER =
             DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
 
+    private final JdbcTemplate jdbc;
     private final ExcelReader reader;
     private final ChegadaTuristaDAO dao;
     private final LogDAO logDAO;
     private final NotificacaoService notificacaoService;
 
     public TuristaEtlService(JdbcTemplate jdbc) {
+
+        this.jdbc = jdbc;
 
         this.reader = new ExcelReader();
 
@@ -49,7 +52,7 @@ public class TuristaEtlService {
                 new NotificacaoService(configuracaoDAO);
     }
 
-    public int executar(String caminho) {
+    public int executar(String caminho, String arquivo) {
 
         List<ChegadaTuristaDTO> lista;
 
@@ -78,6 +81,7 @@ public class TuristaEtlService {
 
             logDAO.inserir(
                     "chegadas_turistas",
+                    arquivo,
                     0,
                     false,
                     "Erro na leitura: " + e.getMessage()
@@ -98,6 +102,7 @@ public class TuristaEtlService {
 
             logDAO.inserir(
                     "chegadas_turistas",
+                    arquivo,
                     lista.size(),
                     true,
                     "ETL executado com sucesso"
@@ -116,6 +121,7 @@ public class TuristaEtlService {
 
             logDAO.inserir(
                     "chegadas_turistas",
+                    arquivo,
                     lista.size(),
                     false,
                     "Erro ao salvar: " + e.getMessage()
@@ -151,6 +157,17 @@ public class TuristaEtlService {
             String key = object.key();
 
             if (!key.endsWith(".xlsx")) {
+                continue;
+            }
+
+            if (logDAO.foiProcessado(key)) {
+
+                log(
+                        "INFO",
+                        "Arquivo já processado, ignorando: "
+                                + key
+                );
+
                 continue;
             }
 
@@ -213,7 +230,8 @@ public class TuristaEtlService {
 
             int total =
                     executar(
-                            tempFile.getAbsolutePath()
+                            tempFile.getAbsolutePath(),
+                            objectKey
                     );
 
             int tempo =
@@ -225,6 +243,11 @@ public class TuristaEtlService {
                     "chegadas_turistas",
                     total,
                     tempo
+            );
+
+            notificacaoService.notificarClienteNovosAnos(
+                    objectKey,
+                    jdbc
             );
 
         } catch (Exception e) {
@@ -283,7 +306,7 @@ public class TuristaEtlService {
 
         String saida =
                 "[" + timestamp + "] "
-                        + "[" +nivel + "] "
+                        + "[" + nivel + "] "
                         + mensagem;
 
         if ("ERRO".equals(nivel)) {
