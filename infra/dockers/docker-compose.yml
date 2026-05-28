@@ -1,4 +1,4 @@
-services:
+ services:
  mysql:
   container_name: ContainerBD
   build:
@@ -52,16 +52,3 @@ services:
     condition: service_healthy
   environment:
    DB_HOST: ${DB_HOST}
-   DB_DATABASE: ${DB_DATABASE}
-   DB_USER: ${DB_USER}
-   DB_PASSWORD: ${DB_PASSWORD}
-   DB_PORT: ${DB_PORT}
-   AWS_ACCESS_KEY_ID: ${AWS_ACCESS_KEY_ID}
-   AWS_SECRET_ACCESS_KEY: ${AWS_SECRET_ACCESS_KEY}
-   AWS_SESSION_TOKEN: ${AWS_SESSION_TOKEN}
-   AWS_REGION: ${AWS_REGION}
-   S3_BUCKET_NAME: ${S3_BUCKET_NAME}
-   SLACK_WEBHOOK_URL: ${SLACK_WEBHOOK_URL}
-
-volumes:
- mysql_data:
