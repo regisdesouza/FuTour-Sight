@@ -17,7 +17,9 @@ sudo apt install docker-compose -y
 DIR_BASE="/opt/futour-sight"
 DIR_REPO="${DIR_BASE}/repo"
 
-sudo rm -rf "$DIR_BASE"
+if [[ -d "$DIR_BASE" ]]; then
+    sudo rm -rf "$DIR_BASE"
+fi
 
 sudo mkdir -p "$DIR_BASE"
 
