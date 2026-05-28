@@ -41,7 +41,7 @@ sudo cp "$DIR_REPO/infra/dockers/docker-compose.yml" "$DIR_BASE/docker-compose.y
 echo "Copiando .env"
 sudo cp "$DIR_REPO/infra/env/.env.exemplo" "$DIR_BASE/.env"
 
-echo "Preencha o .env no caminho: $DIR_BASE/.env"
+echo "Arquivo .env criado em: $DIR_BASE/.env"
 
 echo ""
 read -p "Gostaria de preencher agora? (S/N): " RESPOSTA
