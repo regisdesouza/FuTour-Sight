@@ -4,7 +4,6 @@ import jakarta.mail.*;
 import jakarta.mail.internet.InternetAddress;
 import jakarta.mail.internet.MimeMessage;
 
-import java.io.UnsupportedEncodingException;
 import java.util.Properties;
 
 public class EmailService {
@@ -26,13 +25,17 @@ public class EmailService {
             long totalAnterior,
             String paisLider,
             String melhorMes
-    ) throws MessagingException, UnsupportedEncodingException {
+    ) throws MessagingException {
 
         Session session = criarSession();
 
         MimeMessage message = new MimeMessage(session);
 
-        message.setFrom(new InternetAddress(emailUser, "FuTour Sight"));
+        try {
+            message.setFrom(new InternetAddress(emailUser, "FuTour Sight"));
+        } catch (java.io.UnsupportedEncodingException e) {
+            message.setFrom(new InternetAddress(emailUser));
+        }
 
         message.setRecipients(
                 Message.RecipientType.TO,
