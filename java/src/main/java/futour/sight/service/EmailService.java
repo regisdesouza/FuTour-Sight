@@ -4,6 +4,7 @@ import jakarta.mail.*;
 import jakarta.mail.internet.InternetAddress;
 import jakarta.mail.internet.MimeMessage;
 
+import java.io.UnsupportedEncodingException;
 import java.util.Properties;
 
 public class EmailService {
@@ -25,7 +26,7 @@ public class EmailService {
             long totalAnterior,
             String paisLider,
             String melhorMes
-    ) throws MessagingException {
+    ) throws MessagingException, UnsupportedEncodingException {
 
         Session session = criarSession();
 
@@ -179,9 +180,12 @@ public class EmailService {
                 empresa,
                 anoNovo,
                 totalNovo,
-                String.valueOf(anoNovo), anoAnterior,
+                String.valueOf(anoNovo),
+                anoAnterior,
                 variacao >= 0 ? "#2e7d32" : "#c62828",
-                emoji, sinal, variacao,
+                emoji,
+                sinal,
+                variacao,
                 paisLider,
                 melhorMes
         );
