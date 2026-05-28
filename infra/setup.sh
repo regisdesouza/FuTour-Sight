@@ -33,7 +33,7 @@ fi
 sudo mkdir -p "$DIR_BASE"
 
 echo "Copiando repositório..."
-sudo cp -r . "$DIR_REPO"
+sudo cp -r "$HOME/FuTour-Sight/." "$DIR_REPO"
 
 echo "Copiando Docker Compose..."
 sudo cp "$DIR_REPO/infra/dockers/docker-compose.yml" "$DIR_BASE/docker-compose.yml"
@@ -47,10 +47,11 @@ echo ""
 read -p "Gostaria de preencher agora? (S/N): " RESPOSTA
 
 if [[ "$RESPOSTA" == "S" || "$RESPOSTA" == "s" ]]; then
-    ./infra/editarEnv.sh
+    "$DIR_REPO/infra/editarEnv.sh"
 
     else 
-    echo "Para preencher o .env, execute ./infra/editarEnv.sh"
+    echo "Para preencher o .env, execute o script:"
+    echo "$DIR_REPO/infra/editarEnv.sh"
 fi
 
 echo "Setup concluído!"
