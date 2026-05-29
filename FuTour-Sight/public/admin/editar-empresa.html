@@ -57,22 +57,22 @@
                 <div class="criar-filtro">
                     <div class="campo">
                         <label for="nome-empresa">Nome da empresa</label>
-                        <input id="nome-empresa" type="text" placeholder="Nome da empresa">
+                        <input id="nome-empresa" type="text" placeholder="Nome da empresa" onkeyup="onkey_nome()">
                         <div class="msg-erro" id="div_msg_nome"></div>
                     </div>
                     <div class="campo">
                         <label for="cnpj">CNPJ</label>
-                        <input id="cnpj" type="text" placeholder="CNPJ">
+                        <input id="cnpj" type="text" placeholder="CNPJ" onkeyup="onkey_cnpj()">
                         <div class="msg-erro" id="div_msg_cnpj"></div>
                     </div>
                     <div class="campo">
                         <label for="email">Email</label>
-                        <input id="email" type="text" placeholder="Email">
+                        <input id="email" type="text" placeholder="Email" onkeyup="onkey_email()">
                         <div class="msg-erro" id="div_msg_email"></div>
                     </div>
                     <div class="campo">
                         <label for="telefone">Telefone</label>
-                        <input id="telefone" type="text" placeholder="Telefone">
+                        <input id="telefone" type="text" placeholder="Telefone" onkeyup="onkey_telefone()">
                         <div class="msg-erro" id="div_msg_telefone"></div>
                     </div>
                     <div class="campo">
@@ -90,15 +90,7 @@
                     <button id="btn-salvar">Atualizar empresa</button>
                 </div>
 
-                <div class="msg-erro" id="div_msg"
-                    style="color: green; text-align: center; font-weight: 500; margin-top: 10px;"></div>
 
-                <div class="alerta_erro">
-                    <div class="card_erro" id="cardErro">
-                        <span id="mensagem_erro"></span>
-                    </div>
-                </div>
-                <div id="div_erros"></div>
             </div>
         </section>
     </main>

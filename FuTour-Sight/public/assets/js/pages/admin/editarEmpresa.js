@@ -110,7 +110,7 @@ function atualizarEmpresa() {
 
             setTimeout(() => {
                 window.location.href = "../admin/lista-empresas.html";
-            }, 1500);
+            }, 100);
         })
         .catch((erro) => {
             console.error("#ERRO:", erro);
