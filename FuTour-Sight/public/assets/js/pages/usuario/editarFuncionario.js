@@ -10,9 +10,9 @@ var idUsuario = sessionStorage.getItem("ID_USUARIO_EDITAR");
 
 if (!idUsuario) {
     ativarToast("erro", "Nenhum funcionário selecionado");
-    setTimeout(() => {
-        window.location.href = "../usuario/lista-funcionarios.html";
-    }, 2000);
+
+    window.location.href = "../usuario/lista-funcionarios.html";
+
 }
 
 function onkey_nome() {
@@ -102,7 +102,7 @@ function salvarEdicao() {
 
             sessionStorage.removeItem("ID_USUARIO_EDITAR");
             window.location.href = "../usuario/lista-funcionarios.html";
-            
+
         })
         .catch((erro) => {
             console.error("#ERRO:", erro);
