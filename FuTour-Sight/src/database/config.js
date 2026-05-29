@@ -7,7 +7,7 @@ var mySqlConfig = {
     user: process.env.DB_USER,
     password: process.env.DB_PASSWORD,
     port: process.env.DB_PORT,
-    charset: 'utf8mb4_0900_ai_ci'
+    charset: 'utf8mb4'
 
 };
 
