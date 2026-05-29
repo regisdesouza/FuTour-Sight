@@ -39,7 +39,7 @@ services:
    EMAIL_USER: ${EMAIL_USER}
    EMAIL_PASS: ${EMAIL_PASS}
   ports:
-   - "${APP_PORT}:3333"
+   - "80:${APP_PORT}"
 
  etl:
   container_name: ContainerETL
