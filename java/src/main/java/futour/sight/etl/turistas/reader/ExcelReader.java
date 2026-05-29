@@ -66,17 +66,18 @@ public class ExcelReader {
         return lista;
     }
 
-    private String getString(Cell cell) {
+ private String getString(Cell cell) {
 
     if (cell == null) {
         return null;
     }
 
+    System.out.println("CELL TYPE: " + cell.getCellType() + " | VALUE RAW bytes: " + java.util.Arrays.toString(cell.toString().getBytes()));
+
     return switch (cell.getCellType()) {
 
         case STRING -> {
             String valor = cell.getStringCellValue().trim();
-            System.out.println("CELL RAW: [" + valor + "] bytes: " + java.util.Arrays.toString(valor.getBytes()));
             yield valor;
         }
 
