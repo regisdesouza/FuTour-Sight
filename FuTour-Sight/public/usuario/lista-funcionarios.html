@@ -124,6 +124,23 @@
         </div>
     </div>
 
+    <script>
+    const pagina = window.location.pathname;
+    document.querySelectorAll('.links nav ul li').forEach(li => {
+        const btn = li.querySelector('button');
+        if (!btn) return;
+        const onclick = btn.getAttribute('onclick') || '';
+        if (
+            (pagina.includes('dashboard') && onclick.includes('Dashboard')) ||
+            (pagina.includes('empresa') && onclick.includes('Empresa')) ||
+            (pagina.includes('perfil') && onclick.includes('Perfil')) ||
+            (pagina.includes('funcionario') && onclick.includes('Funcionario')) ||
+            (pagina.includes('filtro') && onclick.includes('Filtro'))
+        ) {
+            li.classList.add('ativo');
+        }
+    });
+</script>
     <script src="../assets/js/utils/redirecionamento.js"></script>
     <script src="../assets/js/shared/sessao.js"></script>
     <script src="../assets/js/utils/utils.js"></script>

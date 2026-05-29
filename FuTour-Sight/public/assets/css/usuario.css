@@ -5,7 +5,7 @@ body {
 
 header {
     margin: 0;
-    padding: 64px;
+    padding: 32px 24px;
     border-radius: 0 24px 24px 0;
     height: 100vh;
     position: sticky;
@@ -23,71 +23,110 @@ header .links {
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 16px;
+    gap: 12px;
 }
 
 .usuario-infos .img-container {
-    width: 200px;
-    height: 200px;
+    width: 100px;
+    height: 100px;
 }
 
 .usuario-infos .img-container img {
     border-radius: 100px;
     width: 100%;
+    border: 3px solid rgba(255,255,255,0.3);
 }
 
 .usuario-infos span {
-    font-size: var(--texto-medio);
+    font-size: var(--texto-pequeno);
     color: var(--cor-clara);
     font-weight: var(--semi-bold);
     text-align: center;
 }
 
+.links nav {
+    width: 100%;
+}
+
 .links nav ul {
     flex-direction: column;
-    gap: 16px;
+    gap: 4px;
+    width: 100%;
+}
+
+.links nav ul li {
+    width: 100%;
+    border-radius: 12px;
+    transition: var(--transition);
 }
 
 .links nav ul li button {
     display: flex;
     align-items: center;
-    gap: 16px;
-    font-size: var(--texto-grande);
+    gap: 12px;
+    width: 100%;
+    padding: 10px 16px;
+    border: none;
+    border-radius: 12px;
+    color: rgba(255,255,255,0.75);
+    font-size: var(--texto-pequeno);
+    background-color: transparent;
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.links nav ul li button:hover {
+    background-color: rgba(255,255,255,0.12);
+    color: #fff;
+    transform: none;
+}
+
+.links nav ul li.ativo button {
+    background-color: rgba(0,0,0,0.25);
+    color: #fff;
+    font-weight: var(--semi-bold);
 }
 
 .links nav ul li img {
-    width: 36px;
+    width: 22px;
+    opacity: 0.75;
 }
 
-.links nav ul li button {
-    border: none;
-    color: var(--cor-clara);
-    font-size: var(--texto-grande);
-    background-color: transparent;
-    cursor: pointer;
-    transition: var(--transition);
+.links nav ul li button:hover img,
+.links nav ul li.ativo button img {
+    opacity: 1;
 }
 
 .botao-sair-container {
     display: flex;
     align-items: center;
-    gap: 16px;
+    gap: 12px;
     align-self: flex-start;
-}
-
-.botao-sair-container {
+    padding: 10px 16px;
+    width: 100%;
     border: none;
+    border-radius: 12px;
     background-color: transparent;
-    color: var(--cor-clara);
+    color: rgba(255,255,255,0.75);
     font-weight: var(--regular);
-    font-size: var(--texto-medio);
+    font-size: var(--texto-pequeno);
     cursor: pointer;
     transition: var(--transition);
 }
 
-.botao-sair-container:hover,
-.links nav ul li button:hover {
-    transform: scale(1.2);
+.botao-sair-container:hover {
+    background-color: rgba(255,255,255,0.12);
+    color: #fff;
+    transform: none;
+}
+
+.botao-sair-container img {
+    width: 22px;
+    opacity: 0.75;
+}
+
+.botao-sair-container:hover img {
+    opacity: 1;
 }
 
 .logo {
@@ -107,9 +146,7 @@ header .links {
 }
 
 @media (max-width: 576px) {
-    body {
-        flex-direction: column;
-    }
+    body { flex-direction: column; }
 
     header {
         margin: 16px 24px 8px 24px;
@@ -121,13 +158,9 @@ header .links {
         z-index: 100;
     }
 
-    .overlay {
-        display: none;
-    }
+    .overlay { display: none; }
 
-    header input#menu-hamburguer:checked~.overlay {
-        display: block;
-    }
+    header input#menu-hamburguer:checked~.overlay { display: block; }
 
     header input#menu-hamburguer:checked~.menu-hamburguer {
         position: absolute;
@@ -137,26 +170,13 @@ header .links {
         justify-content: center;
     }
 
-    .usuario-infos .img-container {
-        width: 50px;
-        height: 50px;
-    }
+    .usuario-infos .img-container { width: 50px; height: 50px; }
 
-    header .links {
-        justify-content: flex-start;
-        gap: 32px;
-    }
+    header .links { justify-content: flex-start; gap: 32px; }
 
-    .links nav ul li img {
-        width: 18px;
-    }
+    .links nav ul li img { width: 18px; }
 
-    .botao-sair-container img {
-        width: 18px;
-    }
+    .botao-sair-container img { width: 18px; }
 
-    .logo {
-        display: flex;
-    }
-
+    .logo { display: flex; }
 }

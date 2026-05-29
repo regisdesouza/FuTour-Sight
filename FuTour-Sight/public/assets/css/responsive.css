@@ -441,3 +441,77 @@
         width: 200%;
     }
 }
+
+@media (min-width: 1920px) {
+    main { padding: 24px 64px; gap: 28px; }
+    .filtros-container select { width: 520px; }
+    .parametro { width: 340px; }
+    .parametros-container { gap: 32px; }
+    .kpis-container { gap: 40px; }
+    .graficos-container { gap: 28px; }
+    .grafico-container { padding: 32px; }
+    #grafico-fluxo-turistas-gerente,
+#grafico-fluxo-turistas-marketing {
+    max-height: 400px;
+}
+}
+
+@media (max-width: 1440px) {
+    main { padding: 16px 28px; gap: 18px; }
+    .filtros-container select { width: 340px; }
+    .parametro { width: 260px; }
+    .kpis-container { gap: 24px; }
+    .grafico-container { padding: 20px; }
+    .kpi { padding: 8px 14px; }
+.kpi-valor { font-size: 1.3rem; }
+.porcentagem { font-size: 1.3rem; }
+.absoluto { font-size: 0.75rem; }
+}
+
+@media (max-width: 1366px) {
+    main { padding: 14px 24px; gap: 16px; }
+    .filtros-container select { width: 280px; font-size: 0.85rem; padding: 6px 12px; }
+    .filtros-container h2 { font-size: 0.9rem; }
+    .parametro { width: 200px; padding: 10px 14px; }
+    .parametro-header h3 { font-size: 16px; }
+    .parametros-container { gap: 12px; }
+    .kpis-container { gap: 14px; }
+    .kpi { padding: 10px 14px; }
+    .titulo-container h3 { font-size: 16px; }
+    .graficos-container { gap: 14px; }
+    .grafico-container { padding: 16px; }
+    .kpi-valor, .porcentagem, .parametro-valor { font-size: clamp(1.1rem, 2vw, var(--texto-grande)); }
+    .absoluto { font-size: 0.75rem; }
+}
+
+@media (max-width: 1280px) {
+    main { padding: 12px 20px; gap: 12px; }
+    .configs-dashboard { flex-wrap: wrap; gap: 12px; }
+    .filtros-container select { width: 220px; }
+    .parametros-container { gap: 10px; }
+    .parametro { width: 180px; padding: 10px 12px; }
+    .kpis-container { gap: 12px; }
+    .graficos-container { gap: 12px; }
+    .grafico-container { padding: 14px; }
+    .titulo-container h3 { font-size: 14px; }
+    .grafico-legenda { gap: 12px; }
+    .grafico-legenda-item { font-size: 0.7rem; }
+    .kpi-valor, .porcentagem, .parametro-valor { font-size: clamp(1rem, 1.8vw, var(--texto-grande)); }
+}
+
+@media (max-width: 1024px) {
+    main { padding: 12px 16px; gap: 12px; }
+    .configs-dashboard { flex-direction: column; align-items: flex-start; gap: 10px; }
+    .filtros-container { width: 100%; }
+    .filtros-container select { width: 100%; max-width: 400px; }
+    .parametros-container { flex-wrap: wrap; gap: 10px; }
+    .parametro { width: calc(50% - 5px); min-width: 160px; }
+    .kpis-container { flex-wrap: wrap; gap: 10px; }
+    .kpi { flex: 1 1 calc(50% - 5px); min-width: 160px; }
+    .graficos-container { flex-direction: column; }
+    .graficos-container .grafico-container:first-child { flex: unset; }
+    .graficos { flex-direction: row; flex-wrap: wrap; gap: 12px; }
+    .graficos .grafico-container { flex: 1 1 calc(50% - 6px); min-width: 240px; }
+    .grafico.donut { width: 120px; height: 120px; }
+    .ranking-via-acesso { max-width: 200px; }
+}
