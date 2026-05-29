@@ -11,12 +11,6 @@ services:
    - mysql_data:/var/lib/mysql
   ports:
    - "${DB_PORT}:3306"
-  healthcheck:
-   test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-uroot", "-p${DB_PASSWORD}"]
-   interval: 10s
-   timeout: 5s
-   retries: 5
-   start_period: 30s
 
  site:
   container_name: ContainerSite
@@ -25,8 +19,7 @@ services:
    dockerfile: infra/dockers/Dockerfile.node
   restart: always
   depends_on:
-   mysql:
-    condition: service_healthy
+   - mysql
   environment:
    AMBIENTE_PROCESSO: ${AMBIENTE_PROCESSO}
    DB_HOST: ${DB_HOST}
@@ -48,8 +41,7 @@ services:
    dockerfile: infra/dockers/Dockerfile.etl
   restart: no
   depends_on:
-   mysql:
-    condition: service_healthy
+   - mysql
   environment:
    DB_HOST: ${DB_HOST}
    DB_DATABASE: ${DB_DATABASE}
