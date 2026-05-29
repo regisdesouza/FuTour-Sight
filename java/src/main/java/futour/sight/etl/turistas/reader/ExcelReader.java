@@ -72,9 +72,7 @@ public class ExcelReader {
         return null;
     }
 
-    System.out.println("CELL TYPE: " + cell.getCellType() + " | VALUE RAW bytes: " + java.util.Arrays.toString(cell.toString().getBytes()));
-
-    return switch (cell.getCellType()) {
+      return switch (cell.getCellType()) {
 
         case STRING -> {
             String valor = cell.getStringCellValue().trim();
