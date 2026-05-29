@@ -2,10 +2,14 @@ package futour.sight.service;
 
 import futour.sight.config.SlackConfig;
 import futour.sight.dao.ConfiguracaoNotificacaoDAO;
+import futour.sight.dao.EmpresaAdminDAO;
+import futour.sight.etl.turistas.service.EmailService;
+import org.springframework.jdbc.core.JdbcTemplate;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
+import java.util.Map;
 
 public class NotificacaoService {
 
@@ -132,5 +136,70 @@ public class NotificacaoService {
                 mensagem,
                 "danger"
         );
+    }
+    public void notificarClienteNovosAnos(
+            String arquivo,
+            JdbcTemplate jdbc
+    ) {
+        int anoNovo;
+        try {
+            String semExtensao = arquivo.replace(".xlsx", "");
+            anoNovo = Integer.parseInt(
+                    semExtensao.substring(semExtensao.lastIndexOf("-") + 1)
+            );
+        } catch (Exception e) {
+            System.out.println(
+                    "[EMAIL] Não foi possível extrair o ano do arquivo: " + arquivo
+            );
+            return;
+        }
+
+        int anoAnterior = anoNovo - 1;
+
+        EmpresaAdminDAO empresaAdminDAO = new EmpresaAdminDAO(jdbc);
+        EmailService emailService = new EmailService();
+
+        long totalNovo = empresaAdminDAO.getTotalChegadas(anoNovo);
+        long totalAnterior = empresaAdminDAO.getTotalChegadas(anoAnterior);
+        String paisLider = empresaAdminDAO.getPaisLider(anoNovo);
+        String melhorMes = empresaAdminDAO.getMelhorMes(anoNovo);
+
+        List<Map<String, Object>> admins = empresaAdminDAO.getAdminsAtivos();
+
+        if (admins.isEmpty()) {
+            System.out.println("[EMAIL] Nenhum EMPRESA_ADMIN ativo encontrado");
+            return;
+        }
+
+        for (Map<String, Object> admin : admins) {
+
+            String email = (String) admin.get("email");
+            String nome = (String) admin.get("nome");
+            String empresa = (String) admin.get("empresa");
+
+            try {
+
+                emailService.enviarNovosAnos(
+                        email,
+                        nome,
+                        empresa,
+                        anoNovo,
+                        totalNovo,
+                        totalAnterior,
+                        paisLider,
+                        melhorMes
+                );
+
+                System.out.println(
+                        "[EMAIL] Enviado para: " + email
+                );
+
+            } catch (Exception e) {
+
+                System.err.println(
+                        "[EMAIL] Falha ao enviar para " + email + ": " + e.getMessage()
+                );
+            }
+        }
     }
 }
