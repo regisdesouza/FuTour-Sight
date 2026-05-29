@@ -54,6 +54,7 @@ async function enviarMensagem(req, res) {
 // ============================================================
 
 async function preCadastrar(req, res) {
+
     const {
         nomeServer,
         emailPessoalServer,
@@ -64,35 +65,54 @@ async function preCadastrar(req, res) {
     } = req.body;
 
     try {
+
         if (!nomeServer) {
-            return res.status(400).json({ mensagem: "Nome undefined." });
+            return res.status(400).json({
+                mensagem: "Nome undefined."
+            });
         }
 
         if (!emailPessoalServer) {
-            return res.status(400).json({ mensagem: "Email pessoal undefined." });
+            return res.status(400).json({
+                mensagem: "Email pessoal undefined."
+            });
         }
 
         if (!empresaServer) {
-            return res.status(400).json({ mensagem: "Empresa undefined." });
+            return res.status(400).json({
+                mensagem: "Empresa undefined."
+            });
         }
 
         if (!emailCorporativoServer) {
-            return res.status(400).json({ mensagem: "Email corporativo undefined." });
+            return res.status(400).json({
+                mensagem: "Email corporativo undefined."
+            });
         }
 
         if (!cnpjServer) {
-            return res.status(400).json({ mensagem: "CNPJ undefined." });
+            return res.status(400).json({
+                mensagem: "CNPJ undefined."
+            });
         }
 
         if (!telefoneCorporativoServer) {
-            return res.status(400).json({ mensagem: "Telefone undefined." });
+            return res.status(400).json({
+                mensagem: "Telefone undefined."
+            });
         }
 
-        const existe = await usuarioModel.buscarPorCnpj(cnpjServer);
+        const existe = await usuarioModel.buscarSolicitacaoExistente(
+            cnpjServer,
+            emailCorporativoServer
+        );
+
+        console.log("RESULTADO EXISTE:", existe);
 
         if (existe.length > 0) {
-            return res.status(400).json({
-                mensagem: "Já existe uma solicitação com esse CNPJ."
+
+            return res.status(409).json({
+                mensagem: "Já existe uma solicitação em aberto."
             });
         }
 
@@ -111,7 +131,9 @@ async function preCadastrar(req, res) {
         });
 
     } catch (erro) {
+
         console.log(erro);
+
         return res.status(500).json({
             mensagem: erro.sqlMessage || erro.message
         });
