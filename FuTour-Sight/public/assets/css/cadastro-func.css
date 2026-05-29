@@ -161,6 +161,32 @@ main {
     border-radius: 8px;
 }
 
+.emp-div-btn {
+    display: flex;
+    gap: 16px;
+    align-items: center;
+}
+
+#btn-cancelar {
+    padding: 12px 64px;
+    font-size: var(--texto-medio);
+    font-weight: var(--semi-bold);
+
+    background-color: transparent;
+    color: var(--cor-complementar);
+
+    border: 2px solid var(--cor-complementar);
+    border-radius: 8px;
+
+    cursor: pointer;
+    transition: all 0.2s ease-in-out;
+}
+
+#btn-cancelar:hover {
+    background-color: var(--cor-complementar);
+    color: var(--cor-clara);
+}
+
 /* --------------------- RESPONSIVIDADE --------------------- */
 
 @media (max-width: 576px) {
