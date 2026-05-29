@@ -411,27 +411,6 @@ SELECT
 FROM chegadas_turistas ct
 GROUP BY ct.ano, ct.mes, ct.uf, ct.nome_pais_origem, ct.via_de_acesso;
 
-
-SELECT * FROM vw_empresas ORDER BY nome ASC;
-
-SELECT * FROM vw_empresas WHERE nome LIKE '%empresa teste%' ORDER BY nome ASC;
-
-SELECT * FROM vw_usuarios WHERE status != 'PENDENTE' ORDER BY nome ASC;
-
-SELECT * FROM vw_usuarios
-WHERE status     != 'PENDENTE'
-    AND id_empresa  = 1
-    AND nome LIKE '%joao%'
-ORDER BY nome ASC;
-
-SELECT * FROM vw_solicitacoes ORDER BY data_criacao DESC;
-
-SELECT * FROM vw_solicitacoes WHERE id_solicitacao = 1;
-
-SELECT id_log, tabela, registros_lidos, sucesso, mensagem, data_criacao
-FROM log
-ORDER BY data_criacao DESC;
-
 ALTER TABLE chegadas_turistas
     CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
@@ -531,34 +510,6 @@ SELECT
 FROM chegadas_turistas ct
 WHERE ct.uf != 'Outras Unidades da Federação';
 
-SELECT continente, SUM(chegadas) AS total_turistas
-FROM vw_continente_turistas
-WHERE continente = 'Europa'
-GROUP BY continente;
-
-SELECT regiao, SUM(chegadas) AS total_turistas
-FROM vw_regiao_turistas
-WHERE regiao = 'Sudeste'
-GROUP BY regiao;
-
-SELECT *
-FROM vw_continente_turistas
-WHERE continente = 'Europa';
-
-SELECT *
-FROM vw_regiao_turistas
-WHERE regiao = 'Sudeste';
-
-SELECT *
-FROM vw_continente_turistas ct
-JOIN vw_regiao_turistas rt ON rt.id = ct.id
-WHERE ct.continente = 'Europa' AND rt.regiao = 'Sudeste';
-
-SELECT SUM(ct.chegadas) AS total_turistas FROM vw_continente_turistas ct
-JOIN vw_regiao_turistas rt  ON rt.id = ct.id
-WHERE ct.continente = 'Europa' AND rt.regiao = 'Sudeste';
-
-
 
 INSERT INTO filtro_personalizado (nome, ano_inicio, ano_fim, estado, continente, fk_usuario)
 VALUES
@@ -575,112 +526,3 @@ VALUES
 ('EUA e Canadá no RJ', 2023, 2024, 'Rio de Janeiro', 'América do Norte', 7);
 
 
-
-SELECT nome_pais_origem, ano, SUM(chegadas) 
-FROM chegadas_turistas 
-WHERE uf = 'São Paulo' AND nome_pais_origem IN ('Alemanha','Portugal','Reino Unido')
-GROUP BY nome_pais_origem, ano;
-
-
-
-INSERT INTO chegadas_turistas (ano, mes, uf, nome_pais_origem, via_de_acesso, chegadas)
-VALUES
-(2023, 'Janeiro', 'São Paulo', 'Alemanha', 'Aérea', 6200),
-(2023, 'Fevereiro', 'São Paulo', 'Alemanha', 'Aérea', 5800),
-(2023, 'Março', 'São Paulo', 'Alemanha', 'Aérea', 6500),
-(2023, 'Abril', 'São Paulo', 'Alemanha', 'Aérea', 7100),
-(2023, 'Maio', 'São Paulo', 'Alemanha', 'Aérea', 7400),
-(2023, 'Junho', 'São Paulo', 'Alemanha', 'Aérea', 7800),
-(2023, 'Julho', 'São Paulo', 'Alemanha', 'Aérea', 8900),
-(2023, 'Agosto', 'São Paulo', 'Alemanha', 'Aérea', 8200),
-(2023, 'Setembro', 'São Paulo', 'Alemanha', 'Aérea', 7600),
-(2023, 'Outubro', 'São Paulo', 'Alemanha', 'Aérea', 7900),
-(2023, 'Novembro', 'São Paulo', 'Alemanha', 'Aérea', 8700),
-(2023, 'Dezembro', 'São Paulo', 'Alemanha', 'Aérea', 9800),
-
-(2023, 'Janeiro', 'São Paulo', 'Portugal', 'Aérea', 6100),
-(2023, 'Fevereiro', 'São Paulo', 'Portugal', 'Aérea', 5700),
-(2023, 'Março', 'São Paulo', 'Portugal', 'Aérea', 6400),
-(2023, 'Abril', 'São Paulo', 'Portugal', 'Aérea', 7000),
-(2023, 'Maio', 'São Paulo', 'Portugal', 'Aérea', 7300),
-(2023, 'Junho', 'São Paulo', 'Portugal', 'Aérea', 7700),
-(2023, 'Julho', 'São Paulo', 'Portugal', 'Aérea', 8800),
-(2023, 'Agosto', 'São Paulo', 'Portugal', 'Aérea', 8100),
-(2023, 'Setembro', 'São Paulo', 'Portugal', 'Aérea', 7500),
-(2023, 'Outubro', 'São Paulo', 'Portugal', 'Aérea', 7800),
-(2023, 'Novembro', 'São Paulo', 'Portugal', 'Aérea', 8600),
-(2023, 'Dezembro', 'São Paulo', 'Portugal', 'Aérea', 9700),
-
-(2023, 'Janeiro', 'São Paulo', 'Reino Unido', 'Aérea', 5200),
-(2023, 'Fevereiro', 'São Paulo', 'Reino Unido', 'Aérea', 4900),
-(2023, 'Março', 'São Paulo', 'Reino Unido', 'Aérea', 5500),
-(2023, 'Abril', 'São Paulo', 'Reino Unido', 'Aérea', 6000),
-(2023, 'Maio', 'São Paulo', 'Reino Unido', 'Aérea', 6300),
-(2023, 'Junho', 'São Paulo', 'Reino Unido', 'Aérea', 6700),
-(2023, 'Julho', 'São Paulo', 'Reino Unido', 'Aérea', 7600),
-(2023, 'Agosto', 'São Paulo', 'Reino Unido', 'Aérea', 7000),
-(2023, 'Setembro', 'São Paulo', 'Reino Unido', 'Aérea', 6500),
-(2023, 'Outubro', 'São Paulo', 'Reino Unido', 'Aérea', 6700),
-(2023, 'Novembro', 'São Paulo', 'Reino Unido', 'Aérea', 7400),
-(2023, 'Dezembro', 'São Paulo', 'Reino Unido', 'Aérea', 8400);
-
-
-
-SELECT nome_pais_origem, ano, SUM(chegadas)
-FROM chegadas_turistas
-WHERE uf = 'São Paulo' AND nome_pais_origem IN ('Itália','França','Espanha')
-GROUP BY nome_pais_origem, ano
-ORDER BY nome_pais_origem, ano;
-
-INSERT INTO chegadas_turistas (ano, mes, uf, nome_pais_origem, via_de_acesso, chegadas)
-VALUES
-(2023, 'Janeiro', 'São Paulo', 'Itália', 'Aérea', 4800),
-(2023, 'Fevereiro', 'São Paulo', 'Itália', 'Aérea', 4500),
-(2023, 'Março', 'São Paulo', 'Itália', 'Aérea', 5100),
-(2023, 'Abril', 'São Paulo', 'Itália', 'Aérea', 5600),
-(2023, 'Maio', 'São Paulo', 'Itália', 'Aérea', 5900),
-(2023, 'Junho', 'São Paulo', 'Itália', 'Aérea', 6300),
-(2023, 'Julho', 'São Paulo', 'Itália', 'Aérea', 7200),
-(2023, 'Agosto', 'São Paulo', 'Itália', 'Aérea', 6600),
-(2023, 'Setembro', 'São Paulo', 'Itália', 'Aérea', 6100),
-(2023, 'Outubro', 'São Paulo', 'Itália', 'Aérea', 6400),
-(2023, 'Novembro', 'São Paulo', 'Itália', 'Aérea', 7100),
-(2023, 'Dezembro', 'São Paulo', 'Itália', 'Aérea', 8000),
-
-(2023, 'Janeiro', 'São Paulo', 'França', 'Aérea', 4600),
-(2023, 'Fevereiro', 'São Paulo', 'França', 'Aérea', 4300),
-(2023, 'Março', 'São Paulo', 'França', 'Aérea', 4900),
-(2023, 'Abril', 'São Paulo', 'França', 'Aérea', 5400),
-(2023, 'Maio', 'São Paulo', 'França', 'Aérea', 5700),
-(2023, 'Junho', 'São Paulo', 'França', 'Aérea', 6100),
-(2023, 'Julho', 'São Paulo', 'França', 'Aérea', 6900),
-(2023, 'Agosto', 'São Paulo', 'França', 'Aérea', 6400),
-(2023, 'Setembro', 'São Paulo', 'França', 'Aérea', 5900),
-(2023, 'Outubro', 'São Paulo', 'França', 'Aérea', 6200),
-(2023, 'Novembro', 'São Paulo', 'França', 'Aérea', 6800),
-(2023, 'Dezembro', 'São Paulo', 'França', 'Aérea', 7700),
-
-(2023, 'Janeiro', 'São Paulo', 'Espanha', 'Aérea', 4200),
-(2023, 'Fevereiro', 'São Paulo', 'Espanha', 'Aérea', 3900),
-(2023, 'Março', 'São Paulo', 'Espanha', 'Aérea', 4400),
-(2023, 'Abril', 'São Paulo', 'Espanha', 'Aérea', 4900),
-(2023, 'Maio', 'São Paulo', 'Espanha', 'Aérea', 5200),
-(2023, 'Junho', 'São Paulo', 'Espanha', 'Aérea', 5600),
-(2023, 'Julho', 'São Paulo', 'Espanha', 'Aérea', 6300),
-(2023, 'Agosto', 'São Paulo', 'Espanha', 'Aérea', 5800),
-(2023, 'Setembro', 'São Paulo', 'Espanha', 'Aérea', 5400),
-(2023, 'Outubro', 'São Paulo', 'Espanha', 'Aérea', 5600),
-(2023, 'Novembro', 'São Paulo', 'Espanha', 'Aérea', 6200),
-(2023, 'Dezembro', 'São Paulo', 'Espanha', 'Aérea', 7000);
-
-
-SELECT nome_pais_origem, COUNT(DISTINCT ano) as anos
-FROM chegadas_turistas
-WHERE uf = 'São Paulo'
-AND nome_pais_origem IN ('Alemanha','Áustria','Bélgica','Bulgária','Croácia','Dinamarca','Eslováquia','Eslovênia','Espanha','Estônia','Finlândia','França','Grécia','Holanda','Hungria','Irlanda','Itália','Letônia','Lituânia','Luxemburgo','Noruega','Polônia','Portugal','Reino Unido','República Tcheca','Romênia','Rússia','Sérvia','Suécia','Suíça','Turquia','Ucrânia')
-GROUP BY nome_pais_origem
-ORDER BY anos, nome_pais_origem;
-
-
-
-DESCRIBE log;
