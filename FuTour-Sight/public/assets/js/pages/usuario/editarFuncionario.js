@@ -2,8 +2,8 @@ verificarNivel("EMPRESA_ADMIN");
 
 preencherNomeUsuario();
 
-var chkNome      = false;
-var chkEmail     = false;
+var chkNome = false;
+var chkEmail = false;
 var chkPermissao = false;
 
 var idUsuario = sessionStorage.getItem("ID_USUARIO_EDITAR");
@@ -55,20 +55,20 @@ function buscarFuncionario() {
     fetch(`/usuariosAdmin/funcionarios/${idUsuario}`, {
         method: "GET"
     })
-    .then((resposta) => tratarRespostaFetch(resposta))
-    .then((dados) => {
-        document.getElementById("nome-funcionario").value    = dados.nome;
-        document.getElementById("email").value               = dados.email;
-        document.getElementById("nivel-permissao").value    = dados.fk_nivel_permissao;
+        .then((resposta) => tratarRespostaFetch(resposta))
+        .then((dados) => {
+            document.getElementById("nome-funcionario").value = dados.nome;
+            document.getElementById("email").value = dados.email;
+            document.getElementById("nivel-permissao").value = dados.fk_nivel_permissao;
 
-        chkNome      = true;
-        chkEmail     = true;
-        chkPermissao = true;
-    })
-    .catch((erro) => {
-        console.error("#ERRO:", erro);
-        exibirToast("erro", "Erro ao carregar dados do funcionário.");
-    });
+            chkNome = true;
+            chkEmail = true;
+            chkPermissao = true;
+        })
+        .catch((erro) => {
+            console.error("#ERRO:", erro);
+            exibirToast("erro", "Erro ao carregar dados do funcionário.");
+        });
 }
 
 function salvarEdicao() {
@@ -83,31 +83,31 @@ function salvarEdicao() {
         return;
     }
 
-    var nome      = document.getElementById("nome-funcionario").value.trim();
-    var email     = document.getElementById("email").value.trim();
+    var nome = document.getElementById("nome-funcionario").value.trim();
+    var email = document.getElementById("email").value.trim();
     var permissao = document.getElementById("nivel-permissao").value;
 
     fetch(`/usuariosAdmin/funcionarios/${idUsuario}`, {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-            nomeServer:      nome,
-            emailServer:     email,
+            nomeServer: nome,
+            emailServer: email,
             permissaoServer: permissao
         })
     })
-    .then((resposta) => tratarRespostaFetch(resposta))
-    .then(() => {
-        ativarToast("sucesso", "Funcionário atualizado com sucesso!");
-        setTimeout(() => {
+        .then((resposta) => tratarRespostaFetch(resposta))
+        .then(() => {
+            ativarToast("sucesso", "Funcionário atualizado com sucesso!");
+
             sessionStorage.removeItem("ID_USUARIO_EDITAR");
             window.location.href = "../usuario/lista-funcionarios.html";
-        }, 2000);
-    })
-    .catch((erro) => {
-        console.error("#ERRO:", erro);
-        exibirToast("erro", "Erro ao atualizar funcionário");
-    });
+            
+        })
+        .catch((erro) => {
+            console.error("#ERRO:", erro);
+            exibirToast("erro", "Erro ao atualizar funcionário");
+        });
 }
 
 function cancelar() {
