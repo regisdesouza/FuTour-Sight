@@ -168,7 +168,7 @@ public class EmailService {
                                style="background-color: #1a1a2e; color: #ffffff;
                                       padding: 12px 32px; border-radius: 6px;
                                       text-decoration: none; font-size: 14px;">
-                                Acessar Dashboard
+                                Acessar Site
                             </a>
                         </div>
 
