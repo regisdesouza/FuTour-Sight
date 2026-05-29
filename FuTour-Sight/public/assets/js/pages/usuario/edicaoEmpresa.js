@@ -7,59 +7,59 @@ Inputmask("(99) 99999-9999").mask(document.getElementById("telefone"));
 Inputmask("99.999.999/9999-99").mask(document.getElementById("cnpj"));
 Inputmask("99999-999").mask(document.getElementById("cep"));
 
-var chkNomeEmpresa      = false;
-var chkCnpj             = false;
+var chkNomeEmpresa = false;
+var chkCnpj = false;
 var chkEmailCorporativo = false;
-var chkTelefone         = false;
+var chkTelefone = false;
 
 fetch(`/usuariosAdmin/empresas/${sessionStorage.getItem("ID_EMPRESA")}`)
-.then((res) => tratarRespostaFetch(res))
-.then((dados) => {
-    document.getElementById("empresa").value          = dados.empresa          || "";
-    document.getElementById("cnpj").value             = dados.cnpj             || "";
-    document.getElementById("emailCorporativo").value = dados.emailCorporativo  || "";
-    document.getElementById("telefone").value         = dados.telefoneCorporativo || "";
-    document.getElementById("cep").value              = dados.cep              || "";
-    document.getElementById("estado").value           = dados.estado           || "";
-    document.getElementById("cidade").value           = dados.cidade           || "";
-    document.getElementById("bairro").value           = dados.bairro           || "";
-    document.getElementById("rua").value              = dados.logradouro       || "";
-    document.getElementById("numero").value           = dados.numero           || "";
-    document.getElementById("complemento").value      = dados.complemento      || "";
+    .then((res) => tratarRespostaFetch(res))
+    .then((dados) => {
+        document.getElementById("empresa").value = dados.empresa || "";
+        document.getElementById("cnpj").value = dados.cnpj || "";
+        document.getElementById("emailCorporativo").value = dados.emailCorporativo || "";
+        document.getElementById("telefone").value = dados.telefoneCorporativo || "";
+        document.getElementById("cep").value = dados.cep || "";
+        document.getElementById("estado").value = dados.estado || "";
+        document.getElementById("cidade").value = dados.cidade || "";
+        document.getElementById("bairro").value = dados.bairro || "";
+        document.getElementById("rua").value = dados.logradouro || "";
+        document.getElementById("numero").value = dados.numero || "";
+        document.getElementById("complemento").value = dados.complemento || "";
 
-    document.getElementById("banner-nome-empresa").innerHTML  = dados.empresa          || "";
-    document.getElementById("banner-email-empresa").innerHTML = dados.emailCorporativo  || "";
+        document.getElementById("banner-nome-empresa").innerHTML = dados.empresa || "";
+        document.getElementById("banner-email-empresa").innerHTML = dados.emailCorporativo || "";
 
-    chkNomeEmpresa      = true;
-    chkCnpj             = true;
-    chkEmailCorporativo = true;
-    chkTelefone         = true;
-})
-.catch((erro) => {
-    console.error("#ERRO ao carregar empresa:", erro);
-    exibirToast("erro", "Erro ao carregar dados da empresa");
-});
+        chkNomeEmpresa = true;
+        chkCnpj = true;
+        chkEmailCorporativo = true;
+        chkTelefone = true;
+    })
+    .catch((erro) => {
+        console.error("#ERRO ao carregar empresa:", erro);
+        exibirToast("erro", "Erro ao carregar dados da empresa");
+    });
 
 document.getElementById("cep").addEventListener("blur", () => {
     var cepLimpo = document.getElementById("cep").value.replace(/\D/g, "");
     if (cepLimpo.length !== 8) return;
 
     fetch(`https://viacep.com.br/ws/${cepLimpo}/json/`)
-    .then((res) => res.json())
-    .then((dados) => {
-        if (dados.erro) {
-            exibirToast("erro", "CEP não encontrado");
-            return;
-        }
-        document.getElementById("estado").value = dados.uf         || "";
-        document.getElementById("cidade").value = dados.localidade || "";
-        document.getElementById("bairro").value = dados.bairro     || "";
-        document.getElementById("rua").value    = dados.logradouro || "";
-        document.getElementById("numero").focus();
-    })
-    .catch(() => {
-        exibirToast("erro", "Erro ao buscar CEP");
-    });
+        .then((res) => res.json())
+        .then((dados) => {
+            if (dados.erro) {
+                exibirToast("erro", "CEP não encontrado");
+                return;
+            }
+            document.getElementById("estado").value = dados.uf || "";
+            document.getElementById("cidade").value = dados.localidade || "";
+            document.getElementById("bairro").value = dados.bairro || "";
+            document.getElementById("rua").value = dados.logradouro || "";
+            document.getElementById("numero").focus();
+        })
+        .catch(() => {
+            exibirToast("erro", "Erro ao buscar CEP");
+        });
 });
 
 function onkey_nome_empresa() {
@@ -127,32 +127,31 @@ function editarEmpresa() {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-            empresaServer:            document.getElementById("empresa").value.trim(),
-            cnpjServer:               document.getElementById("cnpj").value.replace(/\D/g, ""),
-            emailCorporativoServer:   document.getElementById("emailCorporativo").value.trim(),
+            empresaServer: document.getElementById("empresa").value.trim(),
+            cnpjServer: document.getElementById("cnpj").value.replace(/\D/g, ""),
+            emailCorporativoServer: document.getElementById("emailCorporativo").value.trim(),
             telefoneCorporativoServer: document.getElementById("telefone").value.replace(/\D/g, ""),
-            cepServer:                document.getElementById("cep").value.replace(/\D/g, ""),
-            estadoServer:             document.getElementById("estado").value.trim(),
-            cidadeServer:             document.getElementById("cidade").value.trim(),
-            bairroServer:             document.getElementById("bairro").value.trim(),
-            logradouroServer:         document.getElementById("rua").value.trim(),
-            numeroServer:             document.getElementById("numero").value.trim(),
-            complementoServer:        document.getElementById("complemento").value.trim()
+            cepServer: document.getElementById("cep").value.replace(/\D/g, ""),
+            estadoServer: document.getElementById("estado").value.trim(),
+            cidadeServer: document.getElementById("cidade").value.trim(),
+            bairroServer: document.getElementById("bairro").value.trim(),
+            logradouroServer: document.getElementById("rua").value.trim(),
+            numeroServer: document.getElementById("numero").value.trim(),
+            complementoServer: document.getElementById("complemento").value.trim()
         }),
     })
-    .then((resposta) => tratarRespostaFetch(resposta))
-    .then((dados) => {
-        console.log("Empresa atualizada:", dados);
-        ativarToast('sucesso', 'Dados empresariais atualizados com sucesso pelo usuário de email: ' + sessionStorage.getItem('EMAIL_USUARIO') + '!');
+        .then((resposta) => tratarRespostaFetch(resposta))
+        .then((dados) => {
+            console.log("Empresa atualizada:", dados);
+            ativarToast('sucesso', 'Dados empresariais atualizados com sucesso pelo usuário de email: ' + sessionStorage.getItem('EMAIL_USUARIO') + '!');
 
-         setTimeout(() => {
             redirecionarDashboard();
-        }, 2000);
-    })
-    .catch((erro) => {
-        console.error("#ERRO:", erro);
-        exibirToast("erro", "Erro ao atualizar empresa");
-    });
+
+        })
+        .catch((erro) => {
+            console.error("#ERRO:", erro);
+            exibirToast("erro", "Erro ao atualizar empresa");
+        });
 
     return false;
 }
