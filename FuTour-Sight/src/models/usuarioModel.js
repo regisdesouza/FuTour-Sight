@@ -14,17 +14,27 @@ function enviarMensagem(nome, email, telefone, mensagem) {
 }
 
 // ============================================================
-// POST — buscarPorCnpj  (auxiliar de preCadastrar)
+// POST — buscarSolicitacaoExistente  (auxiliar de preCadastrar)
 // ============================================================
 
-function buscarPorCnpj(cnpj) {
+function buscarSolicitacaoExistente(cnpj, emailCorporativo) {
+
     const instrucaoSql = `
         SELECT id_solicitacao
         FROM solicitacao_cadastro
-        WHERE cnpj_empresa = ?;
+        WHERE
+            REPLACE(
+                REPLACE(
+                    REPLACE(cnpj_empresa, '.', ''),
+                '/', ''),
+            '-', '') = ?
+        OR LOWER(TRIM(email_empresa)) = LOWER(TRIM(?));
     `;
 
-    return database.executar(instrucaoSql, [cnpj]);
+    return database.executar(instrucaoSql, [
+        cnpj,
+        emailCorporativo
+    ]);
 }
 
 // ============================================================
@@ -246,7 +256,7 @@ function excluirFiltro(idFiltro) {
 
 module.exports = {
     enviarMensagem,
-    buscarPorCnpj,
+    buscarSolicitacaoExistente,
     preCadastrar,
     autenticar,
     criarFiltro,
