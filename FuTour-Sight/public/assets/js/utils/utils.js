@@ -1,15 +1,3 @@
-// function mostrarToast(mensagem, tipo = "sucesso") {
-//     const toast = document.getElementById("toast");
-//     const texto = document.getElementById("toastMensagem");
-
-//     toast.className = `toast ${tipo}`;
-//     texto.innerText = mensagem;
-
-//     setTimeout(() => {
-//         toast.classList.add("hidden");
-//     }, 4000);
-// }
-
 function verificarAutenticacao() {
     const id = sessionStorage.getItem("ID_USUARIO");
 
@@ -34,7 +22,6 @@ function abrirModalConfirmacao({
     texto = "Deseja continuar?",
     onConfirm = () => { }
 }) {
-
     const modal = document.getElementById("modalConfirmacao");
 
     document.getElementById("modalTitulo").innerText = titulo;
@@ -43,7 +30,7 @@ function abrirModalConfirmacao({
     modal.classList.remove("hidden");
 
     const btnConfirmar = document.getElementById("btnConfirmarModal");
-    const btnCancelar = document.getElementById("btnCancelarModal");
+    const btnCancelar  = document.getElementById("btnCancelarModal");
 
     btnConfirmar.onclick = () => {
         modal.classList.add("hidden");
@@ -66,15 +53,15 @@ function limparCampos(ids = []) {
 }
 
 function obterPermissao() {
-    return Number(sessionStorage.getItem("NIVEL_ACESSO"));
+    return sessionStorage.getItem("NIVEL_ACESSO");
 }
 
-function usuarioEhProprietario() {
-    return obterPermissao() === 2;
+function usuarioEhGrente() {
+    return obterPermissao() === 'EMPRESA_ADMIN';
 }
 
-function usuarioEhGerente() {
-    return obterPermissao() === 3;
+function usuarioEhMarketing() {
+    return obterPermissao() === 'EMPRESA_USER';
 }
 
 function validarPermissao(permissoesPermitidas = []) {
@@ -128,30 +115,30 @@ function verificarToast(
     tipo = localStorage.getItem("tipoToast"),
     mensagem = localStorage.getItem("mensagemToast")
 ) {
-    if (localStorage.getItem("showToast") === 'true') {
+    if (localStorage.getItem("showToast") === "true") {
         exibirToast(tipo, mensagem);
     }
 
-    localStorage.removeItem('showToast')
-    localStorage.removeItem('tipoToast')
-    localStorage.removeItem('mensagemToast')
+    localStorage.removeItem("showToast");
+    localStorage.removeItem("tipoToast");
+    localStorage.removeItem("mensagemToast");
 }
 
-const div_toast = document.getElementById("toast")
+const div_toast = document.getElementById("toast");
 let contador;
 
 function exibirToast(tipo, mensagem) {
-    div_toast.classList.add('exibindo')
+    div_toast.classList.add("exibindo");
     let imagem;
 
     if (tipo === "erro") {
-        div_toast.classList.remove('sucesso');
-        div_toast.classList.add('erro')
-        imagem = `<img src="../../assets/images/icons/erro.png" alt="ícone de erro">`
+        div_toast.classList.remove("sucesso");
+        div_toast.classList.add("erro");
+        imagem = `<img src="../../assets/images/icons/erro.png" alt="ícone de erro">`;
     } else if (tipo === "sucesso") {
-        div_toast.classList.remove('erro');
-        div_toast.classList.add('sucesso')
-        imagem = `<img src="../../assets/images/icons/sucesso.png" alt="ícone de sucesso">`
+        div_toast.classList.remove("erro");
+        div_toast.classList.add("sucesso");
+        imagem = `<img src="../../assets/images/icons/sucesso.png" alt="ícone de sucesso">`;
     }
 
     div_toast.innerHTML = `
@@ -163,10 +150,10 @@ function exibirToast(tipo, mensagem) {
             </div>
         </div>
         <div id="barra-tempo"></div>
-        `
+        `;
 
-    const barraTempo = document.getElementById("barra-tempo")
-    let tempoTotal = 5000;
+    const barraTempo = document.getElementById("barra-tempo");
+    let tempoTotal   = 5000;
     let tempoRestante = tempoTotal;
 
     clearInterval(contador);
@@ -180,11 +167,11 @@ function exibirToast(tipo, mensagem) {
         if (tempoRestante <= 0) {
             fecharToast();
         }
-    }, 10)
+    }, 10);
 }
 
 function fecharToast() {
-    div_toast.classList.remove('exibindo');
+    div_toast.classList.remove("exibindo");
     clearInterval(contador);
-    localStorage.removeItem('showToast')
+    localStorage.removeItem("showToast");
 }

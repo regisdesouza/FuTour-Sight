@@ -1,8 +1,3 @@
-// ================================================
-// editarEmpresa.js  (admin da plataforma)
-// ================================================
-
-
 iniciarMenu();
 
 const idEmpresa = sessionStorage.getItem("ID_EMPRESA_EDITAR");
@@ -10,9 +5,9 @@ const idEmpresa = sessionStorage.getItem("ID_EMPRESA_EDITAR");
 Inputmask("(99) 99999-9999").mask(document.getElementById("telefone"));
 Inputmask("99.999.999/9999-99").mask(document.getElementById("cnpj"));
 
-var chkNome     = false;
-var chkCnpj     = false;
-var chkEmail    = false;
+var chkNome = false;
+var chkCnpj = false;
+var chkEmail = false;
 var chkTelefone = false;
 
 function buscarDadosEmpresa() {
@@ -24,15 +19,11 @@ function buscarDadosEmpresa() {
     fetch(`/adminFutour/empresas/${idEmpresa}`)
         .then((resposta) => tratarRespostaFetch(resposta))
         .then((empresa) => {
-            document.getElementById("nome-empresa").value     = empresa.nome     || "";
-            document.getElementById("cnpj").value     = empresa.cnpj     || "";
-            document.getElementById("email").value    = empresa.email    || "";
+            document.getElementById("nome-empresa").value = empresa.nome || "";
+            document.getElementById("cnpj").value = empresa.cnpj || "";
+            document.getElementById("email").value = empresa.email || "";
             document.getElementById("telefone").value = empresa.telefone || "";
-
-            chkNome     = true;
-            chkCnpj     = true;
-            chkEmail    = true;
-            chkTelefone = true;
+            document.getElementById("nivel").value = empresa.nivel || "";
         })
         .catch((erro) => {
             console.error("#ERRO:", erro);
@@ -105,10 +96,11 @@ function atualizarEmpresa() {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-            nome:     document.getElementById("nome-empresa").value.trim(),
-            cnpj:     document.getElementById("cnpj").value.replace(/\D/g, ""),
-            email:    document.getElementById("email").value.trim(),
-            telefone: document.getElementById("telefone").value.replace(/\D/g, "")
+            nome: document.getElementById("nome-empresa").value.trim(),
+            cnpj: document.getElementById("cnpj").value.replace(/\D/g, ""),
+            email: document.getElementById("email").value.trim(),
+            telefone: document.getElementById("telefone").value.replace(/\D/g, ""),
+            nivel: document.getElementById("nivel").value.trim()
         })
     })
         .then((resposta) => tratarRespostaFetch(resposta))
@@ -117,8 +109,8 @@ function atualizarEmpresa() {
             exibirToast("sucesso", "Empresa atualizada com sucesso!");
 
             setTimeout(() => {
-                window.location.href = "./lista-empresa.html";
-            }, 1500);
+                window.location.href = "../admin/lista-empresas.html";
+            }, 100);
         })
         .catch((erro) => {
             console.error("#ERRO:", erro);
@@ -126,6 +118,16 @@ function atualizarEmpresa() {
         });
 }
 
+function cancelar() {
+    ativarToast("sucesso", "Edição cancelada com sucesso")
+
+    setTimeout(() => {
+        window.location.href = "../admin/lista-empresas.html";
+    }, 100);
+}
+
 document.getElementById("btn-salvar").addEventListener("click", atualizarEmpresa);
+
+document.getElementById("btn-cancelar").addEventListener("click", cancelar);
 
 buscarDadosEmpresa();

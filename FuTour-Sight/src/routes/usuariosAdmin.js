@@ -1,11 +1,19 @@
 var express = require("express");
-var router = express.Router();
+var router  = express.Router();
 
 var usuarioAdminController = require("../controllers/usuarioAdminController");
+
+// ============================================================
+// POST
+// ============================================================
 
 router.post("/funcionarios", function (req, res) {
     usuarioAdminController.cadastrarFuncionario(req, res);
 });
+
+// ============================================================
+// GET
+// ============================================================
 
 router.get("/usuarios", function (req, res) {
     usuarioAdminController.listarUsuarios(req, res);
@@ -22,6 +30,10 @@ router.get("/funcionarios/:idUsuario", function (req, res) {
 router.get("/empresas/:idEmpresa", function (req, res) {
     usuarioAdminController.buscarEmpresa(req, res);
 });
+
+// ============================================================
+// PUT
+// ============================================================
 
 router.put("/funcionarios/:idUsuario", function (req, res) {
     usuarioAdminController.editarFuncionario(req, res);
