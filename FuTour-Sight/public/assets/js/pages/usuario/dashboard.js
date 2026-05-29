@@ -42,35 +42,47 @@ function renderizarParametros(filtro) {
 
 function renderizarKpisMarketing(kpis) {
     const mes = kpis.mes_maior_crescimento;
+    const sinalMesPct = mes?.crescimento_percentual >= 0 ? '+' : '';
+    const sinalMesAbs = mes?.diferenca_turistas >= 0 ? '+' : '';
     document.getElementById('kpi-mes-valor').textContent = mes?.mes ?? '—';
-    document.getElementById('kpi-mes-pct').textContent = mes?.crescimento_percentual != null ? `+${mes.crescimento_percentual}%` : '—';
-    document.getElementById('kpi-mes-abs').textContent = mes?.diferenca_turistas != null ? `+${mes.diferenca_turistas.toLocaleString('pt-BR')} turistas` : '—';
+    document.getElementById('kpi-mes-pct').textContent = mes?.crescimento_percentual != null ? `${sinalMesPct}${mes.crescimento_percentual}%` : '—';
+    document.getElementById('kpi-mes-abs').textContent = mes?.diferenca_turistas != null ? `${sinalMesAbs}${mes.diferenca_turistas.toLocaleString('pt-BR')} turistas` : '—';
 
     const pais = kpis.pais_maior_crescimento;
+    const sinalPaisPct = pais?.crescimento_percentual >= 0 ? '+' : '';
+    const sinalPaisAbs = pais?.diferenca_turistas >= 0 ? '+' : '';
     document.getElementById('kpi-pais-valor').textContent = pais?.pais ?? '—';
-    document.getElementById('kpi-pais-pct').textContent = pais?.crescimento_percentual != null ? `+${pais.crescimento_percentual}%` : '—';
-    document.getElementById('kpi-pais-abs').textContent = pais?.diferenca_turistas != null ? `+${pais.diferenca_turistas.toLocaleString('pt-BR')} turistas` : '—';
+    document.getElementById('kpi-pais-pct').textContent = pais?.crescimento_percentual != null ? `${sinalPaisPct}${pais.crescimento_percentual}%` : '—';
+    document.getElementById('kpi-pais-abs').textContent = pais?.diferenca_turistas != null ? `${sinalPaisAbs}${pais.diferenca_turistas.toLocaleString('pt-BR')} turistas` : '—';
 
     const via = kpis.via_maior_crescimento;
+    const sinalViaPct = via?.crescimento_percentual >= 0 ? '+' : '';
+    const sinalViaAbs = via?.diferenca_chegadas >= 0 ? '+' : '';
     document.getElementById('kpi-via-valor').textContent = via?.via ?? '—';
-    document.getElementById('kpi-via-pct').textContent = via?.crescimento_percentual != null ? `+${via.crescimento_percentual}%` : '—';
-    document.getElementById('kpi-via-abs').textContent = via?.diferenca_chegadas != null ? `+${via.diferenca_chegadas.toLocaleString('pt-BR')} chegadas` : '—';
+    document.getElementById('kpi-via-pct').textContent = via?.crescimento_percentual != null ? `${sinalViaPct}${via.crescimento_percentual}%` : '—';
+    document.getElementById('kpi-via-abs').textContent = via?.diferenca_chegadas != null ? `${sinalViaAbs}${via.diferenca_chegadas.toLocaleString('pt-BR')} chegadas` : '—';
 }
 
 function renderizarKpisGerente(kpis) {
     const taxa = kpis.taxa_crescimento_geral;
-    document.getElementById('kpi-taxa-pct').textContent = taxa?.crescimento_percentual != null ? `${taxa.crescimento_percentual}%` : '—';
-    document.getElementById('kpi-taxa-abs').textContent = taxa?.diferenca_turistas != null ? `${taxa.diferenca_turistas.toLocaleString('pt-BR')} turistas` : '—';
+    const sinalTaxaPct = taxa?.crescimento_percentual >= 0 ? '+' : '';
+    const sinalTaxaAbs = taxa?.diferenca_turistas >= 0 ? '+' : '';
+    document.getElementById('kpi-taxa-pct').textContent = taxa?.crescimento_percentual != null ? `${sinalTaxaPct}${taxa.crescimento_percentual}%` : '—';
+    document.getElementById('kpi-taxa-abs').textContent = taxa?.diferenca_turistas != null ? `${sinalTaxaAbs}${taxa.diferenca_turistas.toLocaleString('pt-BR')} turistas` : '—';
 
     const mes = kpis.mes_maior_crescimento;
+    const sinalMesPct = mes?.crescimento_percentual >= 0 ? '+' : '';
+    const sinalMesAbs = mes?.diferenca_turistas >= 0 ? '+' : '';
     document.getElementById('kpi-gerente-mes-valor').textContent = mes?.mes ?? '—';
-    document.getElementById('kpi-gerente-mes-pct').textContent = mes?.crescimento_percentual != null ? `+${mes.crescimento_percentual}%` : '—';
-    document.getElementById('kpi-gerente-mes-abs').textContent = mes?.diferenca_turistas != null ? `+${mes.diferenca_turistas.toLocaleString('pt-BR')} turistas` : '—';
+    document.getElementById('kpi-gerente-mes-pct').textContent = mes?.crescimento_percentual != null ? `${sinalMesPct}${mes.crescimento_percentual}%` : '—';
+    document.getElementById('kpi-gerente-mes-abs').textContent = mes?.diferenca_turistas != null ? `${sinalMesAbs}${mes.diferenca_turistas.toLocaleString('pt-BR')} turistas` : '—';
 
     const deficit = kpis.mes_maior_deficit;
+    const sinalDeficitPct = deficit?.crescimento_percentual >= 0 ? '+' : '';
+    const sinalDeficitAbs = deficit?.diferenca_turistas >= 0 ? '+' : '';
     document.getElementById('kpi-deficit-valor').textContent = deficit?.mes ?? '—';
-    document.getElementById('kpi-deficit-pct').textContent = deficit?.crescimento_percentual != null ? `${deficit.crescimento_percentual}%` : '—';
-    document.getElementById('kpi-deficit-abs').textContent = deficit?.diferenca_turistas != null ? `${deficit.diferenca_turistas.toLocaleString('pt-BR')} turistas` : '—';
+    document.getElementById('kpi-deficit-pct').textContent = deficit?.crescimento_percentual != null ? `${sinalDeficitPct}${deficit.crescimento_percentual}%` : '—';
+    document.getElementById('kpi-deficit-abs').textContent = deficit?.diferenca_turistas != null ? `${sinalDeficitAbs}${deficit.diferenca_turistas.toLocaleString('pt-BR')} turistas` : '—';
 }
 
 function renderizarGraficoLinhaMarketing(grafico) {
@@ -132,20 +144,23 @@ function renderizarGraficoLinhaGerente(grafico) {
 
 function renderizarRankingPaises(ranking) {
     const maiorDiferenca = ranking[0]?.diferenca || 1;
-    const html = ranking.map((p, i) => `
+    const html = ranking.map((p, i) => {
+        const sinalPct = p.crescimento_percentual >= 0 ? '+' : '';
+        const sinalAbs = p.diferenca >= 0 ? '+' : '';
+        return `
         <li>
             <div class="pais-header">
                 <span>${i + 1}º ${p.pais}</span>
                 <div class="pais-dados">
-                    <span class="porcentagem">+${p.crescimento_percentual}%</span>
-                    <span class="absoluto">+${p.diferenca.toLocaleString('pt-BR')} turistas</span>
+                    <span class="porcentagem">${sinalPct}${p.crescimento_percentual}%</span>
+                    <span class="absoluto">${sinalAbs}${p.diferenca.toLocaleString('pt-BR')} turistas</span>
                 </div>
             </div>
             <div class="barra-porcentagem">
                 <div class="barra-porcentagem-atual" style="width: ${Math.round(p.diferenca * 100 / maiorDiferenca)}%"></div>
             </div>
         </li>
-    `).join('');
+    `}).join('');
 
     document.getElementById('ranking-gerente').innerHTML = html;
     document.getElementById('ranking-marketing').innerHTML = html;
