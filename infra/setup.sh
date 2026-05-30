@@ -64,4 +64,4 @@ if [[ "$RESPOSTA" == "S" || "$RESPOSTA" == "s" ]]; then
     echo "$DIR_REPO/infra/editarEnv.sh"
 fi
 
-echo "Setup concluido!"
+echo "Setup concluido! Bora testar!"
