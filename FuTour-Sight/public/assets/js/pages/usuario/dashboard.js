@@ -1,47 +1,33 @@
+
 let chartFluxoGerente  = null;
 let chartFluxoMarketing = null;
 let chartDoughnut      = null;
 
 async function renderizarDashboard() {
-
     const idFiltro = document.getElementById('select-filtros').value;
-
     if (!idFiltro) return;
-
     document.querySelectorAll('.kpis-container, .graficos-container')
         .forEach(el => el.classList.remove('exibindo'));
-
     try {
-
         const res = await fetch(`/dashboard/${idFiltro}`);
         const dados = await res.json();
-
         console.log('DADOS DASHBOARD:', dados);
-
         const nivelAcesso = sessionStorage.getItem('NIVEL_ACESSO');
-
         renderizarParametros(dados.filtro || {});
-
         if (nivelAcesso === 'EMPRESA_USER') {
-
             renderizarKpisMarketing(dados.kpis || {});
             renderizarGraficoLinhaMarketing(dados.grafico_linha_marketing || { meses: [], series: [] });
             renderizarRankingPaises(dados.ranking_paises || []);
             renderizarDoughnut(dados.grafico_doughnut || []);
-
             document.querySelector('.kpis-container.marketing').classList.add('exibindo');
             document.querySelector('.graficos-container.marketing').classList.add('exibindo');
-
         } else {
-
             renderizarKpisGerente(dados.kpis || {});
             renderizarGraficoLinhaGerente(dados.grafico_linha_gerente || { meses: [], datasets: [] });
             renderizarRankingPaises(dados.ranking_paises || []);
-
             document.querySelector('.kpis-container.gerente').classList.add('exibindo');
             document.querySelector('.graficos-container.gerente').classList.add('exibindo');
         }
-
     } catch (erro) {
         console.error('Erro ao renderizar dashboard:', erro);
     }
@@ -67,7 +53,6 @@ function aplicarPorcentagem(elPct, valor) {
 }
 
 function renderizarKpisMarketing(kpis) {
-
     const mes = kpis.maior_crescimento || {};
     document.getElementById('kpi-mes-valor').textContent = mes.mes || '—';
     aplicarPorcentagem('kpi-mes-pct', mes.percentual);
@@ -94,7 +79,6 @@ function renderizarKpisMarketing(kpis) {
 }
 
 function renderizarKpisGerente(kpis) {
-
     const taxa = kpis.crescimento_total || {};
     aplicarPorcentagem('kpi-taxa-pct', taxa.percentual);
     document.getElementById('kpi-taxa-abs').textContent =
@@ -133,15 +117,13 @@ function renderizarLegenda(containerId, items) {
 }
 
 function renderizarGraficoLinhaMarketing(grafico) {
-
     const ctx = document.getElementById('grafico-fluxo-turistas-marketing');
-    if (!grafico.series) return;
+    if (!grafico.series || !grafico.series.length) return;
 
     const coresPais = ['#1a3f6f', '#b8860b', '#2e8b57'];
 
     const datasets = grafico.series.map((serie, i) => {
         const corIndex = Math.floor(i / 2);
-        const isAnoFim = i % 2 === 1;
         return {
             label: serie.pais || `Serie ${i + 1}`,
             data: serie.dados || [],
@@ -149,7 +131,7 @@ function renderizarGraficoLinhaMarketing(grafico) {
             backgroundColor: 'transparent',
             borderWidth: 2,
             tension: 0.4,
-            borderDash: isAnoFim ? [] : [5, 5],
+            borderDash: serie.tracejado ? [5, 5] : [],
             pointRadius: 4,
             pointBackgroundColor: coresPais[corIndex]
         };
@@ -166,15 +148,8 @@ function renderizarGraficoLinhaMarketing(grafico) {
             options: {
                 plugins: { legend: { display: false } },
                 scales: {
-                    y: {
-                        beginAtZero: false,
-                        grid: { color: 'rgba(0,0,0,0.05)' },
-                        ticks: { font: { size: 11 } }
-                    },
-                    x: {
-                        grid: { display: false },
-                        ticks: { font: { size: 11 } }
-                    }
+                    y: { beginAtZero: false, grid: { color: 'rgba(0,0,0,0.05)' }, ticks: { font: { size: 11 } } },
+                    x: { grid: { display: false }, ticks: { font: { size: 11 } } }
                 }
             }
         });
@@ -183,13 +158,12 @@ function renderizarGraficoLinhaMarketing(grafico) {
     const legendaItems = grafico.series.map((serie, i) => ({
         label: serie.pais || `Serie ${i + 1}`,
         cor: coresPais[Math.floor(i / 2)],
-        tracejado: i % 2 === 0
+        tracejado: serie.tracejado
     }));
     renderizarLegenda('legenda-marketing', legendaItems);
 }
 
 function renderizarGraficoLinhaGerente(grafico) {
-
     const ctx = document.getElementById('grafico-fluxo-turistas-gerente');
     if (!grafico.datasets) return;
 
@@ -217,15 +191,8 @@ function renderizarGraficoLinhaGerente(grafico) {
             options: {
                 plugins: { legend: { display: false } },
                 scales: {
-                    y: {
-                        beginAtZero: false,
-                        grid: { color: 'rgba(0,0,0,0.05)' },
-                        ticks: { font: { size: 11 } }
-                    },
-                    x: {
-                        grid: { display: false },
-                        ticks: { font: { size: 11 } }
-                    }
+                    y: { beginAtZero: false, grid: { color: 'rgba(0,0,0,0.05)' }, ticks: { font: { size: 11 } } },
+                    x: { grid: { display: false }, ticks: { font: { size: 11 } } }
                 }
             }
         });
@@ -240,22 +207,18 @@ function renderizarGraficoLinhaGerente(grafico) {
 }
 
 function renderizarRankingPaises(ranking) {
-
     if (!ranking || ranking.length === 0) {
         document.getElementById('ranking-gerente').innerHTML = '<li>Nenhum dado encontrado</li>';
         document.getElementById('ranking-marketing').innerHTML = '<li>Nenhum dado encontrado</li>';
         return;
     }
 
-    const maiorDiferenca = Math.max(
-        ...ranking.map(p => Math.abs(Number(p.diferenca) || 0)), 1
-    );
+    const maiorDiferenca = Math.max(...ranking.map(p => Math.abs(Number(p.diferenca) || 0)), 1);
 
     const html = ranking.map((p, i) => {
         const diferenca = Number(p.diferenca) || 0;
         const percentual = Number(p.crescimento) || 0;
         const largura = Math.max(5, Math.round((Math.abs(diferenca) * 100) / maiorDiferenca));
-
         return `
         <li>
             <div class="pais-header">
@@ -280,7 +243,6 @@ function renderizarRankingPaises(ranking) {
 }
 
 function renderizarDoughnut(doughnut) {
-
     if (!Array.isArray(doughnut)) return;
 
     const icones = {
