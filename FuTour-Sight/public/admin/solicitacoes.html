@@ -114,8 +114,13 @@
                 <p>E-mail do responsável: <span>exemplo@teste.com</span></p>
             </div>
             <div class="botoes-confirmacao">
-                <button><img src="../assets/images/icons/negar.png" alt="ícone do botão de negar"></button>
-                <button><img src="../assets/images/icons/aprovar.png" alt="ícone do botão de aprovar"></button>
+                <button id="btnRecusar">
+                    <img src="../assets/images/icons/negar.png" alt="ícone do botão de negar">
+                </button>
+
+                <button id="btnAprovar">
+                    <img src="../assets/images/icons/aprovar.png" alt="ícone do botão de aprovar">
+                </button>
             </div>
         </div>
     </div>
@@ -128,7 +133,7 @@
             <p id="modalTexto">Deseja continuar?</p>
             <div class="modal-botoes">
                 <button id="btnCancelarModal">Cancelar</button>
-                <button id="btnConfirmarModal">Confirmar</button>
+                <button id="btnConfirmarModal" class="btn-confirmar-aprovar">Confirmar</button>
             </div>
         </div>
     </div>

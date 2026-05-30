@@ -1,26 +1,3 @@
-// ================================================
-// listaUsuario.js
-// ================================================
-// HTML necessário (adicionar antes do </body>):
-//
-// <!-- Toast de notificação -->
-// <div id="toast" class="toast hidden">
-//   <span id="toastMensagem"></span>
-// </div>
-//
-// <!-- Modal de confirmação -->
-// <div id="modalConfirmacao" class="modal hidden">
-//   <div class="modal-content">
-//     <h3 id="modalTitulo"></h3>
-//     <p id="modalTexto"></p>
-//     <div class="modal-botoes">
-//       <button id="btnCancelarModal">Cancelar</button>
-//       <button id="btnConfirmarModal">Confirmar</button>
-//     </div>
-//   </div>
-// </div>
-// ================================================
-
 preencherNomeUsuario();
 
 const inputBusca = document.getElementById("input-busca");

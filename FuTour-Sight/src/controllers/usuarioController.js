@@ -1,5 +1,9 @@
 var usuarioModel = require("../models/usuarioModel");
 
+// ============================================================
+// POST — enviarMensagem
+// ============================================================
+
 async function enviarMensagem(req, res) {
     const {
         nomeServer,
@@ -10,27 +14,19 @@ async function enviarMensagem(req, res) {
 
     try {
         if (!nomeServer) {
-            return res.status(400).json({
-                mensagem: "Nome undefined."
-            });
+            return res.status(400).json({ mensagem: "Nome undefined." });
         }
 
         if (!emailServer) {
-            return res.status(400).json({
-                mensagem: "Email undefined."
-            });
+            return res.status(400).json({ mensagem: "Email undefined." });
         }
 
         if (!telefoneServer) {
-            return res.status(400).json({
-                mensagem: "Telefone undefined."
-            });
+            return res.status(400).json({ mensagem: "Telefone undefined." });
         }
 
         if (!mensagemServer) {
-            return res.status(400).json({
-                mensagem: "Mensagem undefined."
-            });
+            return res.status(400).json({ mensagem: "Mensagem undefined." });
         }
 
         const resultado = await usuarioModel.enviarMensagem(
@@ -47,14 +43,18 @@ async function enviarMensagem(req, res) {
 
     } catch (erro) {
         console.log(erro);
-
         return res.status(500).json({
             mensagem: erro.sqlMessage || erro.message
         });
     }
 }
 
+// ============================================================
+// POST — preCadastrar
+// ============================================================
+
 async function preCadastrar(req, res) {
+
     const {
         nomeServer,
         emailPessoalServer,
@@ -65,6 +65,7 @@ async function preCadastrar(req, res) {
     } = req.body;
 
     try {
+
         if (!nomeServer) {
             return res.status(400).json({
                 mensagem: "Nome undefined."
@@ -101,11 +102,17 @@ async function preCadastrar(req, res) {
             });
         }
 
-        const existe = await usuarioModel.buscarPorCnpj(cnpjServer);
+        const existe = await usuarioModel.buscarSolicitacaoExistente(
+            cnpjServer,
+            emailCorporativoServer
+        );
+
+        console.log("RESULTADO EXISTE:", existe);
 
         if (existe.length > 0) {
-            return res.status(400).json({
-                mensagem: "Já existe uma solicitação com esse CNPJ."
+
+            return res.status(409).json({
+                mensagem: "Já existe uma solicitação em aberto."
             });
         }
 
@@ -124,6 +131,7 @@ async function preCadastrar(req, res) {
         });
 
     } catch (erro) {
+
         console.log(erro);
 
         return res.status(500).json({
@@ -131,6 +139,10 @@ async function preCadastrar(req, res) {
         });
     }
 }
+
+// ============================================================
+// POST — autenticar
+// ============================================================
 
 async function autenticar(req, res) {
     const {
@@ -140,44 +152,36 @@ async function autenticar(req, res) {
 
     try {
         if (!emailServer) {
-            return res.status(400).json({
-                mensagem: "Email undefined."
-            });
+            return res.status(400).json({ mensagem: "Email undefined." });
         }
 
         if (!senhaServer) {
-            return res.status(400).json({
-                mensagem: "Senha undefined."
-            });
+            return res.status(400).json({ mensagem: "Senha undefined." });
         }
 
-        const resultado = await usuarioModel.autenticar(
-            emailServer,
-            senhaServer
-        );
+        const resultado = await usuarioModel.autenticar(emailServer, senhaServer);
 
         if (resultado.length === 1) {
             return res.status(200).json(resultado[0]);
         }
 
         if (resultado.length === 0) {
-            return res.status(403).json({
-                mensagem: "Login inválido."
-            });
+            return res.status(403).json({ mensagem: "Login inválido." });
         }
 
-        return res.status(403).json({
-            mensagem: "Duplicidade de usuário."
-        });
+        return res.status(403).json({ mensagem: "Duplicidade de usuário." });
 
     } catch (erro) {
         console.log(erro);
-
         return res.status(500).json({
             mensagem: erro.sqlMessage || erro.message
         });
     }
 }
+
+// ============================================================
+// POST — criarFiltro
+// ============================================================
 
 async function criarFiltro(req, res) {
     const {
@@ -190,7 +194,31 @@ async function criarFiltro(req, res) {
     } = req.body;
 
     try {
-        const filtro = await usuarioModel.criarFiltro(
+        if (!nomeFiltro) {
+            return res.status(400).json({ mensagem: "Nome do filtro undefined." });
+        }
+
+        if (!estado) {
+            return res.status(400).json({ mensagem: "Estado undefined." });
+        }
+
+        if (!continente) {
+            return res.status(400).json({ mensagem: "Continente undefined." });
+        }
+
+        if (!ano_inicio) {
+            return res.status(400).json({ mensagem: "Ano de início undefined." });
+        }
+
+        if (!ano_fim) {
+            return res.status(400).json({ mensagem: "Ano fim undefined." });
+        }
+
+        if (!fkUsuario) {
+            return res.status(400).json({ mensagem: "Usuário undefined." });
+        }
+
+        await usuarioModel.criarFiltro(
             nomeFiltro,
             estado,
             continente,
@@ -205,26 +233,39 @@ async function criarFiltro(req, res) {
 
     } catch (erro) {
         console.log(erro);
-
         return res.status(500).json({
             mensagem: erro.sqlMessage || erro.message
         });
     }
 }
 
+// ============================================================
+// GET — listarFiltros
+// ============================================================
+
 async function listarFiltros(req, res) {
     const idUsuario = req.query.idUsuario;
 
     try {
-        const resultados = await usuarioModel.listarFiltros(idUsuario);
+        if (!idUsuario) {
+            return res.status(400).json({ mensagem: "idUsuario undefined." });
+        }
 
-        return res.status(200).json(resultados);
+        const resultado = await usuarioModel.listarFiltros(idUsuario);
+
+        return res.status(200).json(resultado);
 
     } catch (erro) {
         console.log(erro);
-        return res.status(500).json({ mensagem: erro.sqlMessage || erro.message });
+        return res.status(500).json({
+            mensagem: erro.sqlMessage || erro.message
+        });
     }
 }
+
+// ============================================================
+// GET — buscarFiltro
+// ============================================================
 
 async function buscarFiltro(req, res) {
     const idFiltro = req.params.idFiltro;
@@ -233,21 +274,22 @@ async function buscarFiltro(req, res) {
         const resultado = await usuarioModel.buscarFiltro(idFiltro);
 
         if (resultado.length === 0) {
-            return res.status(404).json({
-                mensagem: "Filtro não encontrado."
-            });
+            return res.status(404).json({ mensagem: "Filtro não encontrado." });
         }
 
         return res.status(200).json(resultado);
 
     } catch (erro) {
         console.log(erro);
-
         return res.status(500).json({
             mensagem: erro.sqlMessage || erro.message
         });
     }
 }
+
+// ============================================================
+// GET — listarEstados
+// ============================================================
 
 async function listarEstados(req, res) {
     try {
@@ -257,12 +299,15 @@ async function listarEstados(req, res) {
 
     } catch (erro) {
         console.log(erro);
-
         return res.status(500).json({
             mensagem: erro.sqlMessage || erro.message
         });
     }
 }
+
+// ============================================================
+// GET — listarContinentes
+// ============================================================
 
 async function listarContinentes(req, res) {
     try {
@@ -272,12 +317,15 @@ async function listarContinentes(req, res) {
 
     } catch (erro) {
         console.log(erro);
-
         return res.status(500).json({
             mensagem: erro.sqlMessage || erro.message
         });
     }
 }
+
+// ============================================================
+// GET — listarAnos
+// ============================================================
 
 async function listarAnos(req, res) {
     try {
@@ -287,16 +335,18 @@ async function listarAnos(req, res) {
 
     } catch (erro) {
         console.log(erro);
-
         return res.status(500).json({
             mensagem: erro.sqlMessage || erro.message
         });
     }
 }
 
+// ============================================================
+// PUT — atualizarFiltro
+// ============================================================
+
 async function atualizarFiltro(req, res) {
     const idFiltro = req.params.idFiltro;
-
     const {
         nomeFiltro,
         estado,
@@ -307,6 +357,12 @@ async function atualizarFiltro(req, res) {
     } = req.body;
 
     try {
+        if (!nomeFiltro || !estado || !continente || !ano_inicio || !ano_fim) {
+            return res.status(400).json({
+                mensagem: "Preencha todos os campos obrigatórios."
+            });
+        }
+
         await usuarioModel.atualizarFiltro(
             nomeFiltro,
             estado,
@@ -322,16 +378,18 @@ async function atualizarFiltro(req, res) {
 
     } catch (erro) {
         console.log(erro);
-
         return res.status(500).json({
             mensagem: erro.sqlMessage || erro.message
         });
     }
 }
 
+// ============================================================
+// PUT — editarPerfil
+// ============================================================
+
 async function editarPerfil(req, res) {
     const idUsuario = req.params.idUsuario;
-
     const {
         nomeServer,
         emailServer,
@@ -339,6 +397,14 @@ async function editarPerfil(req, res) {
     } = req.body;
 
     try {
+        if (!nomeServer) {
+            return res.status(400).json({ mensagem: "Nome undefined." });
+        }
+
+        if (!emailServer) {
+            return res.status(400).json({ mensagem: "Email undefined." });
+        }
+
         await usuarioModel.editarPerfil(
             idUsuario,
             nomeServer,
@@ -352,18 +418,20 @@ async function editarPerfil(req, res) {
 
     } catch (erro) {
         console.log(erro);
-
         return res.status(500).json({
             mensagem: erro.sqlMessage || erro.message
         });
     }
 }
 
+// ============================================================
+// DELETE — excluirFiltro
+// ============================================================
+
 async function excluirFiltro(req, res) {
     const idFiltro = req.params.idFiltro;
 
     try {
-
         await usuarioModel.excluirFiltro(idFiltro);
 
         return res.status(200).json({
@@ -372,7 +440,6 @@ async function excluirFiltro(req, res) {
 
     } catch (erro) {
         console.log(erro);
-
         return res.status(500).json({
             mensagem: erro.sqlMessage || erro.message
         });

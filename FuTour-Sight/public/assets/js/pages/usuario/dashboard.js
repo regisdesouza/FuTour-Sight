@@ -1,6 +1,6 @@
-let chartFluxoGerente = null;
+let chartFluxoGerente  = null;
 let chartFluxoMarketing = null;
-let chartDoughnut = null;
+let chartDoughnut      = null;
 
 async function renderizarDashboard() {
 
@@ -275,8 +275,8 @@ function renderizarRankingPaises(ranking) {
         </li>`;
     }).join('');
 
-    document.getElementById('ranking-gerente').innerHTML = html;
-    document.getElementById('ranking-marketing').innerHTML = html;
+    document.getElementById("ranking-gerente").innerHTML   = html;
+    document.getElementById("ranking-marketing").innerHTML = html;
 }
 
 function renderizarDoughnut(doughnut) {
@@ -289,7 +289,7 @@ function renderizarDoughnut(doughnut) {
         'Terrestre': 'terrestre.png'
     };
 
-    document.getElementById('ranking-via').innerHTML = doughnut.map(d => `
+    document.getElementById("ranking-via").innerHTML = doughnut.map(d => `
         <li>
             <div class="via-header">
                 <span>${d.via}</span>
@@ -304,11 +304,11 @@ function renderizarDoughnut(doughnut) {
                 <div class="barra-porcentagem-atual" style="width:${d.percentual}%"></div>
             </div>
         </li>
-    `).join('');
+    `).join("");
 
     if (chartDoughnut) {
-        chartDoughnut.data.labels = doughnut.map(d => d.via);
-        chartDoughnut.data.datasets[0].data = doughnut.map(d => d.percentual);
+        chartDoughnut.data.labels              = doughnut.map(d => d.via);
+        chartDoughnut.data.datasets[0].data    = doughnut.map(d => d.percentual);
         chartDoughnut.update();
     } else {
         chartDoughnut = new Chart(
@@ -342,8 +342,8 @@ async function carregarFiltros() {
     }
 }
 
-document.addEventListener('DOMContentLoaded', function () {
-    document.getElementById('select-filtros').addEventListener('change', renderizarDashboard);
+document.addEventListener("DOMContentLoaded", function () {
+    document.getElementById("select-filtros").addEventListener("change", renderizarDashboard);
     carregarFiltros();
 });
 

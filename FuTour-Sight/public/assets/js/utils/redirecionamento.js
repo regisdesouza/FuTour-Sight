@@ -2,20 +2,18 @@ const usuario = {
     id: Number(sessionStorage.getItem("ID_USUARIO")),
     nome: sessionStorage.getItem("NOME_USUARIO"),
     email: sessionStorage.getItem("EMAIL_USUARIO"),
-    nivelAcesso: Number(sessionStorage.getItem("NIVEL_ACESSO")),
+    nivelAcesso: sessionStorage.getItem("NIVEL_ACESSO"),
     idEmpresa: Number(sessionStorage.getItem("ID_EMPRESA")),
     primeiroAcesso: Number(sessionStorage.getItem("PRIMEIRO_ACESSO"))
 };
 
 const permissoes = {
-    PROPRIETARIO: 2,
-    GERENTE: 3
+    GERENTE: 'EMPRESA_ADMIN',
+    MARKETING: 'EMPRESA_USER'
 };
 
 const rotas = {
     dashboard: './dashboard.html',
-    dashboardProprietario: "./dashboard-proprietario.html",
-    dashboardGerente: "./dashboard-gerente.html",
     editarEmpresa: "./edicao-empresa.html",
     editarPerfil: "./editar-perfil.html",
     listarFuncionarios: "./lista-funcionarios.html",
@@ -29,7 +27,15 @@ function usuarioLogado() {
 }
 
 function verificarPermissao(permissoesPermitidas = []) {
-    return permissoesPermitidas.includes(usuario.nivelAcesso);
+
+    const nivelUsuario =
+        usuario.nivelAcesso
+            ?.trim()
+            .toUpperCase();
+
+    return permissoesPermitidas
+        .map(p => p.trim().toUpperCase())
+        .includes(nivelUsuario);
 }
 
 function redirecionarDashboard() {
@@ -40,7 +46,7 @@ function renderizarDashboard() {
     const elementosGerente = document.querySelectorAll('.gerente');
     const elementosMarketing = document.querySelectorAll('.marketing');
 
-    if (usuario.nivelAcesso === permissoes.PROPRIETARIO) {
+    if (usuario.nivelAcesso === permissoes.GERENTE) {
         elementosGerente.forEach(elemento => {
             elemento.classList.remove('exibindo');
         });
@@ -50,7 +56,7 @@ function renderizarDashboard() {
         });
     }
 
-    if (usuario.nivelAcesso === permissoes.GERENTE) {
+    if (usuario.nivelAcesso === permissoes.MARKETING) {
         elementosMarketing.forEach(elemento => {
             elemento.classList.remove('exibindo');
         });
@@ -64,7 +70,7 @@ function renderizarDashboard() {
 function redirecionarEdicaoEmpresa() {
     if (
         verificarPermissao([
-            permissoes.PROPRIETARIO
+            permissoes.GERENTE
         ])
     ) {
         window.location.href = rotas.editarEmpresa;
@@ -78,7 +84,7 @@ function redirecionarPerfil() {
 function redirecionarListFuncionario() {
     if (
         verificarPermissao([
-            permissoes.PROPRIETARIO
+            permissoes.GERENTE
         ])
     ) {
         window.location.href = rotas.listarFuncionarios;
@@ -88,7 +94,7 @@ function redirecionarListFuncionario() {
 function redirecionarCadastroFuncionario() {
     if (
         verificarPermissao([
-            permissoes.PROPRIETARIO
+            permissoes.GERENTE
         ])
     ) {
         window.location.href = rotas.cadastrarFuncionario;
@@ -106,22 +112,30 @@ function sair() {
 }
 
 function ocultarElementosSemPermissao() {
-    const elementosRestritos = document.querySelectorAll(
-        "[data-permissao]"
-    );
+
+    const elementosRestritos =
+        document.querySelectorAll("[data-permissao]");
+
+    console.log(elementosRestritos);
 
     elementosRestritos.forEach((elemento) => {
+
         const permissoesPermitidas =
             elemento.dataset.permissao
-                .split(",")
-                .map(Number);
+                .split(",");
+
+        console.log("Elemento:", elemento);
+        console.log("Permissões:", permissoesPermitidas);
 
         const possuiPermissao =
             verificarPermissao(permissoesPermitidas);
 
+        console.log("Possui?", possuiPermissao);
+
         if (!possuiPermissao) {
-            elemento.style.display = "none";
+            elemento.remove();
         }
+
     });
 }
 

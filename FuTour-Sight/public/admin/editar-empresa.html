@@ -57,29 +57,46 @@
                 <div class="criar-filtro">
                     <div class="campo">
                         <label for="nome-empresa">Nome da empresa</label>
-                        <input id="nome-empresa" type="text" placeholder="Nome da empresa">
+                        <input id="nome-empresa" type="text" placeholder="Nome da empresa" onkeyup="onkey_nome()">
+                        <div class="msg-erro" id="div_msg_nome"></div>
                     </div>
                     <div class="campo">
                         <label for="cnpj">CNPJ</label>
-                        <input id="cnpj" type="text" placeholder="CNPJ">
+                        <input id="cnpj" type="text" placeholder="CNPJ" onkeyup="onkey_cnpj()">
+                        <div class="msg-erro" id="div_msg_cnpj"></div>
                     </div>
                     <div class="campo">
                         <label for="email">Email</label>
-                        <input id="email" type="text" placeholder="Email">
+                        <input id="email" type="text" placeholder="Email" onkeyup="onkey_email()">
+                        <div class="msg-erro" id="div_msg_email"></div>
                     </div>
                     <div class="campo">
                         <label for="telefone">Telefone</label>
-                        <input id="telefone" type="text" placeholder="Telefone">
+                        <input id="telefone" type="text" placeholder="Telefone" onkeyup="onkey_telefone()">
+                        <div class="msg-erro" id="div_msg_telefone"></div>
+                    </div>
+                    <div class="campo">
+                        <label for="nivel">Nível</label>
+                        <select id="nivel" required>
+                            <option value="1">ATIVA </option>
+                            <option value="2">SUSPENSA</option>
+                            <option value="3">PENDENTE</option>
+                        </select>
                     </div>
                 </div>
 
                 <div class="botoes">
-                    <button>Cancelar</button>
+                    <button id="btn-cancelar">Cancelar</button>
                     <button id="btn-salvar">Atualizar empresa</button>
                 </div>
+
+
             </div>
         </section>
     </main>
+
+    <div id="toast"></div>
+
 
     <script src="../assets/js/shared/menu.js"></script>
     <script src="../assets/js/utils/validacoes.js"></script>
@@ -91,5 +108,3 @@
 </body>
 
 </html>
-
-

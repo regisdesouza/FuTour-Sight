@@ -1,20 +1,3 @@
-// ================================================
-// index.js
-// ================================================
-// HTML necessário (adicionar antes do </body>):
-//
-// <!-- Toast de notificação -->
-// <div id="toast" class="toast hidden">
-//   <span id="toastMensagem"></span>
-// </div>
-//
-// Nos campos do formulário, adicionar divs de erro:
-// <div id="div_msg_nome"      class="msg-erro"></div>
-// <div id="div_msg_email"     class="msg-erro"></div>
-// <div id="div_msg_telefone"  class="msg-erro"></div>
-// <div id="div_msg_msg"       class="msg-erro"></div>
-// ================================================
-
 iniciarMenu();
 
 sessionStorage.clear();

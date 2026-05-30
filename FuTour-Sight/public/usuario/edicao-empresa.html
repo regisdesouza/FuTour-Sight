@@ -52,25 +52,25 @@
                             <span>Dashboard</span>
                         </button>
                     </li>
-                    <li>
+                    <li data-permissao="EMPRESA_ADMIN" >
                         <button onclick="redirecionarEdicaoEmpresa()">
                             <img src="../assets/images/icons/empresa-branca.png" alt="icone de empresa da cor branca">
                             <span>Empresa</span>
                         </button>
                     </li>
-                    <li>
+                    <li data-permissao="EMPRESA_ADMIN,EMPRESA_USER" >
                         <button onclick="redirecionarPerfil()">
                             <img src="../assets/images/icons/perfil.png" alt="icone de perfil">
                             <span>Perfil</span>
                         </button>
                     </li>
-                    <li>
+                    <li data-permissao="EMPRESA_ADMIN" >
                         <button onclick="redirecionarListFuncionario()">
                             <img src="../assets/images/icons/historico.png" alt="icone de historico">
                             <span>Funcionários</span>
                         </button>
                     </li>
-                    <li>
+                    <li data-permissao="EMPRESA_ADMIN,EMPRESA_USER">
                         <button onclick="redirecionarFiltros()">
                             <img src="../assets/images/icons/filtro.png" alt="icone de filtro">
                             <span>Filtro</span>

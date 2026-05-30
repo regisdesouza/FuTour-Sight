@@ -1,30 +1,3 @@
-// ================================================
-// edicaoPerfil.js
-// ================================================
-// HTML necessário (adicionar antes do </body>):
-//
-// <!-- Toast de notificação -->
-// <div id="toast" class="toast hidden">
-//   <span id="toastMensagem"></span>
-// </div>
-//
-// <!-- Modal de confirmação -->
-// <div id="modalConfirmacao" class="modal hidden">
-//   <div class="modal-content">
-//     <h3 id="modalTitulo"></h3>
-//     <p id="modalTexto"></p>
-//     <div class="modal-botoes">
-//       <button id="btnCancelarModal">Cancelar</button>
-//       <button id="btnConfirmarModal">Confirmar</button>
-//     </div>
-//   </div>
-// </div>
-//
-// Nos campos do formulário, adicionar divs de erro:
-// <div id="div_msg_nome"  class="msg-erro"></div>
-// <div id="div_msg_email" class="msg-erro"></div>
-// <div id="div_msg_senha" class="msg-erro"></div>
-// ================================================
 verificarNivel("EMPRESA_ADMIN", "EMPRESA_USER");
 
 preencherNomeUsuario();
@@ -66,7 +39,6 @@ function onkey_email() {
 function onkey_senha() {
     var valorSenha = document.getElementById("senha-atual").value.trim();
 
-    // Senha é opcional na edição — só valida se preenchida
     if (valorSenha === "") {
         document.getElementById("div_msg_senha").innerHTML = "";
         chkSenha = true;
@@ -84,7 +56,6 @@ function onkey_senha() {
     }
 }
 
-// Inicializa flags como true porque campos já vêm preenchidos do sessionStorage
 chkNome  = true;
 chkEmail = true;
 chkSenha = true;

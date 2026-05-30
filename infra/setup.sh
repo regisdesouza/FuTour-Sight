@@ -27,31 +27,39 @@ DIR_BASE="/opt/futour-sight"
 DIR_REPO="${DIR_BASE}/repo"
 
 if [[ -d "$DIR_BASE" ]]; then
-    sudo rm -rf "$DIR_BASE"
+    read -p "Deseja manter o .env? (S/N): " MANTERENV
+    if [[ "$MANTERENV" == "S" || "$MANTERENV" == "s" ]]; then
+        sudo rm -rf "$DIR_REPO"
+
+        else
+        sudo rm -rf "$DIR_BASE"
+    fi
 fi
 
 sudo mkdir -p "$DIR_BASE"
 
 echo "Copiando repositório..."
-sudo cp -r "$HOME/FuTour-Sight/." "$DIR_REPO"
+sudo rsync -avh --exclude='node_modules/' --info=progress2 "$HOME/FuTour-Sight/." "$DIR_REPO"
 
 echo "Copiando Docker Compose..."
 sudo cp "$DIR_REPO/infra/dockers/docker-compose.yml" "$DIR_BASE/docker-compose.yml"
 
-echo "Copiando .env"
-sudo cp "$DIR_REPO/infra/env/.env.exemplo" "$DIR_BASE/.env"
+if [[ "$MANTERENV" != "S" && "$MANTERENV" != "s" ]]; then
+    echo "Copiando .env"
+    sudo cp "$DIR_REPO/infra/env/.env.exemplo" "$DIR_BASE/.env"
 
-echo "Arquivo .env criado em: $DIR_BASE/.env"
+    echo "Arquivo .env criado em: $DIR_BASE/.env"
 
-echo ""
-read -p "Gostaria de preencher agora? (S/N): " RESPOSTA
+    echo ""
+    read -p "Gostaria de preencher agora? (S/N): " RESPOSTA
 
-if [[ "$RESPOSTA" == "S" || "$RESPOSTA" == "s" ]]; then
-    "$DIR_REPO/infra/editarEnv.sh"
+    if [[ "$RESPOSTA" == "S" || "$RESPOSTA" == "s" ]]; then
+        "$DIR_REPO/infra/editarEnv.sh"
 
-    else 
-    echo "Para preencher o .env, execute o script:"
-    echo "$DIR_REPO/infra/editarEnv.sh"
+        else 
+        echo "Para preencher o .env, execute o script:"
+        echo "$DIR_REPO/infra/editarEnv.sh"
+    fi
 fi
 
 echo "Setup concluído!"

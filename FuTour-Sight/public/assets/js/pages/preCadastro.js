@@ -1,33 +1,14 @@
-// ================================================
-// preCadastro.js
-// ================================================
-// HTML necessário (adicionar antes do </body>):
-//
-// <!-- Toast de notificação -->
-// <div id="toast" class="toast hidden">
-//   <span id="toastMensagem"></span>
-// </div>
-//
-// Nos campos do formulário, adicionar divs de erro:
-// <div id="div_msg_nome"              class="msg-erro"></div>
-// <div id="div_msg_email_pessoal"     class="msg-erro"></div>
-// <div id="div_msg_nome_empresa"      class="msg-erro"></div>
-// <div id="div_msg_email_corporativo" class="msg-erro"></div>
-// <div id="div_msg_cnpj"              class="msg-erro"></div>
-// <div id="div_msg_telefone"          class="msg-erro"></div>
-// ================================================
-
 iniciarMenu();
 
 Inputmask("(99) 99999-9999").mask(document.getElementById("telefone"));
 Inputmask("99.999.999/9999-99").mask(document.getElementById("cnpj"));
 
-var chkNome             = false;
-var chkEmailPessoal     = false;
-var chkNomeEmpresa      = false;
+var chkNome = false;
+var chkEmailPessoal = false;
+var chkNomeEmpresa = false;
 var chkEmailCorporativo = false;
-var chkCnpj             = false;
-var chkTelefone         = false;
+var chkCnpj = false;
+var chkTelefone = false;
 
 function onkey_nome() {
     var erro = validarNome(document.getElementById("nome").value.trim());
@@ -102,6 +83,7 @@ function onkey_telefone() {
 }
 
 function preCadastrar() {
+
     onkey_nome();
     onkey_email_pessoal();
     onkey_nome_empresa();
@@ -109,54 +91,126 @@ function preCadastrar() {
     onkey_cnpj();
     onkey_telefone();
 
-    const temErro = chkNome &&
+    const formularioValido =
+        chkNome &&
         chkEmailPessoal &&
         chkNomeEmpresa &&
         chkEmailCorporativo &&
         chkCnpj &&
         chkTelefone;
 
-    if (!temErro) {
+    if (!formularioValido) {
         exibirToast("erro", "Preencha todos os campos corretamente");
         return false;
     }
 
-    var nomeVar                = document.getElementById("nome").value;
-    var emailPessoalVar        = document.getElementById("emailPessoal").value;
-    var empresaVar             = document.getElementById("empresa").value;
-    var emailCorporativoVar    = document.getElementById("emailCorporativo").value;
-    var cnpjVar                = document.getElementById("cnpj").value.replace(/\D/g, "");
-    var telefoneCorporativoVar = document.getElementById("telefone").value.replace(/\D/g, "");
+    var nomeVar = document.getElementById("nome").value.trim();
+
+    var emailPessoalVar = document
+        .getElementById("emailPessoal")
+        .value
+        .trim();
+
+    var empresaVar = document
+        .getElementById("empresa")
+        .value
+        .trim();
+
+    var emailCorporativoVar = document
+        .getElementById("emailCorporativo")
+        .value
+        .trim()
+        .toLowerCase();
+
+    var cnpjVar = document
+        .getElementById("cnpj")
+        .value
+        .replace(/\D/g, "");
+
+    var telefoneCorporativoVar = document
+        .getElementById("telefone")
+        .value
+        .replace(/\D/g, "");
 
     fetch("/usuarios/usuarios/pre-cadastro", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: {
+            "Content-Type": "application/json"
+        },
         body: JSON.stringify({
-            nomeServer:               nomeVar,
-            emailPessoalServer:       emailPessoalVar,
-            empresaServer:            empresaVar,
-            emailCorporativoServer:   emailCorporativoVar,
-            cnpjServer:               cnpjVar,
+            nomeServer: nomeVar,
+            emailPessoalServer: emailPessoalVar,
+            empresaServer: empresaVar,
+            emailCorporativoServer: emailCorporativoVar,
+            cnpjServer: cnpjVar,
             telefoneCorporativoServer: telefoneCorporativoVar,
         }),
     })
-    .then((resposta) => tratarRespostaFetch(resposta))
-    .then((dados) => {
-        console.log("Pré cadastro realizado:", dados);
-        exibirToast("sucesso", "Pré cadastro enviado com sucesso!");
 
-        limparCampos(["nome", "emailPessoal", "empresa", "emailCorporativo", "cnpj", "telefone"]);
+    .then(async (resposta) => {
 
-        chkNome             = false;
-        chkEmailPessoal     = false;
-        chkNomeEmpresa      = false;
-        chkEmailCorporativo = false;
-        chkCnpj             = false;
-        chkTelefone         = false;
+        const dados = await resposta.json();
+
+        if (!resposta.ok) {
+
+            if (resposta.status == 409) {
+
+                exibirToast(
+                    "erro",
+                    "Já existe uma solicitação com este CNPJ ou e-mail corporativo"
+                );
+
+                throw new Error("Solicitação duplicada");
+            }
+
+            throw new Error(
+                dados.mensagem || "Erro ao enviar pré cadastro"
+            );
+        }
+
+        return dados;
     })
+
+    .then((dados) => {
+
+        if (!dados) return;
+
+        console.log("Pré cadastro realizado:", dados);
+
+        exibirToast(
+            "sucesso",
+            "Pré cadastro enviado com sucesso!"
+        );
+
+        limparCampos([
+            "nome",
+            "emailPessoal",
+            "empresa",
+            "emailCorporativo",
+            "cnpj",
+            "telefone"
+        ]);
+
+        chkNome = false;
+        chkEmailPessoal = false;
+        chkNomeEmpresa = false;
+        chkEmailCorporativo = false;
+        chkCnpj = false;
+        chkTelefone = false;
+    })
+
     .catch((erro) => {
+
         console.error("#ERRO:", erro);
-        exibirToast("erro", "Erro ao enviar pré cadastro");
+
+        if (erro.message == "Solicitação duplicada") {
+            return;
+        }
+
+        exibirToast(
+            "erro",
+            "Erro ao enviar pré cadastro"
+        );
     });
 
     return false;
