@@ -451,10 +451,9 @@
     .graficos-container { gap: 28px; }
     .grafico-container { padding: 32px; }
     #grafico-fluxo-turistas-gerente,
-#grafico-fluxo-turistas-marketing {
-    max-height: 400px;
+    #grafico-fluxo-turistas-marketing { max-height: 400px; }
 }
-}
+
 
 @media (max-width: 1440px) {
     main { padding: 16px 28px; gap: 18px; }
