@@ -1,34 +1,22 @@
 const model = require('../models/dashboardModel');
 
 const MESES = [
-    'Janeiro',
-    'Fevereiro',
-    'Março',
-    'Abril',
-    'Maio',
-    'Junho',
-    'Julho',
-    'Agosto',
-    'Setembro',
-    'Outubro',
-    'Novembro',
-    'Dezembro'
+    'Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho',
+    'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'
 ];
 
 const MAPA_MESES = {
-    'janeiro': 'Janeiro',
-    'fevereiro': 'Fevereiro',
-    'marco': 'Março',
-    'março': 'Março',
-    'abril': 'Abril',
-    'maio': 'Maio',
-    'junho': 'Junho',
-    'julho': 'Julho',
-    'agosto': 'Agosto',
-    'setembro': 'Setembro',
-    'outubro': 'Outubro',
-    'novembro': 'Novembro',
-    'dezembro': 'Dezembro'
+    'janeiro': 'Janeiro', 'fevereiro': 'Fevereiro', 'marco': 'Março',
+    'março': 'Março', 'abril': 'Abril', 'maio': 'Maio', 'junho': 'Junho',
+    'julho': 'Julho', 'agosto': 'Agosto', 'setembro': 'Setembro',
+    'outubro': 'Outubro', 'novembro': 'Novembro', 'dezembro': 'Dezembro'
+};
+
+const MAPA_VIAS = {
+    'aérea': 'Aérea', 'aerea': 'Aérea', 'aéreo': 'Aérea', 'aereo': 'Aérea',
+    'terrestre': 'Terrestre',
+    'fluvial': 'Marítima',
+    'marítima': 'Marítima', 'maritima': 'Marítima', 'marítimo': 'Marítima', 'maritimo': 'Marítima'
 };
 
 function normalizarMes(mes) {
@@ -36,80 +24,60 @@ function normalizarMes(mes) {
     return MAPA_MESES[mes.toLowerCase()] || mes.charAt(0).toUpperCase() + mes.slice(1).toLowerCase();
 }
 
+function normalizarVia(via) {
+    if (!via) return via;
+    return MAPA_VIAS[via.toLowerCase()] || via;
+}
+
 function calcularCrescimento(atual, anterior) {
-    if (!anterior || anterior === 0) return 100;
+    if (!anterior || anterior === 0) return null;
     return parseFloat((((atual - anterior) / anterior) * 100).toFixed(1));
 }
 
-function separarPorAno(rows, anoInicio, anoFim) {
+function separarPorAno(rows, anoInicio, anoFim, normalizarChave) {
     const inicio = {};
     const fim = {};
-
     for (const r of rows) {
-        const chave =
-            r.nome_pais_origem ||
-            r.via_de_acesso ||
-            normalizarMes(r.mes);
-
-        if (r.ano == anoInicio) inicio[chave] = Number(r.total);
-        if (r.ano == anoFim) fim[chave] = Number(r.total);
+        let chave = r.nome_pais_origem || r.via_de_acesso || normalizarMes(r.mes);
+        if (normalizarChave) chave = normalizarChave(chave);
+        if (r.ano == anoInicio) inicio[chave] = (inicio[chave] || 0) + Number(r.total);
+        if (r.ano == anoFim) fim[chave] = (fim[chave] || 0) + Number(r.total);
     }
-
     return { inicio, fim };
 }
 
 function totalPorMes(rows, ano) {
     const totais = {};
-
     for (const r of rows) {
         if (r.ano == ano) {
             const mes = normalizarMes(r.mes);
             totais[mes] = (totais[mes] || 0) + Number(r.total);
         }
     }
-
     return MESES.map(mes => totais[mes] || 0);
 }
 
 async function getDashboard(req, res) {
-
     try {
-
         const idFiltro = req.params.idFiltro;
-
         const filtro = await model.buscarFiltro(idFiltro);
-
-        if (!filtro) {
-            return res.status(404).json({ erro: 'Filtro não encontrado' });
-        }
+        if (!filtro) return res.status(404).json({ erro: 'Filtro não encontrado' });
 
         const totaisMensais = await model.getTotaisMensais(filtro);
         const totaisPorPais = await model.getTotaisPorPais(filtro);
 
-        const { inicio, fim } = separarPorAno(
-            totaisPorPais,
-            filtro.ano_inicio,
-            filtro.ano_fim
-        );
+        const { inicio, fim } = separarPorAno(totaisPorPais, filtro.ano_inicio, filtro.ano_fim);
 
         const totalInicio = Object.values(inicio).reduce((a, b) => a + b, 0);
         const totalFim = Object.values(fim).reduce((a, b) => a + b, 0);
 
-        const crescimentoTotal = calcularCrescimento(totalFim, totalInicio);
-        const diferencaTotal = totalFim - totalInicio;
-
-        const crescimentoPorPais = Object.keys(fim).map(nome => {
-            const valorInicio = inicio[nome] || 0;
-            const valorFim = fim[nome] || 0;
-
-            return {
-                nome,
-                inicio: valorInicio,
-                fim: valorFim,
-                diferenca: valorFim - valorInicio,
-                crescimento: calcularCrescimento(valorFim, valorInicio)
-            };
-        });
+        const crescimentoPorPais = Object.keys(fim).map(nome => ({
+            nome,
+            inicio: inicio[nome] || 0,
+            fim: fim[nome] || 0,
+            diferenca: (fim[nome] || 0) - (inicio[nome] || 0),
+            crescimento: calcularCrescimento(fim[nome] || 0, inicio[nome] || 0)
+        }));
 
         const positivos = crescimentoPorPais
             .filter(p => p.crescimento > 0)
@@ -117,21 +85,18 @@ async function getDashboard(req, res) {
 
         const top3 = positivos.length >= 3
             ? positivos.slice(0, 3)
-            : crescimentoPorPais
-                .sort((a, b) => b.crescimento - a.crescimento)
-                .slice(0, 3);
+            : crescimentoPorPais.sort((a, b) => (b.crescimento || 0) - (a.crescimento || 0)).slice(0, 3);
+
+        const paisMaiorCrescimento = top3[0] || null;
 
         const crescimentoMensal = {};
-
         for (const mes of MESES) {
             const valorInicio = totaisMensais
                 .filter(r => normalizarMes(r.mes) === mes && r.ano == filtro.ano_inicio)
                 .reduce((acc, r) => acc + Number(r.total), 0);
-
             const valorFim = totaisMensais
                 .filter(r => normalizarMes(r.mes) === mes && r.ano == filtro.ano_fim)
                 .reduce((acc, r) => acc + Number(r.total), 0);
-
             crescimentoMensal[mes] = {
                 inicio: valorInicio,
                 fim: valorFim,
@@ -142,12 +107,10 @@ async function getDashboard(req, res) {
 
         const maiorCrescimento = Object.entries(crescimentoMensal)
             .sort((a, b) => b[1].diferenca - a[1].diferenca)[0];
-
         const maiorDeficit = Object.entries(crescimentoMensal)
             .sort((a, b) => a[1].diferenca - b[1].diferenca)[0];
 
         const nomesTop3 = top3.map(p => p.nome);
-
         const fluxoMensal = await model.getFluxoMensalPorPais(filtro, nomesTop3);
         const totaisVia = await model.getTotaisPorVia(filtro, nomesTop3);
 
@@ -155,6 +118,7 @@ async function getDashboard(req, res) {
             [filtro.ano_inicio, filtro.ano_fim].map(ano => ({
                 pais,
                 ano,
+                tracejado: ano == filtro.ano_inicio,
                 dados: MESES.map(mes => {
                     const registro = fluxoMensal.find(f =>
                         f.nome_pais_origem === pais &&
@@ -166,30 +130,30 @@ async function getDashboard(req, res) {
             }))
         );
 
-        const graficoDoughnut = (() => {
-            const inicioVia = {};
-            const fimVia = {};
+        const { inicio: inicioVia, fim: fimVia } = separarPorAno(totaisVia, filtro.ano_inicio, filtro.ano_fim, normalizarVia);
+        const totalViaFim = Object.values(fimVia).reduce((a, b) => a + b, 0);
 
-            for (const r of totaisVia) {
-                if (r.ano == filtro.ano_inicio) inicioVia[r.via_de_acesso] = Number(r.total);
-                if (r.ano == filtro.ano_fim) fimVia[r.via_de_acesso] = Number(r.total);
-            }
+        const graficoDoughnut = Object.entries(fimVia)
+            .filter(([, total]) => total > 0)
+            .map(([via, total]) => ({
+                via,
+                percentual: totalViaFim > 0 ? parseFloat(((total / totalViaFim) * 100).toFixed(1)) : 0,
+                diferenca: total - (inicioVia[via] || 0),
+                crescimento: calcularCrescimento(total, inicioVia[via] || 0)
+            }));
 
-            return {
-                labels: Object.keys(fimVia),
-                datasets: [
-                    { ano: filtro.ano_inicio, dados: Object.values(inicioVia) },
-                    { ano: filtro.ano_fim, dados: Object.values(fimVia) }
-                ]
-            };
-        })();
+        const viaMaiorCrescimento = graficoDoughnut
+            .filter(v => v.crescimento !== null && v.crescimento > 0)
+            .sort((a, b) => b.crescimento - a.crescimento)[0]
+            || graficoDoughnut.sort((a, b) => (b.crescimento || 0) - (a.crescimento || 0))[0]
+            || null;
 
         return res.json({
             filtro,
             kpis: {
                 crescimento_total: {
-                    percentual: crescimentoTotal,
-                    diferenca: diferencaTotal
+                    percentual: calcularCrescimento(totalFim, totalInicio),
+                    diferenca: totalFim - totalInicio
                 },
                 maior_crescimento: {
                     mes: maiorCrescimento[0],
@@ -200,7 +164,13 @@ async function getDashboard(req, res) {
                     mes: maiorDeficit[0],
                     percentual: maiorDeficit[1].crescimento,
                     diferenca: maiorDeficit[1].diferenca
-                }
+                },
+                pais_maior_crescimento: paisMaiorCrescimento,
+                via_maior_crescimento: viaMaiorCrescimento ? {
+                    via: viaMaiorCrescimento.via,
+                    percentual: viaMaiorCrescimento.crescimento,
+                    diferenca: viaMaiorCrescimento.diferenca
+                } : null
             },
             grafico_linha_gerente: {
                 meses: MESES,
@@ -223,6 +193,4 @@ async function getDashboard(req, res) {
     }
 }
 
-module.exports = {
-    getDashboard
-};
+module.exports = { getDashboard };
