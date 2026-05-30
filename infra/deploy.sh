@@ -1,4 +1,3 @@
-cat /opt/futour-sight/repo/infra/deploy.sh
 #!/bin/bash
 set -e
 DIR_BASE="/opt/futour-sight"
