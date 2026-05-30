@@ -4,9 +4,9 @@ function buildWhere(filtro) {
     return {
         clause: `
             JOIN vw_continente_turistas vc
-              ON vc.id = ct.id
-            WHERE vc.continente = ?
-              AND ct.uf = ?
+              ON vc.id COLLATE utf8mb4_unicode_ci = ct.id COLLATE utf8mb4_unicode_ci
+            WHERE vc.continente COLLATE utf8mb4_unicode_ci = ?
+              AND ct.uf COLLATE utf8mb4_unicode_ci = ?
               AND ct.ano IN (?, ?)
         `,
         params: [

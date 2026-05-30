@@ -15,9 +15,25 @@ const MESES = [
     'Dezembro'
 ];
 
+const MAPA_MESES = {
+    'janeiro': 'Janeiro',
+    'fevereiro': 'Fevereiro',
+    'marco': 'Março',
+    'março': 'Março',
+    'abril': 'Abril',
+    'maio': 'Maio',
+    'junho': 'Junho',
+    'julho': 'Julho',
+    'agosto': 'Agosto',
+    'setembro': 'Setembro',
+    'outubro': 'Outubro',
+    'novembro': 'Novembro',
+    'dezembro': 'Dezembro'
+};
+
 function normalizarMes(mes) {
     if (!mes) return '';
-    return mes.charAt(0).toUpperCase() + mes.slice(1).toLowerCase();
+    return MAPA_MESES[mes.toLowerCase()] || mes.charAt(0).toUpperCase() + mes.slice(1).toLowerCase();
 }
 
 function calcularCrescimento(atual, anterior) {
