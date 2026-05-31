@@ -18,7 +18,7 @@ if ! docker compose version >/dev/null 2>&1; then
     echo "Instalando Docker Compose..."
     sudo apt install docker-compose -y
     else
-        echo "Docker Compose ja esta instalado."
+        echo "Docker Compose já esta instalado."
 fi
 
 DIR_BASE="/opt/futour-sight"
@@ -30,7 +30,7 @@ fi
 
 sudo mkdir -p "$DIR_BASE"
 
-echo "Copiando repositorio..."
+echo "Copiando repositório..."
 sudo cp -r "$HOME/FuTour-Sight/." "$DIR_REPO"
 
 echo "Copiando Docker Compose..."
@@ -39,7 +39,7 @@ sudo cp "$DIR_REPO/infra/dockers/docker-compose.yml" "$DIR_BASE/docker-compose.y
 echo "Copiando .env"
 sudo cp "$DIR_REPO/infra/env/.env.exemplo" "$DIR_BASE/.env"
 
-echo "Criando configuracao de charset do MySQL..."
+echo "Criando configuração de charset do MySQL..."
 sudo tee "$DIR_REPO/infra/mysql.cnf" > /dev/null << 'MYSQLCNF'
 [mysqld]
 character-set-server=utf8mb4
@@ -64,4 +64,4 @@ if [[ "$RESPOSTA" == "S" || "$RESPOSTA" == "s" ]]; then
     echo "$DIR_REPO/infra/editarEnv.sh"
 fi
 
-echo "Setup concluido! Bora testar!"
+echo "Setup concluido!"
