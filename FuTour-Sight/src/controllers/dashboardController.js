@@ -79,13 +79,17 @@ async function getDashboard(req, res) {
             crescimento: calcularCrescimento(fim[nome] || 0, inicio[nome] || 0)
         }));
 
+        // top 3 por crescimento percentual (com volume mínimo) para ranking e KPI
         const positivos = crescimentoPorPais
-            .filter(p => p.crescimento > 0)
+            .filter(p => p.crescimento > 0 && p.fim >= 100)
             .sort((a, b) => b.crescimento - a.crescimento);
 
         const top3 = positivos.length >= 3
             ? positivos.slice(0, 3)
-            : crescimentoPorPais.sort((a, b) => (b.crescimento || 0) - (a.crescimento || 0)).slice(0, 3);
+            : crescimentoPorPais
+                .filter(p => p.fim >= 100)
+                .sort((a, b) => (b.crescimento || 0) - (a.crescimento || 0))
+                .slice(0, 3);
 
         const paisMaiorCrescimento = top3[0] || null;
 
@@ -110,7 +114,12 @@ async function getDashboard(req, res) {
         const maiorDeficit = Object.entries(crescimentoMensal)
             .sort((a, b) => a[1].diferenca - b[1].diferenca)[0];
 
-        const nomesTop3 = top3.map(p => p.nome);
+        // top 3 por volume no ano_fim para gráfico e doughnut
+        const nomesTop3 = Object.entries(fim)
+            .sort((a, b) => b[1] - a[1])
+            .slice(0, 3)
+            .map(([nome]) => nome);
+
         const fluxoMensal = await model.getFluxoMensalPorPais(filtro, nomesTop3);
         const totaisVia = await model.getTotaisPorVia(filtro, nomesTop3);
 
