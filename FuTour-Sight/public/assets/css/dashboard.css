@@ -280,7 +280,7 @@ h1 {
 
 #grafico-fluxo-turistas-gerente,
 #grafico-fluxo-turistas-marketing {
-    max-height: 480px;
+    height: 380px !important;
 }
 
 .grafico-header {
