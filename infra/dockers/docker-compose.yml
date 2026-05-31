@@ -46,7 +46,7 @@ services:
   build:
    context: /opt/futour-sight/repo
    dockerfile: infra/dockers/Dockerfile.etl
-  restart: on-failure
+  restart: on-failure:3
   depends_on:
    mysql:
     condition: service_healthy
