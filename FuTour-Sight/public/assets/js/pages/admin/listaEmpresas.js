@@ -1,3 +1,5 @@
+verificarNivel("PLATAFORMA_ADMIN");
+
 const inputBusca = document.getElementById("input-busca");
 const btnBusca = document.getElementById("btn-busca");
 

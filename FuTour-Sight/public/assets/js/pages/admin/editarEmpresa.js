@@ -1,3 +1,5 @@
+verificarNivel("PLATAFORMA_ADMIN");
+
 iniciarMenu();
 
 const idEmpresa = sessionStorage.getItem("ID_EMPRESA_EDITAR");
