@@ -1,10 +1,32 @@
 const database = require("../database/config.js");
 
 // ============================================================
+// POST — buscarFuncionarioPorEmail
+// ============================================================
+
+function buscarFuncionarioPorEmail(email) {
+
+    const instrucaoSql = `
+        SELECT id_usuario
+        FROM usuario
+        WHERE email = ?;
+    `;
+
+    return database.executar(instrucaoSql, [email]);
+}
+
+// ============================================================
 // POST — cadastrarFuncionario
 // ============================================================
 
-function cadastrarFuncionario(nome, email, senha, permissao, idEmpresa) {
+function cadastrarFuncionario(
+    nome,
+    email,
+    senha,
+    permissao,
+    idEmpresa
+) {
+
     const instrucaoSql = `
         INSERT INTO usuario (
             nome,
@@ -180,17 +202,17 @@ function editarEmpresa(
         telefoneCorporativo,
         idEmpresa
     ])
-    .then(() => database.executar(instrucaoSqlEndereco, [
-        cep,
-        estado,
-        cidade,
-        bairro,
-        logradouro,
-        numero,
-        complemento,
-        idEmpresa
-    ]))
-    .then(() => database.executar(instrucaoSqlPrimeiroAcesso, [0, idEmpresa]));
+        .then(() => database.executar(instrucaoSqlEndereco, [
+            cep,
+            estado,
+            cidade,
+            bairro,
+            logradouro,
+            numero,
+            complemento,
+            idEmpresa
+        ]))
+        .then(() => database.executar(instrucaoSqlPrimeiroAcesso, [0, idEmpresa]));
 }
 
 // ============================================================
@@ -208,6 +230,7 @@ function editarStatusUsuario(idUsuario, status) {
 }
 
 module.exports = {
+    buscarFuncionarioPorEmail,
     cadastrarFuncionario,
     listarUsuarios,
     listarUsuariosProcurados,

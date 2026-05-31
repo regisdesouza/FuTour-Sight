@@ -1,5 +1,5 @@
 var usuarioAdminModel = require("../models/usuarioAdminModel");
-var nodemailer        = require("nodemailer");
+var nodemailer = require("nodemailer");
 
 var transporter = nodemailer.createTransport({
     service: "gmail",
@@ -14,6 +14,7 @@ var transporter = nodemailer.createTransport({
 // ============================================================
 
 async function cadastrarFuncionario(req, res) {
+
     const {
         nomeServer,
         emailPessoalServer,
@@ -23,45 +24,86 @@ async function cadastrarFuncionario(req, res) {
     } = req.body;
 
     try {
+
         if (!nomeServer) {
-            return res.status(400).json({ mensagem: "Nome undefined." });
+            return res.status(400).json({
+                mensagem: "Nome undefined."
+            });
         }
 
         if (!emailPessoalServer) {
-            return res.status(400).json({ mensagem: "Email undefined." });
+            return res.status(400).json({
+                mensagem: "Email undefined."
+            });
         }
 
         if (!senhaServer) {
-            return res.status(400).json({ mensagem: "Senha undefined." });
+            return res.status(400).json({
+                mensagem: "Senha undefined."
+            });
         }
 
         if (!permissaoServer) {
-            return res.status(400).json({ mensagem: "Permissão undefined." });
+            return res.status(400).json({
+                mensagem: "Permissão undefined."
+            });
         }
 
         if (!idEmpresaServer) {
-            return res.status(400).json({ mensagem: "Empresa undefined." });
+            return res.status(400).json({
+                mensagem: "Empresa undefined."
+            });
         }
 
-        const resultado = await usuarioAdminModel.cadastrarFuncionario(
-            nomeServer,
-            emailPessoalServer,
-            senhaServer,
-            permissaoServer,
-            idEmpresaServer
-        );
+        // CORRIGIDO
+        const usuarioExistente =
+            await usuarioAdminModel.buscarFuncionarioPorEmail(
+                emailPessoalServer
+            );
+
+        if (usuarioExistente.length > 0) {
+
+            return res.status(409).json({
+                mensagem: "Já existe um funcionário com este e-mail."
+            });
+        }
+
+        const resultado =
+            await usuarioAdminModel.cadastrarFuncionario(
+                nomeServer,
+                emailPessoalServer,
+                senhaServer,
+                permissaoServer,
+                idEmpresaServer
+            );
 
         await transporter.sendMail({
             from: process.env.EMAIL_USER,
-            to:   emailPessoalServer,
+            to: emailPessoalServer,
             subject: "Suas credenciais de acesso",
             html: `
                 <h2>Olá, ${nomeServer}!</h2>
-                <p>Seu cadastro foi realizado com sucesso.</p>
-                <p><strong>Email:</strong> ${emailPessoalServer}</p>
-                <p><strong>Senha:</strong> ${senhaServer}</p>
+
+                <p>
+                    Seu cadastro foi realizado com sucesso.
+                </p>
+
+                <p>
+                    <strong>Email:</strong>
+                    ${emailPessoalServer}
+                </p>
+
+                <p>
+                    <strong>Senha:</strong>
+                    ${senhaServer}
+                </p>
+
                 <br>
-                <p>Recomendamos que você altere sua senha após o primeiro acesso.</p>
+
+                <p>
+                    Recomendamos alterar sua senha
+                    após o primeiro acesso.
+                </p>
             `
         });
 
@@ -71,12 +113,15 @@ async function cadastrarFuncionario(req, res) {
         });
 
     } catch (erro) {
+
         console.log(erro);
+
         return res.status(500).json({
             mensagem: erro.sqlMessage || erro.message
         });
     }
 }
+
 
 // ============================================================
 // GET — listarUsuarios
@@ -107,7 +152,7 @@ async function listarUsuarios(req, res) {
 // ============================================================
 
 async function listarUsuariosProcurados(req, res) {
-    const idEmpresa       = req.query.idEmpresa;
+    const idEmpresa = req.query.idEmpresa;
     const nomeFuncionario = req.query.nomeFuncionarioServer;
 
     try {
@@ -289,7 +334,7 @@ async function editarEmpresa(req, res) {
 // ============================================================
 
 async function editarStatusUsuario(req, res) {
-    const idUsuario  = req.params.idUsuario;
+    const idUsuario = req.params.idUsuario;
     const { status } = req.body;
 
     try {
