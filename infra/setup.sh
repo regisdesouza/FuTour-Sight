@@ -10,7 +10,7 @@ if ! command -v docker >/dev/null 2>&1; then
     echo "Instalando Docker..."
     sudo apt install docker.io -y
 else
-    echo "Docker ja esta instalado."
+    echo "Docker já está instalado."
 fi
 
 echo "Verificando Docker Compose..."
@@ -18,7 +18,7 @@ if ! docker compose version >/dev/null 2>&1; then
     echo "Instalando Docker Compose..."
     sudo apt install docker-compose -y
 else
-    echo "Docker Compose já esta instalado."
+    echo "Docker Compose já está instalado."
 fi
 
 DIR_BASE="/opt/futour-sight"
@@ -43,9 +43,8 @@ sudo rsync -avh --exclude='node_modules/' --info=progress2 "$HOME/FuTour-Sight/.
 echo "Copiando Docker Compose..."
 sudo cp "$DIR_REPO/infra/dockers/docker-compose.yml" "$DIR_BASE/docker-compose.yml"
 
-if [[ "$MANTERENV" != "S" && "$MANTERENV" != "s" ]]; then
-    echo "Criando configuração de charset do MySQL..."
-    sudo tee "$DIR_REPO/infra/mysql.cnf" > /dev/null << 'MYSQLCNF'
+echo "Criando configuração de charset do MySQL..."
+sudo tee "$DIR_REPO/infra/mysql.cnf" > /dev/null << 'MYSQLCNF'
 [mysqld]
 character-set-server=utf8mb4
 collation-server=utf8mb4_unicode_ci
@@ -57,12 +56,12 @@ default-character-set=utf8mb4
 default-character-set=utf8mb4
 MYSQLCNF
 
-    echo "Copiando .env"
+if [[ "$MANTERENV" != "S" && "$MANTERENV" != "s" ]]; then
+    echo "Copiando .env..."
     sudo cp "$DIR_REPO/infra/env/.env.exemplo" "$DIR_BASE/.env"
     echo "Arquivo .env criado em: $DIR_BASE/.env"
 
-    echo ""
-    read -p "Gostaria de preencher agora? (S/N): " RESPOSTA
+    read -p "Gostaria de preencher o .env agora? (S/N): " RESPOSTA
 
     if [[ "$RESPOSTA" == "S" || "$RESPOSTA" == "s" ]]; then
         "$DIR_REPO/infra/editarEnv.sh"
@@ -72,4 +71,4 @@ MYSQLCNF
     fi
 fi
 
-echo "Setup concluido!"
+echo "Setup concluído!"
