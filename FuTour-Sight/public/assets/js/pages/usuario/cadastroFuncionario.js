@@ -191,11 +191,10 @@ function cancelar() {
     );
 
     setTimeout(() => {
-
         window.location.href =
             "../usuario/lista-funcionarios.html";
 
-    }, 1000);
+    }, 100);
 }
 
 document
