@@ -63,8 +63,10 @@ async function getDashboard(req, res) {
         const filtro = await model.buscarFiltro(idFiltro);
         if (!filtro) return res.status(404).json({ erro: 'Filtro não encontrado' });
 
-        const totaisMensais = await model.getTotaisMensais(filtro);
-        const totaisPorPais = await model.getTotaisPorPais(filtro);
+        const [totaisMensais, totaisPorPais] = await Promise.all([
+            model.getTotaisMensais(filtro),
+            model.getTotaisPorPais(filtro)
+        ]);
 
         const { inicio, fim } = separarPorAno(totaisPorPais, filtro.ano_inicio, filtro.ano_fim);
 
@@ -111,8 +113,10 @@ async function getDashboard(req, res) {
             .sort((a, b) => a[1].diferenca - b[1].diferenca)[0];
 
         const nomesTop3 = top3.map(p => p.nome);
-        const fluxoMensal = await model.getFluxoMensalPorPais(filtro, nomesTop3);
-        const totaisVia = await model.getTotaisPorVia(filtro, nomesTop3);
+        const [fluxoMensal, totaisVia] = await Promise.all([
+            model.getFluxoMensalPorPais(filtro, nomesTop3),
+            model.getTotaisPorVia(filtro, nomesTop3)
+        ]);
 
         const graficoLinhaMarketing = nomesTop3.flatMap(pais =>
             [filtro.ano_inicio, filtro.ano_fim].map(ano => ({
