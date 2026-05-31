@@ -282,3 +282,32 @@ h1 {
 #grafico-fluxo-turistas-marketing {
     max-height: 480px;
 }
+
+.grafico-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 16px;
+}
+
+.botoes-ano {
+    display: flex;
+    gap: 8px;
+}
+
+.botao-ano {
+    padding: 4px 16px;
+    border-radius: 16px;
+    border: 2px solid var(--cor-primaria);
+    background-color: transparent;
+    color: var(--cor-primaria);
+    font-size: var(--texto-pequeno);
+    font-weight: var(--bold);
+    cursor: pointer;
+    transition: .15s ease-in-out;
+}
+
+.botao-ano.ativo {
+    background-color: var(--cor-primaria);
+    color: #fff;
+}

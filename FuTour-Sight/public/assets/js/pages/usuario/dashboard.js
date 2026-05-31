@@ -122,29 +122,36 @@ function renderizarGraficoLinhaMarketing(grafico) {
 
     const coresPais = ['#1a3f6f', '#b8860b', '#2e8b57'];
 
-    const datasets = grafico.series.map((serie, i) => {
-        const corIndex = Math.floor(i / 2);
-        return {
-            label: serie.pais || `Serie ${i + 1}`,
-            data: serie.dados || [],
-            borderColor: coresPais[corIndex],
-            backgroundColor: 'transparent',
-            borderWidth: 2,
-            tension: 0.4,
-            borderDash: serie.tracejado ? [5, 5] : [],
-            pointRadius: 4,
-            pointBackgroundColor: coresPais[corIndex]
-        };
-    });
+    const anos = [...new Set(grafico.series.map(s => s.ano))];
+
+    let anoSelecionado = anos[anos.length - 1];
+
+    function montarDatasets(ano) {
+        return grafico.series
+            .filter(serie => serie.ano == ano)
+            .map((serie, i) => ({
+                label: serie.pais,
+                data: serie.dados || [],
+                borderColor: coresPais[i],
+                backgroundColor: 'transparent',
+                borderWidth: 2,
+                tension: 0.4,
+                pointRadius: 4,
+                pointBackgroundColor: coresPais[i]
+            }));
+    }
 
     if (chartFluxoMarketing) {
         chartFluxoMarketing.data.labels = grafico.meses || [];
-        chartFluxoMarketing.data.datasets = datasets;
+        chartFluxoMarketing.data.datasets = montarDatasets(anoSelecionado);
         chartFluxoMarketing.update();
     } else {
         chartFluxoMarketing = new Chart(ctx, {
             type: 'line',
-            data: { labels: grafico.meses || [], datasets },
+            data: {
+                labels: grafico.meses || [],
+                datasets: montarDatasets(anoSelecionado)
+            },
             options: {
                 plugins: { legend: { display: false } },
                 scales: {
@@ -155,12 +162,49 @@ function renderizarGraficoLinhaMarketing(grafico) {
         });
     }
 
-    const legendaItems = grafico.series.map((serie, i) => ({
-        label: serie.pais || `Serie ${i + 1}`,
-        cor: coresPais[Math.floor(i / 2)],
-        tracejado: serie.tracejado
-    }));
-    renderizarLegenda('legenda-marketing', legendaItems);
+    const paisesUnicos = [...new Set(grafico.series.map(s => s.pais))];
+    renderizarLegenda('legenda-marketing', paisesUnicos.map((pais, i) => ({
+        label: pais,
+        cor: coresPais[i],
+        tracejado: false
+    })));
+
+    const containerBotoes = document.getElementById('botoes-ano-marketing');
+    containerBotoes.innerHTML = anos.map(ano => `
+        <button
+            class="botao-ano ${ano == anoSelecionado ? 'ativo' : ''}"
+            onclick="trocarAnoMarketing(${ano}, this)">
+            ${ano}
+        </button>
+    `).join('');
+
+    chartFluxoMarketing._series = grafico.series;
+    chartFluxoMarketing._coresPais = coresPais;
+}
+
+function trocarAnoMarketing(ano, botaoClicado) {
+    // atualiza visual dos botões
+    document.querySelectorAll('#botoes-ano-marketing .botao-ano')
+        .forEach(btn => btn.classList.remove('ativo'));
+    botaoClicado.classList.add('ativo');
+
+    const series = chartFluxoMarketing._series;
+    const cores  = chartFluxoMarketing._coresPais;
+
+    chartFluxoMarketing.data.datasets = series
+        .filter(s => s.ano == ano)
+        .map((serie, i) => ({
+            label: serie.pais,
+            data: serie.dados || [],
+            borderColor: cores[i],
+            backgroundColor: 'transparent',
+            borderWidth: 2,
+            tension: 0.4,
+            pointRadius: 4,
+            pointBackgroundColor: cores[i]
+        }));
+
+    chartFluxoMarketing.update();
 }
 
 function renderizarGraficoLinhaGerente(grafico) {
