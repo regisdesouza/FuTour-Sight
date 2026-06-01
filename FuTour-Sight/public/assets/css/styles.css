@@ -681,6 +681,13 @@ footer .footer-acima {
     
 }
 
+.links .botoes-autenticacao a.isAtivo {
+    background-color: rgba(0,0,0,0.25);
+    color: #fff;
+    font-weight: var(--semi-bold);
+}
+
+
 @media (max-width: 592px) {
     .contato-formulario .infos-contato {
         flex-direction: column;

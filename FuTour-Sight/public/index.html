@@ -33,7 +33,7 @@
     <div class="links">
       <nav>
         <ul>
-          <li><a href="#main" id="botao-home">Home</a></li>
+          <li><a href="./index.html" id="botao-home">Home</a></li>
           <li><a href="./sobre.html">Sobre</a></li>
           <li><a href="#contato" id="botao-contato">Contato</a></li>
           <li><a href="./cadastro.html">Quero ser cliente</a></li>
@@ -225,6 +225,22 @@
   </footer>
 
   <div id="toast"></div>
+
+  <script>
+    const paginaAtual = window.location.pathname.split("/").pop();
+
+    document.querySelectorAll(".links nav ul li a").forEach(link => {
+      const href = link.getAttribute("href");
+
+      if (!href) return;
+
+      const arquivoLink = href.split("/").pop();
+
+      if (arquivoLink === paginaAtual) {
+        link.parentElement.classList.add("isAtivo");
+      }
+    });
+  </script>
 
   <script src="./assets/js/shared/menu.js"></script>
   <script src="./assets/js/utils/validacoes.js"></script>

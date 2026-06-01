@@ -215,6 +215,22 @@
         </div>
     </footer>
 
+    <script>
+        const paginaAtual = window.location.pathname.split("/").pop();
+
+        document.querySelectorAll(".links nav ul li a").forEach(link => {
+            const href = link.getAttribute("href");
+
+            if (!href) return;
+
+            const arquivoLink = href.split("/").pop();
+
+            if (arquivoLink === paginaAtual) {
+                link.parentElement.classList.add("isAtivo");
+            }
+        });
+    </script>
+
     <script src="./assets/js/menu.js"></script>
 </body>
 
