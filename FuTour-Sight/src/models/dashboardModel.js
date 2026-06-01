@@ -3,9 +3,10 @@ const database = require("../database/config.js");
 function buildWhere(filtro) {
     return {
         clause: `
-            JOIN vw_continente_turistas vc ON vc.id = ct.id
-            WHERE vc.continente = ?
-              AND ct.uf = ?
+            JOIN vw_continente_turistas vc
+              ON vc.id COLLATE utf8mb4_unicode_ci = ct.id COLLATE utf8mb4_unicode_ci
+            WHERE vc.continente COLLATE utf8mb4_unicode_ci = ?
+              AND ct.uf COLLATE utf8mb4_unicode_ci = ?
               AND ct.ano IN (?, ?)
         `,
         params: [
@@ -49,13 +50,11 @@ async function getTotaisPorPais(filtro) {
 
 async function getTotaisPorVia(filtro, paises = []) {
     const { clause, params } = buildWhere(filtro);
-
     let paisFilter = '';
     if (paises.length) {
         paisFilter = `AND ct.nome_pais_origem IN (${paises.map(() => '?').join(',')})`;
         params.push(...paises);
     }
-
     return await database.executar(
         `SELECT ct.via_de_acesso, ct.ano, SUM(ct.chegadas) AS total
          FROM chegadas_turistas ct
@@ -67,9 +66,9 @@ async function getTotaisPorVia(filtro, paises = []) {
 }
 
 async function getFluxoMensalPorPais(filtro, paises) {
+    if (!paises || paises.length === 0) return [];
     const { clause, params } = buildWhere(filtro);
     params.push(...paises);
-
     return await database.executar(
         `SELECT ct.nome_pais_origem, ct.mes, ct.ano, SUM(ct.chegadas) AS total
          FROM chegadas_turistas ct

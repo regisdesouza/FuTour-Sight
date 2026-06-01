@@ -66,34 +66,36 @@ public class ExcelReader {
         return lista;
     }
 
-    private String getString(Cell cell) {
+ private String getString(Cell cell) {
 
-        if (cell == null) {
-            return null;
+    if (cell == null) {
+        return null;
+    }
+
+      return switch (cell.getCellType()) {
+
+        case STRING -> {
+            String valor = cell.getStringCellValue().trim();
+            yield valor;
         }
 
-        return switch (cell.getCellType()) {
+        case NUMERIC ->
+                String.valueOf(
+                        (int) cell.getNumericCellValue()
+                );
 
-            case STRING ->
-                    cell.getStringCellValue().trim();
+        case BOOLEAN ->
+                String.valueOf(
+                        cell.getBooleanCellValue()
+                );
 
-            case NUMERIC ->
-                    String.valueOf(
-                            (int) cell.getNumericCellValue()
-                    );
+        case FORMULA ->
+                cell.getCellFormula();
 
-            case BOOLEAN ->
-                    String.valueOf(
-                            cell.getBooleanCellValue()
-                    );
-
-            case FORMULA ->
-                    cell.getCellFormula();
-
-            default ->
-                    null;
-        };
-    }
+        default ->
+                null;
+    };
+}
 
     private Integer getInt(Cell cell) {
 
