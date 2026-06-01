@@ -1,3 +1,5 @@
+verificarNivel("EMPRESA_ADMIN");
+
 preencherNomeUsuario();
 
 const inputBusca = document.getElementById("input-busca");
