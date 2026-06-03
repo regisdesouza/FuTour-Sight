@@ -3,9 +3,9 @@ verificarNivel("EMPRESA_ADMIN", "EMPRESA_USER");
 preencherNomeUsuario();
 
 var chkNomeFiltro = false;
-var chkEstado     = false;
+var chkEstado = false;
 var chkContinente = false;
-var chkAno        = false;
+var chkAno = false;
 
 function onkey_nome_filtro() {
     var erro = validarNomeFiltro(document.getElementById("nome-filtro").value.trim());
@@ -45,7 +45,7 @@ function onkey_continente() {
 
 function onkey_ano() {
     var erroAnoInicio = validarAno(document.getElementById("ano-inicio").value);
-    var erroAnoFim    = validarAno(document.getElementById("ano-fim").value);
+    var erroAnoFim = validarAno(document.getElementById("ano-fim").value);
 
     document.getElementById("div_msg_ano").innerHTML = "";
 
@@ -78,21 +78,21 @@ function salvarFiltro() {
     }
 
     const nomeFiltro = document.getElementById("nome-filtro").value;
-    const estado     = document.getElementById("estado-destino").value;
+    const estado = document.getElementById("estado-destino").value;
     const continente = document.getElementById("continente-origem").value;
     const ano_inicio = document.getElementById("ano-inicio").value;
-    const ano_fim    = document.getElementById("ano-fim").value;
+    const ano_fim = document.getElementById("ano-fim").value;
 
     fetch("/usuarios/filtros", {
-        method:  "POST",
+        method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
             nomeFiltro: nomeFiltro,
-            estado:     estado,
+            estado: estado,
             continente: continente,
             ano_inicio: ano_inicio,
-            ano_fim:    ano_fim,
-            fkUsuario:  sessionStorage.getItem("ID_USUARIO")
+            ano_fim: ano_fim,
+            fkUsuario: sessionStorage.getItem("ID_USUARIO")
         }),
     })
         .then((resposta) => tratarRespostaFetch(resposta))
@@ -110,9 +110,9 @@ function salvarFiltro() {
 }
 
 function carregarFiltros() {
-    const ul_filtros           = document.getElementById("ul_filtros");
+    const ul_filtros = document.getElementById("ul_filtros");
     const p_quantidade_filtros = document.getElementById("pQuantidadeFiltros");
-    const idUsuario            = sessionStorage.getItem("ID_USUARIO");
+    const idUsuario = sessionStorage.getItem("ID_USUARIO");
 
     fetch(`/usuarios/filtros?idUsuario=${idUsuario}`, { method: "GET" })
         .then((resposta) => tratarRespostaFetch(resposta))
@@ -158,7 +158,7 @@ function carregarFiltros() {
 function confirmarExcluirFiltro(idFiltro) {
     abrirModalConfirmacao({
         titulo: "Excluir filtro",
-        texto:  "Tem certeza que deseja excluir este filtro?",
+        texto: "Tem certeza que deseja excluir este filtro?",
         onConfirm: () => excluirFiltro(idFiltro)
     });
 }
@@ -223,13 +223,43 @@ function renderizarOptionsAnos() {
         });
 }
 
+function desabilitarOptionsAnosMenoresOuIguais() {
+    const select_ano_inicio = document.getElementById("ano-inicio");
+    const select_ano_fim = document.getElementById("ano-fim");
+
+    select_ano_inicio.addEventListener("change", () => {
+        if (select_ano_inicio.value == "") {
+            select_ano_fim.setAttribute("disabled", true);
+            select_ano_fim.value = "";
+            return;
+        }
+
+        select_ano_fim.removeAttribute("disabled");
+
+        if (Number(select_ano_inicio.value) >= Number(select_ano_fim.value)) {
+            select_ano_fim.value = "";
+        }
+
+        const options_ano_fim = select_ano_fim.options;
+        for (const option of options_ano_fim) {
+            if (Number(option.value) <= Number(select_ano_inicio.value) && option.value != "") {
+                option.setAttribute("disabled", true);
+            } else {
+                option.removeAttribute("disabled");
+            }
+        }
+    })
+}
+
 function limparCampos() {
-    document.getElementById("nome-filtro").value       = "";
-    document.getElementById("estado-destino").value    = "";
+    document.getElementById("nome-filtro").value = "";
+    document.getElementById("estado-destino").value = "";
     document.getElementById("continente-origem").value = "";
+    document.getElementById("ano-inicio").value = "";
+    document.getElementById("ano-fim").value = "";
 
     chkNomeFiltro = false;
-    chkAno        = false;
+    chkAno = false;
 }
 
 function editarFiltro(idFiltro) {
@@ -240,4 +270,5 @@ function editarFiltro(idFiltro) {
 renderizarOptionsEstados();
 renderizarOptionsContinentes();
 renderizarOptionsAnos();
+desabilitarOptionsAnosMenoresOuIguais();
 carregarFiltros();
