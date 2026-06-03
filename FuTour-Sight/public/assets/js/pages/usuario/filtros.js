@@ -223,10 +223,36 @@ function renderizarOptionsAnos() {
         });
 }
 
+function desabilitarOptionsAnosMenoresOuIguais() {
+    const select_ano_inicio = document.getElementById("ano-inicio");
+    const select_ano_fim = document.getElementById("ano-fim");
+
+    select_ano_inicio.addEventListener("change", () => {
+        if(select_ano_inicio.value == "") {
+            select_ano_fim.setAttribute("disabled", true);
+            select_ano_fim.value = "";
+            return;
+        } 
+    
+        select_ano_fim.removeAttribute("disabled");
+        
+        const options = select_ano_fim.options;
+        for (const option of options) {
+            if(Number(option.value) <= Number(select_ano_inicio.value) && option.value != "") {
+                option.setAttribute("disabled", true);
+            } else {
+                option.removeAttribute("disabled");
+            }
+        }
+    })
+}
+
 function limparCampos() {
     document.getElementById("nome-filtro").value       = "";
     document.getElementById("estado-destino").value    = "";
     document.getElementById("continente-origem").value = "";
+    document.getElementById("ano-inicio").value        = "";
+    document.getElementById("ano-fim").value           = "";
 
     chkNomeFiltro = false;
     chkAno        = false;
@@ -240,4 +266,5 @@ function editarFiltro(idFiltro) {
 renderizarOptionsEstados();
 renderizarOptionsContinentes();
 renderizarOptionsAnos();
+desabilitarOptionsAnosMenoresOuIguais();
 carregarFiltros();
