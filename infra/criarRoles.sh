@@ -29,6 +29,9 @@ echo "Adicionando usuários aos grupos..."
 sudo usermod -aG infra eiki
 sudo usermod -aG infra gabriel
 
+sudo usermod -aG docker eiki
+sudo usermod -aG docker gabriel
+
 sudo usermod -aG dev reginaldo
 sudo usermod -aG dev frossi
 sudo usermod -aG dev eiki
