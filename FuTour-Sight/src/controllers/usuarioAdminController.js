@@ -77,6 +77,9 @@ async function cadastrarFuncionario(req, res) {
                 idEmpresaServer
             );
 
+        if ([2, 3].includes(Number(permissaoServer))) {
+            await usuarioAdminModel.criarFiltrosPadrao(resultado.insertId);
+        }
         await transporter.sendMail({
             from: process.env.EMAIL_USER,
             to: emailPessoalServer,
