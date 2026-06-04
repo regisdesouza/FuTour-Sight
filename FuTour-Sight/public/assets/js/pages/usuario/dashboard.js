@@ -243,61 +243,58 @@ function trocarAnoMarketing(ano, botaoClicado) {
 
   chartFluxoMarketing.update();
 }
-
 function renderizarGraficoLinhaGerente(grafico) {
-  const ctx = document.getElementById("grafico-fluxo-turistas-gerente");
-  if (!grafico.datasets) return;
+    const ctx = document.getElementById('grafico-fluxo-turistas-gerente');
+    if (!grafico.datasets) return;
 
-  const cores = ["#1a3f6f", "#b8860b"];
+    const cores = ['#1a3f6f', '#b8860b'];
 
-  const datasets = grafico.datasets.map((serie, i) => ({
-    label: String(serie.ano || `Serie ${i + 1}`),
-    data: serie.dados || [],
-    borderColor: cores[i % cores.length],
-    backgroundColor: "transparent",
-    borderWidth: 2,
-    tension: 0.4,
-    pointRadius: 4,
-    pointBackgroundColor: cores[i % cores.length],
-  }));
+    const datasets = grafico.datasets.map((serie, i) => ({
+        label: String(serie.ano || `Serie ${i + 1}`),
+        data: serie.dados || [],
+        borderColor: cores[i % cores.length],
+        backgroundColor: 'transparent',
+        borderWidth: 2,
+        tension: 0.4,
+        pointRadius: 4,
+        pointBackgroundColor: cores[i % cores.length]
+    }));
 
-  if (chartFluxoGerente) {
-    chartFluxoGerente.data.labels = grafico.meses || [];
-    chartFluxoGerente.data.datasets = datasets;
-    chartFluxoGerente.update();
-  } else {
-    chartFluxoGerente = new Chart(ctx, {
-      type: "line",
-      data: { labels: grafico.meses || [], datasets },
-      options: {
-        plugins: { legend: { display: false } },
-        layout: {
-          padding: { bottom: 10 },
-        },
-        scales: {
-          y: {
-            beginAtZero: true,
-            suggestedMin: 0,
-            grace: "5%",
-            grid: { color: "rgba(0,0,0,0.05)" },
-            ticks: { font: { size: 11 } },
-          },
-          x: {
-            grid: { display: false },
-            ticks: { font: { size: 11 } },
-          },
-        },
-      },
-    });
-  }
+    if (chartFluxoGerente) {
+        chartFluxoGerente.data.labels = grafico.meses || [];
+        chartFluxoGerente.data.datasets = datasets;
+        chartFluxoGerente.update();
+    } else {
+        chartFluxoGerente = new Chart(ctx, {
+            type: 'line',
+            data: { labels: grafico.meses || [], datasets },
+            options: {
+                plugins: { legend: { display: false } },
+                layout: { padding: { bottom: 10 } },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        suggestedMin: 0,
+                        grace: '5%',
+                        grid: { color: 'rgba(0,0,0,0.05)' },
+                        ticks: { font: { size: 11 } }
+                    },
+                    x: {
+                        grid: { display: false },
+                        ticks: { font: { size: 11 } }
+                    }
+                }
+            }
+        });
+    }
 
-  const legendaItems = grafico.datasets.map((serie, i) => ({
-    label: String(serie.ano || `Serie ${i + 1}`),
-    cor: cores[i % cores.length],
-    tracejado: false,
-  }));
-  renderizarLegenda("legenda-gerente", legendaItems);
+    renderizarLegenda('legenda-gerente', grafico.datasets.map((serie, i) => ({
+        label: String(serie.ano || `Serie ${i + 1}`),
+        cor: cores[i % cores.length],
+        tracejado: false
+    })));
 }
+
 
 function renderizarRankingPaises(ranking) {
   if (!ranking || ranking.length === 0) {
