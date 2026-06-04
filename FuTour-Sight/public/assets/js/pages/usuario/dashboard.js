@@ -256,12 +256,12 @@ function renderizarRankingPaises(ranking) {
         return;
     }
 
-    const maiorDiferenca = Math.max(...ranking.map(p => Math.abs(Number(p.diferenca) || 0)), 1);
+    const maiorPercentual = Math.max(...ranking.map(p => Math.abs(Number(p.crescimento) || 0)), 1);
 
     const html = ranking.map((p, i) => {
         const diferenca = Number(p.diferenca) || 0;
         const percentual = Number(p.crescimento) || 0;
-        const largura = Math.max(5, Math.round((Math.abs(diferenca) * 100) / maiorDiferenca));
+        const largura = Math.max(5, Math.round((Math.abs(percentual) * 100) / maiorPercentual));
         return `
         <li>
             <div class="pais-header">
