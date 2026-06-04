@@ -183,7 +183,6 @@ function renderizarGraficoLinhaMarketing(grafico) {
 }
 
 function trocarAnoMarketing(ano, botaoClicado) {
-    // atualiza visual dos botões
     document.querySelectorAll('#botoes-ano-marketing .botao-ano')
         .forEach(btn => btn.classList.remove('ativo'));
     botaoClicado.classList.add('ativo');
@@ -336,13 +335,25 @@ async function carregarFiltros() {
         const idUsuario = sessionStorage.getItem('ID_USUARIO');
         const res = await fetch(`/usuarios/filtros?idUsuario=${idUsuario}`);
         const filtros = await res.json();
+
         const select = document.getElementById('select-filtros');
-        filtros.forEach(f => {
-            const option = document.createElement('option');
-            option.value = f.id_filtro;
-            option.textContent = f.nome;
-            select.appendChild(option);
-        });
+
+        select.innerHTML = '';
+
+        filtros
+            .sort((a, b) => a.nome.localeCompare('pt-BR'))
+            .forEach(f => {
+                const option = document.createElement('option');
+                option.value = f.id_filtro;
+                option.textContent = f.nome;
+                select.appendChild(option);
+            });
+
+    
+        if (filtros.length > 0) {
+            select.value = select.options[0].value;
+            renderizarDashboard();
+        }
     } catch (erro) {
         console.error('Erro ao carregar filtros:', erro);
     }
