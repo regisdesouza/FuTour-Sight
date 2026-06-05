@@ -1,5 +1,5 @@
 const nodemailer = require("nodemailer");
-const crypto     = require("crypto");
+const crypto = require("crypto");
 
 var adminFutourModel = require("../models/adminFutourModel");
 
@@ -21,14 +21,28 @@ async function aprovarSolicitacao(req, res) {
 
         const dados = solicitacao[0];
 
-        const maiusculas      = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-        const especiais       = "!@#$%&*";
-        const letraMaiuscula  = maiusculas[Math.floor(Math.random() * maiusculas.length)];
-        const caractereEspecial = especiais[Math.floor(Math.random() * especiais.length)];
+        const maiusculas = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+        const minusculas = "abcdefghijklmnopqrstuvwxyz";
+        const especiais = "!@#$%&*";
+        const numeros = "0123456789";
+
+        const letraMaiuscula =
+            maiusculas[Math.floor(Math.random() * maiusculas.length)];
+
+        const letraMinuscula =
+            minusculas[Math.floor(Math.random() * minusculas.length)];
+
+        const caractereEspecial =
+            especiais[Math.floor(Math.random() * especiais.length)];
+
+        const numero =
+            numeros[Math.floor(Math.random() * numeros.length)];
 
         const senhaTemp =
             letraMaiuscula +
+            letraMinuscula +
             caractereEspecial +
+            numero +
             crypto.randomBytes(3).toString("hex");
 
         const resultadoEmpresa = await adminFutourModel.criarEmpresa(
@@ -61,7 +75,7 @@ async function aprovarSolicitacao(req, res) {
 
         await transporter.sendMail({
             from: `"FuTour Sight" <${process.env.EMAIL_USER}>`,
-            to:   dados.email_responsavel,
+            to: dados.email_responsavel,
             subject: "Sua solicitação foi aprovada!",
             html: `
                 <h2>Bem-vindo ao FuTour Sight!</h2>
@@ -284,7 +298,7 @@ async function atualizarDestinatario(req, res) {
 // ============================================================
 
 async function atualizarConfiguracao(req, res) {
-    const id            = req.params.id;
+    const id = req.params.id;
     const { ativo, intervalo } = req.body;
 
     try {

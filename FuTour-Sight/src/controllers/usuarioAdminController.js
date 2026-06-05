@@ -55,7 +55,6 @@ async function cadastrarFuncionario(req, res) {
             });
         }
 
-        // CORRIGIDO
         const usuarioExistente =
             await usuarioAdminModel.buscarFuncionarioPorEmail(
                 emailPessoalServer

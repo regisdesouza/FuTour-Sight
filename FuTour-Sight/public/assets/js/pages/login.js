@@ -1,7 +1,6 @@
 iniciarMenu();
 
 var chkEmail = false;
-var chkSenha = false;
 
 function onkey_email() {
     var erro = validarEmail(document.getElementById("email").value.trim());
@@ -15,31 +14,17 @@ function onkey_email() {
     }
 }
 
-function onkey_senha() {
-    var erro = validarSenha(document.getElementById("senha").value.trim());
-
-    if (erro != "") {
-        document.getElementById("div_msg_senha").innerHTML = erro;
-        chkSenha = false;
-    } else {
-        document.getElementById("div_msg_senha").innerHTML = "";
-        chkSenha = true;
-    }
-}
-
 function login() {
     onkey_email();
-    onkey_senha();
 
-    const temErro = chkEmail && chkSenha;
+    const senhaVar = document.getElementById("senha").value.trim();
 
-    if (!temErro) {
+    if (!chkEmail || senhaVar === "") {
         exibirToast("erro", "Preencha todos os campos corretamente");
         return false;
     }
 
     var emailVar = document.getElementById("email").value;
-    var senhaVar = document.getElementById("senha").value;
 
     fetch("/usuarios/usuarios/autenticacao", {
         method: "POST",
@@ -49,9 +34,9 @@ function login() {
             senhaServer: senhaVar,
         }),
     })
-    .then((resposta) => tratarRespostaFetch(resposta))
-    .then((json) => {
-        console.log("Login realizado:", json);
+        .then((resposta) => tratarRespostaFetch(resposta))
+        .then((json) => {
+            console.log("Login realizado:", json);
 
             if (json.status_usuario !== "ATIVO") {
                 exibirToast("erro", "Seu acesso está desativado. Entre em contato com o administrador.");
@@ -63,14 +48,14 @@ function login() {
                 return;
             }
 
-        sessionStorage.setItem("ID_USUARIO",      json.id_usuario);
-        sessionStorage.setItem("NOME_USUARIO",    json.nome);
-        sessionStorage.setItem("EMAIL_USUARIO",   json.email);
-        sessionStorage.setItem("NIVEL_ACESSO",    json.nivel_permissao);
-        sessionStorage.setItem("ID_EMPRESA",      json.empresa);
-        sessionStorage.setItem("PRIMEIRO_ACESSO", json.primeiro_acesso);
+            sessionStorage.setItem("ID_USUARIO", json.id_usuario);
+            sessionStorage.setItem("NOME_USUARIO", json.nome);
+            sessionStorage.setItem("EMAIL_USUARIO", json.email);
+            sessionStorage.setItem("NIVEL_ACESSO", json.nivel_permissao);
+            sessionStorage.setItem("ID_EMPRESA", json.empresa);
+            sessionStorage.setItem("PRIMEIRO_ACESSO", json.primeiro_acesso);
 
-            const nivel = json.nivel_permissao; 
+            const nivel = json.nivel_permissao;
             const primeiroAcesso = json.primeiro_acesso === 1 || json.primeiro_acesso === true;
 
             if (nivel !== "PLATAFORMA_ADMIN" && json.status_empresa !== "ATIVA") {
@@ -94,9 +79,16 @@ function login() {
                 }
             }, 1500);
         })
-        .catch((erro) => {
+        .catch(async (erro) => {
             console.error("#ERRO:", erro);
-            exibirToast("erro", "E-mail ou senha inválidos");
+
+            if (erro.message.includes("Senha incorreta")) {
+                exibirToast("erro", "A senha não corresponde à cadastrada.");
+            } else if (erro.message.includes("E-mail não encontrado")) {
+                exibirToast("erro", "E-mail não encontrado.");
+            } else {
+                exibirToast("erro", "Erro ao realizar login.");
+            }
         });
 
     return false;

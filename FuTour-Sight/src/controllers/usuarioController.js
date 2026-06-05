@@ -145,34 +145,44 @@ async function preCadastrar(req, res) {
 // ============================================================
 
 async function autenticar(req, res) {
-    const {
-        emailServer,
-        senhaServer
-    } = req.body;
+    const { emailServer, senhaServer } = req.body;
 
     try {
         if (!emailServer) {
-            return res.status(400).json({ mensagem: "Email undefined." });
+            return res.status(400).json({
+                mensagem: "Email undefined."
+            });
         }
 
         if (!senhaServer) {
-            return res.status(400).json({ mensagem: "Senha undefined." });
+            return res.status(400).json({
+                mensagem: "Senha undefined."
+            });
         }
 
-        const resultado = await usuarioModel.autenticar(emailServer, senhaServer);
-
-        if (resultado.length === 1) {
-            return res.status(200).json(resultado[0]);
-        }
+        const resultado = await usuarioModel.autenticar(emailServer);
 
         if (resultado.length === 0) {
-            return res.status(403).json({ mensagem: "Login inválido." });
+            return res.status(404).json({
+                mensagem: "E-mail não encontrado."
+            });
         }
 
-        return res.status(403).json({ mensagem: "Duplicidade de usuário." });
+        const usuario = resultado[0];
+
+        if (usuario.senha !== senhaServer) {
+            return res.status(401).json({
+                mensagem: "Senha incorreta."
+            });
+        }
+
+        delete usuario.senha;
+
+        return res.status(200).json(usuario);
 
     } catch (erro) {
         console.log(erro);
+
         return res.status(500).json({
             mensagem: erro.sqlMessage || erro.message
         });
