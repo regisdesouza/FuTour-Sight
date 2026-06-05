@@ -38,11 +38,19 @@ main header {
     font-size: var(--texto-medio);
 }
 
+
 .solicitacoes-empresas {
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
     gap: 32px;
+}
+
+.solicitacoes-empresas img {
+    width: 346px;
+    height: 220px;
+    object-fit: cover;
+    border-top-left-radius: 24px;
 }
 
 .solicitacoes-empresas li {
@@ -88,6 +96,13 @@ main header {
 .empresa-selecionada img {
     width: 100%;
     border-top-left-radius: 32px;
+}
+
+.empresa-selecionada #banner{
+    width: 650px;
+    height: 320px;
+    object-fit: cover;
+    border-top-left-radius: 24px;
 }
 
 .empresa-selecionada .empresa-container {

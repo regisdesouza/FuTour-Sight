@@ -64,7 +64,7 @@ function listarSolicitacoes() {
                 const li = document.createElement("li");
 
                 li.innerHTML = `
-                <img src="https://placehold.co/346x220/png" alt="imagem da empresa">
+                <img src="../assets/images/imagem_placeholder346x220.png" alt="imagem da empresa">
                 <div class="infos-empresa">
                     <p>Empresa: ${s.nome_empresa}</p>
                     <p>E-mail da empresa: ${s.email_empresa}</p>
