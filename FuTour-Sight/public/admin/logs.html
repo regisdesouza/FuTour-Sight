@@ -22,6 +22,7 @@
         seta.classList.toggle('rotacionado');
     }
 </script>
+
 <body>
     <header>
         <a href="../index.html" class="logo">
@@ -54,19 +55,19 @@
     </header>
 
     <ma<section class="painel-configuracoes" id="painel-configuracoes">
-    <h2>Configurações de Notificação</h2>
-    <div class="config-menu">
-        <div class="config-menu-item">
-            <button class="config-menu-btn" onclick="toggleConfig(this)">
-                <span>Notificações</span>
-                <i class="config-seta">▾</i>
-            </button>
-            <div class="config-menu-conteudo">
-                <div id="lista-configuracoes"></div>
+        <h2>Configurações de Notificação</h2>
+        <div class="config-menu">
+            <div class="config-menu-item">
+                <button class="config-menu-btn" onclick="toggleConfig(this)">
+                    <span>Notificações</span>
+                    <i class="config-seta">▾</i>
+                </button>
+                <div class="config-menu-conteudo">
+                    <div id="lista-configuracoes"></div>
+                </div>
             </div>
         </div>
-    </div>
-</section>
+        </section>
 
         <div>
             <div class="logs-header">
@@ -90,37 +91,51 @@
                 <ul class="logs" id="lista-logs"></ul>
             </div>
         </div>
-    </main>
+        </main>
 
-    <div id="toast"></div>
+        <div id="toast"></div>
 
-    <script src="../assets/js/utils/utils.js"></script>
-    <script src="../assets/js/pages/admin/logs.js"></script>
-    <script src="../assets/js/utils/redirecionamento.js"></script>
+        <script src="../assets/js/utils/utils.js"></script>
+        <script src="../assets/js/pages/admin/logs.js"></script>
+        <script src="../assets/js/utils/redirecionamento.js"></script>
 
-    <script>
-        let todosOsLogs = [];
+        <script>
+            const paginaAtual = window.location.pathname.split("/").pop();
 
-        function filtrarLogs(tipo, btn) {
-            document.querySelectorAll('.filtro-btn').forEach(b => b.classList.remove('ativo'));
-            btn.classList.add('ativo');
+            document.querySelectorAll(".links nav ul li a").forEach(link => {
+                const href = link.getAttribute("href");
 
-            const filtrados = tipo === 'todos'
-                ? todosOsLogs
-                : todosOsLogs.filter(l => (tipo === 'sucesso' ? l.sucesso : !l.sucesso));
+                if (!href) return;
 
-            renderizarLogs(filtrados);
-        }
+                const arquivoLink = href.split("/").pop();
 
-        function renderizarLogs(logs) {
-            const lista = document.getElementById('lista-logs');
+                if (arquivoLink === paginaAtual) {
+                    link.parentElement.classList.add("isAtivo");
+                }
+            });
 
-            if (!logs.length) {
-                lista.innerHTML = '<li class="sem-logs">Nenhum log encontrado.</li>';
-                return;
+            let todosOsLogs = [];
+
+            function filtrarLogs(tipo, btn) {
+                document.querySelectorAll('.filtro-btn').forEach(b => b.classList.remove('ativo'));
+                btn.classList.add('ativo');
+
+                const filtrados = tipo === 'todos'
+                    ? todosOsLogs
+                    : todosOsLogs.filter(l => (tipo === 'sucesso' ? l.sucesso : !l.sucesso));
+
+                renderizarLogs(filtrados);
             }
 
-            lista.innerHTML = logs.map(log => `
+            function renderizarLogs(logs) {
+                const lista = document.getElementById('lista-logs');
+
+                if (!logs.length) {
+                    lista.innerHTML = '<li class="sem-logs">Nenhum log encontrado.</li>';
+                    return;
+                }
+
+                lista.innerHTML = logs.map(log => `
                 <li class="log">
                     <p class="data-hora">${new Date(log.data_criacao).toLocaleString('pt-BR')}</p>
                     <p class="mensagem">${log.mensagem || '—'}</p>
@@ -131,20 +146,21 @@
                     </div>
                 </li>
             `).join('');
-        }
-
-        async function carregarLogs() {
-            try {
-                const res = await fetch('/adminFutour/logs');
-                todosOsLogs = await res.json();
-                document.getElementById('badge-total').textContent = todosOsLogs.length;
-                renderizarLogs(todosOsLogs);
-            } catch (e) {
-                console.error(e);
             }
-        }
 
-        document.addEventListener('DOMContentLoaded', carregarLogs);
-    </script>
+            async function carregarLogs() {
+                try {
+                    const res = await fetch('/adminFutour/logs');
+                    todosOsLogs = await res.json();
+                    document.getElementById('badge-total').textContent = todosOsLogs.length;
+                    renderizarLogs(todosOsLogs);
+                } catch (e) {
+                    console.error(e);
+                }
+            }
+
+            document.addEventListener('DOMContentLoaded', carregarLogs);
+        </script>
 </body>
+
 </html>
