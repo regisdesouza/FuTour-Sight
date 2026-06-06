@@ -2,4 +2,4 @@
 
 DIR_BASE="/opt/futour-sight"
 
-sudo nano "$DIR_BASE/.env"
+nano "$DIR_BASE/.env"
