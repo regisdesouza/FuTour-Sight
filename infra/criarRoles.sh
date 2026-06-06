@@ -4,6 +4,13 @@ set -e
 
 echo "Criando grupos..."
 
+if getent group futour > /dev/null 2>&1; then
+    echo "Grupo futour já existe."
+else
+    echo "Criando grupo futour..."
+    sudo groupadd futour
+fi
+
 if getent group infra > /dev/null 2>&1; then
     echo "Grupo infra já existe."
 else
@@ -26,7 +33,13 @@ do
         echo "Usuário $usuario já existe."
     else
         echo "Criando usuário $usuario..."
-        sudo adduser "$usuario"
+        sudo adduser --gecos "$usuario"
+    fi
+
+    if ! id -nG "$usuario" | grep -qw futour; then
+        sudo usermod -aG futour "$usuario"
+    else
+        echo "$usuario já pertence ao grupo futour."
     fi
 done
 
