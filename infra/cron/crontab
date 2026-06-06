@@ -1,0 +1,1 @@
+0 0 1 * * /opt/futour-sight/repo/infra/run_etl.sh

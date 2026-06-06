@@ -3,7 +3,7 @@
 set -e
 
 echo "Atualizando pacotes..."
-sudo apt update && sudo apt upgrade -y
+sudo apt update
 
 echo "Verificando Docker..."
 if ! command -v docker >/dev/null 2>&1; then
@@ -38,7 +38,7 @@ fi
 sudo mkdir -p "$DIR_BASE"
 
 echo "Copiando repositório..."
-sudo rsync -a --exclude='node_modules/' --delete "$HOME/FuTour-Sight/." "$DIR_REPO"
+sudo rsync -a --exclude='node_modules/' --delete "/home/ubuntu/FuTour-Sight/." "$DIR_REPO"
 
 echo "Copiando Docker Compose..."
 sudo cp "$DIR_REPO/infra/dockers/docker-compose.yml" "$DIR_BASE/docker-compose.yml"
@@ -56,19 +56,26 @@ default-character-set=utf8mb4
 default-character-set=utf8mb4
 MYSQLCNF
 
+sudo "$DIR_REPO/infra/criarRoles.sh"
+
 if [[ "$MANTERENV" != "S" && "$MANTERENV" != "s" ]]; then
     echo "Copiando .env..."
     sudo cp "$DIR_REPO/infra/env/.env.exemplo" "$DIR_BASE/.env"
+    sudo chown root:infra "$DIR_BASE/.env"
+    sudo chmod 660 "$DIR_BASE/.env"
+    
     echo "Arquivo .env criado em: $DIR_BASE/.env"
 
     read -p "Gostaria de preencher o .env agora? (S/N): " RESPOSTA
 
     if [[ "$RESPOSTA" == "S" || "$RESPOSTA" == "s" ]]; then
-        "$DIR_REPO/infra/editarEnv.sh"
+        sudo "$DIR_REPO/infra/editarEnv.sh"
     else
         echo "Para preencher o .env, execute o script:"
         echo "$DIR_REPO/infra/editarEnv.sh"
     fi
 fi
+
+sudo "$DIR_REPO/infra/configurarPermissoes.sh"
 
 echo "Setup concluído!"
