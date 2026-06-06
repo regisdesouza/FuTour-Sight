@@ -68,27 +68,27 @@ function preCadastrar(nome, emailPessoal, empresa, emailCorporativo, cnpj, telef
 // POST — autenticar
 // ============================================================
 
-function autenticar(email, senha) {
+function autenticar(email) {
     const instrucaoSql = `
         SELECT
             vu.id_usuario,
             vu.nome,
             vu.email,
             vu.nivel_permissao,
-            vu.id_empresa   AS empresa,
+            vu.id_empresa AS empresa,
             vu.primeiro_acesso,
-            vu.status       AS status_usuario,
-            e.nome          AS nome_empresa,
-            s.nome          AS status_empresa
+            vu.status AS status_usuario,
+            u.senha,
+            e.nome AS nome_empresa,
+            s.nome AS status_empresa
         FROM vw_usuarios vu
         INNER JOIN usuario u ON u.id_usuario = vu.id_usuario
-        LEFT  JOIN empresa e ON e.id_empresa = vu.id_empresa
-        LEFT  JOIN status  s ON s.id_status  = e.fk_status
-        WHERE vu.email  = ?
-          AND u.senha   = ?;
+        LEFT JOIN empresa e ON e.id_empresa = vu.id_empresa
+        LEFT JOIN status s ON s.id_status = e.fk_status
+        WHERE vu.email = ?;
     `;
 
-    return database.executar(instrucaoSql, [email, senha]);
+    return database.executar(instrucaoSql, [email]);
 }
 
 // ============================================================

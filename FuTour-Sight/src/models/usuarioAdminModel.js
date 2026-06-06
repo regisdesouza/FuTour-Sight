@@ -229,6 +229,22 @@ function editarStatusUsuario(idUsuario, status) {
     return database.executar(instrucaoSql, [status, idUsuario]);
 }
 
+// ============================================================
+// POST — criarFiltrosPadrao
+// ============================================================
+
+function criarFiltrosPadrao(idUsuario) {
+    const instrucaoSql = `
+        INSERT INTO filtro_personalizado (nome, ano_inicio, ano_fim, estado, continente, fk_usuario)
+        VALUES
+            ('América do Sul em SP',  2020, 2023, 'São Paulo',         'América do Sul', ?),
+            ('América do Sul no RS',  2020, 2023, 'Rio Grande do Sul', 'América do Sul', ?),
+            ('Europa em SP',          2020, 2023, 'São Paulo',         'Europa',         ?);
+    `;
+
+    return database.executar(instrucaoSql, [idUsuario, idUsuario, idUsuario]);
+}
+
 module.exports = {
     buscarFuncionarioPorEmail,
     cadastrarFuncionario,
@@ -238,5 +254,6 @@ module.exports = {
     buscarEmpresa,
     editarFuncionario,
     editarEmpresa,
+    criarFiltrosPadrao,
     editarStatusUsuario
 };

@@ -510,25 +510,14 @@ SELECT
 FROM chegadas_turistas ct
 WHERE ct.uf != 'Outras Unidades da Federação';
 
-INSERT INTO filtro_personalizado (nome, ano_inicio, ano_fim, estado, continente, fk_usuario)
-VALUES
-('Estados Unidos RJ', 2023, 2024, 'Rio de Janeiro', 'América do Norte', 6),
-('América do Sul Sul', 2023, 2024, 'Rio Grande do Sul', 'América do Sul', 6),
-('Turistas Europa Sudeste', 2023, 2024, 'São Paulo', 'Europa', 6),
-('Europa em SP 2022-2023', 2022, 2023, 'São Paulo', 'Europa', 6),
-('América do Sul no RS 2022-2023', 2022, 2023, 'Rio Grande do Sul', 'América do Sul', 6),
-('América do Norte no RJ 2022-2023', 2022, 2023, 'Rio de Janeiro', 'América do Norte', 6),
-('América do Sul no PR 2022-2023', 2022, 2023, 'Paraná', 'América do Sul', 6),
-('Europa no RJ 2022-2023', 2022, 2023, 'Rio de Janeiro', 'Europa', 6);
+ INSERT INTO filtro_personalizado (nome, ano_inicio, ano_fim, estado, continente, fk_usuario)
+        VALUES
+            ('América do Sul em SP',  2020, 2023, 'São Paulo',         'América do Sul', 6),
+            ('América do Sul no RS',  2020, 2023, 'Rio Grande do Sul', 'América do Sul', 6),
+            ('Europa em SP',          2020, 2023, 'São Paulo',         'Europa',         6);
 
-INSERT INTO filtro_personalizado (nome, ano_inicio, ano_fim, estado, continente, fk_usuario)
-VALUES
-('Turismo Europeu em SP', 2023, 2024, 'São Paulo', 'Europa', 7),
-('Vizinhos do Sul no RS', 2023, 2024, 'Rio Grande do Sul', 'América do Sul', 7),
-('EUA e Canadá no RJ', 2023, 2024, 'Rio de Janeiro', 'América do Norte', 7),
-('Europa em SP 2022-2023', 2022, 2023, 'São Paulo', 'Europa', 7),
-('América do Sul no RS 2022-2023', 2022, 2023, 'Rio Grande do Sul', 'América do Sul', 7),
-('América do Norte no RJ 2022-2023', 2022, 2023, 'Rio de Janeiro', 'América do Norte', 7),
-('América do Sul no PR 2022-2023', 2022, 2023, 'Paraná', 'América do Sul', 7),
-('Europa no RJ 2022-2023', 2022, 2023, 'Rio de Janeiro', 'Europa', 7);
-
+ INSERT INTO filtro_personalizado (nome, ano_inicio, ano_fim, estado, continente, fk_usuario)
+        VALUES
+            ('América do Sul em SP',  2020, 2023, 'São Paulo',         'América do Sul', 7),
+            ('América do Sul no RS',  2020, 2023, 'Rio Grande do Sul', 'América do Sul', 7),
+            ('Europa em SP',          2020, 2023, 'São Paulo',         'Europa',         7);

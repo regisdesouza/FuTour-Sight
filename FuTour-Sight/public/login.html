@@ -122,6 +122,21 @@
 
     <div id="toast"></div>
 
+    <script>
+        const paginaAtual = window.location.pathname.split("/").pop();
+
+        document.querySelectorAll(".links nav ul li a, .links .botoes-autenticacao a").forEach(link => {
+            const href = link.getAttribute("href");
+            if (!href) return;
+
+            const arquivoLink = href.split("/").pop();
+            if (arquivoLink === paginaAtual) {
+                link.classList.add("isAtivo"); // agora é no <a>
+            }
+        });
+
+    </script>
+
     <script src="./assets/js/shared/menu.js"></script>
     <script src="./assets/js/utils/validacoes.js"></script>
     <script src="./assets/js/shared/sessao.js"></script>
