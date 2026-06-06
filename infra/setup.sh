@@ -38,7 +38,7 @@ fi
 sudo mkdir -p "$DIR_BASE"
 
 echo "Copiando repositório..."
-sudo rsync -a --exclude='node_modules/' --delete "$HOME/FuTour-Sight/." "$DIR_REPO"
+sudo rsync -a --exclude='node_modules/' --delete "/home/ubuntu/FuTour-Sight/." "$DIR_REPO"
 
 echo "Copiando Docker Compose..."
 sudo cp "$DIR_REPO/infra/dockers/docker-compose.yml" "$DIR_BASE/docker-compose.yml"
