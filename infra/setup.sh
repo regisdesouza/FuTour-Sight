@@ -56,7 +56,7 @@ default-character-set=utf8mb4
 default-character-set=utf8mb4
 MYSQLCNF
 
-"$DIR_REPO/infra/criarRoles.sh"
+sudo "$DIR_REPO/infra/criarRoles.sh"
 
 if [[ "$MANTERENV" != "S" && "$MANTERENV" != "s" ]]; then
     echo "Copiando .env..."
@@ -76,6 +76,6 @@ if [[ "$MANTERENV" != "S" && "$MANTERENV" != "s" ]]; then
     fi
 fi
 
-"$DIR_REPO/infra/configurarPermissoes.sh"
+sudo "$DIR_REPO/infra/configurarPermissoes.sh"
 
 echo "Setup concluído!"
