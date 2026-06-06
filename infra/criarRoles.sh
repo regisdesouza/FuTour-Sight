@@ -33,7 +33,7 @@ do
         echo "Usuário $usuario já existe."
     else
         echo "Criando usuário $usuario..."
-        sudo adduser --gecos "$usuario"
+        sudo adduser --gecos "" "$usuario"
     fi
 
     if ! id -nG "$usuario" | grep -qw futour; then
