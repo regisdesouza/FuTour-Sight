@@ -3,7 +3,7 @@
 set -e
 
 echo "Atualizando pacotes..."
-sudo apt update && sudo apt upgrade -y
+sudo apt update
 
 echo "Verificando Docker..."
 if ! command -v docker >/dev/null 2>&1; then
