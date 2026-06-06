@@ -52,8 +52,11 @@ async function aprovarSolicitacao(req, res) {
             dados.telefone_empresa
         );
 
-       await adminFutourModel.criarEndereco(idEmpresa);
+        
+        const idEmpresa = resultadoEmpresa.insertId;
 
+       await adminFutourModel.criarEndereco(idEmpresa);
+        
         const resultadoUsuario = await adminFutourModel.criarUsuario( 
             dados.nome_responsavel,
             dados.email_responsavel,
@@ -61,6 +64,7 @@ async function aprovarSolicitacao(req, res) {
             idEmpresa
         );
 
+        
         await adminFutourModel.criarFiltrosPadrao(resultadoUsuario.insertId); 
 
         await adminFutourModel.aprovarSolicitacao(idSolicitacao);
@@ -377,7 +381,6 @@ module.exports = {
     aprovarSolicitacao,
     cancelarSolicitacao,
     listarSolicitacoes,
-    criarFiltrosPadrao,
     buscarLogs,
     listarConfiguracoes,
     listarEmpresas,
