@@ -78,4 +78,6 @@ fi
 
 sudo "$DIR_REPO/infra/configurarPermissoes.sh"
 
+sudo "$DIR_REPO/infra/configurarCron.sh"
+
 echo "Setup concluído!"
