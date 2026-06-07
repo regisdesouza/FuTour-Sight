@@ -52,16 +52,20 @@ async function aprovarSolicitacao(req, res) {
             dados.telefone_empresa
         );
 
+        
         const idEmpresa = resultadoEmpresa.insertId;
 
-        await adminFutourModel.criarEndereco(idEmpresa);
-
-        await adminFutourModel.criarUsuario(
+       await adminFutourModel.criarEndereco(idEmpresa);
+        
+        const resultadoUsuario = await adminFutourModel.criarUsuario( 
             dados.nome_responsavel,
             dados.email_responsavel,
             senhaTemp,
             idEmpresa
         );
+
+        
+        await adminFutourModel.criarFiltrosPadrao(resultadoUsuario.insertId); 
 
         await adminFutourModel.aprovarSolicitacao(idSolicitacao);
 
