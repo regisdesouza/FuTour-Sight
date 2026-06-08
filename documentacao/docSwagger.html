@@ -1,0 +1,1604 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>FuTour Sight – API Documentation</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet" />
+    <link rel="shortcut icon" href="../FuTour-Sight/public/assets/images/logo-futour-sight-branco.png" type="image/x-icon">
+
+<style>
+/* ── VARIÁVEIS DO PROJETO ORIGINAL ─────────────────────── */
+:root {
+    --cor-primaria: #1C4AA6;
+    --cor-secundaria: #245CA6;
+    --cor-terciaria: #03658C;
+    --cor-complementar: #7D8C0D;
+    --cor-complementar-escura: #69750B;
+    --cor-contraste: #BF7C2A;
+    --cor-clara: #eee;
+    --cor-cinza-claro: #ddd;
+    --cor-cinza: #ccc;
+    --cor-cinza-escuro: #999;
+    --cor-escura: #222;
+
+    --texto-gigante: 4rem;
+    --texto-grande-plus: 2.5rem;
+    --texto-grande: 2rem;
+    --texto-medio: 1.5rem;
+    --texto-pequeno: 1rem;
+
+    --fonte: 'Inter', sans-serif;
+
+    --regular: 400;
+    --medium: 500;
+    --semi-bold: 600;
+    --bold: 700;
+    --extra-bold: 800;
+
+    --transition: .15s ease-in-out;
+}
+
+/* ── RESET ──────────────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body { background-color: #f0f2f5; font-family: var(--fonte); overflow-x: hidden; }
+a { color: var(--cor-clara); text-decoration: none; }
+ul { list-style: none; }
+
+/* ── HEADER (padrão do projeto) ─────────────────────────── */
+header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin: 32px 128px 16px 128px;
+    padding: 8px 32px;
+    border-radius: 32px;
+    font-size: var(--texto-medio);
+    font-weight: var(--regular);
+    background-color: var(--cor-secundaria);
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-weight: var(--extra-bold);
+    color: var(--cor-clara);
+}
+
+.logo-img {
+    width: 64px;
+    height: 64px;
+    object-fit: contain;
+    flex-shrink: 0;
+}
+
+.links nav ul {
+    display: flex;
+    gap: 32px;
+}
+
+.links nav ul li a {
+    display: inline-block;
+    transition: var(--transition);
+    color: var(--cor-clara);
+    font-size: var(--texto-pequeno);
+    font-weight: var(--semi-bold);
+}
+
+.links nav ul li a:hover { transform: scale(1.2); }
+
+.badge-versao {
+    padding: 6px 20px;
+    border-radius: 32px;
+    background-color: var(--cor-complementar);
+    color: var(--cor-clara);
+    font-size: var(--texto-pequeno);
+    font-weight: var(--semi-bold);
+    white-space: nowrap;
+}
+
+/* ── HERO / BANNER DO PROJETO ───────────────────────────── */
+.hero-api {
+    background: linear-gradient(to right, var(--cor-primaria), var(--cor-terciaria));
+    margin: 0 128px 0 128px;
+    border-radius: 0 0 24px 24px;
+    padding: 48px 64px;
+    color: var(--cor-clara);
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    gap: 48px;
+}
+
+.hero-api .hero-info h1 {
+    font-size: 3rem;
+    font-weight: var(--extra-bold);
+    margin-bottom: 8px;
+    color: var(--cor-clara);
+}
+
+.hero-api .hero-info h1 span { color: var(--cor-contraste); }
+
+.hero-api .hero-info p {
+    color: var(--cor-cinza);
+    font-size: var(--texto-medio);
+    line-height: 150%;
+    max-width: 600px;
+}
+
+/* ── CONTADORES DE MÉTODOS ──────────────────────────────── */
+.metricas-api {
+    margin: 24px 128px;
+    display: flex;
+    gap: 16px;
+    flex-wrap: wrap;
+}
+
+.metrica-card {
+    background-color: #fff;
+    border-radius: 12px;
+    padding: 20px 28px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.08);
+    flex: 1;
+    min-width: 120px;
+    border-top: 3px solid transparent;
+}
+
+.metrica-card.total  { border-color: var(--cor-primaria); }
+.metrica-card.get    { border-color: #027a48; }
+.metrica-card.post   { border-color: var(--cor-primaria); }
+.metrica-card.put    { border-color: #b54708; }
+.metrica-card.delete { border-color: #c01048; }
+
+.metrica-card .metrica-numero {
+    font-size: 2.2rem;
+    font-weight: var(--extra-bold);
+    color: var(--cor-escura);
+}
+
+.metrica-card .metrica-label {
+    font-size: 12px;
+    font-weight: var(--semi-bold);
+    color: var(--cor-cinza-escuro);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.metrica-card.total .metrica-numero  { color: var(--cor-primaria); }
+.metrica-card.get   .metrica-numero  { color: #027a48; }
+.metrica-card.post  .metrica-numero  { color: var(--cor-primaria); }
+.metrica-card.put   .metrica-numero  { color: #b54708; }
+.metrica-card.delete .metrica-numero { color: #c01048; }
+
+/* ── BASE URLS ──────────────────────────────────────────── */
+.base-urls {
+    margin: 0 128px 24px 128px;
+    background-color: #fff;
+    border-radius: 12px;
+    padding: 24px 32px;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.08);
+}
+
+.base-urls h2 {
+    font-size: var(--texto-medio);
+    font-weight: var(--semi-bold);
+    color: var(--cor-escura);
+    margin-bottom: 16px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.base-urls-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 12px;
+}
+
+.url-item {
+    background-color: #f9fafb;
+    border: 1px solid #e4e7ec;
+    border-radius: 10px;
+    padding: 14px 18px;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.url-item .url-varname {
+    font-size: 12px;
+    font-weight: var(--semi-bold);
+    color: var(--cor-cinza-escuro);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.url-item .url-descricao {
+    font-size: 12px;
+    font-weight: var(--regular);
+    color: var(--cor-cinza-escuro);
+    margin-bottom: 2px;
+}
+
+.url-item .url-valor {
+    font-size: var(--texto-pequeno);
+    font-weight: var(--semi-bold);
+    color: var(--cor-primaria);
+    font-family: 'Courier New', monospace;
+    word-break: break-all;
+}
+
+/* ── LAYOUT PRINCIPAL ───────────────────────────────────── */
+.layout-principal {
+    display: flex;
+    gap: 24px;
+    margin: 0 128px 48px 128px;
+    align-items: flex-start;
+}
+
+/* ── SIDEBAR ────────────────────────────────────────────── */
+.sidebar {
+    width: 220px;
+    flex-shrink: 0;
+    position: sticky;
+    top: 24px;
+}
+
+.sidebar-painel {
+    background-color: #fff;
+    border-radius: 12px;
+    padding: 16px 0;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.08);
+}
+
+.sidebar-titulo {
+    font-size: 12px;
+    font-weight: var(--semi-bold);
+    color: var(--cor-cinza-escuro);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    padding: 8px 16px 4px;
+}
+
+.sidebar-link {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 16px;
+    font-size: var(--texto-pequeno);
+    color: var(--cor-escura);
+    cursor: pointer;
+    transition: background-color var(--transition), color var(--transition);
+    font-weight: var(--regular);
+    border: none;
+    background: none;
+    width: 100%;
+    text-align: left;
+}
+
+.sidebar-link:hover { background-color: #f0f2f5; color: var(--cor-primaria); }
+.sidebar-link.ativo { background-color: #e8f0ff; color: var(--cor-primaria); font-weight: var(--semi-bold); }
+
+.sidebar-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    flex-shrink: 0;
+}
+
+/* ── CONTEÚDO PRINCIPAL ─────────────────────────────────── */
+.conteudo-principal { flex: 1; min-width: 0; }
+
+/* ── GRUPO DE ENDPOINTS (padrão tabela do projeto) ───────── */
+.grupo-card {
+    background-color: #fff;
+    border-radius: 12px;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.08);
+    margin-bottom: 24px;
+    overflow: hidden;
+}
+
+.grupo-header {
+    background: linear-gradient(to right, var(--cor-primaria), var(--cor-terciaria));
+    padding: 14px 24px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.grupo-header h2 {
+    color: var(--cor-clara);
+    font-size: var(--texto-medio);
+    font-weight: var(--semi-bold);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.grupo-total {
+    background-color: rgba(255,255,255,0.2);
+    color: var(--cor-clara);
+    font-size: 12px;
+    font-weight: var(--semi-bold);
+    padding: 3px 12px;
+    border-radius: 20px;
+}
+
+/* ── TABELA HEADER (idêntico ao projeto) ─────────────────── */
+.tabela-header {
+    display: grid;
+    grid-template-columns: 70px 1fr 180px 90px;
+    padding: 10px 24px;
+    background-color: #f9fafb;
+    border-bottom: 1px solid #e4e7ec;
+}
+
+.tabela-header span {
+    font-size: 12px;
+    font-weight: var(--semi-bold);
+    color: #667085;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+/* ── ENDPOINT ROW ───────────────────────────────────────── */
+.endpoint {
+    border-bottom: 1px solid #f2f4f7;
+}
+.endpoint:last-child { border-bottom: none; }
+
+.endpoint-linha {
+    display: grid;
+    grid-template-columns: 70px 1fr 180px 90px;
+    padding: 12px 24px;
+    align-items: center;
+    cursor: pointer;
+    transition: background-color var(--transition);
+}
+
+.endpoint-linha:hover { background-color: #f9fafb; }
+
+/* ── BADGES DE MÉTODO (estilo do projeto) ────────────────── */
+.badge-metodo {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 3px 8px;
+    border-radius: 6px;
+    font-size: 11px;
+    font-weight: var(--semi-bold);
+    font-family: 'Courier New', monospace;
+    width: 58px;
+    text-align: center;
+}
+
+.badge-metodo.GET    { background-color: #ecfdf3; color: #027a48; border: 1px solid #aaddc0; }
+.badge-metodo.POST   { background-color: #eff4ff; color: var(--cor-primaria); border: 1px solid #b2ccff; }
+.badge-metodo.PUT    { background-color: #fffaeb; color: #b54708; border: 1px solid #f0d48a; }
+.badge-metodo.DELETE { background-color: #fff1f3; color: #c01048; border: 1px solid #f0b0b8; }
+.badge-metodo.PATCH  { background-color: #f9f5ff; color: #6941c6; border: 1px solid #d6bbfb; }
+
+.endpoint-path {
+    font-family: 'Courier New', monospace;
+    font-size: 13px;
+    color: var(--cor-escura);
+    font-weight: var(--medium);
+    padding-right: 12px;
+}
+
+.endpoint-path .param { color: var(--cor-primaria); }
+
+.endpoint-nome {
+    font-size: var(--texto-pequeno);
+    color: #667085;
+    font-weight: var(--regular);
+}
+
+.chevron {
+    font-size: 11px;
+    color: var(--cor-cinza-escuro);
+    transition: transform .2s;
+    text-align: right;
+}
+
+.endpoint.aberto .chevron { transform: rotate(180deg); }
+
+/* ── CORPO DO ENDPOINT ──────────────────────────────────── */
+.endpoint-corpo {
+    display: none;
+    padding: 0 24px 20px 24px;
+    background-color: #f9fafb;
+    border-top: 1px solid #e4e7ec;
+}
+.endpoint.aberto .endpoint-corpo { display: block; }
+
+.secao-detalhe { margin-top: 16px; }
+
+.secao-detalhe h4 {
+    font-size: 12px;
+    font-weight: var(--semi-bold);
+    color: #667085;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-bottom: 8px;
+}
+
+/* ── TABELA DE PARÂMETROS (idêntico às tabelas do projeto) ── */
+.tabela-params {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: var(--texto-pequeno);
+    background-color: #fff;
+    border-radius: 10px;
+    overflow: hidden;
+    border: 1px solid #e4e7ec;
+}
+
+.tabela-params thead {
+    background-color: var(--cor-primaria);
+    color: var(--cor-clara);
+}
+
+.tabela-params thead th {
+    padding: 8px 16px;
+    text-align: left;
+    font-size: 12px;
+    font-weight: var(--semi-bold);
+}
+
+.tabela-params tbody td {
+    padding: 10px 16px;
+    border-bottom: 1px solid #f2f4f7;
+    color: #344054;
+    font-size: var(--texto-pequeno);
+    vertical-align: top;
+}
+
+.tabela-params tbody tr:last-child td { border-bottom: none; }
+.tabela-params tbody tr:hover td { background-color: #f9fafb; }
+
+.nome-param {
+    font-family: 'Courier New', monospace;
+    color: var(--cor-primaria);
+    font-weight: var(--semi-bold);
+    font-size: 13px;
+}
+
+.tipo-param {
+    font-family: 'Courier New', monospace;
+    color: var(--cor-cinza-escuro);
+    font-size: 12px;
+}
+
+/* ── BADGE OBRIGATÓRIO / OPCIONAL ────────────────────────── */
+.badge-obrigatorio {
+    background-color: #fff1f3;
+    color: #c01048;
+    font-size: 11px;
+    font-weight: var(--semi-bold);
+    padding: 2px 8px;
+    border-radius: 20px;
+}
+
+.badge-opcional {
+    background-color: #f2f4f7;
+    color: #667085;
+    font-size: 11px;
+    padding: 2px 8px;
+    border-radius: 20px;
+}
+
+/* ── CÓDIGO JSON (tema escuro, igual aos devtools do projeto) */
+.bloco-codigo {
+    background-color: #1a2332;
+    color: #c8d8f0;
+    border-radius: 10px;
+    padding: 16px 18px;
+    font-family: 'Courier New', monospace;
+    font-size: 13px;
+    line-height: 1.8;
+    overflow-x: auto;
+    white-space: pre;
+    border: 1px solid #2d3f5a;
+}
+
+.bloco-codigo .chave   { color: #7ec8e3; }
+.bloco-codigo .string  { color: #a8d672; }
+.bloco-codigo .numero  { color: #f0b86e; }
+.bloco-codigo .booleano { color: #e07070; }
+
+/* ── STATUS CODES (badge-status do projeto) ──────────────── */
+.status-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.badge-status {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 5px 14px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: var(--semi-bold);
+}
+
+.badge-status::before {
+    content: "";
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background-color: currentColor;
+    flex-shrink: 0;
+}
+
+.badge-status.s2xx { background-color: #ecfdf3; color: #027a48; }
+.badge-status.s3xx { background-color: #eff4ff; color: #1c4aa6; }
+.badge-status.s4xx { background-color: #fffaeb; color: #b54708; }
+.badge-status.s4xx-r { background-color: #fff1f3; color: #c01048; }
+.badge-status.s5xx { background-color: #fff1f3; color: #c01048; }
+
+.status-desc {
+    font-weight: var(--regular);
+    color: #344054;
+}
+
+/* ── FOOTER (padrão do projeto) ─────────────────────────── */
+.footer {
+    background: linear-gradient(to right, var(--cor-primaria), var(--cor-terciaria));
+    padding: 32px 0;
+    margin-top: 48px;
+}
+
+.footer-abaixo {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: var(--cor-clara);
+    margin: 0 128px;
+}
+
+.footer-abaixo p { font-size: var(--texto-pequeno); opacity: .8; }
+
+.redes-sociais {
+    display: flex;
+    align-items: center;
+    gap: 24px;
+}
+
+.redes-sociais li {
+    transition: var(--transition);
+    color: var(--cor-clara);
+    font-size: var(--texto-pequeno);
+    font-weight: var(--semi-bold);
+    opacity: .8;
+}
+
+.redes-sociais li:hover { transform: scale(1.2); opacity: 1; }
+
+/* ── RESPONSIVO ─────────────────────────────────────────── */
+@media (max-width: 900px) {
+    header, .hero-api, .metricas-api, .base-urls, .layout-principal, .footer-abaixo {
+        margin-left: 16px;
+        margin-right: 16px;
+    }
+    .sidebar { display: none; }
+    .tabela-header, .endpoint-linha { grid-template-columns: 70px 1fr 90px; }
+    .endpoint-nome { display: none; }
+    .hero-api { flex-direction: column; gap: 24px; padding: 32px 24px; }
+}
+
+@media (max-width: 592px) {
+    header { margin: 16px; padding: 8px 16px; font-size: var(--texto-pequeno); }
+    .tabela-header, .endpoint-linha { grid-template-columns: 60px 1fr 40px; }
+    .endpoint-nome { display: none; }
+}
+</style>
+</head>
+<body>
+
+<!-- HEADER (padrão do projeto) -->
+<header>
+  <div class="logo">
+    <img src="../FuTour-Sight/public/assets/images/logo-futour-sight-branco.png" alt="FuTour Sight" class="logo-img" />
+    <span>FuTour Sight</span>
+  </div>
+  <span class="badge-versao">API v1.0</span>
+</header>
+
+<!-- HERO -->
+<div class="hero-api">
+  <div class="hero-info">
+    <h1>API <span>Reference</span></h1>
+    <p>Documentação completa de todos os endpoints da plataforma FuTour Sight — análise de dados e previsão de demanda turística.</p>
+  </div>
+  <div style="display:flex;flex-direction:column;gap:8px;text-align:right;">
+    <span style="color:var(--cor-cinza);font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:.05em;">Formato</span>
+    <span style="color:var(--cor-clara);font-size:var(--texto-medio);font-weight:var(--semi-bold);">REST · JSON · HTTP/1.1</span>
+  </div>
+</div>
+
+<!-- MÉTRICAS -->
+<div class="metricas-api">
+  <div class="metrica-card total">
+    <span class="metrica-numero">33</span>
+    <span class="metrica-label">Total de Rotas</span>
+  </div>
+  <div class="metrica-card get">
+    <span class="metrica-numero">18</span>
+    <span class="metrica-label">GET</span>
+  </div>
+  <div class="metrica-card post">
+    <span class="metrica-numero">7</span>
+    <span class="metrica-label">POST</span>
+  </div>
+  <div class="metrica-card put">
+    <span class="metrica-numero">7</span>
+    <span class="metrica-label">PUT</span>
+  </div>
+  <div class="metrica-card delete">
+    <span class="metrica-numero">1</span>
+    <span class="metrica-label">DELETE</span>
+  </div>
+</div>
+
+<!-- BASE URLS -->
+<div class="base-urls">
+  <h2>⚙️ Variáveis de Ambiente</h2>
+  <div class="base-urls-grid">
+    <div class="url-item">
+      <span class="url-varname">BASE_URL_USUARIO</span>
+      <span class="url-descricao">Serviço de usuários — autenticação, filtros, contato e pré-cadastro de empresas</span>
+      <span class="url-valor">http://localhost:3333/usuarios</span>
+    </div>
+    <div class="url-item">
+      <span class="url-varname">BASE_URL_ADMIN_FUTOUR</span>
+      <span class="url-descricao">Painel administrativo da plataforma FuTour — solicitações, empresas, logs e notificações</span>
+      <span class="url-valor">http://localhost:3333/adminFutour</span>
+    </div>
+    <div class="url-item">
+      <span class="url-varname">BASE_URL_ADMIN_USUARIO</span>
+      <span class="url-descricao">Administração de usuários por empresa — funcionários, permissões e dados corporativos</span>
+      <span class="url-valor">http://localhost:3333/usuariosAdmin</span>
+    </div>
+    <div class="url-item">
+      <span class="url-varname">BASE_URL_DASHBOARD</span>
+      <span class="url-descricao">Serviço de dados do dashboard — previsão e análise turística por filtro</span>
+      <span class="url-valor">http://localhost:3333/dashboard</span>
+    </div>
+  </div>
+</div>
+
+<!-- LAYOUT -->
+<div class="layout-principal">
+
+  <!-- SIDEBAR -->
+  <aside class="sidebar">
+    <div class="sidebar-painel">
+      <div class="sidebar-titulo">Módulos</div>
+      <button class="sidebar-link" onclick="irPara('admin-futour')"><span class="sidebar-dot" style="background:#c01048"></span> Admin FuTour</button>
+      <button class="sidebar-link" onclick="irPara('admin-usuario')"><span class="sidebar-dot" style="background:#b54708"></span> Admin Usuário</button>
+      <button class="sidebar-link" onclick="irPara('usuario')"><span class="sidebar-dot" style="background:#027a48"></span> Usuário</button>
+      <button class="sidebar-link" onclick="irPara('dashboard')"><span class="sidebar-dot" style="background:var(--cor-primaria)"></span> Dashboard</button>
+      <div class="sidebar-titulo" style="margin-top:8px">Métodos</div>
+      <button class="sidebar-link"><span class="badge-metodo GET">GET</span> Leitura</button>
+      <button class="sidebar-link"><span class="badge-metodo POST">POST</span> Criação</button>
+      <button class="sidebar-link"><span class="badge-metodo PUT">PUT</span> Atualização</button>
+      <button class="sidebar-link"><span class="badge-metodo DELETE">DELETE</span> Exclusão</button>
+    </div>
+  </aside>
+
+  <!-- CONTEÚDO -->
+  <div class="conteudo-principal">
+
+    <!-- ═══════════════════════ ADMIN FUTOUR -->
+    <div class="grupo-card" id="admin-futour">
+      <div class="grupo-header">
+        <h2>🔧 ADMIN_FUTOUR</h2>
+        <span class="grupo-total">12 endpoints</span>
+      </div>
+      <div class="tabela-header">
+        <span>Método</span>
+        <span>Rota</span>
+        <span>Nome</span>
+        <span>Detalhe</span>
+      </div>
+
+      <!-- Aprovar Solicitação -->
+      <div class="endpoint" onclick="alternar(this)">
+        <div class="endpoint-linha">
+          <span class="badge-metodo POST">POST</span>
+          <span class="endpoint-path">/solicitacoes/<span class="param">{idSolicitacao}</span>/aprovar</span>
+          <span class="endpoint-nome">Aprovar Solicitação</span>
+          <span class="chevron">▼</span>
+        </div>
+        <div class="endpoint-corpo">
+          <div class="secao-detalhe">
+            <h4>Parâmetro de Rota</h4>
+            <table class="tabela-params"><thead><tr><th>Nome</th><th>Tipo</th><th>Obrigatório</th><th>Descrição</th></tr></thead>
+            <tbody><tr><td class="nome-param">idSolicitacao</td><td class="tipo-param">string</td><td><span class="badge-obrigatorio">sim</span></td><td>ID da solicitação de pré-cadastro a ser aprovada</td></tr></tbody></table>
+          </div>
+          <div class="secao-detalhe"><h4>Request Body</h4><div class="bloco-codigo">{}</div></div>
+          <div class="secao-detalhe"><h4>Respostas Possíveis</h4>
+            <div class="status-grid">
+              <span class="badge-status s2xx">200 <span class="status-desc">Solicitação aprovada com sucesso</span></span>
+              <span class="badge-status s4xx-r">401 <span class="status-desc">Não autorizado</span></span>
+              <span class="badge-status s4xx">404 <span class="status-desc">Solicitação não encontrada</span></span>
+              <span class="badge-status s4xx">409 <span class="status-desc">Solicitação já processada</span></span>
+              <span class="badge-status s5xx">500 <span class="status-desc">Erro interno do servidor</span></span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Cancelar Solicitação -->
+      <div class="endpoint" onclick="alternar(this)">
+        <div class="endpoint-linha">
+          <span class="badge-metodo POST">POST</span>
+          <span class="endpoint-path">/solicitacoes/<span class="param">{idSolicitacao}</span>/cancelar</span>
+          <span class="endpoint-nome">Cancelar/Recusar Solicitação</span>
+          <span class="chevron">▼</span>
+        </div>
+        <div class="endpoint-corpo">
+          <div class="secao-detalhe">
+            <h4>Parâmetro de Rota</h4>
+            <table class="tabela-params"><thead><tr><th>Nome</th><th>Tipo</th><th>Obrigatório</th><th>Descrição</th></tr></thead>
+            <tbody><tr><td class="nome-param">idSolicitacao</td><td class="tipo-param">string</td><td><span class="badge-obrigatorio">sim</span></td><td>ID da solicitação a ser cancelada ou recusada</td></tr></tbody></table>
+          </div>
+          <div class="secao-detalhe"><h4>Respostas Possíveis</h4>
+            <div class="status-grid">
+              <span class="badge-status s2xx">200 <span class="status-desc">Solicitação cancelada com sucesso</span></span>
+              <span class="badge-status s4xx-r">401 <span class="status-desc">Não autorizado</span></span>
+              <span class="badge-status s4xx">404 <span class="status-desc">Solicitação não encontrada</span></span>
+              <span class="badge-status s4xx">409 <span class="status-desc">Solicitação já processada</span></span>
+              <span class="badge-status s5xx">500 <span class="status-desc">Erro interno do servidor</span></span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Buscar Solicitações -->
+      <div class="endpoint" onclick="alternar(this)">
+        <div class="endpoint-linha">
+          <span class="badge-metodo GET">GET</span>
+          <span class="endpoint-path">/solicitacoes</span>
+          <span class="endpoint-nome">Buscar Solicitações</span>
+          <span class="chevron">▼</span>
+        </div>
+        <div class="endpoint-corpo">
+          <div class="secao-detalhe"><p style="font-size:var(--texto-pequeno);color:#667085">Retorna a lista de todas as solicitações de pré-cadastro registradas no sistema.</p></div>
+          <div class="secao-detalhe"><h4>Respostas Possíveis</h4>
+            <div class="status-grid">
+              <span class="badge-status s2xx">200 <span class="status-desc">Lista retornada com sucesso</span></span>
+              <span class="badge-status s4xx-r">401 <span class="status-desc">Não autorizado</span></span>
+              <span class="badge-status s5xx">500 <span class="status-desc">Erro interno do servidor</span></span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Buscar Logs -->
+      <div class="endpoint" onclick="alternar(this)">
+        <div class="endpoint-linha">
+          <span class="badge-metodo GET">GET</span>
+          <span class="endpoint-path">/logs</span>
+          <span class="endpoint-nome">Buscar Logs</span>
+          <span class="chevron">▼</span>
+        </div>
+        <div class="endpoint-corpo">
+          <div class="secao-detalhe"><p style="font-size:var(--texto-pequeno);color:#667085">Retorna os registros de log do sistema — data/hora, mensagem e status de cada evento.</p></div>
+          <div class="secao-detalhe"><h4>Respostas Possíveis</h4>
+            <div class="status-grid">
+              <span class="badge-status s2xx">200 <span class="status-desc">Logs retornados com sucesso</span></span>
+              <span class="badge-status s4xx-r">401 <span class="status-desc">Não autorizado</span></span>
+              <span class="badge-status s5xx">500 <span class="status-desc">Erro interno do servidor</span></span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Buscar Notificações -->
+      <div class="endpoint" onclick="alternar(this)">
+        <div class="endpoint-linha">
+          <span class="badge-metodo GET">GET</span>
+          <span class="endpoint-path">/notificacoes</span>
+          <span class="endpoint-nome">Buscar Notificações</span>
+          <span class="chevron">▼</span>
+        </div>
+        <div class="endpoint-corpo">
+          <div class="secao-detalhe"><h4>Respostas Possíveis</h4>
+            <div class="status-grid">
+              <span class="badge-status s2xx">200 <span class="status-desc">Notificações retornadas</span></span>
+              <span class="badge-status s4xx-r">401 <span class="status-desc">Não autorizado</span></span>
+              <span class="badge-status s5xx">500 <span class="status-desc">Erro interno do servidor</span></span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Buscar Empresas -->
+      <div class="endpoint" onclick="alternar(this)">
+        <div class="endpoint-linha">
+          <span class="badge-metodo GET">GET</span>
+          <span class="endpoint-path">/empresas</span>
+          <span class="endpoint-nome">Buscar Empresas</span>
+          <span class="chevron">▼</span>
+        </div>
+        <div class="endpoint-corpo">
+          <div class="secao-detalhe"><h4>Respostas Possíveis</h4>
+            <div class="status-grid">
+              <span class="badge-status s2xx">200 <span class="status-desc">Lista de empresas retornada</span></span>
+              <span class="badge-status s4xx-r">401 <span class="status-desc">Não autorizado</span></span>
+              <span class="badge-status s5xx">500 <span class="status-desc">Erro interno do servidor</span></span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Buscar Dados da Empresa -->
+      <div class="endpoint" onclick="alternar(this)">
+        <div class="endpoint-linha">
+          <span class="badge-metodo GET">GET</span>
+          <span class="endpoint-path">/empresas/procuradas?empresaServer=&lt;string&gt;</span>
+          <span class="endpoint-nome">Buscar Dados da Empresa</span>
+          <span class="chevron">▼</span>
+        </div>
+        <div class="endpoint-corpo">
+          <div class="secao-detalhe">
+            <h4>Query Parameters</h4>
+            <table class="tabela-params"><thead><tr><th>Nome</th><th>Tipo</th><th>Obrigatório</th><th>Descrição</th></tr></thead>
+            <tbody><tr><td class="nome-param">empresaServer</td><td class="tipo-param">string</td><td><span class="badge-obrigatorio">sim</span></td><td>Nome ou identificador da empresa a buscar</td></tr></tbody></table>
+          </div>
+          <div class="secao-detalhe"><h4>Respostas Possíveis</h4>
+            <div class="status-grid">
+              <span class="badge-status s2xx">200 <span class="status-desc">Dados da empresa retornados</span></span>
+              <span class="badge-status s4xx">400 <span class="status-desc">Parâmetro inválido ou ausente</span></span>
+              <span class="badge-status s4xx">404 <span class="status-desc">Empresa não encontrada</span></span>
+              <span class="badge-status s5xx">500 <span class="status-desc">Erro interno do servidor</span></span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Buscar Empresa por ID -->
+      <div class="endpoint" onclick="alternar(this)">
+        <div class="endpoint-linha">
+          <span class="badge-metodo GET">GET</span>
+          <span class="endpoint-path">/empresas/<span class="param">{idEmpresa}</span></span>
+          <span class="endpoint-nome">Buscar Empresa por ID</span>
+          <span class="chevron">▼</span>
+        </div>
+        <div class="endpoint-corpo">
+          <div class="secao-detalhe">
+            <h4>Parâmetro de Rota</h4>
+            <table class="tabela-params"><thead><tr><th>Nome</th><th>Tipo</th><th>Obrigatório</th><th>Descrição</th></tr></thead>
+            <tbody><tr><td class="nome-param">idEmpresa</td><td class="tipo-param">string</td><td><span class="badge-obrigatorio">sim</span></td><td>ID da empresa</td></tr></tbody></table>
+          </div>
+          <div class="secao-detalhe"><h4>Respostas Possíveis</h4>
+            <div class="status-grid">
+              <span class="badge-status s2xx">200 <span class="status-desc">Empresa retornada</span></span>
+              <span class="badge-status s4xx">404 <span class="status-desc">Empresa não encontrada</span></span>
+              <span class="badge-status s5xx">500 <span class="status-desc">Erro interno do servidor</span></span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Atualizar Status da Empresa -->
+      <div class="endpoint" onclick="alternar(this)">
+        <div class="endpoint-linha">
+          <span class="badge-metodo PUT">PUT</span>
+          <span class="endpoint-path">/empresas/<span class="param">{idEmpresa}</span>/status</span>
+          <span class="endpoint-nome">Atualizar Status da Empresa</span>
+          <span class="chevron">▼</span>
+        </div>
+        <div class="endpoint-corpo">
+          <div class="secao-detalhe">
+            <h4>Parâmetro de Rota</h4>
+            <table class="tabela-params"><thead><tr><th>Nome</th><th>Tipo</th><th>Obrigatório</th><th>Descrição</th></tr></thead>
+            <tbody><tr><td class="nome-param">idEmpresa</td><td class="tipo-param">string</td><td><span class="badge-obrigatorio">sim</span></td><td>ID da empresa</td></tr></tbody></table>
+          </div>
+          <div class="secao-detalhe"><h4>Respostas Possíveis</h4>
+            <div class="status-grid">
+              <span class="badge-status s2xx">200 <span class="status-desc">Status atualizado com sucesso</span></span>
+              <span class="badge-status s4xx">400 <span class="status-desc">Dados inválidos</span></span>
+              <span class="badge-status s4xx">404 <span class="status-desc">Empresa não encontrada</span></span>
+              <span class="badge-status s5xx">500 <span class="status-desc">Erro interno do servidor</span></span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Atualizar Empresa Admin -->
+      <div class="endpoint" onclick="alternar(this)">
+        <div class="endpoint-linha">
+          <span class="badge-metodo PUT">PUT</span>
+          <span class="endpoint-path">/empresas/<span class="param">{idEmpresa}</span></span>
+          <span class="endpoint-nome">Atualizar Empresa (Admin)</span>
+          <span class="chevron">▼</span>
+        </div>
+        <div class="endpoint-corpo">
+          <div class="secao-detalhe">
+            <h4>Request Body</h4>
+            <div class="bloco-codigo">{
+  <span class="chave">"nome"</span>:     <span class="string">"&lt;string&gt;"</span>,
+  <span class="chave">"cnpj"</span>:     <span class="string">"&lt;string — apenas dígitos, ex: 12345678000195&gt;"</span>,
+  <span class="chave">"email"</span>:    <span class="string">"&lt;string&gt;"</span>,
+  <span class="chave">"telefone"</span>: <span class="string">"&lt;string — apenas dígitos, ex: 11999999999&gt;"</span>,
+  <span class="chave">"nivel"</span>:    <span class="string">"&lt;string&gt;"</span>
+}</div>
+          </div>
+          <div class="secao-detalhe"><h4>Respostas Possíveis</h4>
+            <div class="status-grid">
+              <span class="badge-status s2xx">200 <span class="status-desc">Empresa atualizada</span></span>
+              <span class="badge-status s4xx">400 <span class="status-desc">Dados inválidos ou malformados</span></span>
+              <span class="badge-status s4xx">404 <span class="status-desc">Empresa não encontrada</span></span>
+              <span class="badge-status s4xx">422 <span class="status-desc">CNPJ ou telefone em formato inválido</span></span>
+              <span class="badge-status s5xx">500 <span class="status-desc">Erro interno do servidor</span></span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Atualizar Config. Notificação -->
+      <div class="endpoint" onclick="alternar(this)">
+        <div class="endpoint-linha">
+          <span class="badge-metodo PUT">PUT</span>
+          <span class="endpoint-path">/notificacoes/<span class="param">{id}</span></span>
+          <span class="endpoint-nome">Atualizar Config. Notificação</span>
+          <span class="chevron">▼</span>
+        </div>
+        <div class="endpoint-corpo">
+          <div class="secao-detalhe">
+            <h4>Request Body</h4>
+            <div class="bloco-codigo">{
+  <span class="chave">"ativo"</span>:    <span class="booleano">&lt;boolean&gt;</span>,
+  <span class="chave">"intervalo"</span>: <span class="numero">&lt;number — minutos&gt;</span>
+}</div>
+          </div>
+          <div class="secao-detalhe"><h4>Respostas Possíveis</h4>
+            <div class="status-grid">
+              <span class="badge-status s2xx">200 <span class="status-desc">Configuração atualizada</span></span>
+              <span class="badge-status s4xx">400 <span class="status-desc">Dados inválidos</span></span>
+              <span class="badge-status s4xx">404 <span class="status-desc">Notificação não encontrada</span></span>
+              <span class="badge-status s5xx">500 <span class="status-desc">Erro interno do servidor</span></span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Atualizar Destinatário -->
+      <div class="endpoint" onclick="alternar(this)">
+        <div class="endpoint-linha">
+          <span class="badge-metodo PUT">PUT</span>
+          <span class="endpoint-path">/notificacoes/destinatario</span>
+          <span class="endpoint-nome">Atualizar Destinatário</span>
+          <span class="chevron">▼</span>
+        </div>
+        <div class="endpoint-corpo">
+          <div class="secao-detalhe">
+            <h4>Request Body</h4>
+            <div class="bloco-codigo">{
+  <span class="chave">"idUsuario"</span>:      <span class="numero">&lt;number&gt;</span>,
+  <span class="chave">"idConfiguracao"</span>: <span class="numero">&lt;number&gt;</span>,
+  <span class="chave">"receber"</span>:        <span class="booleano">&lt;boolean&gt;</span>
+}</div>
+          </div>
+          <div class="secao-detalhe"><h4>Respostas Possíveis</h4>
+            <div class="status-grid">
+              <span class="badge-status s2xx">200 <span class="status-desc">Destinatário atualizado</span></span>
+              <span class="badge-status s4xx">400 <span class="status-desc">Dados inválidos</span></span>
+              <span class="badge-status s4xx">404 <span class="status-desc">Usuário ou configuração não encontrada</span></span>
+              <span class="badge-status s5xx">500 <span class="status-desc">Erro interno do servidor</span></span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div><!-- /admin-futour -->
+
+
+    <!-- ═══════════════════════ ADMIN USUARIO -->
+    <div class="grupo-card" id="admin-usuario">
+      <div class="grupo-header">
+        <h2>👤 ADMIN_USUARIO</h2>
+        <span class="grupo-total">8 endpoints</span>
+      </div>
+      <div class="tabela-header">
+        <span>Método</span><span>Rota</span><span>Nome</span><span>Detalhe</span>
+      </div>
+
+      <!-- Cadastrar Funcionário -->
+      <div class="endpoint" onclick="alternar(this)">
+        <div class="endpoint-linha">
+          <span class="badge-metodo POST">POST</span>
+          <span class="endpoint-path">/funcionarios</span>
+          <span class="endpoint-nome">Cadastrar Funcionário</span>
+          <span class="chevron">▼</span>
+        </div>
+        <div class="endpoint-corpo">
+          <div class="secao-detalhe">
+            <h4>Request Body</h4>
+            <div class="bloco-codigo">{
+  <span class="chave">"nomeServer"</span>:         <span class="string">"&lt;string&gt;"</span>,
+  <span class="chave">"emailPessoalServer"</span>: <span class="string">"&lt;string&gt;"</span>,
+  <span class="chave">"senhaServer"</span>:        <span class="string">"&lt;string&gt;"</span>,
+  <span class="chave">"permissaoServer"</span>:    <span class="string">"&lt;string&gt;"</span>,
+  <span class="chave">"idEmpresaServer"</span>:    <span class="string">"&lt;string — ID da empresa do sessionStorage&gt;"</span>
+}</div>
+          </div>
+          <div class="secao-detalhe"><h4>Respostas Possíveis</h4>
+            <div class="status-grid">
+              <span class="badge-status s2xx">201 <span class="status-desc">Funcionário criado com sucesso</span></span>
+              <span class="badge-status s4xx">400 <span class="status-desc">Dados obrigatórios ausentes ou inválidos</span></span>
+              <span class="badge-status s4xx-r">401 <span class="status-desc">Não autorizado</span></span>
+              <span class="badge-status s4xx">409 <span class="status-desc">E-mail já cadastrado</span></span>
+              <span class="badge-status s5xx">500 <span class="status-desc">Erro interno do servidor</span></span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Buscar Funcionários -->
+      <div class="endpoint" onclick="alternar(this)">
+        <div class="endpoint-linha">
+          <span class="badge-metodo GET">GET</span>
+          <span class="endpoint-path">/usuarios?idEmpresa=&lt;number&gt;</span>
+          <span class="endpoint-nome">Buscar Funcionários</span>
+          <span class="chevron">▼</span>
+        </div>
+        <div class="endpoint-corpo">
+          <div class="secao-detalhe">
+            <h4>Query Parameters</h4>
+            <table class="tabela-params"><thead><tr><th>Nome</th><th>Tipo</th><th>Obrigatório</th><th>Descrição</th></tr></thead>
+            <tbody><tr><td class="nome-param">idEmpresa</td><td class="tipo-param">number</td><td><span class="badge-obrigatorio">sim</span></td><td>ID da empresa para filtrar funcionários</td></tr></tbody></table>
+          </div>
+          <div class="secao-detalhe"><h4>Respostas Possíveis</h4>
+            <div class="status-grid">
+              <span class="badge-status s2xx">200 <span class="status-desc">Lista retornada</span></span>
+              <span class="badge-status s4xx">400 <span class="status-desc">idEmpresa ausente ou inválido</span></span>
+              <span class="badge-status s4xx-r">401 <span class="status-desc">Não autorizado</span></span>
+              <span class="badge-status s5xx">500 <span class="status-desc">Erro interno do servidor</span></span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Buscar Funcionários por Nome -->
+      <div class="endpoint" onclick="alternar(this)">
+        <div class="endpoint-linha">
+          <span class="badge-metodo GET">GET</span>
+          <span class="endpoint-path">/usuarios/procurados?idEmpresa&amp;nomeFuncionarioServer</span>
+          <span class="endpoint-nome">Buscar Funcionários por Nome</span>
+          <span class="chevron">▼</span>
+        </div>
+        <div class="endpoint-corpo">
+          <div class="secao-detalhe">
+            <h4>Query Parameters</h4>
+            <table class="tabela-params"><thead><tr><th>Nome</th><th>Tipo</th><th>Obrigatório</th><th>Descrição</th></tr></thead>
+            <tbody>
+              <tr><td class="nome-param">idEmpresa</td><td class="tipo-param">number</td><td><span class="badge-obrigatorio">sim</span></td><td>ID da empresa</td></tr>
+              <tr><td class="nome-param">nomeFuncionarioServer</td><td class="tipo-param">string</td><td><span class="badge-obrigatorio">sim</span></td><td>Nome do funcionário a buscar</td></tr>
+            </tbody></table>
+          </div>
+          <div class="secao-detalhe"><h4>Respostas Possíveis</h4>
+            <div class="status-grid">
+              <span class="badge-status s2xx">200 <span class="status-desc">Resultados retornados</span></span>
+              <span class="badge-status s4xx">400 <span class="status-desc">Parâmetros ausentes</span></span>
+              <span class="badge-status s5xx">500 <span class="status-desc">Erro interno do servidor</span></span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Buscar Funcionário por ID -->
+      <div class="endpoint" onclick="alternar(this)">
+        <div class="endpoint-linha">
+          <span class="badge-metodo GET">GET</span>
+          <span class="endpoint-path">/funcionarios/<span class="param">{idUsuario}</span></span>
+          <span class="endpoint-nome">Buscar Funcionário por ID</span>
+          <span class="chevron">▼</span>
+        </div>
+        <div class="endpoint-corpo">
+          <div class="secao-detalhe"><h4>Respostas Possíveis</h4>
+            <div class="status-grid">
+              <span class="badge-status s2xx">200 <span class="status-desc">Dados retornados</span></span>
+              <span class="badge-status s4xx">404 <span class="status-desc">Funcionário não encontrado</span></span>
+              <span class="badge-status s5xx">500 <span class="status-desc">Erro interno do servidor</span></span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Buscar Empresa Admin -->
+      <div class="endpoint" onclick="alternar(this)">
+        <div class="endpoint-linha">
+          <span class="badge-metodo GET">GET</span>
+          <span class="endpoint-path">/empresas/<span class="param">{idEmpresa}</span></span>
+          <span class="endpoint-nome">Buscar Empresa (Admin Usuário)</span>
+          <span class="chevron">▼</span>
+        </div>
+        <div class="endpoint-corpo">
+          <div class="secao-detalhe"><h4>Respostas Possíveis</h4>
+            <div class="status-grid">
+              <span class="badge-status s2xx">200 <span class="status-desc">Dados da empresa retornados</span></span>
+              <span class="badge-status s4xx">404 <span class="status-desc">Empresa não encontrada</span></span>
+              <span class="badge-status s5xx">500 <span class="status-desc">Erro interno do servidor</span></span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Salvar Edição Funcionário -->
+      <div class="endpoint" onclick="alternar(this)">
+        <div class="endpoint-linha">
+          <span class="badge-metodo PUT">PUT</span>
+          <span class="endpoint-path">/funcionarios/<span class="param">{idUsuario}</span></span>
+          <span class="endpoint-nome">Salvar Edição de Funcionário</span>
+          <span class="chevron">▼</span>
+        </div>
+        <div class="endpoint-corpo">
+          <div class="secao-detalhe">
+            <h4>Request Body</h4>
+            <div class="bloco-codigo">{
+  <span class="chave">"nomeServer"</span>:      <span class="string">"&lt;string&gt;"</span>,
+  <span class="chave">"emailServer"</span>:     <span class="string">"&lt;string&gt;"</span>,
+  <span class="chave">"permissaoServer"</span>: <span class="string">"&lt;string&gt;"</span>
+}</div>
+          </div>
+          <div class="secao-detalhe"><h4>Respostas Possíveis</h4>
+            <div class="status-grid">
+              <span class="badge-status s2xx">200 <span class="status-desc">Funcionário atualizado</span></span>
+              <span class="badge-status s4xx">400 <span class="status-desc">Dados inválidos</span></span>
+              <span class="badge-status s4xx">404 <span class="status-desc">Funcionário não encontrado</span></span>
+              <span class="badge-status s5xx">500 <span class="status-desc">Erro interno do servidor</span></span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Editar Empresa Usuário -->
+      <div class="endpoint" onclick="alternar(this)">
+        <div class="endpoint-linha">
+          <span class="badge-metodo PUT">PUT</span>
+          <span class="endpoint-path">/empresas/<span class="param">{idEmpresa}</span></span>
+          <span class="endpoint-nome">Editar Empresa (Usuário)</span>
+          <span class="chevron">▼</span>
+        </div>
+        <div class="endpoint-corpo">
+          <div class="secao-detalhe">
+            <h4>Request Body</h4>
+            <div class="bloco-codigo">{
+  <span class="chave">"empresaServer"</span>:             <span class="string">"&lt;string&gt;"</span>,
+  <span class="chave">"cnpjServer"</span>:                <span class="string">"&lt;string — apenas dígitos&gt;"</span>,
+  <span class="chave">"emailCorporativoServer"</span>:    <span class="string">"&lt;string&gt;"</span>,
+  <span class="chave">"telefoneCorporativoServer"</span>: <span class="string">"&lt;string — apenas dígitos&gt;"</span>,
+  <span class="chave">"cepServer"</span>:                 <span class="string">"&lt;string — apenas dígitos&gt;"</span>,
+  <span class="chave">"estadoServer"</span>:              <span class="string">"&lt;string&gt;"</span>,
+  <span class="chave">"cidadeServer"</span>:              <span class="string">"&lt;string&gt;"</span>,
+  <span class="chave">"bairroServer"</span>:              <span class="string">"&lt;string&gt;"</span>,
+  <span class="chave">"logradouroServer"</span>:          <span class="string">"&lt;string&gt;"</span>,
+  <span class="chave">"numeroServer"</span>:              <span class="string">"&lt;string&gt;"</span>,
+  <span class="chave">"complementoServer"</span>:         <span class="string">"&lt;string&gt;"</span>
+}</div>
+          </div>
+          <div class="secao-detalhe"><h4>Respostas Possíveis</h4>
+            <div class="status-grid">
+              <span class="badge-status s2xx">200 <span class="status-desc">Empresa atualizada</span></span>
+              <span class="badge-status s4xx">400 <span class="status-desc">Dados inválidos</span></span>
+              <span class="badge-status s4xx">404 <span class="status-desc">Empresa não encontrada</span></span>
+              <span class="badge-status s4xx">422 <span class="status-desc">CNPJ/CEP/telefone inválidos</span></span>
+              <span class="badge-status s5xx">500 <span class="status-desc">Erro interno do servidor</span></span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Alterar Status Funcionário -->
+      <div class="endpoint" onclick="alternar(this)">
+        <div class="endpoint-linha">
+          <span class="badge-metodo PUT">PUT</span>
+          <span class="endpoint-path">/usuarios/<span class="param">{idUsuario}</span>/status</span>
+          <span class="endpoint-nome">Alterar Status do Funcionário</span>
+          <span class="chevron">▼</span>
+        </div>
+        <div class="endpoint-corpo">
+          <div class="secao-detalhe">
+            <h4>Request Body</h4>
+            <div class="bloco-codigo">{ <span class="chave">"status"</span>: <span class="numero">&lt;number&gt;</span> }</div>
+          </div>
+          <div class="secao-detalhe"><h4>Respostas Possíveis</h4>
+            <div class="status-grid">
+              <span class="badge-status s2xx">200 <span class="status-desc">Status alterado</span></span>
+              <span class="badge-status s4xx">400 <span class="status-desc">Valor inválido</span></span>
+              <span class="badge-status s4xx">404 <span class="status-desc">Funcionário não encontrado</span></span>
+              <span class="badge-status s5xx">500 <span class="status-desc">Erro interno do servidor</span></span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div><!-- /admin-usuario -->
+
+
+    <!-- ═══════════════════════ USUARIO -->
+    <div class="grupo-card" id="usuario">
+      <div class="grupo-header">
+        <h2>🌐 USUARIO</h2>
+        <span class="grupo-total">12 endpoints</span>
+      </div>
+      <div class="tabela-header">
+        <span>Método</span><span>Rota</span><span>Nome</span><span>Detalhe</span>
+      </div>
+
+      <!-- Enviar Mensagem -->
+      <div class="endpoint" onclick="alternar(this)">
+        <div class="endpoint-linha">
+          <span class="badge-metodo POST">POST</span>
+          <span class="endpoint-path">/mensagens</span>
+          <span class="endpoint-nome">Enviar Mensagem de Contato</span>
+          <span class="chevron">▼</span>
+        </div>
+        <div class="endpoint-corpo">
+          <div class="secao-detalhe">
+            <h4>Request Body</h4>
+            <div class="bloco-codigo">{
+  <span class="chave">"nomeServer"</span>:     <span class="string">"&lt;string&gt;"</span>,
+  <span class="chave">"emailServer"</span>:    <span class="string">"&lt;string&gt;"</span>,
+  <span class="chave">"telefoneServer"</span>: <span class="string">"&lt;string — apenas dígitos, ex: 11999999999&gt;"</span>,
+  <span class="chave">"mensagemServer"</span>: <span class="string">"&lt;string&gt;"</span>
+}</div>
+          </div>
+          <div class="secao-detalhe"><h4>Respostas Possíveis</h4>
+            <div class="status-grid">
+              <span class="badge-status s2xx">200 <span class="status-desc">Mensagem enviada com sucesso</span></span>
+              <span class="badge-status s4xx">400 <span class="status-desc">Campos obrigatórios ausentes</span></span>
+              <span class="badge-status s4xx">422 <span class="status-desc">E-mail ou telefone inválido</span></span>
+              <span class="badge-status s5xx">500 <span class="status-desc">Falha ao enviar mensagem</span></span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Pré-cadastro -->
+      <div class="endpoint" onclick="alternar(this)">
+        <div class="endpoint-linha">
+          <span class="badge-metodo POST">POST</span>
+          <span class="endpoint-path">/usuarios/pre-cadastro</span>
+          <span class="endpoint-nome">Pré-cadastro de Empresa</span>
+          <span class="chevron">▼</span>
+        </div>
+        <div class="endpoint-corpo">
+          <div class="secao-detalhe">
+            <h4>Request Body</h4>
+            <div class="bloco-codigo">{
+  <span class="chave">"nomeServer"</span>:                <span class="string">"&lt;string&gt;"</span>,
+  <span class="chave">"emailPessoalServer"</span>:        <span class="string">"&lt;string&gt;"</span>,
+  <span class="chave">"empresaServer"</span>:             <span class="string">"&lt;string&gt;"</span>,
+  <span class="chave">"emailCorporativoServer"</span>:    <span class="string">"&lt;string&gt;"</span>,
+  <span class="chave">"cnpjServer"</span>:                <span class="string">"&lt;string — apenas dígitos, ex: 12345678000195&gt;"</span>,
+  <span class="chave">"telefoneCorporativoServer"</span>: <span class="string">"&lt;string — apenas dígitos, ex: 11999999999&gt;"</span>
+}</div>
+          </div>
+          <div class="secao-detalhe"><h4>Respostas Possíveis</h4>
+            <div class="status-grid">
+              <span class="badge-status s2xx">201 <span class="status-desc">Solicitação criada — aguardando aprovação</span></span>
+              <span class="badge-status s4xx">400 <span class="status-desc">Dados obrigatórios ausentes</span></span>
+              <span class="badge-status s4xx">409 <span class="status-desc">E-mail ou CNPJ já cadastrado</span></span>
+              <span class="badge-status s4xx">422 <span class="status-desc">CNPJ ou telefone em formato inválido</span></span>
+              <span class="badge-status s5xx">500 <span class="status-desc">Erro interno do servidor</span></span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Autenticação -->
+      <div class="endpoint" onclick="alternar(this)">
+        <div class="endpoint-linha">
+          <span class="badge-metodo POST">POST</span>
+          <span class="endpoint-path">/usuarios/autenticacao</span>
+          <span class="endpoint-nome">Autenticação de Usuário</span>
+          <span class="chevron">▼</span>
+        </div>
+        <div class="endpoint-corpo">
+          <div class="secao-detalhe">
+            <h4>Request Body</h4>
+            <div class="bloco-codigo">{
+  <span class="chave">"emailServer"</span>: <span class="string">"&lt;string&gt;"</span>,
+  <span class="chave">"senhaServer"</span>: <span class="string">"&lt;string&gt;"</span>
+}</div>
+          </div>
+          <div class="secao-detalhe"><h4>Respostas Possíveis</h4>
+            <div class="status-grid">
+              <span class="badge-status s2xx">200 <span class="status-desc">Autenticado — retorna token/sessão</span></span>
+              <span class="badge-status s4xx">400 <span class="status-desc">Dados ausentes ou malformados</span></span>
+              <span class="badge-status s4xx-r">401 <span class="status-desc">Credenciais inválidas</span></span>
+              <span class="badge-status s4xx-r">403 <span class="status-desc">Conta desativada ou sem acesso</span></span>
+              <span class="badge-status s5xx">500 <span class="status-desc">Erro interno do servidor</span></span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Salvar Filtro -->
+      <div class="endpoint" onclick="alternar(this)">
+        <div class="endpoint-linha">
+          <span class="badge-metodo POST">POST</span>
+          <span class="endpoint-path">/filtros</span>
+          <span class="endpoint-nome">Salvar Novo Filtro</span>
+          <span class="chevron">▼</span>
+        </div>
+        <div class="endpoint-corpo">
+          <div class="secao-detalhe">
+            <h4>Request Body</h4>
+            <div class="bloco-codigo">{
+  <span class="chave">"nomeFiltro"</span>: <span class="string">"&lt;string&gt;"</span>,
+  <span class="chave">"estado"</span>:     <span class="string">"&lt;string — UF, ex: SP&gt;"</span>,
+  <span class="chave">"continente"</span>: <span class="string">"&lt;string&gt;"</span>,
+  <span class="chave">"ano_inicio"</span>: <span class="string">"&lt;string&gt;"</span>,
+  <span class="chave">"ano_fim"</span>:    <span class="string">"&lt;string&gt;"</span>,
+  <span class="chave">"fkUsuario"</span>:  <span class="string">"&lt;string — ID do usuário do sessionStorage&gt;"</span>
+}</div>
+          </div>
+          <div class="secao-detalhe"><h4>Respostas Possíveis</h4>
+            <div class="status-grid">
+              <span class="badge-status s2xx">201 <span class="status-desc">Filtro criado com sucesso</span></span>
+              <span class="badge-status s4xx">400 <span class="status-desc">Dados obrigatórios ausentes</span></span>
+              <span class="badge-status s4xx-r">401 <span class="status-desc">Não autorizado</span></span>
+              <span class="badge-status s5xx">500 <span class="status-desc">Erro interno do servidor</span></span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Listar Filtros -->
+      <div class="endpoint" onclick="alternar(this)">
+        <div class="endpoint-linha">
+          <span class="badge-metodo GET">GET</span>
+          <span class="endpoint-path">/filtros?idUsuario=&lt;number&gt;</span>
+          <span class="endpoint-nome">Listar Filtros</span>
+          <span class="chevron">▼</span>
+        </div>
+        <div class="endpoint-corpo">
+          <div class="secao-detalhe">
+            <h4>Query Parameters</h4>
+            <table class="tabela-params"><thead><tr><th>Nome</th><th>Tipo</th><th>Obrigatório</th><th>Descrição</th></tr></thead>
+            <tbody><tr><td class="nome-param">idUsuario</td><td class="tipo-param">number</td><td><span class="badge-obrigatorio">sim</span></td><td>ID do usuário para buscar os filtros salvos</td></tr></tbody></table>
+          </div>
+          <div class="secao-detalhe"><h4>Respostas Possíveis</h4>
+            <div class="status-grid">
+              <span class="badge-status s2xx">200 <span class="status-desc">Lista de filtros retornada</span></span>
+              <span class="badge-status s4xx">400 <span class="status-desc">Parâmetro ausente</span></span>
+              <span class="badge-status s4xx-r">401 <span class="status-desc">Não autorizado</span></span>
+              <span class="badge-status s5xx">500 <span class="status-desc">Erro interno do servidor</span></span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Buscar Filtro por ID -->
+      <div class="endpoint" onclick="alternar(this)">
+        <div class="endpoint-linha">
+          <span class="badge-metodo GET">GET</span>
+          <span class="endpoint-path">/filtros/<span class="param">{idFiltro}</span></span>
+          <span class="endpoint-nome">Buscar Filtro por ID</span>
+          <span class="chevron">▼</span>
+        </div>
+        <div class="endpoint-corpo">
+          <div class="secao-detalhe"><h4>Respostas Possíveis</h4>
+            <div class="status-grid">
+              <span class="badge-status s2xx">200 <span class="status-desc">Filtro retornado</span></span>
+              <span class="badge-status s4xx">404 <span class="status-desc">Filtro não encontrado</span></span>
+              <span class="badge-status s5xx">500 <span class="status-desc">Erro interno do servidor</span></span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Listar Estados -->
+      <div class="endpoint" onclick="alternar(this)">
+        <div class="endpoint-linha">
+          <span class="badge-metodo GET">GET</span>
+          <span class="endpoint-path">/estados</span>
+          <span class="endpoint-nome">Listar Estados (UFs)</span>
+          <span class="chevron">▼</span>
+        </div>
+        <div class="endpoint-corpo">
+          <div class="secao-detalhe"><p style="font-size:var(--texto-pequeno);color:#667085">Retorna a lista de Unidades Federativas disponíveis para uso nos filtros.</p></div>
+          <div class="secao-detalhe"><h4>Respostas Possíveis</h4>
+            <div class="status-grid">
+              <span class="badge-status s2xx">200 <span class="status-desc">Lista de UFs retornada</span></span>
+              <span class="badge-status s5xx">500 <span class="status-desc">Erro interno do servidor</span></span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Listar Continentes -->
+      <div class="endpoint" onclick="alternar(this)">
+        <div class="endpoint-linha">
+          <span class="badge-metodo GET">GET</span>
+          <span class="endpoint-path">/continentes</span>
+          <span class="endpoint-nome">Listar Continentes</span>
+          <span class="chevron">▼</span>
+        </div>
+        <div class="endpoint-corpo">
+          <div class="secao-detalhe"><h4>Respostas Possíveis</h4>
+            <div class="status-grid">
+              <span class="badge-status s2xx">200 <span class="status-desc">Lista de continentes retornada</span></span>
+              <span class="badge-status s5xx">500 <span class="status-desc">Erro interno do servidor</span></span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Listar Anos -->
+      <div class="endpoint" onclick="alternar(this)">
+        <div class="endpoint-linha">
+          <span class="badge-metodo GET">GET</span>
+          <span class="endpoint-path">/anos</span>
+          <span class="endpoint-nome">Listar Anos Disponíveis</span>
+          <span class="chevron">▼</span>
+        </div>
+        <div class="endpoint-corpo">
+          <div class="secao-detalhe"><h4>Respostas Possíveis</h4>
+            <div class="status-grid">
+              <span class="badge-status s2xx">200 <span class="status-desc">Lista de anos retornada</span></span>
+              <span class="badge-status s5xx">500 <span class="status-desc">Erro interno do servidor</span></span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Editar Perfil -->
+      <div class="endpoint" onclick="alternar(this)">
+        <div class="endpoint-linha">
+          <span class="badge-metodo PUT">PUT</span>
+          <span class="endpoint-path">/filtros/<span class="param">{idFiltro}</span></span>
+          <span class="endpoint-nome">Editar Perfil do Usuário</span>
+          <span class="chevron">▼</span>
+        </div>
+        <div class="endpoint-corpo">
+          <div class="secao-detalhe">
+            <h4>Request Body</h4>
+            <div class="bloco-codigo">{
+  <span class="chave">"nomeServer"</span>:  <span class="string">"&lt;string&gt;"</span>,
+  <span class="chave">"emailServer"</span>: <span class="string">"&lt;string&gt;"</span>,
+  <span class="chave">"senhaServer"</span>: <span class="string">"&lt;string — vazio se não quiser alterar a senha&gt;"</span>
+}</div>
+          </div>
+          <div class="secao-detalhe"><h4>Respostas Possíveis</h4>
+            <div class="status-grid">
+              <span class="badge-status s2xx">200 <span class="status-desc">Perfil atualizado</span></span>
+              <span class="badge-status s4xx">400 <span class="status-desc">Dados inválidos</span></span>
+              <span class="badge-status s4xx">409 <span class="status-desc">E-mail já em uso</span></span>
+              <span class="badge-status s5xx">500 <span class="status-desc">Erro interno do servidor</span></span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Atualizar Filtro -->
+      <div class="endpoint" onclick="alternar(this)">
+        <div class="endpoint-linha">
+          <span class="badge-metodo PUT">PUT</span>
+          <span class="endpoint-path">/usuarios/<span class="param">{idUsuario}</span>/perfil</span>
+          <span class="endpoint-nome">Atualizar Filtro</span>
+          <span class="chevron">▼</span>
+        </div>
+        <div class="endpoint-corpo">
+          <div class="secao-detalhe">
+            <h4>Request Body</h4>
+            <div class="bloco-codigo">{
+  <span class="chave">"nomeFiltro"</span>: <span class="string">"&lt;string&gt;"</span>,
+  <span class="chave">"estado"</span>:     <span class="string">"&lt;string — UF, ex: SP&gt;"</span>,
+  <span class="chave">"continente"</span>: <span class="string">"&lt;string&gt;"</span>,
+  <span class="chave">"ano_inicio"</span>: <span class="string">"&lt;string&gt;"</span>,
+  <span class="chave">"ano_fim"</span>:    <span class="string">"&lt;string&gt;"</span>,
+  <span class="chave">"fkUsuario"</span>:  <span class="string">"&lt;string — ID do usuário do sessionStorage&gt;"</span>
+}</div>
+          </div>
+          <div class="secao-detalhe"><h4>Respostas Possíveis</h4>
+            <div class="status-grid">
+              <span class="badge-status s2xx">200 <span class="status-desc">Filtro atualizado</span></span>
+              <span class="badge-status s4xx">400 <span class="status-desc">Dados inválidos</span></span>
+              <span class="badge-status s4xx">404 <span class="status-desc">Recurso não encontrado</span></span>
+              <span class="badge-status s5xx">500 <span class="status-desc">Erro interno do servidor</span></span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Deletar Filtro -->
+      <div class="endpoint" onclick="alternar(this)">
+        <div class="endpoint-linha">
+          <span class="badge-metodo DELETE">DELETE</span>
+          <span class="endpoint-path">/filtros/<span class="param">{idFiltro}</span></span>
+          <span class="endpoint-nome">Deletar Filtro</span>
+          <span class="chevron">▼</span>
+        </div>
+        <div class="endpoint-corpo">
+          <div class="secao-detalhe">
+            <h4>Parâmetro de Rota</h4>
+            <table class="tabela-params"><thead><tr><th>Nome</th><th>Tipo</th><th>Obrigatório</th><th>Descrição</th></tr></thead>
+            <tbody><tr><td class="nome-param">idFiltro</td><td class="tipo-param">string</td><td><span class="badge-obrigatorio">sim</span></td><td>ID do filtro a ser deletado</td></tr></tbody></table>
+          </div>
+          <div class="secao-detalhe"><h4>Respostas Possíveis</h4>
+            <div class="status-grid">
+              <span class="badge-status s2xx">204 <span class="status-desc">Filtro deletado — sem conteúdo</span></span>
+              <span class="badge-status s4xx-r">401 <span class="status-desc">Não autorizado</span></span>
+              <span class="badge-status s4xx">404 <span class="status-desc">Filtro não encontrado</span></span>
+              <span class="badge-status s5xx">500 <span class="status-desc">Erro interno do servidor</span></span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div><!-- /usuario -->
+
+
+    <!-- ═══════════════════════ DASHBOARD -->
+    <div class="grupo-card" id="dashboard">
+      <div class="grupo-header">
+        <h2>📊 DASHBOARD</h2>
+        <span class="grupo-total">1 endpoint</span>
+      </div>
+      <div class="tabela-header">
+        <span>Método</span><span>Rota</span><span>Nome</span><span>Detalhe</span>
+      </div>
+
+      <div class="endpoint" onclick="alternar(this)">
+        <div class="endpoint-linha">
+          <span class="badge-metodo GET">GET</span>
+          <span class="endpoint-path">/<span class="param">{idFiltro}</span></span>
+          <span class="endpoint-nome">Buscar Dados do Dashboard</span>
+          <span class="chevron">▼</span>
+        </div>
+        <div class="endpoint-corpo">
+          <div class="secao-detalhe">
+            <h4>Parâmetro de Rota</h4>
+            <table class="tabela-params"><thead><tr><th>Nome</th><th>Tipo</th><th>Obrigatório</th><th>Descrição</th></tr></thead>
+            <tbody><tr><td class="nome-param">idFiltro</td><td class="tipo-param">string</td><td><span class="badge-obrigatorio">sim</span></td><td>ID do filtro salvo para carregar as visualizações do dashboard — previsões e métricas turísticas</td></tr></tbody></table>
+          </div>
+          <div class="secao-detalhe"><p style="font-size:var(--texto-pequeno);color:#667085">Retorna os dados processados e as métricas de previsão turística associadas ao filtro selecionado, utilizados para renderizar gráficos e indicadores no painel principal.</p></div>
+          <div class="secao-detalhe"><h4>Respostas Possíveis</h4>
+            <div class="status-grid">
+              <span class="badge-status s2xx">200 <span class="status-desc">Dados do dashboard retornados</span></span>
+              <span class="badge-status s4xx-r">401 <span class="status-desc">Não autorizado</span></span>
+              <span class="badge-status s4xx">404 <span class="status-desc">Filtro não encontrado</span></span>
+              <span class="badge-status s5xx">500 <span class="status-desc">Erro ao processar dados</span></span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div><!-- /dashboard -->
+
+  </div><!-- /conteudo-principal -->
+</div><!-- /layout-principal -->
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="footer-abaixo">
+    <p>FuTour Sight &copy; 2025 · API Documentation · Gerado a partir da coleção Postman</p>
+    <ul class="redes-sociais">
+      <li>REST</li>
+      <li>JSON</li>
+      <li>HTTP/1.1</li>
+    </ul>
+  </div>
+</footer>
+
+<script>
+  function alternar(el) { el.classList.toggle('aberto'); }
+  function irPara(id) { document.getElementById(id).scrollIntoView({ behavior: 'smooth', block: 'start' }); }
+</script>
+</body>
+</html>
