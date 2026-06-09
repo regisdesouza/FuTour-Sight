@@ -86,7 +86,7 @@ async function aprovarSolicitacao(req, res) {
                 <p>Sua solicitação foi aprovada 🎉</p>
                 <p><strong>Email:</strong> ${dados.email_responsavel}</p>
                 <p><strong>Senha temporária:</strong> ${senhaTemp}</p>
-                <a href="http://localhost:3333/login.html">Acessar sistema</a>
+                <a href="http://futour.duckdns.org/login.html">Acessar sistema</a>
                 <p>No primeiro acesso você deverá alterar sua senha.</p>
             `
         });

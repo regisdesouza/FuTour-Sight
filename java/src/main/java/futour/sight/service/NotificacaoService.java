@@ -7,6 +7,8 @@ import futour.sight.etl.turistas.service.EmailService;
 import org.springframework.jdbc.core.JdbcTemplate;
 
 import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Map;
@@ -72,7 +74,7 @@ public class NotificacaoService {
                 tabela,
                 registros,
                 tempoSegundos,
-                LocalDateTime.now().format(FORMATTER)
+                ZonedDateTime.now(ZoneId.of("America/Sao_Paulo")).format(FORMATTER)
         );
 
         SlackConfig.enviarMensagemFormatada(
@@ -128,7 +130,7 @@ public class NotificacaoService {
                 mentions,
                 tabela,
                 erro,
-                LocalDateTime.now().format(FORMATTER)
+                ZonedDateTime.now(ZoneId.of("America/Sao_Paulo")).format(FORMATTER)
         );
 
         SlackConfig.enviarMensagemFormatada(
