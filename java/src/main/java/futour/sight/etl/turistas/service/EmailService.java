@@ -164,7 +164,7 @@ public class EmailService {
                         </div>
 
                         <div style="text-align: center; margin: 24px 0;">
-                            <a href="http://localhost:3333"
+                            <a href="http://futour.duckdns.org"
                                style="background-color: #1a1a2e; color: #ffffff;
                                       padding: 12px 32px; border-radius: 6px;
                                       text-decoration: none; font-size: 14px;">
