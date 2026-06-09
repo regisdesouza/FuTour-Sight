@@ -345,7 +345,7 @@ function renderizarRankingPaises(ranking) {
 function renderizarDoughnut(doughnut) {
   if (!Array.isArray(doughnut)) return;
 
-  const cores = ["#1C4AA6", "#7D8C0D", "#BF7C2A"];
+  const cores = ["#1C4AA6", "#7D8C0D", "#e4582c"];
 
   const icones = {
     Aérea: "aereo.png",
