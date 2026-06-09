@@ -134,6 +134,42 @@ function renderizarOptionsAnos() {
         });
 }
 
+function desabilitarOptionsAnosMenoresOuIguais() {
+    const select_ano_inicio = document.getElementById("ano-inicio");
+
+    select_ano_inicio.addEventListener("change", atualizarAnosFim);
+
+    atualizarAnosFim();
+}
+
+function atualizarAnosFim() {
+    const select_ano_inicio = document.getElementById("ano-inicio");
+    const select_ano_fim = document.getElementById("ano-fim");
+
+    if (select_ano_inicio.value == "") {
+        select_ano_fim.setAttribute("disabled", true);
+        select_ano_fim.value = "";
+        return;
+    }
+
+    select_ano_fim.removeAttribute("disabled");
+
+    if (Number(select_ano_inicio.value) >= Number(select_ano_fim.value)) {
+        select_ano_fim.value = "";
+    }
+
+    for (const option of select_ano_fim.options) {
+        if (
+            option.value !== "" &&
+            Number(option.value) <= Number(select_ano_inicio.value)
+        ) {
+            option.disabled = true;
+        } else {
+            option.disabled = false;
+        }
+    }
+}
+
 function atualizarFiltro() {
     onkey_nome_filtro();
     onkey_estado();
@@ -190,4 +226,5 @@ document.addEventListener("DOMContentLoaded", async () => {
     ]);
 
     await buscarFiltro();
+    desabilitarOptionsAnosMenoresOuIguais();
 });
