@@ -345,6 +345,8 @@ function renderizarRankingPaises(ranking) {
 function renderizarDoughnut(doughnut) {
   if (!Array.isArray(doughnut)) return;
 
+  const cores = ["#1C4AA6", "#7D8C0D", "#BF7C2A"];
+
   const icones = {
     Aérea: "aereo.png",
     Marítima: "maritimo.png",
@@ -353,7 +355,7 @@ function renderizarDoughnut(doughnut) {
 
   document.getElementById("ranking-via").innerHTML = doughnut
     .map(
-      (d) => `
+      (d, i) => `
         <li>
             <div class="via-header">
                 <span>${d.via}</span>
@@ -365,7 +367,7 @@ function renderizarDoughnut(doughnut) {
                 </div>
             </div>
             <div class="barra-porcentagem">
-                <div class="barra-porcentagem-atual" style="width:${d.percentual}%"></div>
+                <div class="barra-porcentagem-atual" style="width:${d.percentual}%; background-color: ${cores[i]}"></div>
             </div>
         </li>
     `,
@@ -384,7 +386,11 @@ function renderizarDoughnut(doughnut) {
         data: {
           labels: doughnut.map((d) => d.via),
           datasets: [
-            { data: doughnut.map((d) => d.percentual), borderWidth: 1 },
+            { 
+              data: doughnut.map((d) => d.percentual), 
+              borderWidth: 1,
+              backgroundColor: cores
+            },
           ],
         },
         options: { plugins: { legend: { display: false } } },
