@@ -346,7 +346,7 @@ function renderizarDoughnut(doughnut) {
   if (!Array.isArray(doughnut)) return;
 
   const icones = {
-    Aerea: "aereo.png",
+    Aérea: "aereo.png",
     Marítima: "maritimo.png",
     Terrestre: "terrestre.png",
   };
