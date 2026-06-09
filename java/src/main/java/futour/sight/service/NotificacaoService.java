@@ -130,7 +130,7 @@ public class NotificacaoService {
                 mentions,
                 tabela,
                 erro,
-                LocalDateTime.now().format(FORMATTER)
+                ZonedDateTime.now(ZoneId.of("America/Sao_Paulo")).format(FORMATTER)
         );
 
         SlackConfig.enviarMensagemFormatada(
