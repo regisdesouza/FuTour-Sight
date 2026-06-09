@@ -65,18 +65,16 @@ function onkey_ano() {
 }
 
 function buscarFiltro() {
-    fetch(`/usuarios/filtros/${sessionStorage.getItem("ID_FILTRO")}`, { method: "GET" })
+    return fetch(`/usuarios/filtros/${sessionStorage.getItem("ID_FILTRO")}`, { method: "GET" })
         .then((resposta) => tratarRespostaFetch(resposta))
         .then((filtros) => {
             const filtro = filtros[0];
 
-            setTimeout(() => {
-                document.getElementById("nome-filtro").value        = filtro.nome;
-                document.getElementById("estado-destino").value     = filtro.estado;
-                document.getElementById("continente-origem").value  = filtro.continente;
-                document.getElementById("ano-inicio").value         = filtro.ano_inicio;
-                document.getElementById("ano-fim").value            = filtro.ano_fim;
-            }, 10);
+            document.getElementById("nome-filtro").value        = filtro.nome;
+            document.getElementById("estado-destino").value     = filtro.estado;
+            document.getElementById("continente-origem").value  = filtro.continente;
+            document.getElementById("ano-inicio").value         = filtro.ano_inicio;
+            document.getElementById("ano-fim").value            = filtro.ano_fim;
 
             chkNomeFiltro = true;
             chkEstado     = true;
@@ -90,7 +88,7 @@ function buscarFiltro() {
 }
 
 function renderizarOptionsEstados() {
-    fetch("/usuarios/estados", { method: "GET" })
+    return fetch("/usuarios/estados", { method: "GET" })
         .then((resposta) => tratarRespostaFetch(resposta))
         .then((estados) => {
             const select = document.getElementById("estado-destino");
@@ -105,7 +103,7 @@ function renderizarOptionsEstados() {
 }
 
 function renderizarOptionsContinentes() {
-    fetch("/usuarios/continentes", { method: "GET" })
+    return fetch("/usuarios/continentes", { method: "GET" })
         .then((resposta) => tratarRespostaFetch(resposta))
         .then((continentes) => {
             const select = document.getElementById("continente-origem");
@@ -120,7 +118,7 @@ function renderizarOptionsContinentes() {
 }
 
 function renderizarOptionsAnos() {
-    fetch("/usuarios/anos", { method: "GET" })
+    return fetch("/usuarios/anos", { method: "GET" })
         .then((resposta) => tratarRespostaFetch(resposta))
         .then((anos) => {
             const selects = document.querySelectorAll(".select-anos-comparacao");
@@ -134,6 +132,42 @@ function renderizarOptionsAnos() {
             console.error("#ERRO:", erro);
             exibirToast("erro", "Erro ao carregar anos");
         });
+}
+
+function desabilitarOptionsAnosMenoresOuIguais() {
+    const select_ano_inicio = document.getElementById("ano-inicio");
+
+    select_ano_inicio.addEventListener("change", atualizarAnosFim);
+
+    atualizarAnosFim();
+}
+
+function atualizarAnosFim() {
+    const select_ano_inicio = document.getElementById("ano-inicio");
+    const select_ano_fim = document.getElementById("ano-fim");
+
+    if (select_ano_inicio.value == "") {
+        select_ano_fim.setAttribute("disabled", true);
+        select_ano_fim.value = "";
+        return;
+    }
+
+    select_ano_fim.removeAttribute("disabled");
+
+    if (Number(select_ano_inicio.value) >= Number(select_ano_fim.value)) {
+        select_ano_fim.value = "";
+    }
+
+    for (const option of select_ano_fim.options) {
+        if (
+            option.value !== "" &&
+            Number(option.value) <= Number(select_ano_inicio.value)
+        ) {
+            option.disabled = true;
+        } else {
+            option.disabled = false;
+        }
+    }
 }
 
 function atualizarFiltro() {
@@ -184,7 +218,13 @@ function cancelarAtualizacaoFiltro() {
     window.location.href = "../../../usuario/filtros.html";
 }
 
-renderizarOptionsEstados();
-renderizarOptionsContinentes();
-renderizarOptionsAnos();
-buscarFiltro();
+document.addEventListener("DOMContentLoaded", async () => {
+    await Promise.all([
+        renderizarOptionsEstados(),
+        renderizarOptionsContinentes(),
+        renderizarOptionsAnos()
+    ]);
+
+    await buscarFiltro();
+    desabilitarOptionsAnosMenoresOuIguais();
+});
