@@ -65,18 +65,16 @@ function onkey_ano() {
 }
 
 function buscarFiltro() {
-    fetch(`/usuarios/filtros/${sessionStorage.getItem("ID_FILTRO")}`, { method: "GET" })
+    return fetch(`/usuarios/filtros/${sessionStorage.getItem("ID_FILTRO")}`, { method: "GET" })
         .then((resposta) => tratarRespostaFetch(resposta))
         .then((filtros) => {
             const filtro = filtros[0];
 
-            setTimeout(() => {
-                document.getElementById("nome-filtro").value        = filtro.nome;
-                document.getElementById("estado-destino").value     = filtro.estado;
-                document.getElementById("continente-origem").value  = filtro.continente;
-                document.getElementById("ano-inicio").value         = filtro.ano_inicio;
-                document.getElementById("ano-fim").value            = filtro.ano_fim;
-            }, 10);
+            document.getElementById("nome-filtro").value        = filtro.nome;
+            document.getElementById("estado-destino").value     = filtro.estado;
+            document.getElementById("continente-origem").value  = filtro.continente;
+            document.getElementById("ano-inicio").value         = filtro.ano_inicio;
+            document.getElementById("ano-fim").value            = filtro.ano_fim;
 
             chkNomeFiltro = true;
             chkEstado     = true;
@@ -90,7 +88,7 @@ function buscarFiltro() {
 }
 
 function renderizarOptionsEstados() {
-    fetch("/usuarios/estados", { method: "GET" })
+    return fetch("/usuarios/estados", { method: "GET" })
         .then((resposta) => tratarRespostaFetch(resposta))
         .then((estados) => {
             const select = document.getElementById("estado-destino");
@@ -105,7 +103,7 @@ function renderizarOptionsEstados() {
 }
 
 function renderizarOptionsContinentes() {
-    fetch("/usuarios/continentes", { method: "GET" })
+    return fetch("/usuarios/continentes", { method: "GET" })
         .then((resposta) => tratarRespostaFetch(resposta))
         .then((continentes) => {
             const select = document.getElementById("continente-origem");
@@ -120,7 +118,7 @@ function renderizarOptionsContinentes() {
 }
 
 function renderizarOptionsAnos() {
-    fetch("/usuarios/anos", { method: "GET" })
+    return fetch("/usuarios/anos", { method: "GET" })
         .then((resposta) => tratarRespostaFetch(resposta))
         .then((anos) => {
             const selects = document.querySelectorAll(".select-anos-comparacao");
@@ -184,7 +182,12 @@ function cancelarAtualizacaoFiltro() {
     window.location.href = "../../../usuario/filtros.html";
 }
 
-renderizarOptionsEstados();
-renderizarOptionsContinentes();
-renderizarOptionsAnos();
-buscarFiltro();
+document.addEventListener("DOMContentLoaded", async () => {
+    await Promise.all([
+        renderizarOptionsEstados(),
+        renderizarOptionsContinentes(),
+        renderizarOptionsAnos()
+    ]);
+
+    await buscarFiltro();
+});
